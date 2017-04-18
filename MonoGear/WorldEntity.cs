@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,52 +9,45 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    class WorldEntity
+    abstract class WorldEntity
     {
-        static Texture2D texture;
+        private Texture2D instanceTexture;
 
-        public Rectangle Size { get; set; }
+        public Vector2 Size { get; set; }
 
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
+        public Vector3 Position { get; set; }
 
         public bool Visible { get; set; }
         public bool Enabled { get; set; }
 
-        public string TextureFile { get; set; }
+        public string TextureAssetName { get; set; }
 
         public WorldEntity()
         {
             Visible = true;
             Enabled = true;
+            Size = new Vector2(0, 0);
         }
 
-        public void LoadGraphics(GraphicsDevice graphicsDevice)
+        // Need something better than this. Maybe use some sort of sprite manager instead.
+        public virtual void LoadContent(ContentManager content)
         {
-            if(texture == null)
-            {
-                using(var stream = TitleContainer.OpenStream("Content/charactersheet.png"))
-                {
-                    texture = Texture2D.FromStream(graphicsDevice, stream);
-                }
-            }
+            instanceTexture = content.Load<Texture2D>(TextureAssetName);
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(Input input, GameTime gameTime)
         {
             if(!Enabled)
                 return;
-
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(Viewport viewport, SpriteBatch spriteBatch)
         {
             if(!Visible)
                 return;
 
-            Vector2 topLeft = new Vector2(X, Y);
-            spriteBatch.Draw(texture, topLeft, Color.White);
+            Vector2 topLeft = new Vector2(Position.X - 0.5f * Size.X, Position.Y - 0.5f * Size.Y);
+            spriteBatch.Draw(instanceTexture, viewport.Translate(topLeft), Color.White);
         }
     }
 }

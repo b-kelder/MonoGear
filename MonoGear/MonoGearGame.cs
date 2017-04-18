@@ -11,7 +11,9 @@ namespace MonoGear
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Viewport activeViewport;
         List<WorldEntity> activeEntities;
+        Input input;
 
         public MonoGearGame()
         {
@@ -28,8 +30,11 @@ namespace MonoGear
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            input = new Input();
 
             activeEntities = new List<WorldEntity>();
+            // This size is bullshit
+            activeViewport = new Viewport(800, 600);
 
             base.Initialize();
         }
@@ -42,8 +47,14 @@ namespace MonoGear
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
             // TODO: use this.Content to load your game content here
+
+            // Test crap
+            var player = new Player();
+            player.LoadContent(Content);
+            player.Position = new Vector3(32, 64, 2);
+            activeEntities.Add(player);
         }
 
         /// <summary>
@@ -62,10 +73,12 @@ namespace MonoGear
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            input.Update();
+
             // TODO: Add your update logic here
             foreach(var entity in activeEntities)
             {
-                entity.Update(gameTime);
+                entity.Update(input, gameTime);
             }
             
             base.Update(gameTime);
@@ -80,10 +93,12 @@ namespace MonoGear
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
             foreach(var entity in activeEntities)
             {
-                entity.Draw(spriteBatch);
+                entity.Draw(activeViewport, spriteBatch);
             }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
