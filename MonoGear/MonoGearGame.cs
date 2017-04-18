@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace MonoGear
 {
@@ -10,6 +11,7 @@ namespace MonoGear
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        List<WorldEntity> activeEntities;
 
         public MonoGearGame()
         {
@@ -26,6 +28,8 @@ namespace MonoGear
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
+            activeEntities = new List<WorldEntity>();
 
             base.Initialize();
         }
@@ -59,6 +63,10 @@ namespace MonoGear
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
+            foreach(var entity in activeEntities)
+            {
+                entity.Update(gameTime);
+            }
             
             base.Update(gameTime);
         }
@@ -72,6 +80,10 @@ namespace MonoGear
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            foreach(var entity in activeEntities)
+            {
+                entity.Draw(spriteBatch);
+            }
 
             base.Draw(gameTime);
         }

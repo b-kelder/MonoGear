@@ -103,8 +103,11 @@
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GraphicsManager.cs" />
     <Compile Include="MonoGearGame.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorldEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />
