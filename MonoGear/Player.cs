@@ -28,14 +28,14 @@ namespace MonoGear
             if(input.IsKeyDown(Keys.S))
                 dy += Speed;
 
-            var delta = new Vector3(dx, dy, 0) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            var delta = new Vector3(dx, dy, 0);
             if(delta.LengthSquared() > Speed * Speed)
             {
                 delta.Normalize();
                 delta *= Speed;
             }
 
-            Position += delta;
+            Position += delta * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
     }
 }
