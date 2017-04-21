@@ -12,7 +12,7 @@ namespace MonoGear
     {
         private static Dictionary<string, ResourceManager> managers = new Dictionary<string, ResourceManager>();
 
-        //Hardcode for now
+        //Hardcode for now, might want to load this via some sort of configuration
         private readonly Dictionary<Type, string[]> resources = new Dictionary<Type, string[]>
         {
             {
