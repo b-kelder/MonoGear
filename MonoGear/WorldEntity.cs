@@ -29,10 +29,9 @@ namespace MonoGear
             Size = new Vector2(0, 0);
         }
 
-        // Need something better than this. Maybe use some sort of sprite manager instead.
-        public virtual void LoadContent(ContentManager content)
+        protected virtual void LoadContent()
         {
-            instanceTexture = content.Load<Texture2D>(TextureAssetName);
+            instanceTexture = ResourceManager.GetManager("Global").GetResource<Texture2D>(TextureAssetName);
         }
 
         public virtual void Update(Input input, GameTime gameTime)
@@ -41,13 +40,13 @@ namespace MonoGear
                 return;
         }
 
-        public virtual void Draw(Viewport viewport, SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             if(!Visible)
                 return;
 
             Vector2 topLeft = new Vector2(Position.X - 0.5f * Size.X, Position.Y - 0.5f * Size.Y);
-            spriteBatch.Draw(instanceTexture, viewport.Translate(topLeft), Color.White);
+            spriteBatch.Draw(instanceTexture, topLeft, Color.White);
         }
     }
 }

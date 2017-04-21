@@ -9,11 +9,12 @@ namespace MonoGear
     /// </summary>
     public class MonoGearGame : Game
     {
+        ResourceManager globalResources;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Viewport activeViewport;
         List<WorldEntity> activeEntities;
         Input input;
+        Camera activeCamera;
 
         public MonoGearGame()
         {
@@ -33,8 +34,8 @@ namespace MonoGear
             input = new Input();
 
             activeEntities = new List<WorldEntity>();
-            // This size is bullshit
-            activeViewport = new Viewport(800, 600);
+            activeCamera = new Camera(graphics.GraphicsDevice.Viewport);
+            globalResources = new ResourceManager("Global");
 
             base.Initialize();
         }
@@ -49,10 +50,10 @@ namespace MonoGear
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            globalResources.LoadResources(Content);
 
             // Test crap
             var player = new Player();
-            player.LoadContent(Content);
             player.Position = new Vector3(32, 64, 2);
             activeEntities.Add(player);
         }
@@ -93,10 +94,11 @@ namespace MonoGear
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            var matrix = activeCamera.GetViewMatrix();
+            spriteBatch.Begin(transformMatrix: matrix);
             foreach(var entity in activeEntities)
             {
-                entity.Draw(activeViewport, spriteBatch);
+                entity.Draw(spriteBatch);
             }
             spriteBatch.End();
 

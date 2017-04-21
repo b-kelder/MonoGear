@@ -13,6 +13,8 @@ namespace MonoGear
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Speed = 60.0f;
             TextureAssetName = "Sprites/s_generator";
+
+            LoadContent();
         }
 
         public override void Update(Input input, GameTime gameTime)
