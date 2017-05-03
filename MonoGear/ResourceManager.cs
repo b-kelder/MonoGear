@@ -22,6 +22,8 @@ namespace MonoGear
                 new string[]
                 {
                     "Sprites/s_generator",
+                    "Sprites/map",
+                    "Sprites/guardsheet",
                 }
             },
         };

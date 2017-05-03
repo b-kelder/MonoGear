@@ -7,14 +7,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGear", "MonoGear.csproj
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|ARM = Release|ARM
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8E27A19-01C5-402A-BB3C-6EB06B2B21A3}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{D8E27A19-01C5-402A-BB3C-6EB06B2B21A3}.Debug|ARM.ActiveCfg = Debug|ARM
 		{D8E27A19-01C5-402A-BB3C-6EB06B2B21A3}.Debug|ARM.Build.0 = Debug|ARM
 		{D8E27A19-01C5-402A-BB3C-6EB06B2B21A3}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -24,6 +27,7 @@ Global
 		{D8E27A19-01C5-402A-BB3C-6EB06B2B21A3}.Debug|x86.ActiveCfg = Debug|x86
 		{D8E27A19-01C5-402A-BB3C-6EB06B2B21A3}.Debug|x86.Build.0 = Debug|x86
 		{D8E27A19-01C5-402A-BB3C-6EB06B2B21A3}.Debug|x86.Deploy.0 = Debug|x86
+		{D8E27A19-01C5-402A-BB3C-6EB06B2B21A3}.Release|Any CPU.ActiveCfg = Release|x86
 		{D8E27A19-01C5-402A-BB3C-6EB06B2B21A3}.Release|ARM.ActiveCfg = Release|ARM
 		{D8E27A19-01C5-402A-BB3C-6EB06B2B21A3}.Release|ARM.Build.0 = Release|ARM
 		{D8E27A19-01C5-402A-BB3C-6EB06B2B21A3}.Release|ARM.Deploy.0 = Release|ARM

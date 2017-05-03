@@ -4,21 +4,29 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MonoGear
 {
-    class Player : WorldEntity
+    class Player : WorldEntityAnimated
     {
         public float Speed { get; set; }
 
         public Player() : base()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
-            Speed = 60.0f;
-            TextureAssetName = "Sprites/s_generator";
+            Speed = 100.0f;
+            TextureAssetName = "Sprites/guardsheet";
+
+            AnimationLength = 3;
+            AnimationDelta = 0.2f;
 
             LoadContent();
         }
 
         public override void Update(Input input, GameTime gameTime)
         {
+            if(!Enabled)
+                return;
+
+            base.Update(input, gameTime);
+
             var dx = 0.0f;
             var dy = 0.0f;
             if(input.IsKeyDown(Keys.A))
@@ -37,7 +45,12 @@ namespace MonoGear
                 delta *= Speed;
             }
 
+            AnimationRunning = delta.LengthSquared() > 0;
+
             Position += delta * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+
+            Camera.main.Position = new Vector2(Position.X, Position.Y);
         }
     }
 }

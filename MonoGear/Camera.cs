@@ -31,7 +31,6 @@ namespace MonoGear
         {
             return
                 Matrix.CreateTranslation(new Vector3(-Position, 0.0f)) *
-                Matrix.CreateTranslation(new Vector3(-Origin, 0.0f)) *
                 Matrix.CreateRotationZ(Rotation) *
                 Matrix.CreateScale(Zoom, Zoom, 1) *
                 Matrix.CreateTranslation(new Vector3(Origin, 0.0f));

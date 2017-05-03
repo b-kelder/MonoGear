@@ -15,6 +15,7 @@ namespace MonoGear
         List<WorldEntity> activeEntities;
         Input input;
         Camera activeCamera;
+        Level activeLevel;
 
         public MonoGearGame()
         {
@@ -53,8 +54,17 @@ namespace MonoGear
             globalResources.LoadResources(Content);
 
             // Test crap
+            activeLevel = new Level();
+            var layer = new LevelLayer()
+            {
+                layer = 0,
+                offset = new Vector2(),
+                textureName = "Sprites/map"
+            };
+            activeLevel.AddBackgroundLayer(layer);
+
             var player = new Player();
-            player.Position = new Vector3(32, 64, 2);
+            player.Position = new Vector3(8, 8, 2);
             activeEntities.Add(player);
         }
 
@@ -91,15 +101,20 @@ namespace MonoGear
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             var matrix = activeCamera.GetViewMatrix();
             spriteBatch.Begin(transformMatrix: matrix);
+
+            activeLevel.DrawBackground(spriteBatch);
+
             foreach(var entity in activeEntities)
             {
                 entity.Draw(spriteBatch);
             }
+
+            activeLevel.DrawForeground(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

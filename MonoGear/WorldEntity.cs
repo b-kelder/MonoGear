@@ -11,7 +11,7 @@ namespace MonoGear
 {
     abstract class WorldEntity
     {
-        private Texture2D instanceTexture;
+        protected Texture2D instanceTexture;
 
         public Vector2 Size { get; set; }
 
@@ -32,6 +32,10 @@ namespace MonoGear
         protected virtual void LoadContent()
         {
             instanceTexture = ResourceManager.GetManager("Global").GetResource<Texture2D>(TextureAssetName);
+            if(instanceTexture != null)
+            {
+                Size = new Vector2(instanceTexture.Bounds.Size.X, instanceTexture.Bounds.Size.Y);
+            }
         }
 
         public virtual void Update(Input input, GameTime gameTime)
