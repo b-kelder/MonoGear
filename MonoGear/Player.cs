@@ -29,13 +29,13 @@ namespace MonoGear
 
             var dx = 0.0f;
             var dy = 0.0f;
-            if(input.IsKeyDown(Keys.A))
+            if(input.IsKeyDown(Keys.A) || input.IsKeyDown(Keys.Left))
                 dx -= Speed;
-            if(input.IsKeyDown(Keys.D))
+            if(input.IsKeyDown(Keys.D) || input.IsKeyDown(Keys.Right))
                 dx += Speed;
-            if(input.IsKeyDown(Keys.W))
+            if(input.IsKeyDown(Keys.W) || input.IsKeyDown(Keys.Up))
                 dy -= Speed;
-            if(input.IsKeyDown(Keys.S))
+            if(input.IsKeyDown(Keys.S) || input.IsKeyDown(Keys.Down))
                 dy += Speed;
 
             var delta = new Vector3(dx, dy, 0);
