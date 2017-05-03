@@ -11,7 +11,7 @@ namespace MonoGear
         public Player() : base()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
-            Speed = 60.0f;
+            Speed = 600.0f;
             TextureAssetName = "Sprites/s_generator";
 
             LoadContent();
@@ -21,13 +21,13 @@ namespace MonoGear
         {
             var dx = 0.0f;
             var dy = 0.0f;
-            if(input.IsKeyDown(Keys.A))
+            if(input.IsKeyDown(Keys.A) || input.IsKeyDown(Keys.Left))
                 dx -= Speed;
-            if(input.IsKeyDown(Keys.D))
+            if(input.IsKeyDown(Keys.D) || input.IsKeyDown(Keys.Right))
                 dx += Speed;
-            if(input.IsKeyDown(Keys.W))
+            if(input.IsKeyDown(Keys.W) || input.IsKeyDown(Keys.Up))
                 dy -= Speed;
-            if(input.IsKeyDown(Keys.S))
+            if(input.IsKeyDown(Keys.S) || input.IsKeyDown(Keys.Down))
                 dy += Speed;
 
             var delta = new Vector3(dx, dy, 0);
