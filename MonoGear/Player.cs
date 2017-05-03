@@ -45,10 +45,17 @@ namespace MonoGear
                 delta *= Speed;
             }
 
-            AnimationRunning = delta.LengthSquared() > 0;
+            if(delta.LengthSquared() > 0)
+            {
+                Rotation = (float)(Math.Atan2(delta.Y, delta.X) - Math.PI * 0.5);
+                AnimationRunning = true;
+            }
+            else
+            {
+                AnimationRunning = false;
+            }
 
             Position += delta * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
 
             Camera.main.Position = new Vector2(Position.X, Position.Y);
         }

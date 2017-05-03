@@ -17,6 +17,8 @@ namespace MonoGear
 
         public Vector3 Position { get; set; }
 
+        public float Rotation { get; set; }
+
         public bool Visible { get; set; }
         public bool Enabled { get; set; }
 
@@ -49,8 +51,7 @@ namespace MonoGear
             if(!Visible)
                 return;
 
-            Vector2 topLeft = new Vector2(Position.X - 0.5f * Size.X, Position.Y - 0.5f * Size.Y);
-            spriteBatch.Draw(instanceTexture, topLeft, Color.White);
+            spriteBatch.Draw(instanceTexture, new Vector2(Position.X, Position.Y), instanceTexture.Bounds, Color.White, Rotation, Size / 2, 1, SpriteEffects.None, 0);
         }
     }
 }

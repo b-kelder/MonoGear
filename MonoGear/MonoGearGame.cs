@@ -36,6 +36,7 @@ namespace MonoGear
 
             activeEntities = new List<WorldEntity>();
             activeCamera = new Camera(graphics.GraphicsDevice.Viewport);
+            activeCamera.Zoom = 2;
             globalResources = new ResourceManager("Global");
 
             base.Initialize();
@@ -64,7 +65,7 @@ namespace MonoGear
             activeLevel.AddBackgroundLayer(layer);
 
             var player = new Player();
-            player.Position = new Vector3(8, 8, 2);
+           
             activeEntities.Add(player);
         }
 
