@@ -5,31 +5,37 @@ namespace MonoGear
 {
     class AudioManager
     {
-        private List<AudioSource> soundSources;
+        private List<AudioSource> audioSources;
 
         public AudioManager()
         {
-            soundSources = new List<AudioSource>();
+            audioSources = new List<AudioSource>();
         }
 
         public void AddSoundSource(AudioSource soundSource)
         {
-            soundSources.Add(soundSource);
+            audioSources.Add(soundSource);
         }
 
-        public void DistanceToSource(Player player, float maxDistance)
+        public void DistanceToSource(Player player)
         {
-            foreach (var audio in soundSources)
+            float maxDistance = 0;
+
+            foreach (var audioSource in audioSources)
             {
-                float distance = Vector2.Distance(new Vector2(audio.Position.X, audio.Position.Y), new Vector2(player.Position.X, player.Position.Y));
-                if (distance > maxDistance)
+                float distance = Vector2.Distance(new Vector2(audioSource.Position.X, audioSource.Position.Y), new Vector2(player.Position.X, player.Position.Y));
+
+                foreach (var audio in audioSource.GetSoundEffect())
                 {
-                    audio.StopSoundEffects();
-                }
-                else
-                {
-                    audio.PlaySoundEffects();
-                    audio.ChangeVolume(1 - (distance / maxDistance));
+                    if (distance > maxDistance)
+                    {
+                        audio.Key.Stop();
+                    }
+                    else
+                    {
+                        audio.Key.Play();
+                        audio.Key.Volume = (1 - (distance / maxDistance));
+                    }
                 }
             }
         }
