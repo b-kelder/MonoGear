@@ -111,11 +111,11 @@ namespace MonoGear
             // New Audio Source
             
 
-            var sound = new AudioSource();
-            sound.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 100);
-            sound.Position = new Vector3(207, 220, 5);
-            audioManager.AddSoundSource(sound);
-            RegisterGlobalEntity(sound);
+            var fountain = new AudioSource();
+            fountain.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 100);
+            fountain.Position = new Vector3(207, 220, 5);
+            audioManager.AddSoundSource(fountain);
+            RegisterGlobalEntity(fountain);
 
             player = new Player();
             RegisterGlobalEntity(player);
