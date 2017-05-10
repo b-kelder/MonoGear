@@ -49,9 +49,15 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/map.png
 
-#begin Audio/ÁudioFX/Water_Fountain_cut.wav
+#begin Audio/AudioFX/Water_Fountain_cut.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/ÁudioFX/Water_Fountain_cut.wav
+/build:Audio/AudioFX/Water_Fountain_cut.wav
+
+#begin Audio/AudioFX/Running On Grass.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Running On Grass.wav
 

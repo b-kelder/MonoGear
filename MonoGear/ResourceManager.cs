@@ -30,6 +30,7 @@ namespace MonoGear
                 new string[]
                 {
                     "Audio/AudioFX/Water_Fountain_cut",
+                    "Audio/AudioFX/Running On Grass",
                 }
             },
         };

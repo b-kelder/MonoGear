@@ -19,22 +19,20 @@ namespace MonoGear
 
         public void DistanceToSource(Player player)
         {
-            float maxDistance = 0;
-
             foreach (var audioSource in audioSources)
             {
                 float distance = Vector2.Distance(new Vector2(audioSource.Position.X, audioSource.Position.Y), new Vector2(player.Position.X, player.Position.Y));
 
                 foreach (var audio in audioSource.GetSoundEffect())
                 {
-                    if (distance > maxDistance)
+                    if (distance > audio.Value)
                     {
                         audio.Key.Stop();
                     }
                     else
                     {
                         audio.Key.Play();
-                        audio.Key.Volume = (1 - (distance / maxDistance));
+                        audio.Key.Volume = (1 - (distance / audio.Value));
                     }
                 }
             }

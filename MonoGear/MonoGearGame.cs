@@ -109,10 +109,8 @@ namespace MonoGear
             globalResources.LoadResources(Content);
 
             // New Audio Source
-            
-
             var fountain = new AudioSource();
-            fountain.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 100);
+            fountain.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 150);
             fountain.Position = new Vector3(207, 220, 5);
             audioManager.AddSoundSource(fountain);
             RegisterGlobalEntity(fountain);

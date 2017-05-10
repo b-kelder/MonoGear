@@ -117,6 +117,9 @@
     <Compile Include="WorldEntityAnimated.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Running On Grass.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Water_Fountain_cut.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
