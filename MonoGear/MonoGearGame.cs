@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 
 namespace MonoGear
@@ -16,9 +18,11 @@ namespace MonoGear
         Input input;
         Camera activeCamera;
         Level activeLevel;
+        AudioManager audioManager;
 
         public MonoGearGame()
         {
+            audioManager = new AudioManager();
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
@@ -65,8 +69,14 @@ namespace MonoGear
             activeLevel.AddBackgroundLayer(layer);
 
             var player = new Player();
-           
+            var testDing = new SoundSource(new List<SoundEffectInstance>() { Content.Load<SoundEffect>("Sound/SoundFX/Running_On_Concrete").CreateInstance() });
+
             activeEntities.Add(player);
+            activeEntities.Add(testDing);
+
+            //Background music
+            Song song = Content.Load<Song>("Sound/Music/Main menu theme");
+            //MediaPlayer.Play(song);
         }
 
         /// <summary>
