@@ -130,6 +130,9 @@ namespace MonoGear
             var sp = new SpawnPoint(new Vector2(64, 120));
             sp.Tag = "PlayerSpawnPoint";
             lvl.AddEntity(sp);
+            var col = new ColliderTestEntity();
+            col.Position = new Vector3(100, 100, 0);
+            lvl.AddEntity(col);
 
             LoadLevel(lvl);
         }

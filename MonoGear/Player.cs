@@ -15,11 +15,15 @@ namespace MonoGear
             TextureAssetName = "Sprites/guardsheet";
 
             AnimationLength = 3;
-            AnimationDelta = 0.2f;
+            AnimationCurrentFrame = 1;
+            AnimationDelta = 0.1f;
+            AnimationPingPong = true;
 
             Tag = "Player";
 
             LoadContent();
+
+            Collider = new BoxCollider(this, new Vector2(8));
         }
 
         public override void OnLevelLoaded()
@@ -66,11 +70,28 @@ namespace MonoGear
             else
             {
                 AnimationRunning = false;
+                AnimationCurrentFrame = 1;
             }
 
-            Position += delta * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            // Check collisions
+            var prevPos = Position;
+            var deltaX = new Vector3(delta.X, 0, 0);
+            var deltaY = new Vector3(0, delta.Y, 0);
+
+            Position += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if(Collider.CollidesAny())
+            {
+                Position = prevPos;
+            }
+            prevPos = Position;
+            Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if(Collider.CollidesAny())
+            {
+                Position = prevPos;
+            }
 
             Camera.main.Position = new Vector2(Position.X, Position.Y);
         }
     }
 }
+
