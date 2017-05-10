@@ -29,7 +29,7 @@ namespace MonoGear
                 typeof(SoundEffect),
                 new string[]
                 {
-                    "Audio/Water Fountain",
+                    "Audio/AudioFX/Water_Fountain_cut",
                 }
             },
         };

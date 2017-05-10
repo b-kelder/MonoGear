@@ -109,8 +109,8 @@ namespace MonoGear
             globalResources.LoadResources(Content);
 
             // New Audio Source
-            var sound = new AudioSource(new List<SoundEffectInstance>() { globalResources.GetResource<SoundEffect>("Audio/Water Fountain").CreateInstance() });
-            sound.Position = new Vector3(64, 120, 5);
+            var sound = new AudioSource(new List<SoundEffectInstance>() { globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut").CreateInstance() });
+            sound.Position = new Vector3(207, 220, 5);
             audioManager.AddSoundSource(sound);
             RegisterGlobalEntity(sound);
 
@@ -167,7 +167,7 @@ namespace MonoGear
                 entity.Update(input, gameTime);
             }
 
-            audioManager.DistanceToSource(player, 100);
+            audioManager.DistanceToSource(player, 300);
 
             base.Update(gameTime);
         }

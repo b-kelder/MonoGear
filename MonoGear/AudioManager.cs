@@ -28,7 +28,8 @@ namespace MonoGear
                 }
                 else
                 {
-                    audio.ChangeVolume(((distance / 100) * maxDistance) / 100);
+                    audio.PlaySoundEffects();
+                    audio.ChangeVolume(1 - (distance / maxDistance));
                 }
             }
         }

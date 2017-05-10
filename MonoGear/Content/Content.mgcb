@@ -49,3 +49,9 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/map.png
 
+#begin Audio/ÁudioFX/Water_Fountain_cut.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/ÁudioFX/Water_Fountain_cut.wav
+
