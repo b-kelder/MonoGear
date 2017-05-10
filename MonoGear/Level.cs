@@ -12,11 +12,13 @@ namespace MonoGear
     {
         List<LevelLayer> backgroundLayers;
         List<LevelLayer> foregroundLayers;
+        HashSet<WorldEntity> levelEntities;
 
         public Level()
         {
             backgroundLayers = new List<LevelLayer>();
             foregroundLayers = new List<LevelLayer>();
+            levelEntities = new HashSet<WorldEntity>();
         }
 
         public void AddBackgroundLayer(LevelLayer layer)
@@ -48,6 +50,16 @@ namespace MonoGear
             {
                 batch.Draw(layer.texture, layer.offset, Color.White);
             }
+        }
+
+        public void AddEntity(WorldEntity entity)
+        {
+            levelEntities.Add(entity);
+        }
+
+        public WorldEntity[] GetEntities()
+        {
+            return levelEntities.ToArray();
         }
     }
 

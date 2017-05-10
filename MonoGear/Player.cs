@@ -17,6 +17,8 @@ namespace MonoGear
             AnimationLength = 3;
             AnimationDelta = 0.2f;
 
+            Tag = "Player";
+
             LoadContent();
         }
 

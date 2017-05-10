@@ -23,6 +23,7 @@ namespace MonoGear
         public bool Enabled { get; set; }
 
         public string TextureAssetName { get; set; }
+        public string Tag { get; set; }
 
         public WorldEntity()
         {
@@ -38,6 +39,11 @@ namespace MonoGear
             {
                 Size = new Vector2(instanceTexture.Bounds.Size.X, instanceTexture.Bounds.Size.Y);
             }
+        }
+
+        public virtual void OnLevelLoaded()
+        {
+
         }
 
         public virtual void Update(Input input, GameTime gameTime)
