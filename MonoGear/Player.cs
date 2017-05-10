@@ -22,6 +22,17 @@ namespace MonoGear
             LoadContent();
         }
 
+        public override void OnLevelLoaded()
+        {
+            base.OnLevelLoaded();
+
+            var ents = MonoGearGame.FindEntitiesWithTag("PlayerSpawnPoint");
+            if(ents.Count > 0)
+            {
+                Position = new Vector3(ents[0].Position.X, ents[0].Position.Y, Position.Z);
+            }
+        }
+
         public override void Update(Input input, GameTime gameTime)
         {
             if(!Enabled)

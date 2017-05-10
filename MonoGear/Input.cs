@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    class Input
+    public class Input
     {
         KeyboardState currentState;
         KeyboardState previousState;

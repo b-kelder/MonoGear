@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    class Level
+    public class Level
     {
         List<LevelLayer> backgroundLayers;
         List<LevelLayer> foregroundLayers;
@@ -63,7 +63,7 @@ namespace MonoGear
         }
     }
 
-    struct LevelLayer
+    public struct LevelLayer
     {
         public int layer;
         public Vector2 offset;

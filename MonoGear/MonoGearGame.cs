@@ -110,6 +110,9 @@ namespace MonoGear
                 textureName = "Sprites/map"
             };
             lvl.AddBackgroundLayer(layer);
+            var sp = new SpawnPoint(new Vector2(64, 120));
+            sp.Tag = "PlayerSpawnPoint";
+            lvl.AddEntity(sp);
 
             LoadLevel(lvl);
         }
@@ -131,6 +134,12 @@ namespace MonoGear
         protected override void Update(GameTime gameTime)
         {
             input.Update();
+
+            // Level reload by pressing L
+            if(input.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.L))
+            {
+                LoadLevel(activeLevel);
+            }
 
             // Globals go first
             foreach(var entity in globalEntities)
@@ -179,7 +188,7 @@ namespace MonoGear
         /// Adds an entity to the level list.
         /// </summary>
         /// <param name="entity">Entity to add</param>
-        static void RegisterLevelEntity(WorldEntity entity)
+        public static void RegisterLevelEntity(WorldEntity entity)
         {
             instance.levelEntities.Add(entity);
         }
@@ -188,7 +197,7 @@ namespace MonoGear
         /// Adds an entity to the global list.
         /// </summary>
         /// <param name="entity">Entity to add</param>
-        static void RegisterGlobalEntity(WorldEntity entity)
+        public static void RegisterGlobalEntity(WorldEntity entity)
         {
             instance.globalEntities.Add(entity);
         }
@@ -198,7 +207,7 @@ namespace MonoGear
         /// </summary>
         /// <param name="tag">Tag to find</param>
         /// <returns>List</returns>
-        static List<WorldEntity> FindEntitiesWithTag(string tag)
+        public static List<WorldEntity> FindEntitiesWithTag(string tag)
         {
             var list = new List<WorldEntity>();
             list.AddRange(instance.levelEntities.Where(
@@ -220,7 +229,7 @@ namespace MonoGear
         /// </summary>
         /// <typeparam name="T">Type of entity.</typeparam>
         /// <returns>List</returns>
-        static List<WorldEntity> FindEntitiesOfType<T>() where T : WorldEntity
+        public static List<WorldEntity> FindEntitiesOfType<T>() where T : WorldEntity
         {
             var list = new List<WorldEntity>();
             list.AddRange(instance.levelEntities.Where(
@@ -238,7 +247,7 @@ namespace MonoGear
         }
 
         // static level stuff
-        static void LoadLevel(Level level)
+        public static void LoadLevel(Level level)
         {
             instance.activeLevel = level;
 

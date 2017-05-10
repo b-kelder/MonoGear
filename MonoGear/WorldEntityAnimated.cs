@@ -41,7 +41,7 @@ namespace MonoGear
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if(!Visible)
+            if(!Visible || instanceTexture == null)
                 return;
 
             Rectangle sourceRect = new Rectangle(AnimationCurrentFrame * (int)Size.X, 0, (int)Size.X, (int)Size.Y);

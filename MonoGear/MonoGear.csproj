@@ -105,13 +105,13 @@
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ImageEntity.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="MonoGearGame.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManager.cs" />
+    <Compile Include="SpawnPoint.cs" />
     <Compile Include="WorldEntity.cs" />
     <Compile Include="WorldEntityAnimated.cs" />
   </ItemGroup>

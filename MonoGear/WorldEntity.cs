@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    abstract class WorldEntity
+    public abstract class WorldEntity
     {
         protected Texture2D instanceTexture;
 
@@ -54,7 +54,7 @@ namespace MonoGear
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            if(!Visible)
+            if(!Visible || instanceTexture == null)
                 return;
 
             spriteBatch.Draw(instanceTexture, new Vector2(Position.X, Position.Y), instanceTexture.Bounds, Color.White, Rotation, Size / 2, 1, SpriteEffects.None, 0);
