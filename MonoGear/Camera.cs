@@ -23,8 +23,13 @@ namespace MonoGear
 
             Rotation = 0;
             Zoom = 1;
-            Origin = new Vector2(viewport.Width / 2f, viewport.Height / 2f);
             Position = Vector2.Zero;
+            RecalculateOrigin(viewport);
+        }
+
+        public void RecalculateOrigin(Viewport viewport)
+        {
+            Origin = new Vector2(viewport.Width / 2f, viewport.Height / 2f);
         }
 
         public Matrix GetViewMatrix()
