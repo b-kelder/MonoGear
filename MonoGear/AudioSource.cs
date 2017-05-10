@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Audio;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonoGear
 {
@@ -29,9 +25,25 @@ namespace MonoGear
 
         public void PlaySoundEffects()
         {
-            foreach(var audio in soundEffects)
+            foreach (var audio in soundEffects)
             {
                 audio.Play();
+            }
+        }
+
+        public void StopSoundEffects()
+        {
+            foreach (var audio in soundEffects)
+            {
+                audio.Stop();
+            }
+        }
+
+        public void ChangeVolume(float volume)
+        {
+            foreach (var audio in soundEffects)
+            {
+                audio.Volume = volume;
             }
         }
     }
