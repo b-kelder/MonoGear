@@ -8,6 +8,16 @@ namespace MonoGear
 {
     class AudioManager
     {
+        private List<AudioSource> soundSources;
 
+        public AudioManager()
+        {
+
+        }
+
+        public void AddSoundSource(AudioSource soundSource)
+        {
+            soundSources.Add(soundSource);
+        }
     }
 }
