@@ -4,15 +4,13 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonoGear
 {
     class ResourceManager
     {
         private static Dictionary<string, ResourceManager> managers = new Dictionary<string, ResourceManager>();
+
 
         // Hardcode for now, might want to load this via some sort of configuration
         // e.g. when we want to use more ResourceManagers because they will all load the same stuff right now.
@@ -27,13 +25,21 @@ namespace MonoGear
                     "Sprites/guardsheet",
                 }
             },
+            {
+                typeof(SoundEffect),
+                new string[]
+                {
+                    "Audio/AudioFX/Water_Fountain_cut",
+                    "Audio/AudioFX/Running On Grass",
+                }
+            },
         };
-        
+
         private Dictionary<string, object> loadedResources;
 
         public ResourceManager(string name)
         {
-            if(managers.ContainsKey(name))
+            if (managers.ContainsKey(name))
             {
                 throw new ArgumentException("Dupliacte manager name " + name);
             }
@@ -44,25 +50,25 @@ namespace MonoGear
 
         public void LoadResources(ContentManager content)
         {
-            foreach(var type in resources)
+            foreach (var type in resources)
             {
-                if(type.Key == typeof(Texture2D))
+                if (type.Key == typeof(Texture2D))
                 {
-                    foreach(var asset in type.Value)
+                    foreach (var asset in type.Value)
                     {
                         RegisterLoadedResource(asset, content.Load<Texture2D>(asset));
                     }
                 }
-                else if(type.Key == typeof(Song))
+                else if (type.Key == typeof(Song))
                 {
-                    foreach(var asset in type.Value)
+                    foreach (var asset in type.Value)
                     {
                         RegisterLoadedResource(asset, content.Load<Song>(asset));
                     }
                 }
-                else if(type.Key == typeof(SoundEffect))
+                else if (type.Key == typeof(SoundEffect))
                 {
-                    foreach(var asset in type.Value)
+                    foreach (var asset in type.Value)
                     {
                         RegisterLoadedResource(asset, content.Load<SoundEffect>(asset));
                     }
@@ -72,7 +78,7 @@ namespace MonoGear
 
         private void RegisterLoadedResource(string name, object resource)
         {
-            if(loadedResources.ContainsKey(name))
+            if (loadedResources.ContainsKey(name))
             {
                 throw new ArgumentException("Duplicate resource name " + name);
             }
@@ -83,7 +89,7 @@ namespace MonoGear
         public T GetResource<T>(string name)
         {
             object result = default(T);
-            if(loadedResources.TryGetValue(name, out result))
+            if (loadedResources.TryGetValue(name, out result))
             {
                 return (T)result;
             }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGear
 {
@@ -46,18 +47,28 @@ namespace MonoGear
         /// Active level, used for background rendering
         /// </summary>
         Level activeLevel;
+        /// <summary>
+        /// Active AudioManager
+        /// </summary>
+        AudioManager audioManager;
+        /// <summary>
+        /// Active Player
+        /// </summary>
+        Player player;
 
         public MonoGearGame()
         {
             // Required for static entity/level related methods
             instance = this;
 
+            audioManager = new AudioManager();
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
             Window.ClientSizeChanged += (s, e) =>
             {
-                if(activeCamera != null)
+                if (activeCamera != null)
                 {
                     activeCamera.RecalculateOrigin(graphics.GraphicsDevice.Viewport);
                 }
@@ -93,12 +104,18 @@ namespace MonoGear
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
             // Load global resources
             globalResources.LoadResources(Content);
 
+            // New Audio Source
+            var fountain = new AudioSource();
+            fountain.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 150);
+            fountain.Position = new Vector3(207, 220, 5);
+            audioManager.AddSoundSource(fountain);
+            RegisterGlobalEntity(fountain);
 
-            var player = new Player();
+            player = new Player();
             RegisterGlobalEntity(player);
 
             // Test level
@@ -139,21 +156,23 @@ namespace MonoGear
             input.Update();
 
             // Level reload by pressing L
-            if(input.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.L))
+            if (input.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.L))
             {
                 LoadLevel(activeLevel);
             }
 
             // Globals go first
-            foreach(var entity in globalEntities)
+            foreach (var entity in globalEntities)
             {
                 entity.Update(input, gameTime);
             }
-            foreach(var entity in levelEntities)
+            foreach (var entity in levelEntities)
             {
                 entity.Update(input, gameTime);
             }
-            
+
+            audioManager.DistanceToSource(player);
+
             base.Update(gameTime);
         }
 
@@ -171,11 +190,11 @@ namespace MonoGear
             activeLevel.DrawBackground(spriteBatch);
 
             // TODO: Combine lists for rendering and sort based on z position
-            foreach(var entity in levelEntities)
+            foreach (var entity in levelEntities)
             {
                 entity.Draw(spriteBatch);
             }
-            foreach(var entity in globalEntities)
+            foreach (var entity in globalEntities)
             {
                 entity.Draw(spriteBatch);
             }
@@ -257,18 +276,18 @@ namespace MonoGear
             // Update entities
             instance.levelEntities.Clear();
             var ents = level.GetEntities();
-            foreach(var e in ents)
+            foreach (var e in ents)
             {
                 instance.levelEntities.Add(e);
             }
 
             // Do OnLevelLoaded for all entities
-            foreach(var e in instance.levelEntities)
+            foreach (var e in instance.levelEntities)
             {
                 e.OnLevelLoaded();
             }
 
-            foreach(var e in instance.globalEntities)
+            foreach (var e in instance.globalEntities)
             {
                 e.OnLevelLoaded();
             }
