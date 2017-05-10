@@ -9,6 +9,7 @@ namespace MonoGear
 
         public AudioSource()
         {
+            soundEffects = new Dictionary<SoundEffectInstance, int>();
             Visible = false;
         }
 
