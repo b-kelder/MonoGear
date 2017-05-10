@@ -16,6 +16,22 @@ namespace MonoGear
         public float AnimationDelta { get; set; }
         public int AnimationCurrentFrame { get; set; }
         public bool AnimationRunning { get; set; }
+        public bool AnimationPingPong
+        {
+            get { return pingpong; }
+            set
+            {
+                pingpong = value;
+                animDeltaSign = 1;
+            }
+        }
+        private int animDeltaSign;
+        private bool pingpong;
+
+        public WorldEntityAnimated()
+        {
+            animDeltaSign = 1;
+        }
 
         public override void Update(Input input, GameTime gameTime)
         {
@@ -26,7 +42,31 @@ namespace MonoGear
                 if(animationCounter >= AnimationDelta)
                 {
                     animationCounter -= AnimationDelta;
-                    AnimationCurrentFrame = (AnimationCurrentFrame + 1) % AnimationLength;
+                    AnimationCurrentFrame = (AnimationCurrentFrame + animDeltaSign);
+                    if(AnimationCurrentFrame > AnimationLength - 1)
+                    {
+                        if(AnimationPingPong)
+                        {
+                            AnimationCurrentFrame = Math.Max(0, AnimationCurrentFrame - 1);
+                            animDeltaSign *= -1;
+                        }
+                        else
+                        {
+                            AnimationCurrentFrame = 0;
+                        }
+                    }
+                    else if(AnimationCurrentFrame < 0)
+                    {
+                        if(AnimationPingPong)
+                        {
+                            AnimationCurrentFrame = Math.Min(AnimationLength - 1, AnimationCurrentFrame + 1);
+                            animDeltaSign *= -1;
+                        }
+                        else
+                        {
+                            AnimationCurrentFrame = AnimationLength - 1;
+                        }
+                    }
                 }
                 animationCounter += (float)gameTime.ElapsedGameTime.TotalSeconds;
             }

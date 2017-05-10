@@ -9,15 +9,20 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    public abstract class WorldEntity
+    public class WorldEntity
     {
         protected Texture2D instanceTexture;
 
         public Vector2 Size { get; set; }
 
+        /// <summary>
+        /// World position. Keep in mind that the object is centered based on Size.
+        /// </summary>
         public Vector3 Position { get; set; }
 
         public float Rotation { get; set; }
+
+        public Collider Collider { get; set; }
 
         public bool Visible { get; set; }
         public bool Enabled { get; set; }
