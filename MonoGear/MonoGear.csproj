@@ -112,17 +112,10 @@
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManager.cs" />
-    <Compile Include="SoundSource.cs" />
     <Compile Include="WorldEntity.cs" />
     <Compile Include="WorldEntityAnimated.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\bin\WindowsStoreApp\Sound\Music\Main menu theme.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\bin\WindowsStoreApp\Sound\SoundFX\Running_On_Concrete.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Content\bin\WindowsStoreApp\Sprites\guardsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
