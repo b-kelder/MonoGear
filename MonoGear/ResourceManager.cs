@@ -33,6 +33,14 @@ namespace MonoGear
                     "Audio/AudioFX/Running On Grass",
                 }
             },
+            {
+                typeof(Song),
+                new string[]
+                {
+                    "Audio/Music/Epic music for an epic moment",
+                    "Audio/Music/Main menu theme",
+                }
+            },
         };
 
         private Dictionary<string, object> loadedResources;

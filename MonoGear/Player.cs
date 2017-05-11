@@ -1,12 +1,14 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGear
 {
     class Player : WorldEntityAnimated
     {
         public float Speed { get; set; }
+        private SoundEffectInstance walkingSound;
 
         public Player() : base()
         {
@@ -24,6 +26,14 @@ namespace MonoGear
             LoadContent();
 
             Collider = new BoxCollider(this, new Vector2(8));
+        }
+
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+
+            walkingSound = ResourceManager.GetManager("Global").GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
+            AudioManager.GlobalAudioAdd(walkingSound);
         }
 
         public override void OnLevelLoaded()
@@ -66,11 +76,13 @@ namespace MonoGear
             {
                 Rotation = (float)(Math.Atan2(delta.Y, delta.X) - Math.PI * 0.5);
                 AnimationRunning = true;
+                AudioManager.GlobalAudioPlay(walkingSound);
             }
             else
             {
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
+                AudioManager.GlobalAudioStop(walkingSound);
             }
 
             // Check collisions

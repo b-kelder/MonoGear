@@ -129,6 +129,12 @@
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Water_Fountain_cut.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\Music\Epic music for an epic moment.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\Music\Main menu theme.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\bin\WindowsStoreApp\Sprites\guardsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

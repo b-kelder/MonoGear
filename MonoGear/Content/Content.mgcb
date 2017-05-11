@@ -61,3 +61,15 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Running On Grass.wav
 
+#begin Audio/Music/Epic music for an epic moment.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Epic music for an epic moment.mp3
+
+#begin Audio/Music/Main menu theme.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Main menu theme.mp3
+

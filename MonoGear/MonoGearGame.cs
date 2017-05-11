@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace MonoGear
 {
@@ -48,10 +49,6 @@ namespace MonoGear
         /// </summary>
         Level activeLevel;
         /// <summary>
-        /// Active AudioManager
-        /// </summary>
-        AudioManager audioManager;
-        /// <summary>
         /// Active Player
         /// </summary>
         Player player;
@@ -60,8 +57,6 @@ namespace MonoGear
         {
             // Required for static entity/level related methods
             instance = this;
-
-            audioManager = new AudioManager();
 
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -108,11 +103,16 @@ namespace MonoGear
             // Load global resources
             globalResources.LoadResources(Content);
 
+            // Add background music
+            AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
+            AudioManager.MusicVolume(0.4f);
+            AudioManager.MusicPlay();
+
             // New Audio Source
             var fountain = new AudioSource();
             fountain.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 150);
             fountain.Position = new Vector3(207, 220, 5);
-            audioManager.AddSoundSource(fountain);
+            AudioManager.AddSoundSource(fountain);
             RegisterGlobalEntity(fountain);
 
             player = new Player();
@@ -171,7 +171,7 @@ namespace MonoGear
                 entity.Update(input, gameTime);
             }
 
-            audioManager.DistanceToSource(player);
+            AudioManager.UpdateSoundSourceAudio(player);
 
             base.Update(gameTime);
         }
