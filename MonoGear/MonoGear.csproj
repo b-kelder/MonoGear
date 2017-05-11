@@ -119,6 +119,7 @@
     <Compile Include="ResourceManager.cs" />
     <Compile Include="SpawnPoint.cs" />
     <Compile Include="TilemapCollider.cs" />
+    <Compile Include="WorldBoxTrigger.cs" />
     <Compile Include="WorldEntity.cs" />
     <Compile Include="WorldEntityAnimated.cs" />
   </ItemGroup>

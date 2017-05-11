@@ -11,6 +11,8 @@ namespace MonoGear
     {
         private static List<Collider> _colliders = new List<Collider>();
 
+        public bool Trigger { get; set; }
+        public bool Active { get; set; }
         public Vector2 BBSize { get; protected set; }
         public WorldEntity Entity { get; protected set; } 
 
@@ -22,6 +24,8 @@ namespace MonoGear
             }
             Entity = entity;
             Entity.Collider = this;
+            Active = true;
+            Trigger = false;
 
             _colliders.Add(this);
         }
@@ -139,12 +143,18 @@ namespace MonoGear
             return false;
         }
 
+        /// <summary>
+        /// Checks collider list and returns any colliders the given collider has a box overlap with.
+        /// Does not return inactive or trigger colliders or colliders who's entity is disabled.
+        /// </summary>
+        /// <param name="col">Collider to check</param>
+        /// <returns>Colliders that collide</returns>
         public static IEnumerable<Collider> BoxOverlapAny(Collider col)
         {
             List<Collider> cols = new List<Collider>();
             foreach(var other in _colliders)
             {
-                if(other == col)
+                if(other == col || other.Active == false || other.Entity.Enabled == false || other.Trigger)
                     continue;
 
                 if(BoxOverlap(col, other))

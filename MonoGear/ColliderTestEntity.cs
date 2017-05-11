@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,6 +65,27 @@ namespace MonoGear
 
             var fountain = new CircleCollider(new WorldEntity(), 3 * 16);
             fountain.Entity.Position = new Microsoft.Xna.Framework.Vector3(208, 224, 0);
+
+            var trigger = new WorldBoxTrigger(fountain.Entity.Position, new Vector2(160), (col, prevColliders, colliders) =>
+            { 
+                foreach(var collider in colliders)
+                {
+                    if(prevColliders.Contains(collider))
+                    {
+                        continue;
+                    }
+
+                    if(collider.Entity.Tag == "Player")
+                    {
+                        var p = new Player();
+                        p.Position = collider.Entity.Position;
+                        p.Move(new Vector3(16, 0, 0));
+                        p.Tag = "Clone";
+                        MonoGearGame.RegisterLevelEntity(p);
+                    }
+                }
+            });
+            MonoGearGame.RegisterGlobalEntity(trigger);
         }
     }
 }

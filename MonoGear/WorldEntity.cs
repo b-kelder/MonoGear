@@ -37,6 +37,11 @@ namespace MonoGear
             Size = new Vector2(0, 0);
         }
 
+        public void Move(Vector3 delta)
+        {
+            Position += delta;
+        }
+
         protected virtual void LoadContent()
         {
             instanceTexture = ResourceManager.GetManager("Global").GetResource<Texture2D>(TextureAssetName);
