@@ -88,6 +88,7 @@ namespace MonoGear
         public static void MusicSet(Song newMusic)
         {
             music = newMusic;
+            MediaPlayer.IsRepeating = true;
         }
 
         /// <summary>
