@@ -49,6 +49,10 @@ namespace MonoGear
         /// </summary>
         Level activeLevel;
         /// <summary>
+        /// If set will be loaded the next frame
+        /// </summary>
+        Level nextLevel;
+        /// <summary>
         /// Active Player
         /// </summary>
         Player player;
@@ -86,7 +90,7 @@ namespace MonoGear
             activeCamera = new Camera(graphics.GraphicsDevice.Viewport);
             // TODO: Make zoom based on resolution? Or see if we can change resolution otherwise.
             activeCamera.Zoom = 2;
-            globalResources = new ResourceManager("Global");
+            globalResources = new ResourceManager();
 
             base.Initialize();
         }
@@ -133,8 +137,132 @@ namespace MonoGear
             var col = new ColliderTestEntity();
             col.Position = new Vector2(100, 100);
             lvl.AddEntity(col);
+            var bird = new Bird();
+            bird.Position = new Vector2(200, 500);
+            lvl.AddEntity(bird);
+            bird = new Bird();
+            bird.Position = new Vector2(220, 520);
+            lvl.AddEntity(bird);
+            bird = new Bird();
+            bird.Position = new Vector2(180, 520);
+            lvl.AddEntity(bird);
 
-            LoadLevel(lvl);
+            var tilemap = new TilemapCollider(new WorldEntity(), new ushort[0, 0], 16);
+            tilemap.MapFromString(@"0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+                                    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+                                    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+                                    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0,
+                                    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                                    ", 35, 42);
+            lvl.AddEntity(tilemap.Entity);
+
+            var levelA = lvl;
+
+            // Test level
+            lvl = new Level();
+            layer = new LevelLayer()
+            {
+                layer = 0,
+                offset = new Vector2(),
+                textureName = "Sprites/map"
+            };
+            lvl.AddBackgroundLayer(layer);
+            sp = new SpawnPoint(new Vector2(264, 120));
+            sp.Tag = "PlayerSpawnPoint";
+            lvl.AddEntity(sp);
+
+            bird = new Bird();
+            bird.Position = new Vector2(200, 500);
+            lvl.AddEntity(bird);
+            bird = new Bird();
+            bird.Position = new Vector2(220, 520);
+            lvl.AddEntity(bird);
+            bird = new Bird();
+            bird.Position = new Vector2(180, 520);
+            lvl.AddEntity(bird);
+
+            bird = new Bird();
+            bird.Position = new Vector2(200, 400);
+            lvl.AddEntity(bird);
+            bird = new Bird();
+            bird.Position = new Vector2(220, 420);
+            lvl.AddEntity(bird);
+            bird = new Bird();
+            bird.Position = new Vector2(180, 420);
+            lvl.AddEntity(bird);
+
+            bird = new Bird();
+            bird.Position = new Vector2(100, 500);
+            lvl.AddEntity(bird);
+            bird = new Bird();
+            bird.Position = new Vector2(120, 520);
+            lvl.AddEntity(bird);
+            bird = new Bird();
+            bird.Position = new Vector2(80, 520);
+            lvl.AddEntity(bird);
+
+
+            lvl.AddEntity(tilemap.Entity);
+
+
+            var levelB = lvl;
+
+            // Level transition trigger
+            var trans = new WorldBoxTrigger(new Vector2(208, 8), new Vector2(96, 16), (c, prev, current) => 
+            {
+                foreach(var collider in current)
+                {
+                    if(prev.Contains(collider))
+                    {
+                        continue;
+                    }
+
+                    if(collider.Entity.Tag == "Player")
+                    {
+                        LoadLevel(levelB);
+                    }
+                }
+            });
+            levelA.AddEntity(trans);
+
+            LoadLevel(levelA);
         }
 
         /// <summary>
@@ -153,6 +281,11 @@ namespace MonoGear
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            if(nextLevel != null)
+            {
+                LoadLevel();
+            }
+
             input.Update();
 
             // Level reload by pressing L
@@ -189,12 +322,16 @@ namespace MonoGear
 
             activeLevel.DrawBackground(spriteBatch);
 
-            // TODO: Combine lists for rendering and sort based on z position
-            foreach (var entity in levelEntities)
+            // Sort entities based on z order
+            var renderEntities = new List<WorldEntity>();
+            renderEntities.AddRange(levelEntities);
+            renderEntities.AddRange(globalEntities);
+            renderEntities.Sort((ent, other) =>
             {
-                entity.Draw(spriteBatch);
-            }
-            foreach (var entity in globalEntities)
+                return ent.Z.CompareTo(other.Z);
+            });
+
+            foreach(var entity in renderEntities)
             {
                 entity.Draw(spriteBatch);
             }
@@ -212,6 +349,7 @@ namespace MonoGear
         /// <param name="entity">Entity to add</param>
         public static void RegisterLevelEntity(WorldEntity entity)
         {
+            entity.OnLevelLoaded();
             instance.levelEntities.Add(entity);
         }
 
@@ -221,6 +359,7 @@ namespace MonoGear
         /// <param name="entity">Entity to add</param>
         public static void RegisterGlobalEntity(WorldEntity entity)
         {
+            entity.OnLevelLoaded();
             instance.globalEntities.Add(entity);
         }
 
@@ -268,29 +407,44 @@ namespace MonoGear
             return list;
         }
 
+        private void LoadLevel()
+        {
+            if(nextLevel != null)
+            {
+                activeLevel = nextLevel;
+                nextLevel = null;
+
+                // Tell entities that they should stop
+                foreach(var e in levelEntities)
+                {
+                    e.OnLevelUnloaded();
+                }
+
+                // Update entities
+                instance.levelEntities.Clear();
+                var ents = activeLevel.GetEntities();
+                foreach(var e in ents)
+                {
+                    levelEntities.Add(e);
+                }
+
+                // Do OnLevelLoaded for all entities
+                foreach(var e in instance.levelEntities)
+                {
+                    e.OnLevelLoaded();
+                }
+
+                foreach(var e in instance.globalEntities)
+                {
+                    e.OnLevelLoaded();
+                }
+            }
+        }
+
         // static level stuff
         public static void LoadLevel(Level level)
         {
-            instance.activeLevel = level;
-
-            // Update entities
-            instance.levelEntities.Clear();
-            var ents = level.GetEntities();
-            foreach (var e in ents)
-            {
-                instance.levelEntities.Add(e);
-            }
-
-            // Do OnLevelLoaded for all entities
-            foreach (var e in instance.levelEntities)
-            {
-                e.OnLevelLoaded();
-            }
-
-            foreach (var e in instance.globalEntities)
-            {
-                e.OnLevelLoaded();
-            }
+            instance.nextLevel = level;
         }
     }
 }

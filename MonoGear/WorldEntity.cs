@@ -21,6 +21,14 @@ namespace MonoGear
         public Vector2 Position { get; set; }
         public float Z { get; set; }
 
+        public Vector2 Forward
+        {
+            get
+            {
+                return MathExtensions.AngleToVector(Rotation);
+            }
+        }
+
         public float Rotation { get; set; }
 
         public Collider Collider { get; set; }
@@ -45,7 +53,7 @@ namespace MonoGear
 
         protected virtual void LoadContent()
         {
-            instanceTexture = ResourceManager.GetManager("Global").GetResource<Texture2D>(TextureAssetName);
+            instanceTexture = ResourceManager.GetManager().GetResource<Texture2D>(TextureAssetName);
             if(instanceTexture != null)
             {
                 Size = new Vector2(instanceTexture.Bounds.Size.X, instanceTexture.Bounds.Size.Y);
@@ -54,7 +62,14 @@ namespace MonoGear
 
         public virtual void OnLevelLoaded()
         {
+            if(Collider != null)
+                Collider.Active = true;
+        }
 
+        public virtual void OnLevelUnloaded()
+        {
+            if(Collider != null)
+                Collider.Active = false;
         }
 
         public virtual void Update(Input input, GameTime gameTime)

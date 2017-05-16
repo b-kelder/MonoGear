@@ -9,7 +9,7 @@ namespace MonoGear
 {
     class ResourceManager
     {
-        private static Dictionary<string, ResourceManager> managers = new Dictionary<string, ResourceManager>();
+        private static ResourceManager _instance;
 
 
         // Hardcode for now, might want to load this via some sort of configuration
@@ -23,6 +23,7 @@ namespace MonoGear
                     "Sprites/s_generator",
                     "Sprites/map",
                     "Sprites/guardsheet",
+                    "Sprites/birdsheet",
                 }
             },
             {
@@ -46,14 +47,9 @@ namespace MonoGear
 
         private Dictionary<string, object> loadedResources;
 
-        public ResourceManager(string name)
+        public ResourceManager()
         {
-            if (managers.ContainsKey(name))
-            {
-                throw new ArgumentException("Dupliacte manager name " + name);
-            }
-
-            managers.Add(name, this);
+            _instance = this;
             loadedResources = new Dictionary<string, object>();
         }
 
@@ -105,11 +101,9 @@ namespace MonoGear
             throw new KeyNotFoundException("Unknow resource " + name);
         }
 
-        public static ResourceManager GetManager(string name)
+        public static ResourceManager GetManager()
         {
-            ResourceManager manager;
-            managers.TryGetValue(name, out manager);
-            return manager;
+            return _instance;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace MonoGear
         {
             base.LoadContent();
 
-            walkingSound = ResourceManager.GetManager("Global").GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
+            walkingSound = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
         }
 
         public override void OnLevelLoaded()
@@ -73,29 +73,28 @@ namespace MonoGear
 
             if(delta.LengthSquared() > 0)
             {
-                Rotation = (float)(Math.Atan2(delta.Y, delta.X) - Math.PI * 0.5);
+                Rotation = MathExtensions.VectorToAngle(delta);
                 AnimationRunning = true;
                 AudioManager.GlobalAudioPlay(walkingSound);
-
-
-                // Raycast test
-                if(input.IsKeyPressed(Keys.Space))
-                {
-                    Collider hit;
-                    if(Collider.RaycastAny(Position, Position + (delta * 2), out hit, "Player"))
-                    {
-                        if(hit.Entity.Tag == "Fountain")
-                        {
-                            AudioManager.PlayOnce(ResourceManager.GetManager("Global").GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
-                        }
-                    }
-                }
             }
             else
             {
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
                 AudioManager.GlobalAudioStop(walkingSound);
+            }
+
+            // Raycast test
+            if(input.IsKeyPressed(Keys.Space))
+            {
+                Collider hit;
+                if(Collider.RaycastAny(Position, Position + (Forward * 32), out hit, "Player"))
+                {
+                    if(hit.Entity.Tag == "Fountain")
+                    {
+                        AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
+                    }
+                }
             }
 
             // Check collisions

@@ -8,10 +8,10 @@ namespace MonoGear
 {
     public class TilemapCollider : Collider
     {
-        public bool[,] Tiles { get; private set; }
+        public UInt16[,] Tiles { get; private set; }
         public int TileSize { get; set; }
 
-        public TilemapCollider(WorldEntity entity, bool[,] tiles, int tileSize) : base(entity)
+        public TilemapCollider(WorldEntity entity, UInt16[,] tiles, int tileSize) : base(entity)
         {
             Tiles = tiles;
             TileSize = tileSize;
@@ -32,13 +32,13 @@ namespace MonoGear
         /// <param name="height">Map height</param>
         public void MapFromString(string str, int width, int height)
         {
-            Tiles = new bool[width, height];
+            Tiles = new UInt16[width, height];
             var data = str.Split(',');
             for(int x = 0; x < width; x++)
             {
                 for(int y = 0; y < height; y++)
                 {
-                    Tiles[x, y] = int.Parse(data[x + y * width]) > 0;
+                    Tiles[x, y] = UInt16.Parse(data[x + y * width]);
                 }
             }
 

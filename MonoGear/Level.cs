@@ -25,7 +25,7 @@ namespace MonoGear
         {
             if(layer.texture == null)
             {
-                layer.texture = ResourceManager.GetManager("Global").GetResource<Texture2D>(layer.textureName);
+                layer.texture = ResourceManager.GetManager().GetResource<Texture2D>(layer.textureName);
             }
             
             backgroundLayers.Add(layer);
@@ -54,6 +54,7 @@ namespace MonoGear
 
         public void AddEntity(WorldEntity entity)
         {
+            entity.OnLevelUnloaded();
             levelEntities.Add(entity);
         }
 

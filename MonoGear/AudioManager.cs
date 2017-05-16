@@ -130,7 +130,7 @@ namespace MonoGear
 
         #endregion
 
-        #region Soundsource audio controll
+        #region Soundsource audio control
 
         /// <summary>
         /// Method to add a audio source to the audio manager.

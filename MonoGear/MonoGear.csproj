@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="AudioManager.cs" />
     <Compile Include="AudioSource.cs" />
+    <Compile Include="Bird.cs" />
     <Compile Include="BoxCollider.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CircleCollider.cs" />
@@ -137,6 +138,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\bin\WindowsStoreApp\Audio\Music\Main menu theme.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\birdsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\bin\WindowsStoreApp\Sprites\guardsheet.xnb">

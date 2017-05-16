@@ -9,7 +9,13 @@ namespace MonoGear
 {
     public abstract class Collider
     {
+        /// <summary>
+        /// Contains all colliders
+        /// </summary>
         private static List<Collider> _colliders = new List<Collider>();
+        /// <summary>
+        /// Collider used for raycasting
+        /// </summary>
         private static BoxCollider _raycastCollider = new BoxCollider(new WorldEntity(), Vector2.One);
 
         public bool Trigger { get; set; }
@@ -100,23 +106,6 @@ namespace MonoGear
 
         protected static bool CircleBoxOverlap(CircleCollider a, Collider b)
         {
-            /*float sqrRad = a.Radius * a.Radius;
-            Vector2 aPos = new Vector2(a.Entity.Position.X, a.Entity.Position.Y);
-            Vector2 bPos1 = new Vector2(b.Entity.Position.X, b.Entity.Position.Y) - b.BBSize / 2;
-            var bPos2 = bPos1 + b.BBSize;
-            var bPos3 = bPos1 + new Vector2(b.BBSize.X, 0);
-            var bPos4 = bPos1 + new Vector2(0, b.BBSize.Y);
-
-            if(
-                Vector2.DistanceSquared(aPos, bPos1) < sqrRad ||
-                Vector2.DistanceSquared(aPos, bPos2) < sqrRad ||
-                Vector2.DistanceSquared(aPos, bPos3) < sqrRad ||
-                Vector2.DistanceSquared(aPos, bPos4) < sqrRad)
-            {
-                return true;
-            }
-            return false;*/
-
             Vector2 circleDistance = new Vector2();
             circleDistance.X = Math.Abs(a.Entity.Position.X - b.Entity.Position.X);
             circleDistance.Y = Math.Abs(a.Entity.Position.Y - b.Entity.Position.Y);
@@ -180,7 +169,7 @@ namespace MonoGear
             {
                 for(int y = colStartY; y <= colEndY && y < map.Tiles.GetLength(1); y++)
                 {
-                    if(map.Tiles[x, y])
+                    if(map.Tiles[x, y] > 0)
                     {
                         return true;
                     }
