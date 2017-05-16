@@ -104,9 +104,9 @@ namespace MonoGear
             globalResources.LoadResources(Content);
 
             // Add background music
-            //AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
-            //AudioManager.MusicVolume(0.4f);
-            //AudioManager.MusicPlay();
+            AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
+            AudioManager.MusicVolume(0.4f);
+            AudioManager.MusicPlay();
 
             // New Audio Source
             var fountain = new AudioSource();
