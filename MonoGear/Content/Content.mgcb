@@ -49,6 +49,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/map.png
 
+#begin Sprites/birdsheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/birdsheet.png
+
 #begin Audio/AudioFX/Water_Fountain_cut.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -79,15 +91,10 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Guard_Alert_Sound.wav
 
-#begin Sprites/birdsheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/birdsheet.png
+#begin Audio/AudioFX/Bird_sounds.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Bird_sounds.wav
+
 

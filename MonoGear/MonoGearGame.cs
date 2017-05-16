@@ -119,6 +119,9 @@ namespace MonoGear
             AudioManager.AddAudioSource(fountain);
             RegisterGlobalEntity(fountain);
 
+            // Bird sound
+            AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Bird_sounds").CreateInstance(), true, 0.5f);
+
             player = new Player();
             RegisterGlobalEntity(player);
 

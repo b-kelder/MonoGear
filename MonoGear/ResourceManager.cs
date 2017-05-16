@@ -33,6 +33,7 @@ namespace MonoGear
                     "Audio/AudioFX/Water_Fountain_cut",
                     "Audio/AudioFX/Running On Grass",
                     "Audio/AudioFX/Guard_Alert_Sound",
+                    "Audio/AudioFX/Bird_sounds",
                 }
             },
             {
