@@ -8,76 +8,7 @@ namespace MonoGear
     static class AudioManager
     {
         private static List<AudioSource> audioSources = new List<AudioSource>();
-        private static List<SoundEffectInstance> globalAudio = new List<SoundEffectInstance>();
         private static Song music;
-
-        #region Global audio controll
-
-        /// <summary>
-        /// Method to add audio to the global audio list.
-        /// </summary>
-        /// <param name="audio">The audio to add.</param>
-        public static void GlobalAudioAdd(SoundEffectInstance audio)
-        {
-            globalAudio.Add(audio);
-        }
-
-        /// <summary>
-        /// Method to remove audio to the global audio list.
-        /// </summary>
-        /// <param name="audio">The audio to remove.</param>
-        public static void GlobalAudioRemove(SoundEffectInstance audio)
-        {
-            globalAudio.Remove(audio);
-        }
-
-        /// <summary>
-        /// Method to start playing the global audio.
-        /// </summary>
-        public static void GlobalAudioPlay(SoundEffectInstance audio)
-        {
-            if (audio.State != SoundState.Playing)
-                audio.Play();
-        }
-
-        /// <summary>
-        /// Method to pause playing the global audio.
-        /// </summary>
-        public static void GlobalAudioPause(SoundEffectInstance audio)
-        {
-            if (audio.State != SoundState.Paused)
-                audio.Pause();
-        }
-
-        /// <summary>
-        /// Method to resume playing the global audio.
-        /// </summary>
-        public static void GlobalAudioResume(SoundEffectInstance audio)
-        {
-            if (audio.State == SoundState.Paused)
-                audio.Resume();
-        }
-
-        /// <summary>
-        /// Method to stop playing the global audio.
-        /// </summary>
-        public static void GlobalAudioStop(SoundEffectInstance audio)
-        {
-            if (audio.State != SoundState.Stopped)
-                audio.Stop();
-        }
-
-        /// <summary>
-        /// Method to change the volume of a global sound.
-        /// </summary>
-        /// <param name="audio">The audio the change the volume of.</param>
-        /// <param name="volume">The volume to change to.</param>
-        public static void GlobalAudioVolume(SoundEffectInstance audio , float volume)
-        {
-            audio.Volume = volume;
-        }
-
-        #endregion
 
         #region Music controll
 
@@ -127,13 +58,82 @@ namespace MonoGear
         }
         #endregion
 
+        #region Simple sound playback
+
+        public static void PlayOnce(SoundEffect audio, float volume)
+        {
+            SoundEffectInstance audioInstance = audio.CreateInstance();
+            audioInstance.Volume = volume;
+            audioInstance.Play();
+            audioInstance.IsLooped = false;
+        }
+
+        public static void PlayOnce(SoundEffect audio, float volume, Vector3 location, int range)
+        {
+            AudioSource source = new AudioSource(location);
+            source.AddSoundEffect(audio, range);
+            audioSources.Add(source);
+        }
+
+        #endregion
+
+        #region Global audio controll
+
+        /// <summary>
+        /// Method to start playing the global audio.
+        /// </summary>
+        public static void GlobalAudioPlay(SoundEffectInstance audio)
+        {
+            if (audio.State != SoundState.Playing)
+                audio.Play();
+        }
+
+        /// <summary>
+        /// Method to pause playing the global audio.
+        /// </summary>
+        public static void GlobalAudioPause(SoundEffectInstance audio)
+        {
+            if (audio.State != SoundState.Paused)
+                audio.Pause();
+        }
+
+        /// <summary>
+        /// Method to resume playing the global audio.
+        /// </summary>
+        public static void GlobalAudioResume(SoundEffectInstance audio)
+        {
+            if (audio.State == SoundState.Paused)
+                audio.Resume();
+        }
+
+        /// <summary>
+        /// Method to stop playing the global audio.
+        /// </summary>
+        public static void GlobalAudioStop(SoundEffectInstance audio)
+        {
+            if (audio.State != SoundState.Stopped)
+                audio.Stop();
+        }
+
+        /// <summary>
+        /// Method to change the volume of a global sound.
+        /// </summary>
+        /// <param name="audio">The audio the change the volume of.</param>
+        /// <param name="volume">The volume to change to.</param>
+        public static void GlobalAudioVolume(SoundEffectInstance audio , float volume)
+        {
+            audio.Volume = volume;
+        }
+
+        #endregion
+
         #region Soundsource audio controll
 
         /// <summary>
         /// Method to add a audio source to the audio manager.
         /// </summary>
         /// <param name="audioSource">The audio source to add.</param>
-        public static void AddSoundSource(AudioSource audioSource)
+        public static void AddAudioSource(AudioSource audioSource)
         {
             audioSources.Add(audioSource);
         }
@@ -142,7 +142,7 @@ namespace MonoGear
         /// Method to remove a audio source to the audio manager.
         /// </summary>
         /// <param name="audioSource">The audio source to remove.</param>
-        public static void RemoveSoundSource(AudioSource audioSource)
+        public static void RemoveAudioSources(AudioSource audioSource)
         {
             audioSources.Remove(audioSource);
         }
@@ -151,7 +151,7 @@ namespace MonoGear
         /// Method to update the state and volume of audio based on their location relative to the player.
         /// </summary>
         /// <param name="player">The player to base the calculation on.</param>
-        public static void UpdateSoundSourceAudio(Player player)
+        public static void UpdateAudioSourceAudio(Player player)
         {
             foreach (var audioSource in audioSources)
             {
@@ -174,6 +174,7 @@ namespace MonoGear
                 }
             }
         }
+
         #endregion
     }
 }

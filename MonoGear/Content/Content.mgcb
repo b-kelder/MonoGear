@@ -73,3 +73,9 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Main menu theme.mp3
 
+#begin Audio/AudioFX/Guard_Alert_Sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Guard_Alert_Sound.wav
+

@@ -33,7 +33,6 @@ namespace MonoGear
             base.LoadContent();
 
             walkingSound = ResourceManager.GetManager("Global").GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
-            AudioManager.GlobalAudioAdd(walkingSound);
         }
 
         public override void OnLevelLoaded()

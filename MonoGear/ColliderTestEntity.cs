@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,11 +78,12 @@ namespace MonoGear
 
                     if(collider.Entity.Tag == "Player")
                     {
-                        var p = new Player();
-                        p.Position = collider.Entity.Position;
-                        p.Move(new Vector3(16, 0, 0));
-                        p.Tag = "Clone";
-                        MonoGearGame.RegisterLevelEntity(p);
+                        //var p = new Player();
+                        //p.Position = collider.Entity.Position;
+                        //p.Move(new Vector3(16, 0, 0));
+                        //p.Tag = "Clone";
+                        //MonoGearGame.RegisterLevelEntity(p);
+                        AudioManager.PlayOnce(ResourceManager.GetManager("Global").GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
                     }
                 }
             });

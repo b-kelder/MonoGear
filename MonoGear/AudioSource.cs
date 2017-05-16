@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Audio;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 
 namespace MonoGear
@@ -9,6 +10,19 @@ namespace MonoGear
 
         public AudioSource()
         {
+            soundEffects = new Dictionary<SoundEffectInstance, int>();
+            Visible = false;
+        }
+
+        public AudioSource(int x, int y, int z)
+        {
+            Position = new Vector3(x, y, z);
+            soundEffects = new Dictionary<SoundEffectInstance, int>();
+            Visible = false;
+        }
+        public AudioSource(Vector3 position)
+        {
+            Position = position;
             soundEffects = new Dictionary<SoundEffectInstance, int>();
             Visible = false;
         }
