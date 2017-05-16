@@ -85,3 +85,9 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Bird_sounds.wav
 
+#begin Audio/AudioFX/Water_Drop_Sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Water_Drop_Sound.wav
+

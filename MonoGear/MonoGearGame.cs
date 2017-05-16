@@ -116,7 +116,14 @@ namespace MonoGear
             RegisterGlobalEntity(fountain);
 
             // Bird sound
-            AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Bird_sounds").CreateInstance(), true, 0.5f);
+            AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Bird_sounds").CreateInstance(), true, 0.3f);
+
+            // Water drop sound
+            var puddle = new AudioSource();
+            puddle.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Drop_Sound"), 10);
+            puddle.Position = new Vector2(279, 458);
+            AudioManager.AddAudioSource(puddle);
+            RegisterGlobalEntity(puddle);
 
             player = new Player();
             RegisterGlobalEntity(player);
