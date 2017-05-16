@@ -42,7 +42,7 @@ namespace MonoGear
             var ents = MonoGearGame.FindEntitiesWithTag("PlayerSpawnPoint");
             if(ents.Count > 0)
             {
-                Position = new Vector3(ents[0].Position.X, ents[0].Position.Y, Position.Z);
+                Position = new Vector2(ents[0].Position.X, ents[0].Position.Y);
             }
         }
 
@@ -86,8 +86,8 @@ namespace MonoGear
 
             // Check collisions
             var prevPos = Position;
-            var deltaX = new Vector3(delta.X, 0, 0);
-            var deltaY = new Vector3(0, delta.Y, 0);
+            var deltaX = new Vector2(delta.X, 0);
+            var deltaY = new Vector2(0, delta.Y);
 
             Position += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if(Collider.CollidesAny())

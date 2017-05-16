@@ -111,7 +111,7 @@ namespace MonoGear
             // New Audio Source
             var fountain = new AudioSource();
             fountain.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 150);
-            fountain.Position = new Vector3(207, 220, 5);
+            fountain.Position = new Vector2(207, 220);
             AudioManager.AddAudioSource(fountain);
             RegisterGlobalEntity(fountain);
 
@@ -131,7 +131,7 @@ namespace MonoGear
             sp.Tag = "PlayerSpawnPoint";
             lvl.AddEntity(sp);
             var col = new ColliderTestEntity();
-            col.Position = new Vector3(100, 100, 0);
+            col.Position = new Vector2(100, 100);
             lvl.AddEntity(col);
 
             LoadLevel(lvl);

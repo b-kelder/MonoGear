@@ -69,7 +69,7 @@ namespace MonoGear
             audioInstance.IsLooped = false;
         }
 
-        public static void PlayOnce(SoundEffect audio, float volume, Vector3 location, int range)
+        public static void PlayOnce(SoundEffect audio, float volume, Vector2 location, int range)
         {
             AudioSource source = new AudioSource(location);
             source.AddSoundEffect(audio, range);
@@ -83,7 +83,7 @@ namespace MonoGear
         /// <summary>
         /// Method to start playing the global audio.
         /// </summary>
-        public static void GlobalAudioPlay(SoundEffectInstance audio, bool loop, int volume = 1)
+        public static void GlobalAudioPlay(SoundEffectInstance audio, bool loop = false, int volume = 1)
         {
             audio.Volume = volume;
             audio.IsLooped = loop;

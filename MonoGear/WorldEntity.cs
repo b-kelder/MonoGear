@@ -18,7 +18,8 @@ namespace MonoGear
         /// <summary>
         /// World position. Keep in mind that the object is centered based on Size.
         /// </summary>
-        public Vector3 Position { get; set; }
+        public Vector2 Position { get; set; }
+        public float Z { get; set; }
 
         public float Rotation { get; set; }
 
@@ -37,7 +38,7 @@ namespace MonoGear
             Size = new Vector2(0, 0);
         }
 
-        public void Move(Vector3 delta)
+        public void Move(Vector2 delta)
         {
             Position += delta;
         }

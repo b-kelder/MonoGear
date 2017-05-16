@@ -12,7 +12,7 @@ namespace MonoGear
         HashSet<Collider> previousColliders;
         Action<Collider, IEnumerable<Collider>, IEnumerable<Collider>> onTrigger;
 
-        public WorldBoxTrigger(Vector3 position, Vector2 size, Action<Collider, IEnumerable<Collider>, IEnumerable<Collider>> onTrigger)
+        public WorldBoxTrigger(Vector2 position, Vector2 size, Action<Collider, IEnumerable<Collider>, IEnumerable<Collider>> onTrigger)
         {
             if(onTrigger == null)
             {

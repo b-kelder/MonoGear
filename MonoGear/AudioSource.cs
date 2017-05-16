@@ -14,13 +14,14 @@ namespace MonoGear
             Visible = false;
         }
 
-        public AudioSource(int x, int y, int z)
+        public AudioSource(int x, int y)
         {
-            Position = new Vector3(x, y, z);
+            Position = new Vector2(x, y);
             soundEffects = new Dictionary<SoundEffectInstance, int>();
             Visible = false;
         }
-        public AudioSource(Vector3 position)
+
+        public AudioSource(Vector2 position)
         {
             Position = position;
             soundEffects = new Dictionary<SoundEffectInstance, int>();

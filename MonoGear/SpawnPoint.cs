@@ -11,7 +11,7 @@ namespace MonoGear
     {
         public SpawnPoint(Vector2 position)
         {
-            Position = new Vector3(position, 0);
+            Position = position;
             Tag = "SpawnPoint";
         }
     }

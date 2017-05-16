@@ -65,7 +65,7 @@ namespace MonoGear
                                 ", 35, 42);
 
             var fountain = new CircleCollider(new WorldEntity(), 3 * 16);
-            fountain.Entity.Position = new Microsoft.Xna.Framework.Vector3(208, 224, 0);
+            fountain.Entity.Position = new Microsoft.Xna.Framework.Vector2(208, 224);
 
             var trigger = new WorldBoxTrigger(fountain.Entity.Position, new Vector2(160), (col, prevColliders, colliders) =>
             { 
