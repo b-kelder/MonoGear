@@ -9,6 +9,7 @@ namespace MonoGear
     {
         private static List<AudioSource> audioSources = new List<AudioSource>();
         private static Song music;
+        public static int settingsMusicVolume;
 
         #region Music controll
 
@@ -82,8 +83,10 @@ namespace MonoGear
         /// <summary>
         /// Method to start playing the global audio.
         /// </summary>
-        public static void GlobalAudioPlay(SoundEffectInstance audio)
+        public static void GlobalAudioPlay(SoundEffectInstance audio, bool loop, int volume = 1)
         {
+            audio.Volume = volume;
+            audio.IsLooped = loop;
             if (audio.State != SoundState.Playing)
                 audio.Play();
         }
