@@ -64,7 +64,7 @@ namespace MonoGear
             if(input.IsKeyDown(Keys.S) || input.IsKeyDown(Keys.Down))
                 dy += Speed;
 
-            var delta = new Vector3(dx, dy, 0);
+            var delta = new Vector2(dx, dy);
             if(delta.LengthSquared() > Speed * Speed)
             {
                 delta.Normalize();
@@ -76,6 +76,20 @@ namespace MonoGear
                 Rotation = (float)(Math.Atan2(delta.Y, delta.X) - Math.PI * 0.5);
                 AnimationRunning = true;
                 AudioManager.GlobalAudioPlay(walkingSound);
+
+
+                // Raycast test
+                if(input.IsKeyPressed(Keys.Space))
+                {
+                    Collider hit;
+                    if(Collider.RaycastAny(Position, Position + (delta * 2), out hit, "Player"))
+                    {
+                        if(hit.Entity.Tag == "Fountain")
+                        {
+                            AudioManager.PlayOnce(ResourceManager.GetManager("Global").GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
+                        }
+                    }
+                }
             }
             else
             {

@@ -17,7 +17,6 @@ namespace MonoGear
 
             LoadContent();
 
-            Collider = new BoxCollider(this, Size);
             var map = new TilemapCollider(this, new bool[1,1], 16);
 
             map.MapFromString(@"0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -64,8 +63,11 @@ namespace MonoGear
                                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                                 ", 35, 42);
 
+            Collider = new BoxCollider(this, Size);
+
             var fountain = new CircleCollider(new WorldEntity(), 3 * 16);
             fountain.Entity.Position = new Microsoft.Xna.Framework.Vector2(208, 224);
+            fountain.Entity.Tag = "Fountain";
 
             var trigger = new WorldBoxTrigger(fountain.Entity.Position, new Vector2(160), (col, prevColliders, colliders) =>
             { 
@@ -78,11 +80,6 @@ namespace MonoGear
 
                     if(collider.Entity.Tag == "Player")
                     {
-                        //var p = new Player();
-                        //p.Position = collider.Entity.Position;
-                        //p.Move(new Vector3(16, 0, 0));
-                        //p.Tag = "Clone";
-                        //MonoGearGame.RegisterLevelEntity(p);
                         AudioManager.PlayOnce(ResourceManager.GetManager("Global").GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
                     }
                 }

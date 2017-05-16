@@ -10,6 +10,7 @@ namespace MonoGear
     public abstract class Collider
     {
         private static List<Collider> _colliders = new List<Collider>();
+        private static BoxCollider _raycastCollider = new BoxCollider(new WorldEntity(), Vector2.One);
 
         public bool Trigger { get; set; }
         public bool Active { get; set; }
@@ -50,6 +51,24 @@ namespace MonoGear
                     }
                 }
             }
+            return false;
+        }
+
+        public virtual bool CollidesAny(out Collider other)
+        {
+            var colliders = BoxOverlapAny(this);
+            if(colliders.Count() != 0)
+            {
+                foreach(var col in colliders)
+                {
+                    if(Collides(col))
+                    {
+                        other = col;
+                        return true;
+                    }
+                }
+            }
+            other = null;
             return false;
         }
 
@@ -118,6 +137,34 @@ namespace MonoGear
         {
             // I'm not doing this, everything's a box now
             return BoxTilemapOverlap(circle, map);
+        }
+
+        public static bool RaycastAny(Vector2 from, Vector2 to, out Collider firstHit, string ignoreTag, float delta = 8.0f)
+        {
+            Vector2 deltaVec = (to - from);
+            deltaVec.Normalize();
+            deltaVec *= delta;
+
+            _raycastCollider.Active = false;
+            _raycastCollider.Entity.Enabled = false;
+            _raycastCollider.Entity.Position = from;
+
+            float prevDistance = float.MaxValue;
+            float distance = Vector2.DistanceSquared(_raycastCollider.Entity.Position, to);
+
+            while(distance < prevDistance)
+            {
+                if(_raycastCollider.CollidesAny(out firstHit) && firstHit.Entity.Tag != ignoreTag)
+                {
+                    return true;
+                }
+                _raycastCollider.Entity.Move(deltaVec);
+                prevDistance = distance;
+                distance = Vector2.DistanceSquared(_raycastCollider.Entity.Position, to); ;
+            }
+
+            firstHit = null;
+            return false;
         }
 
         public static bool BoxTilemapOverlap(Collider box, TilemapCollider map)
