@@ -34,6 +34,7 @@ namespace MonoGear
                     "Audio/AudioFX/Running On Grass",
                     "Audio/AudioFX/Guard_Alert_Sound",
                     "Audio/AudioFX/Bird_sounds",
+                    "Audio/AudioFX/Water_Drop_Sound",
                 }
             },
             {

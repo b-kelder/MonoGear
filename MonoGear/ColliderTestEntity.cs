@@ -24,15 +24,15 @@ namespace MonoGear
             fountain.Entity.Tag = "Fountain";
 
             var trigger = new WorldBoxTrigger(fountain.Entity.Position, new Vector2(160), (col, prevColliders, colliders) =>
-            { 
-                foreach(var collider in colliders)
+            {
+                foreach (var collider in colliders)
                 {
-                    if(prevColliders.Contains(collider))
+                    if (prevColliders.Contains(collider))
                     {
                         continue;
                     }
 
-                    if(collider.Entity.Tag == "Player")
+                    if (collider.Entity.Tag == "Player")
                     {
                         AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
                     }
