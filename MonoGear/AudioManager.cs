@@ -83,7 +83,7 @@ namespace MonoGear
         /// <summary>
         /// Method to start playing the global audio.
         /// </summary>
-        public static void GlobalAudioPlay(SoundEffectInstance audio, bool loop = false, int volume = 1)
+        public static void GlobalAudioPlay(SoundEffectInstance audio, bool loop = false, float volume = 1)
         {
             audio.Volume = volume;
             audio.IsLooped = loop;

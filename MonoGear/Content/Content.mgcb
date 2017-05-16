@@ -79,3 +79,9 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Guard_Alert_Sound.wav
 
+#begin Audio/AudioFX/Bird_sounds.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Bird_sounds.wav
+

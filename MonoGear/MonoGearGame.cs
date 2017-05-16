@@ -104,9 +104,9 @@ namespace MonoGear
             globalResources.LoadResources(Content);
 
             // Add background music
-            AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
-            AudioManager.MusicVolume(0.4f);
-            AudioManager.MusicPlay();
+            //AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
+            //AudioManager.MusicVolume(0.4f);
+            //AudioManager.MusicPlay();
 
             // New Audio Source
             var fountain = new AudioSource();
@@ -114,6 +114,9 @@ namespace MonoGear
             fountain.Position = new Vector2(207, 220);
             AudioManager.AddAudioSource(fountain);
             RegisterGlobalEntity(fountain);
+
+            // Bird sound
+            AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Bird_sounds").CreateInstance(), true, 0.5f);
 
             player = new Player();
             RegisterGlobalEntity(player);
