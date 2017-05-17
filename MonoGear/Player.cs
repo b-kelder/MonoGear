@@ -136,7 +136,7 @@ namespace MonoGear
                     dwayneThe.Position = Position;
                     dwayneThe.Rotation = Rotation;
                     MonoGearGame.RegisterLevelEntity(dwayneThe);
-                    ThrowingDelay = 100;
+                    ThrowingDelay = 45;
                 }
             }
 
