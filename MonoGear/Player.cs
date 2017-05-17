@@ -10,8 +10,9 @@ namespace MonoGear
         public float Speed { get; set; }
         private SoundEffectInstance walkingSound;
 
-        private SoundEffectInstance walkingSoundNormal;
+        private SoundEffectInstance walkingSoundGrass;
         private SoundEffectInstance walkingSoundWater;
+        private SoundEffectInstance walkingSoundStone;
 
         public Player() : base()
         {
@@ -35,10 +36,11 @@ namespace MonoGear
         {
             base.LoadContent();
 
-            walkingSoundNormal = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
+            walkingSoundGrass = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
             walkingSoundWater = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Water_Drop_Sound").CreateInstance();
+            walkingSoundStone = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Concrete").CreateInstance();
 
-            walkingSound = walkingSoundNormal;
+            walkingSound = walkingSoundGrass;
         }
 
         public override void OnLevelLoaded()
@@ -86,10 +88,13 @@ namespace MonoGear
                 switch(tilevalue)
                 {
                     case 0:
-                        tilesound = walkingSoundNormal;
+                        tilesound = walkingSoundGrass;
                         break;
                     case 2:
                         tilesound = walkingSoundWater;
+                        break;
+                    case 3:
+                        tilesound = walkingSoundStone;
                         break;
                     default:
                         tilesound = null;

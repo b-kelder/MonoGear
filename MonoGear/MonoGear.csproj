@@ -129,6 +129,7 @@
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Guard_Alert_Sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Running On Concrete.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Running On Grass.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

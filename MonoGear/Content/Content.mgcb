@@ -103,3 +103,9 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Water_Drop_Sound.wav
 
+#begin Audio/AudioFX/Running On Concrete.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Running On Concrete.wav
+
