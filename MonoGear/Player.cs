@@ -114,7 +114,7 @@ namespace MonoGear
             {
                 Rotation = MathExtensions.VectorToAngle(delta);
                 AnimationRunning = true;
-                AudioManager.GlobalAudioPlay(walkingSound, true);
+                AudioManager.GlobalAudioPlay(walkingSound);
             }
             else
             {
