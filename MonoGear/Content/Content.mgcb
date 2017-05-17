@@ -133,3 +133,9 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Guard.png
 
+#begin Audio/AudioFX/Car_sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Car_sound.wav
+

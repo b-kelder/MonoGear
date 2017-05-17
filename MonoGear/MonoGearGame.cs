@@ -126,6 +126,8 @@ namespace MonoGear
 
             player = new Player();
             RegisterGlobalEntity(player);
+            var pf = new PathFinding();
+            RegisterGlobalEntity(pf);
 
             // Test level
             var lvl = new Level();
@@ -249,7 +251,7 @@ namespace MonoGear
             lvl.AddEntity(bird);
 
             var guard = new Guard();
-            guard.Position = new Vector2(0, 0);
+            guard.Position = new Vector2(20, 20);
             lvl.AddEntity(guard);
 
             lvl.AddEntity(tilemap.Entity);
@@ -434,7 +436,7 @@ namespace MonoGear
                 }
 
                 // Update entities
-                instance.levelEntities.Clear();
+                levelEntities.Clear();
                 var ents = activeLevel.GetEntities();
                 foreach(var e in ents)
                 {
@@ -442,12 +444,12 @@ namespace MonoGear
                 }
 
                 // Do OnLevelLoaded for all entities
-                foreach(var e in instance.levelEntities)
+                foreach(var e in levelEntities)
                 {
                     e.OnLevelLoaded();
                 }
 
-                foreach(var e in instance.globalEntities)
+                foreach(var e in globalEntities)
                 {
                     e.OnLevelLoaded();
                 }

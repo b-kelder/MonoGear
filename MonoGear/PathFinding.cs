@@ -13,29 +13,51 @@ namespace MonoGear
         Open,
         untested
     }
-    class PathFinding
+    public class PathFinding : WorldEntity
     {
         private int width;
         private int height;
+        private TilemapCollider map;
         private Node[,] nodes;
         private Node startNode;
         private Node endNode;
 
         public PathFinding()
         {
-            
+            Tag = "PathFinder";
+        }
+
+        public override void OnLevelLoaded()
+        {
+            base.OnLevelLoaded();
+
+            var obj = MonoGearGame.FindEntitiesWithTag("Tilemap");
+            if(obj.Count > 0)
+            {
+                var tilemap = obj[0];
+                var collider = tilemap.Collider as TilemapCollider;
+                map = collider;
+                width = map.Tiles.GetLength(0);
+                height = map.Tiles.GetLength(1);
+                nodes = new Node[width, height];
+
+                
+                for(int y = 0; y < this.height; y++)
+                {
+                    for(int x = 0; x < this.width; x++)
+                    {
+                        nodes[x, y] = new Node(new Vector2(x * collider.TileSize, y * collider.TileSize) + tilemap.Position, map.Tiles[x, y], Vector2.Zero);
+                    }
+                }
+            }
         }
 
         public List<Vector2> FindPath(Vector2 start, Vector2 destination)
         {
-            var tilemap = MonoGearGame.FindEntitiesWithTag("Tilemap")[0];
-            var collider = tilemap.Collider as TilemapCollider;
-            var map = collider.Tiles;
-
             startNode = new Node(start, 0, destination);
-            endNode = new Node(destination, 0, destination);
-
-            InitializeNodes(map);
+            endNode = nodes[(int)(destination.X / map.TileSize - map.Entity.Position.X), (int)(destination.Y / map.TileSize - map.Entity.Position.Y)];
+            
+            InitializeNodes();
 
             List<Vector2> path = new List<Vector2>();
             bool succes = Search(startNode);
@@ -43,6 +65,8 @@ namespace MonoGear
             if (succes)
             {
                 Node node = endNode;
+
+                path.Add(destination);
 
                 while (node.ParentNode != null)
                 {
@@ -56,16 +80,15 @@ namespace MonoGear
             return path;
         }
 
-        private void InitializeNodes(UInt16[,] map)
+        private void InitializeNodes()
         {
-            width = map.GetLength(0);
-            height = map.GetLength(1);
-            nodes = new Node[this.width, this.height];
             for (int y = 0; y < this.height; y++)
             {
                 for (int x = 0; x < this.width; x++)
                 {
-                    nodes[x, y] = new Node(new Vector2(x,y), map[x, y], endNode.location);
+                    nodes[x, y].isWalkable = map.Tiles[x, y] != 1;
+                    nodes[x, y].g = 0;
+                    nodes[x, y].h = Node.GetTraversalCost(nodes[x, y].location, endNode.location);
                 }
             }
         }
@@ -79,8 +102,9 @@ namespace MonoGear
 
             foreach (var nextNode in nextNodes)
             {
-                if (nextNode.location == endNode.location)
+                if (Vector2.DistanceSquared(nextNode.location, endNode.location) < 30)
                 {
+                    endNode = nextNode;
                     return true;
                 }
                 else
@@ -144,7 +168,8 @@ namespace MonoGear
                 new Vector2(fromLocation.X+1, fromLocation.Y+1),
                 new Vector2(fromLocation.X+1, fromLocation.Y  ),
                 new Vector2(fromLocation.X+1, fromLocation.Y-1),
-                new Vector2(fromLocation.X,   fromLocation.Y-1)
+                new Vector2(fromLocation.X,   fromLocation.Y-1),
+                new Vector2(fromLocation.X,   fromLocation.Y+1),
             };
         }
     }
