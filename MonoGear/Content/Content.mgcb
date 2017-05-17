@@ -103,9 +103,20 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Water_Drop_Sound.wav
 
+#begin Sprites/Rock.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Rock.png
+
 #begin Audio/AudioFX/Running On Concrete.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Running On Concrete.wav
-

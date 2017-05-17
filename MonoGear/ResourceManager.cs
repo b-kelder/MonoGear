@@ -24,6 +24,7 @@ namespace MonoGear
                     "Sprites/map",
                     "Sprites/guardsheet",
                     "Sprites/birdsheet",
+                    "Sprites/Rock",
                 }
             },
             {
