@@ -8,8 +8,6 @@ namespace MonoGear
     {
         float Speed { get; set; }
 
-
-
         public Rock()
         {
             CircleCollider collider = new CircleCollider(this, 2);
