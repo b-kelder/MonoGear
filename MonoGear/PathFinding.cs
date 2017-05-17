@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
+    enum NodeState
+    {
+        Closed,
+        Open,
+        untested
+    }
     class PathFinding
     {
         private int width;
@@ -17,16 +23,19 @@ namespace MonoGear
 
         public PathFinding()
         {
-            var tilemap = MonoGearGame.FindEntitiesWithTag("Tilemap")[0];
-            var collider = tilemap.Collider as TilemapCollider;
-            var map = collider.Tiles;
-            InitializeNodes(map);
+            
         }
 
         public List<Vector2> FindPath(Vector2 start, Vector2 destination)
         {
+            var tilemap = MonoGearGame.FindEntitiesWithTag("Tilemap")[0];
+            var collider = tilemap.Collider as TilemapCollider;
+            var map = collider.Tiles;
+
             startNode = new Node(start, 0, destination);
             endNode = new Node(destination, 0, destination);
+
+            InitializeNodes(map);
 
             List<Vector2> path = new List<Vector2>();
             bool succes = Search(startNode);
@@ -63,7 +72,7 @@ namespace MonoGear
 
         private bool Search(Node node)
         {
-            node.state = "closed";
+            node.state = NodeState.Closed;
             List<Node> nextNodes = GetAdjacentWalkableNodes(node);
 
             nextNodes.Sort((node1, node2) => node1.f.CompareTo(node2.f));
@@ -101,10 +110,10 @@ namespace MonoGear
                 if (!currentNode.isWalkable)
                     continue;
 
-                if (currentNode.state.Equals("closed"))
+                if (currentNode.state == NodeState.Closed)
                     continue;
 
-                if (currentNode.state.Equals("open"))
+                if (currentNode.state == NodeState.Closed)
                 {
                     float traversalCost = Node.GetTraversalCost(node.location, node.ParentNode.location);
                     float gTemp = node.g + traversalCost;
@@ -117,7 +126,7 @@ namespace MonoGear
                 else
                 {
                     node.ParentNode = node;
-                    currentNode.state = "open";
+                    currentNode.state = NodeState.Open;
                     walkableNodes.Add(currentNode);
                 }
             }

@@ -16,7 +16,7 @@ namespace MonoGear
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
             speed = 100.0f;
-            TextureAssetName = "Sprites/birdsheet";
+            TextureAssetName = "Sprites/Guard";
 
             AnimationLength = 3;
             AnimationCurrentFrame = 1;
@@ -24,7 +24,7 @@ namespace MonoGear
             AnimationPingPong = true;
             AnimationRunning = true;
 
-            Tag = "ObeseHummingbird";
+            Tag = "Guard";
 
             Z = 100;
 
@@ -38,19 +38,22 @@ namespace MonoGear
             base.Update(input, gameTime);
             if (!Enabled)
                 return;
-
-            if (Position.Y < -200)
-            {
-                Move(new Vector2(0, 1000));
-            }
-
-            Move(new Vector2(0, -speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
         }
 
         public void Alert(Vector2 origin)
         {
             alerted = true;
-            //TODO: request path to location.
+            PathFinding path = new PathFinding();
+
+            foreach (var pos in path.FindPath(Position, origin))
+            {
+                MoveTo(pos);
+            }
+        }
+
+        public void MoveTo(Vector2 position)
+        {
+            this.Position = position;
         }
     }
 }

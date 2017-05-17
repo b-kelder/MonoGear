@@ -25,6 +25,7 @@ namespace MonoGear
                     "Sprites/guardsheet",
                     "Sprites/birdsheet",
                     "Sprites/Rock",
+                    "Sprites/Guard",
                 }
             },
             {

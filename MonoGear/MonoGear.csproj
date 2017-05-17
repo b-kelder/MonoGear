@@ -116,8 +116,9 @@
     <Compile Include="MathExtensions.cs" />
     <Compile Include="MonoGearGame.cs" />
     <Compile Include="Player.cs" />
-	<Compile Include="PathFinding.cs" />
-	<Compile Include="Node.cs" />
+    <Compile Include="Guard.cs" />
+    <Compile Include="PathFinding.cs" />
+    <Compile Include="Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManager.cs" />
     <Compile Include="Rock.cs" />
@@ -149,6 +150,7 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\birdsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Guard.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\guardsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

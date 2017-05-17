@@ -14,7 +14,7 @@ namespace MonoGear
         public bool isWalkable { get; set; }
         public float g { get; set; }
         public float h { get; set; }
-        public string state { get; set; }
+        public NodeState state { get; set; }
         public float f
         {
             get { return g + h; }
@@ -33,7 +33,7 @@ namespace MonoGear
         public Node(Vector2 location, int isWalkable, Vector2 end)
         {
             this.location = location;
-            this.state = "untested";
+            this.state = NodeState.untested;
             this.h = GetTraversalCost(this.location, end);
             this.g = 0;
 

@@ -35,6 +35,12 @@ namespace MonoGear
                 if(collider.Entity.Tag != "Player")
                 {
                     Speed = 0.0f;
+                   
+                    foreach (var guard in MonoGearGame.FindEntitiesWithTag("Guard"))
+                    {
+                        var g = guard as Guard;
+                        g.Alert(Position);
+                    }
                     //TODO GUARDS ALERTED U FUCKED UP BRAH
                 }
             }
