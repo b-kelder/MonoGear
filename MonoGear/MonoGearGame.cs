@@ -246,8 +246,7 @@ namespace MonoGear
             lvl.AddEntity(bird);
             bird = new Bird();
             bird.Position = new Vector2(80, 520);
-            lvl.AddEntity(bird);
-
+            lvl.AddEntity(bird);          
 
             lvl.AddEntity(tilemap.Entity);
 

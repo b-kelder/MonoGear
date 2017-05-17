@@ -8,6 +8,7 @@ namespace MonoGear
     class Player : WorldEntityAnimated
     {
         public float Speed { get; set; }
+        public int ThrowingDelay { get; set; }
         private SoundEffectInstance walkingSound;
 
         public Player() : base()
@@ -84,16 +85,28 @@ namespace MonoGear
                 AudioManager.GlobalAudioStop(walkingSound);
             }
 
+            if(ThrowingDelay > 0)
+                ThrowingDelay -= 1;
+
             // Raycast test
             if(input.IsKeyPressed(Keys.Space))
             {
-                Collider hit;
-                if(Collider.RaycastAny(Position, Position + (Forward * 32), out hit, "Player"))
+                //Collider hit;
+                //if(Collider.RaycastAny(Position, Position + (Forward * 32), out hit, "Player"))
+                //{
+                //    if(hit.Entity.Tag == "Fountain")
+                //    {
+                //        AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
+                //    }
+                //}
+
+                if (ThrowingDelay <= 0)
                 {
-                    if(hit.Entity.Tag == "Fountain")
-                    {
-                        AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
-                    }
+                    var dwayneThe = new Rock();
+                    dwayneThe.Position = Position;
+                    dwayneThe.Rotation = Rotation;
+                    MonoGearGame.RegisterLevelEntity(dwayneThe);
+                    ThrowingDelay = 100;
                 }
             }
 
