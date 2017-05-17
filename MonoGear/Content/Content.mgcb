@@ -115,3 +115,8 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Rock.png
 
+#begin Audio/AudioFX/Running On Concrete.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Running On Concrete.wav

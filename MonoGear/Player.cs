@@ -11,6 +11,10 @@ namespace MonoGear
         public int ThrowingDelay { get; set; }
         private SoundEffectInstance walkingSound;
 
+        private SoundEffectInstance walkingSoundGrass;
+        private SoundEffectInstance walkingSoundWater;
+        private SoundEffectInstance walkingSoundStone;
+
         public Player() : base()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
@@ -33,7 +37,11 @@ namespace MonoGear
         {
             base.LoadContent();
 
-            walkingSound = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
+            walkingSoundGrass = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
+            walkingSoundWater = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Water_Drop_Sound").CreateInstance();
+            walkingSoundStone = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Concrete").CreateInstance();
+
+            walkingSound = walkingSoundGrass;
         }
 
         public override void OnLevelLoaded()
@@ -72,6 +80,37 @@ namespace MonoGear
                 delta *= Speed;
             }
 
+            var tilemap = MonoGearGame.FindEntitiesWithTag("Tilemap");
+            var col = tilemap[0].Collider as TilemapCollider;
+            int tilevalue = col.GetTileValue(Position);
+            if(tilevalue != -1)
+            {
+                SoundEffectInstance tilesound;
+                switch(tilevalue)
+                {
+                    case 0:
+                        tilesound = walkingSoundGrass;
+                        break;
+                    case 2:
+                        tilesound = walkingSoundWater;
+                        break;
+                    case 3:
+                        tilesound = walkingSoundStone;
+                        break;
+                    default:
+                        tilesound = null;
+                        break;
+                }
+
+                if(tilesound != null && tilesound != walkingSound)
+                {
+                    // stop old sound
+                    AudioManager.GlobalAudioStop(walkingSound);
+                    walkingSound = tilesound;
+                }
+             
+            }
+
             if(delta.LengthSquared() > 0)
             {
                 Rotation = MathExtensions.VectorToAngle(delta);
@@ -91,15 +130,6 @@ namespace MonoGear
             // Raycast test
             if(input.IsKeyPressed(Keys.Space))
             {
-                //Collider hit;
-                //if(Collider.RaycastAny(Position, Position + (Forward * 32), out hit, "Player"))
-                //{
-                //    if(hit.Entity.Tag == "Fountain")
-                //    {
-                //        AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
-                //    }
-                //}
-
                 if (ThrowingDelay <= 0)
                 {
                     var dwayneThe = new Rock();

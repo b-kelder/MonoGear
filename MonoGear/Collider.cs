@@ -169,7 +169,7 @@ namespace MonoGear
             {
                 for(int y = colStartY; y <= colEndY && y < map.Tiles.GetLength(1); y++)
                 {
-                    if(map.Tiles[x, y] > 0)
+                    if(map.Tiles[x, y] == 1)
                     {
                         return true;
                     }
