@@ -43,5 +43,21 @@ namespace MonoGear
         {
             return soundEffects;
         }
+
+        public void Pause()
+        {
+            foreach (var item in soundEffects)
+            {
+                item.Key.Pause();
+            }
+        }
+
+        public void PlayAll()
+        {
+            foreach (var item in soundEffects)
+            {
+                item.Key.Play();
+            }
+        }
     }
 }

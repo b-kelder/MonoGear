@@ -119,8 +119,10 @@ namespace MonoGear
             AudioManager.AddAudioSource(fountain);
             RegisterGlobalEntity(fountain);
 
+            
+
             // Bird sound
-            //AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Bird_sounds").CreateInstance(), true, 0.3f);
+            AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Bird_sounds").CreateInstance(), true, 0.3f);
 
             player = new Player();
             RegisterGlobalEntity(player);
@@ -149,6 +151,8 @@ namespace MonoGear
             bird = new Bird();
             bird.Position = new Vector2(180, 520);
             lvl.AddEntity(bird);
+
+            
 
             var tilemap = new TilemapCollider(new WorldEntity() {
                 Tag = "Tilemap"
