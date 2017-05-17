@@ -10,6 +10,9 @@ namespace MonoGear
         public float Speed { get; set; }
         private SoundEffectInstance walkingSound;
 
+        private SoundEffectInstance walkingSoundNormal;
+        private SoundEffectInstance walkingSoundWater;
+
         public Player() : base()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
@@ -32,7 +35,10 @@ namespace MonoGear
         {
             base.LoadContent();
 
-            walkingSound = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
+            walkingSoundNormal = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
+            walkingSoundWater = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Water_Drop_Sound").CreateInstance();
+
+            walkingSound = walkingSoundNormal;
         }
 
         public override void OnLevelLoaded()
@@ -71,11 +77,39 @@ namespace MonoGear
                 delta *= Speed;
             }
 
+            var tilemap = MonoGearGame.FindEntitiesWithTag("Tilemap");
+            var col = tilemap[0].Collider as TilemapCollider;
+            int tilevalue = col.GetTileValue(Position);
+            if(tilevalue != -1)
+            {
+                SoundEffectInstance tilesound;
+                switch(tilevalue)
+                {
+                    case 0:
+                        tilesound = walkingSoundNormal;
+                        break;
+                    case 2:
+                        tilesound = walkingSoundWater;
+                        break;
+                    default:
+                        tilesound = null;
+                        break;
+                }
+
+                if(tilesound != null && tilesound != walkingSound)
+                {
+                    // stop old sound
+                    AudioManager.GlobalAudioStop(walkingSound);
+                    walkingSound = tilesound;
+                }
+             
+            }
+
             if(delta.LengthSquared() > 0)
             {
                 Rotation = MathExtensions.VectorToAngle(delta);
                 AnimationRunning = true;
-                AudioManager.GlobalAudioPlay(walkingSound);
+                AudioManager.GlobalAudioPlay(walkingSound, true);
             }
             else
             {
@@ -83,6 +117,7 @@ namespace MonoGear
                 AnimationCurrentFrame = 1;
                 AudioManager.GlobalAudioStop(walkingSound);
             }
+
 
             // Raycast test
             if(input.IsKeyPressed(Keys.Space))

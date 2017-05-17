@@ -108,9 +108,9 @@ namespace MonoGear
             globalResources.LoadResources(Content);
 
             // Add background music
-            AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
-            AudioManager.MusicVolume(0.4f);
-            AudioManager.MusicPlay();
+            //AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
+           //AudioManager.MusicVolume(0.4f);
+           // AudioManager.MusicPlay();
 
             // New Audio Source
             var fountain = new AudioSource();
@@ -120,7 +120,7 @@ namespace MonoGear
             RegisterGlobalEntity(fountain);
 
             // Bird sound
-            AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Bird_sounds").CreateInstance(), true, 0.3f);
+            //AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Bird_sounds").CreateInstance(), true, 0.3f);
 
             // Water drop sound
             var puddle = new AudioSource();
@@ -157,7 +157,9 @@ namespace MonoGear
             bird.Position = new Vector2(180, 520);
             lvl.AddEntity(bird);
 
-            var tilemap = new TilemapCollider(new WorldEntity(), new ushort[0, 0], 16);
+            var tilemap = new TilemapCollider(new WorldEntity() {
+                Tag = "Tilemap"
+            }, new ushort[0, 0], 16);
             tilemap.MapFromString(@"0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -204,6 +206,7 @@ namespace MonoGear
             lvl.AddEntity(tilemap.Entity);
 
             var levelA = lvl;
+
 
             // Test level
             lvl = new Level();
