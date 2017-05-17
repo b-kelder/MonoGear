@@ -116,8 +116,11 @@
     <Compile Include="MathExtensions.cs" />
     <Compile Include="MonoGearGame.cs" />
     <Compile Include="Player.cs" />
+	<Compile Include="PathFinding.cs" />
+	<Compile Include="Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManager.cs" />
+    <Compile Include="Rock.cs" />
     <Compile Include="SpawnPoint.cs" />
     <Compile Include="TilemapCollider.cs" />
     <Compile Include="WorldBoxTrigger.cs" />
@@ -153,6 +156,7 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\map.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Rock.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\s_generator.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
