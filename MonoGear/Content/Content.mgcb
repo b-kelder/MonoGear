@@ -109,3 +109,9 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Running On Concrete.wav
 
+#begin Audio/AudioFX/Car_sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Car_sound.wav
+

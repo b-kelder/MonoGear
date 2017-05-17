@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace MonoGear
     class Bird : WorldEntityAnimated
     {
         float speed;
+        private AudioSource birdSound;
 
         public Bird()
         {
@@ -33,7 +35,28 @@ namespace MonoGear
             LoadContent();
 
             Collider = new BoxCollider(this, new Vector2(8));
+            
+                birdSound = new AudioSource();
+                birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 50);
+                birdSound.Position = Position;
+                AudioManager.AddAudioSource(birdSound);
+                birdSound.Pause();
+            
         }
+
+        public override void OnLevelLoaded()
+        {
+            base.OnLevelLoaded();
+            birdSound.PlayAll();
+        }
+
+        public override void OnLevelUnloaded()
+        {
+            base.OnLevelUnloaded();
+            birdSound.Pause();
+        }
+
+
 
         public override void Update(Input input, GameTime gameTime)
         {
@@ -47,6 +70,8 @@ namespace MonoGear
             }
 
             Move(new Vector2(0, -speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
+
+            birdSound.Position = Position;
         }
     }
 }

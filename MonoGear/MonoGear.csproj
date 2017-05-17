@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Bird_sounds.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Car_sound.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Guard_Alert_Sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
