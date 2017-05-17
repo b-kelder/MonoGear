@@ -115,10 +115,31 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Rock.png
 
+#begin Audio/AudioFX/Car_sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+<<<<<<< HEAD
+/build:Audio/AudioFX/Car_sound.wav
+
+#begin Audio/AudioFX/Crickets_sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Crickets_sound.wav
+
+#begin Audio/AudioFX/Owl_sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Owl_sound.wav
+
 #begin Audio/AudioFX/Running On Concrete.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
+/build:Audio/AudioFX/Running On Concrete.wav
+=======
 /build:Audio/AudioFX/Running On Concrete.wav
 
 #begin Sprites/Guard.png
@@ -132,10 +153,5 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Guard.png
-
-#begin Audio/AudioFX/Car_sound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/AudioFX/Car_sound.wav
+>>>>>>> origin/master
 

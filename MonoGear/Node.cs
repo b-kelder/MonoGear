@@ -10,11 +10,11 @@ namespace MonoGear
     class Node
     {
         private Node parentNode;
-        public Vector2 location;
-        public bool isWalkable;
-        public float g;
-        public float h;
-        public NodeState state;
+        public Vector2 location { get; set; }
+        public bool isWalkable { get; set; }
+        public float g { get; set; }
+        public float h { get; set; }
+        public NodeState state { get; set; }
         public float f
         {
             get { return g + h; }
@@ -43,7 +43,7 @@ namespace MonoGear
                  this.isWalkable = true;
         }
 
-        public static float GetTraversalCost(Vector2 location1, Vector2 location2)
+        internal static float GetTraversalCost(Vector2 location1, Vector2 location2)
         {
             float deltaX = location2.X - location1.X;
             float deltaY = location2.Y - location1.Y;

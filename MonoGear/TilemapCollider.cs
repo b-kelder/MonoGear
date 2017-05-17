@@ -14,7 +14,6 @@ namespace MonoGear
 
         public TilemapCollider(WorldEntity entity, UInt16[,] tiles, int tileSize) : base(entity)
         {
-            Entity.Tag = "Tilemap";
             Tiles = tiles;
             TileSize = tileSize;
             BBSize = new Microsoft.Xna.Framework.Vector2(Tiles.GetLength(0) * TileSize, Tiles.GetLength(1) * TileSize) * 2;

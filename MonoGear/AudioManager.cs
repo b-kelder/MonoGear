@@ -162,7 +162,7 @@ namespace MonoGear
 
                 foreach (var audio in audioSource.GetSoundEffect())
                 {
-                    if (distance > audio.Value)
+                    if (distance > audio.Value[0])
                     {
                         if(audio.Key.State  != SoundState.Stopped)
                             audio.Key.Stop();
@@ -172,7 +172,7 @@ namespace MonoGear
                         if (audio.Key.State != SoundState.Playing)
                             audio.Key.Play();
 
-                        audio.Key.Volume = (1 - (distance / audio.Value));
+                        audio.Key.Volume = audio.Value[1] * (1 - (distance / audio.Value[0]));
                     }
                 }
             }

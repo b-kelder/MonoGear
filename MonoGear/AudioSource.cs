@@ -6,40 +6,42 @@ namespace MonoGear
 {
     class AudioSource : WorldEntity
     {
-        Dictionary<SoundEffectInstance, int> soundEffects;
+        Dictionary<SoundEffectInstance, float[]> soundEffects;
 
         public AudioSource()
         {
-            soundEffects = new Dictionary<SoundEffectInstance, int>();
+            soundEffects = new Dictionary<SoundEffectInstance, float[]>();
             Visible = false;
         }
 
         public AudioSource(int x, int y)
         {
             Position = new Vector2(x, y);
-            soundEffects = new Dictionary<SoundEffectInstance, int>();
+            soundEffects = new Dictionary<SoundEffectInstance, float[]>();
             Visible = false;
         }
 
         public AudioSource(Vector2 position)
         {
             Position = position;
-            soundEffects = new Dictionary<SoundEffectInstance, int>();
+            soundEffects = new Dictionary<SoundEffectInstance, float[]>();
             Visible = false;
         }
 
-        public AudioSource(Dictionary<SoundEffectInstance, int> soundEffects)
+        public AudioSource(Dictionary<SoundEffectInstance, float[]> soundEffects)
         {
             this.soundEffects = soundEffects;
             Visible = false;
         }
 
-        public void AddSoundEffect(SoundEffect soundEffect, int maxDistance)
+        public void AddSoundEffect(SoundEffect soundEffect, float maxDistance, float volume = 1)
         {
-            soundEffects.Add(soundEffect.CreateInstance(), maxDistance);
+            var effect = soundEffect.CreateInstance();
+            effect.Volume = volume;
+            soundEffects.Add(effect, new float[2] { maxDistance, volume });
         }
 
-        public Dictionary<SoundEffectInstance, int> GetSoundEffect()
+        public Dictionary<SoundEffectInstance, float[]> GetSoundEffect()
         {
             return soundEffects;
         }
