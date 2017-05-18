@@ -131,6 +131,7 @@
   <ItemGroup>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Bird_sounds.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Car_sound.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Deja Vu.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Guard_Alert_Sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -155,13 +156,11 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\guardsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\bin\WindowsStoreApp\Sprites\map.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Content\bin\WindowsStoreApp\Sprites\Rock.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\s_generator.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\WhiteHouse.xnb" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>

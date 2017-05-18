@@ -21,7 +21,7 @@ namespace MonoGear
                 new string[]
                 {
                     "Sprites/s_generator",
-                    "Sprites/map",
+                    "Sprites/WhiteHouse",
                     "Sprites/guardsheet",
                     "Sprites/birdsheet",
                     "Sprites/Rock",
@@ -38,6 +38,7 @@ namespace MonoGear
                     "Audio/AudioFX/Water_Drop_Sound",
                     "Audio/AudioFX/Running On Concrete",
                     "Audio/AudioFX/Car_sound",
+                    "Audio/AudioFX/Deja Vu",
 
                 }
             },

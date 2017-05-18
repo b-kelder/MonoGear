@@ -37,7 +37,7 @@ namespace MonoGear
             Collider = new BoxCollider(this, new Vector2(8));
             
                 birdSound = new AudioSource();
-                birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 50);
+                birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 100);
                 birdSound.Position = Position;
                 AudioManager.AddAudioSource(birdSound);
                 birdSound.Pause();
