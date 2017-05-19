@@ -119,7 +119,6 @@
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-<<<<<<< HEAD
 /build:Audio/AudioFX/Car_sound.wav
 
 #begin Audio/AudioFX/Crickets_sound.wav
@@ -139,8 +138,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Running On Concrete.wav
-=======
-/build:Audio/AudioFX/Running On Concrete.wav
 
 #begin Sprites/Guard.png
 /importer:TextureImporter
@@ -153,7 +150,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Guard.png
->>>>>>> origin/master
 
 #begin Audio/AudioFX/Deja Vu.wav
 /importer:WavImporter

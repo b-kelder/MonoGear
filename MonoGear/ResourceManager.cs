@@ -24,11 +24,8 @@ namespace MonoGear
                     "Sprites/WhiteHouse",
                     "Sprites/guardsheet",
                     "Sprites/birdsheet",
-<<<<<<< HEAD
-=======
                     "Sprites/Rock",
                     "Sprites/Guard",
->>>>>>> origin/master
                 }
             },
             {
