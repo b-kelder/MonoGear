@@ -133,12 +133,6 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Owl_sound.wav
 
-#begin Audio/AudioFX/Running On Concrete.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/AudioFX/Running On Concrete.wav
-
 #begin Sprites/Guard.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -180,4 +174,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/WhiteHouseNight.png
+
+#begin Audio/AudioFX/Concrete.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Concrete.wav
 

@@ -39,7 +39,7 @@ namespace MonoGear
 
             walkingSoundGrass = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
             walkingSoundWater = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Water_Drop_Sound").CreateInstance();
-            walkingSoundStone = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Concrete").CreateInstance();
+            walkingSoundStone = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Concrete").CreateInstance();
 
             walkingSound = walkingSoundGrass;
         }

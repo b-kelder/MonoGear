@@ -138,6 +138,7 @@
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Car_sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Concrete.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Crickets_sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -148,9 +149,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Owl_sound.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Running On Concrete.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Running On Grass.xnb">
