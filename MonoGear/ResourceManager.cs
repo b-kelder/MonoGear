@@ -24,7 +24,11 @@ namespace MonoGear
                     "Sprites/WhiteHouse",
                     "Sprites/guardsheet",
                     "Sprites/birdsheet",
+<<<<<<< HEAD
+=======
                     "Sprites/Rock",
+                    "Sprites/Guard",
+>>>>>>> origin/master
                 }
             },
             {
@@ -34,7 +38,8 @@ namespace MonoGear
                     "Audio/AudioFX/Water_Fountain_cut",
                     "Audio/AudioFX/Running On Grass",
                     "Audio/AudioFX/Guard_Alert_Sound",
-                    "Audio/AudioFX/Bird_sounds",
+                    "Audio/AudioFX/Crickets_sound",
+                    "Audio/AudioFX/Owl_sound",
                     "Audio/AudioFX/Water_Drop_Sound",
                     "Audio/AudioFX/Running On Concrete",
                     "Audio/AudioFX/Car_sound",
