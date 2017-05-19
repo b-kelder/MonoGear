@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="AudioManager.cs" />
     <Compile Include="Guard.cs" />
+    <Compile Include="Pathfinding.cs" />
     <Compile Include="Rock.cs" />
     <Compile Include="AudioSource.cs" />
     <Compile Include="Bird.cs" />

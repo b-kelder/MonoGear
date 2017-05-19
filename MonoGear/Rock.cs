@@ -8,6 +8,7 @@ namespace MonoGear
     class Rock : WorldEntity
     {
         float Speed { get; set; }
+        bool triggered;
 
         public Rock()
         {
@@ -31,27 +32,33 @@ namespace MonoGear
                 return;
 
             base.Update(input, gameTime);
-            Collider collider;
-            if(Collider.CollidesAny(out collider))
+            if (!triggered)
             {
-                if(collider.Entity.Tag != "Player")
+                Collider collider;
+                var delta = Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Move(delta);
+                if (Collider.CollidesAny(out collider))
                 {
-                    Speed = 0.0f;
-
-                    foreach (var guard in MonoGearGame.FindEntitiesWithTag("Guard"))
+                    if (collider.Entity.Tag != "Player")
                     {
-                        var g = guard as Guard;
-                        g.Alert(Position);
+                        Move(-delta);
+                        Speed = 0.0f;
+
+                        foreach (var guard in MonoGearGame.FindEntitiesWithTag("Guard"))
+                        {
+                            var g = guard as Guard;
+                            g.Alert(Position);
+                        }
+
+                        triggered = true;
                     }
                 }
+
+                if (Speed > 0)
+                    Speed -= 3;
+                else
+                    Speed = 0;
             }
-
-            Move(Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-
-            if (Speed > 0)
-                Speed -= 3;
-            else
-                Speed = 0;
         }
     }
 }

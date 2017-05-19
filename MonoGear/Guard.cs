@@ -12,17 +12,20 @@ namespace MonoGear
         float speed;
         public bool alerted { get; set; }
 
+        private List<Vector2> currentPath;
+        private int currentPathIndex;
+
         public Guard()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
-            speed = 100.0f;
+            speed = 70.0f;
             TextureAssetName = "Sprites/guardsheet";
 
             AnimationLength = 3;
             AnimationCurrentFrame = 1;
             AnimationDelta = 0.05f;
             AnimationPingPong = true;
-            AnimationRunning = true;
+            AnimationRunning = false;
 
             Tag = "Guard";
 
@@ -38,17 +41,46 @@ namespace MonoGear
             base.Update(input, gameTime);
             if (!Enabled)
                 return;
+
+
+            if(currentPath != null && currentPathIndex >= 0)
+            {
+                AnimationRunning = true;
+                if(currentPathIndex < currentPath.Count)
+                {
+                    var target = currentPath[currentPathIndex];
+                    if (Vector2.DistanceSquared(Position, target) < 24)
+                    {
+                        currentPathIndex++;
+                    }
+                    else
+                    {
+                        Rotation = MathExtensions.VectorToAngle(target - Position);
+
+                        var delta = MathExtensions.AngleToVector(Rotation) * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Move(delta);
+                    }
+                }
+                else
+                {
+                    currentPathIndex = -1;
+                }
+            }
+            
+            if(currentPathIndex < 0 || currentPath == null)
+            {
+                AnimationRunning = false;
+                AnimationCurrentFrame = 1;
+            }
         }
 
         public void Alert(Vector2 origin)
         {
             alerted = true;
-            /*
-            foreach (var pos in )
-            {
-                MoveTo(pos);
-            }
-            */
+            Pathfinding pathFinder = new Pathfinding();
+            var path = pathFinder.FindPath(Position, origin);
+            currentPath = path;
+            currentPathIndex = 0;
         }
 
         public void MoveTo(Vector2 position)

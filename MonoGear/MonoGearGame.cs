@@ -180,8 +180,25 @@ namespace MonoGear
             bird = new Bird();
             bird.Position = new Vector2(2313, 3206);
             lvl.AddEntity(bird);
+            var guard = new Guard();
+            guard.Position = new Vector2(790, 850);
+            lvl.AddEntity(guard);
+            guard = new Guard();
+            guard.Position = new Vector2(790, 840);
+            lvl.AddEntity(guard);
+            guard = new Guard();
+            guard.Position = new Vector2(790, 830);
+            lvl.AddEntity(guard);
+            guard = new Guard();
+            guard.Position = new Vector2(790, 820);
+            lvl.AddEntity(guard);
+            guard = new Guard();
+            guard.Position = new Vector2(790, 810);
+            lvl.AddEntity(guard);
+            guard = new Guard();
+            guard.Position = new Vector2(790, 800);
+            lvl.AddEntity(guard);
 
-            
 
             var tilemap = new TilemapCollider(new WorldEntity() {
                 Tag = "Tilemap"
