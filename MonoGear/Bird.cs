@@ -37,7 +37,7 @@ namespace MonoGear
             Collider = new BoxCollider(this, new Vector2(8));
             
                 birdSound = new AudioSource();
-                birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 100);
+                birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 700);
                 birdSound.Position = Position;
                 AudioManager.AddAudioSource(birdSound);
                 birdSound.Pause();
@@ -66,7 +66,7 @@ namespace MonoGear
 
             if(Position.Y < -200)
             {
-                Move(new Vector2(0, 1000));
+                Move(new Vector2(0, 5000));
             }
 
             Move(new Vector2(0, -speed * (float)gameTime.ElapsedGameTime.TotalSeconds));

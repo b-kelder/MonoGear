@@ -122,7 +122,7 @@ namespace MonoGear
             
 
             // Crickets sound
-            AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Crickets_sound").CreateInstance(), true, 0.5f);
+            AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Crickets_sound").CreateInstance(), true, 0.6f);
 
             // Owl sound
             AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Owl_sound").CreateInstance(), true, 0.1f);
@@ -145,7 +145,14 @@ namespace MonoGear
                 offset = new Vector2(),
                 textureName = "Sprites/WhiteHouse"
             };
+            var layerNight = new LevelLayer()
+            {
+                layer = 200,
+                offset = new Vector2(),
+                textureName = "Sprites/WhiteHouseNight"
+            };
             lvl.AddBackgroundLayer(layer);
+            lvl.AddForegroundLayer(layerNight);
             var sp = new SpawnPoint(new Vector2(872, 824));
             sp.Tag = "PlayerSpawnPoint";
             lvl.AddEntity(sp);
@@ -156,7 +163,7 @@ namespace MonoGear
             bird.Position = new Vector2(200, 500);
             lvl.AddEntity(bird);
             bird = new Bird();
-            bird.Position = new Vector2(220, 520);
+            bird.Position = new Vector2(2353, 3186);
             lvl.AddEntity(bird);
             bird = new Bird();
             bird.Position = new Vector2(180, 520);

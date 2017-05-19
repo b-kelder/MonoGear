@@ -36,6 +36,21 @@ namespace MonoGear
                 });
         }
 
+        public void AddForegroundLayer(LevelLayer layer)
+        {
+            if (layer.texture == null)
+            {
+                layer.texture = ResourceManager.GetManager().GetResource<Texture2D>(layer.textureName);
+            }
+
+            foregroundLayers.Add(layer);
+            foregroundLayers.Sort(
+                (a, b) =>
+                {
+                    return a.layer.CompareTo(b.layer);
+                });
+        }
+
         public void DrawForeground(SpriteBatch batch)
         {
             foreach(var layer in foregroundLayers)
