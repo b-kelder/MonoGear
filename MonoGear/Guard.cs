@@ -16,7 +16,7 @@ namespace MonoGear
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
             speed = 100.0f;
-            TextureAssetName = "Sprites/guardsheet";
+            TextureAssetName = "Sprites/Guard";
 
             AnimationLength = 3;
             AnimationCurrentFrame = 1;
@@ -43,7 +43,7 @@ namespace MonoGear
         public void Alert(Vector2 origin)
         {
             alerted = true;
-            PathFinding path = MonoGearGame.FindEntitiesWithTag("PathFinder")[0] as PathFinding;
+            PathFinding path = new PathFinding();
 
             foreach (var pos in path.FindPath(Position, origin))
             {

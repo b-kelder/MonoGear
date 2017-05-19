@@ -8,8 +8,6 @@ namespace MonoGear
     {
         float Speed { get; set; }
 
-        bool triggered;
-
         public Rock()
         {
             CircleCollider collider = new CircleCollider(this, 2);
@@ -19,7 +17,7 @@ namespace MonoGear
             Speed = 200f;
             TextureAssetName = "Sprites/Rock";
 
-            Tag = "TheRock";
+            Tag = "A Rock";
 
             LoadContent();
 
@@ -31,34 +29,28 @@ namespace MonoGear
                 return;
 
             base.Update(input, gameTime);
-
-            if(!triggered)
+            Collider collider;
+            if(Collider.CollidesAny(out collider))
             {
-                Collider collider;
-                if(Collider.CollidesAny(out collider))
+                if(collider.Entity.Tag != "Player")
                 {
-                    if(collider.Entity.Tag != "Player")
+                    Speed = 0.0f;
+                   
+                    foreach (var guard in MonoGearGame.FindEntitiesWithTag("Guard"))
                     {
-                        Speed = 0.0f;
-
-                        foreach(var guard in MonoGearGame.FindEntitiesWithTag("Guard"))
-                        {
-                            var g = guard as Guard;
-                            g.Alert(Position);
-                        }
-
-                        triggered = true;
-                        //TODO GUARDS ALERTED U FUCKED UP BRAH
+                        var g = guard as Guard;
+                        g.Alert(Position);
                     }
+                    //TODO GUARDS ALERTED U FUCKED UP BRAH
                 }
-
-                Move(Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-
-                if(Speed > 0)
-                    Speed -= 3;
-                else
-                    Speed = 0;
             }
+
+            Move(Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+
+            if (Speed > 0)
+                Speed -= 3;
+            else
+                Speed = 0;
         }
     }
 }
