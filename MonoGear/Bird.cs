@@ -37,7 +37,7 @@ namespace MonoGear
             Collider = new BoxCollider(this, new Vector2(8));
             
                 birdSound = new AudioSource();
-                birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 700);
+                //birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 700);
                 birdSound.Position = Position;
                 AudioManager.AddAudioSource(birdSound);
                 birdSound.Pause();

@@ -19,26 +19,26 @@ namespace MonoGear
 
             Collider = new BoxCollider(this, Size);
 
-            var fountain = new CircleCollider(new WorldEntity(), 3 * 16);
-            fountain.Entity.Position = new Microsoft.Xna.Framework.Vector2(208, 224);
-            fountain.Entity.Tag = "Fountain";
+            // Fountain bottem left collision
+            var fountain1 = new CircleCollider(new WorldEntity(), 3 * 16);
+            fountain1.Entity.Position = new Microsoft.Xna.Framework.Vector2(1823, 2448);
+            fountain1.Entity.Tag = "Fountain";
 
-            var trigger = new WorldBoxTrigger(fountain.Entity.Position, new Vector2(160), (col, prevColliders, colliders) =>
-            {
-                foreach (var collider in colliders)
-                {
-                    if (prevColliders.Contains(collider))
-                    {
-                        continue;
-                    }
+            // Fountain bottem right collision
+            var fountain2 = new CircleCollider(new WorldEntity(), 3 * 16);
+            fountain2.Entity.Position = new Microsoft.Xna.Framework.Vector2(2879, 2448);
+            fountain2.Entity.Tag = "Fountain";
 
-                    if (collider.Entity.Tag == "Player")
-                    {
-                        AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
-                    }
-                }
-            });
-            MonoGearGame.RegisterGlobalEntity(trigger);
+            // Fountain middel collision
+            var fountain3 = new CircleCollider(new WorldEntity(), 3 * 16);
+            fountain3.Entity.Position = new Microsoft.Xna.Framework.Vector2(2351, 1920);
+            fountain3.Entity.Tag = "Fountain";
+
+            // Fountain top collision
+            var fountain4 = new CircleCollider(new WorldEntity(), 3 * 16);
+            fountain4.Entity.Position = new Microsoft.Xna.Framework.Vector2(2351, 1215);
+            fountain4.Entity.Tag = "Fountain";
+
         }
     }
 }

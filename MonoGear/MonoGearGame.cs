@@ -112,30 +112,30 @@ namespace MonoGear
            //AudioManager.MusicVolume(0.4f);
            // AudioManager.MusicPlay();
 
-            // Fountain bottem left Source
+            // Fountain bottem left sound Source
             var fountain1 = new AudioSource();
-            fountain1.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 150, 0.1f);
+            fountain1.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 250, 0.1f);
             fountain1.Position = new Vector2(1823, 2448);
             AudioManager.AddAudioSource(fountain1);
             RegisterGlobalEntity(fountain1);
 
-            // Fountain bottem right Source
+            // Fountain bottem right sound Source
             var fountain2 = new AudioSource();
-            fountain2.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 150, 0.1f);
+            fountain2.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 250, 0.1f);
             fountain2.Position = new Vector2(2879, 2448);
             AudioManager.AddAudioSource(fountain2);
             RegisterGlobalEntity(fountain2);
 
-            // Fountain middel Source
+            // Fountain middel  sound Source
             var fountain3 = new AudioSource();
-            fountain3.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 150, 0.1f);
+            fountain3.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 250, 0.1f);
             fountain3.Position = new Vector2(2351, 1920);
             AudioManager.AddAudioSource(fountain3);
             RegisterGlobalEntity(fountain3);
 
-            // Fountain top Source
+            // Fountain top sound Source
             var fountain4 = new AudioSource();
-            fountain4.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 150, 0.1f);
+            fountain4.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 250, 0.1f);
             fountain4.Position = new Vector2(2351, 1215);
             AudioManager.AddAudioSource(fountain4);
             RegisterGlobalEntity(fountain4);
