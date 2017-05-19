@@ -118,12 +118,8 @@
     <Compile Include="MathExtensions.cs" />
     <Compile Include="MonoGearGame.cs" />
     <Compile Include="Player.cs" />
-<<<<<<< HEAD
-=======
-    <Compile Include="Guard.cs" />
     <Compile Include="PathFinding.cs" />
     <Compile Include="Node.cs" />
->>>>>>> origin/master
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManager.cs" />
     <Compile Include="SpawnPoint.cs" />
@@ -136,6 +132,7 @@
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Bird_sounds.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Car_sound.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Crickets_sound.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Deja Vu.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Guard_Alert_Sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -161,12 +158,12 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\guardsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\bin\WindowsStoreApp\Sprites\map.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Rock.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\s_generator.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\WhiteHouse.xnb" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
