@@ -163,7 +163,13 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/WhiteHouse.png
 
-#begin Sprites/WhiteHouseNight.png
+#begin Audio/AudioFX/Concrete.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Concrete.wav
+
+#begin Sprites/WhiteHouseShadows.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -173,11 +179,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/WhiteHouseNight.png
-
-#begin Audio/AudioFX/Concrete.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/AudioFX/Concrete.wav
+/build:Sprites/WhiteHouseShadows.png
 

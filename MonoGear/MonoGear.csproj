@@ -184,7 +184,7 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\WhiteHouse.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\bin\WindowsStoreApp\Sprites\WhiteHouseNight.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Sprites\WhiteHouseShadows.xnb" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>

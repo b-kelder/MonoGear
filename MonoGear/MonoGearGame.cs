@@ -170,7 +170,7 @@ namespace MonoGear
             {
                 layer = 200,
                 offset = new Vector2(),
-                textureName = "Sprites/WhiteHouseNight"
+                textureName = "Sprites/WhiteHouseShadows"
             };
             lvl.AddBackgroundLayer(layer);
             lvl.AddForegroundLayer(layerNight);

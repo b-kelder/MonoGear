@@ -22,7 +22,7 @@ namespace MonoGear
                 {
                     "Sprites/s_generator",
                     "Sprites/WhiteHouse",
-                    "Sprites/WhiteHouseNight",
+                    "Sprites/WhiteHouseShadows",
                     "Sprites/guardsheet",
                     "Sprites/birdsheet",
                     "Sprites/Rock",
