@@ -140,20 +140,11 @@ namespace MonoGear
             AudioManager.AddAudioSource(fountain4);
             RegisterGlobalEntity(fountain4);
 
-
-
             // Crickets sound
             AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Crickets_sound").CreateInstance(), true, 0.6f);
 
             // Owl sound
             AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Owl_sound").CreateInstance(), true, 0.1f);
-
-            // Water drop sound
-            var puddle = new AudioSource();
-            puddle.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Drop_Sound"), 10);
-            puddle.Position = new Vector2(279, 458);
-            AudioManager.AddAudioSource(puddle);
-            RegisterGlobalEntity(puddle);
 
             player = new Player();
             RegisterGlobalEntity(player);

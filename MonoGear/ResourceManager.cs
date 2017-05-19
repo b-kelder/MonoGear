@@ -42,6 +42,7 @@ namespace MonoGear
                     "Audio/AudioFX/Concrete",
                     "Audio/AudioFX/Car_sound",
                     "Audio/AudioFX/Deja Vu",
+                    "Audio/AudioFX/StoneTrow_sound",
 
                 }
             },

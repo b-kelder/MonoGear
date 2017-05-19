@@ -181,3 +181,9 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/WhiteHouseShadows.png
 
+#begin Audio/AudioFX/StoneTrow_sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/StoneTrow_sound.wav
+

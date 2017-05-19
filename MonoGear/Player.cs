@@ -153,6 +153,7 @@ namespace MonoGear
                     dwayneThe.Rotation = Rotation;
                     MonoGearGame.RegisterLevelEntity(dwayneThe);
                     ThrowingDelay = 45;
+                    AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/StoneTrow_sound"), 1);
                 }
             }
 
