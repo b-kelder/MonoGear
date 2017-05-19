@@ -129,19 +129,33 @@
     <Compile Include="WorldEntityAnimated.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Bird_sounds.xnb" />
-    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Car_sound.xnb" />
-    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Crickets_sound.xnb" />
-    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Deja Vu.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Bird_sounds.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Car_sound.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Crickets_sound.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Deja Vu.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Guard_Alert_Sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Owl_sound.xnb" />
-    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Running On Concrete.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Owl_sound.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Running On Concrete.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Running On Grass.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Water_Drop_Sound.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Water_Drop_Sound.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Water_Fountain_cut.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -154,16 +168,21 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\birdsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\bin\WindowsStoreApp\Sprites\Guard.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Guard.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\bin\WindowsStoreApp\Sprites\guardsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Rock.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    <None Include="Content\bin\WindowsStoreApp\Sprites\Rock.xnb" />
+    </None>
     <None Include="Content\bin\WindowsStoreApp\Sprites\s_generator.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\bin\WindowsStoreApp\Sprites\WhiteHouse.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Sprites\WhiteHouse.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
