@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace MonoGear
 {
@@ -14,10 +15,11 @@ namespace MonoGear
             collider.Trigger = true;
 
             // Speed in units/sec. Right now 1 unit = 1 pixel
-            Speed = 200f;
+            Random rand = new Random();
+            Speed = 200f + rand.Next(-20, 20);
             TextureAssetName = "Sprites/Rock";
 
-            Tag = "A Rock";
+            Tag = "TheRock";
 
             LoadContent();
 
@@ -35,13 +37,12 @@ namespace MonoGear
                 if(collider.Entity.Tag != "Player")
                 {
                     Speed = 0.0f;
-                   
+
                     foreach (var guard in MonoGearGame.FindEntitiesWithTag("Guard"))
                     {
                         var g = guard as Guard;
                         g.Alert(Position);
                     }
-                    //TODO GUARDS ALERTED U FUCKED UP BRAH
                 }
             }
 

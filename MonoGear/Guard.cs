@@ -43,12 +43,12 @@ namespace MonoGear
         public void Alert(Vector2 origin)
         {
             alerted = true;
-            PathFinding path = MonoGearGame.FindEntitiesWithTag("PathFinder")[0] as PathFinding;
-
-            foreach (var pos in path.FindPath(Position, origin))
+            /*
+            foreach (var pos in )
             {
                 MoveTo(pos);
             }
+            */
         }
 
         public void MoveTo(Vector2 position)
