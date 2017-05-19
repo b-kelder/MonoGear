@@ -9,6 +9,7 @@ namespace MonoGear
     {
         public float Speed { get; set; }
         public int ThrowingDelay { get; set; }
+        public bool sneakMode { get; set; }
         private SoundEffectInstance walkingSound;
 
         private SoundEffectInstance walkingSoundGrass;
@@ -73,6 +74,18 @@ namespace MonoGear
             if(input.IsKeyDown(Keys.S) || input.IsKeyDown(Keys.Down))
                 dy += Speed;
 
+            if (input.IsKeyDown(Keys.LeftShift))
+            {
+                sneakMode = true;
+                Speed = 50;
+            }
+            else
+            {
+                sneakMode = false;
+                Speed = 100;
+            }
+                
+
             var delta = new Vector2(dx, dy);
             if(delta.LengthSquared() > Speed * Speed)
             {
@@ -124,7 +137,10 @@ namespace MonoGear
                 AudioManager.GlobalAudioStop(walkingSound);
             }
 
-            if(ThrowingDelay > 0)
+            if (sneakMode)
+                AudioManager.GlobalAudioStop(walkingSound);
+
+            if (ThrowingDelay > 0)
                 ThrowingDelay -= 1;
 
             // Raycast test
