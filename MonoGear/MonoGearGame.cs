@@ -181,13 +181,13 @@ namespace MonoGear
             col.Position = new Vector2(100, 100);
             lvl.AddEntity(col);
             var bird = new Bird();
-            bird.Position = new Vector2(200, 500);
+            bird.Position = new Vector2(2333, 3166);
             lvl.AddEntity(bird);
             bird = new Bird();
             bird.Position = new Vector2(2353, 3186);
             lvl.AddEntity(bird);
             bird = new Bird();
-            bird.Position = new Vector2(180, 520);
+            bird.Position = new Vector2(2313, 3206);
             lvl.AddEntity(bird);
 
             

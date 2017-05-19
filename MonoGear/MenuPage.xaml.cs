@@ -31,5 +31,6 @@ namespace MonoGear
                 this.Frame.Navigate(typeof(GamePage));
             };
         }
+
     }
 }

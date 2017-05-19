@@ -5,7 +5,7 @@
     xmlns:local="using:MonoGear"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Height="5396.207" Width="1564.494">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Button x:Name="button" Content="Start Game" HorizontalAlignment="Left" Margin="1002,567,0,0" VerticalAlignment="Top" Height="79" Width="189"/>
