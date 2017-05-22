@@ -46,8 +46,11 @@ namespace MonoGear
 
                         foreach (var guard in MonoGearGame.FindEntitiesWithTag("Guard"))
                         {
-                            var g = guard as Guard;
-                            g.Alert(Position);
+                            if (Vector2.DistanceSquared(Position, guard.Position) < 100000)
+                            {
+                                var g = guard as Guard;
+                                g.Alert(Position);
+                            }
                         }
 
                         triggered = true;
