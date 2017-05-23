@@ -5,19 +5,19 @@
     xmlns:local="using:MonoGear"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Height="1080" Width="1920">
+    mc:Ignorable="d">
 
     <Grid>
         <Grid.Background>
             <ImageBrush Stretch="None" ImageSource="Assets/background.png" AlignmentY="Top" AlignmentX="Center" />
         </Grid.Background>
-        <Button x:Name="startGameButton" HorizontalAlignment="Left" Margin="1390,676,0,0" VerticalAlignment="Top" Height="54" Width="484">
+        <Button x:Name="startGameButton" HorizontalAlignment="Left" Margin="1390,676,0,0" VerticalAlignment="Top" Height="54" Width="484" Click="StartButton_Click">
             <Image Source="Assets/startgame.png" Margin="-51,-6,-50,-6"/>
         </Button>
-        <Button x:Name="settingsButton" HorizontalAlignment="Left" Margin="1390,770,0,0" VerticalAlignment="Top" Height="52" Width="372">
+        <Button x:Name="settingsButton" HorizontalAlignment="Left" Margin="1390,770,0,0" VerticalAlignment="Top" Height="52" Width="372" Click="SettingsButton_Click">
             <Image Source="Assets/settings.png" Margin="-43,-6"/>
         </Button>
-        <Button x:Name="creditsButton" HorizontalAlignment="Left" Margin="1390,856,0,0" VerticalAlignment="Top" Height="52" Width="320">
+        <Button x:Name="creditsButton" HorizontalAlignment="Left" Margin="1390,856,0,0" VerticalAlignment="Top" Height="52" Width="320" Click="CreditsButton_Click">
             <Image Source="Assets/credits.png" Margin="-37,-6"/>
         </Button>
         <Button x:Name="quitButton" HorizontalAlignment="Left" Margin="1390,948,0,0" VerticalAlignment="Top" Height="56" Width="192" Click="quitButton_Click">

@@ -77,6 +77,9 @@ namespace MonoGear
         public async void Alert(Vector2 origin)
         {
             alerted = true;
+
+            await Task.Delay(1000);
+
             Task.Run(() =>
             {
                 Pathfinding.FindPath(Position, origin, (path) =>
