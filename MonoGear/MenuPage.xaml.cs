@@ -26,11 +26,15 @@ namespace MonoGear
         {
             this.InitializeComponent();
 
-            this.button.Click += (s, e) =>
+            this.startGameButton.Click += (s, e) =>
             {
                 this.Frame.Navigate(typeof(GamePage));
             };
         }
 
+        private void quitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
     }
 }

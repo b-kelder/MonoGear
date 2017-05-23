@@ -195,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\MenuBG.jpg" />
     <Content Include="Assets\NewStoreLogo.scale-100.png" />
     <Content Include="Assets\NewStoreLogo.scale-125.png" />
     <Content Include="Assets\NewStoreLogo.scale-150.png" />

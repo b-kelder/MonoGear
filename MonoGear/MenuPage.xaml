@@ -7,10 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Height="5396.207" Width="1564.494">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="button" Content="Start Game" HorizontalAlignment="Left" Margin="1002,567,0,0" VerticalAlignment="Top" Height="79" Width="189"/>
-        <Slider x:Name="slider" HorizontalAlignment="Left" Margin="253,170,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="353,377,0,0" TextWrapping="Wrap" Text="Allerlei text" VerticalAlignment="Top"/>
-
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="None" ImageSource="Assets/MenuBG.jpg" AlignmentY="Top" AlignmentX="Center" />
+        </Grid.Background>
+        <Button x:Name="startGameButton" Content="Start Game" HorizontalAlignment="Left" Margin="1205,200,0,0" VerticalAlignment="Top" Height="75" Width="150" Foreground="White"/>
+        <Button x:Name="settingsButton" Content="Settings" HorizontalAlignment="Left" Margin="1205,330,0,0" VerticalAlignment="Top" Height="75" Width="150" Foreground="White"/>
+        <Button x:Name="creditsButton" Content="Credits" HorizontalAlignment="Left" Margin="1205,465,0,0" VerticalAlignment="Top" Height="75" Width="150" Foreground="White"/>
+        <Button x:Name="quitButton" Content="Quit" HorizontalAlignment="Left" Margin="1205,605,0,0" VerticalAlignment="Top" Height="75" Width="150" Click="quitButton_Click" Foreground="White"/>
     </Grid>
 </Page>
