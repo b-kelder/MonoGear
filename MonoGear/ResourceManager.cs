@@ -23,10 +23,10 @@ namespace MonoGear
                     "Sprites/s_generator",
                     "Sprites/WhiteHouse",
                     "Sprites/WhiteHouseShadows",
-                    "Sprites/guardsheet",
                     "Sprites/birdsheet",
                     "Sprites/Rock",
                     "Sprites/Guard",
+                    "Sprites/Person",
                 }
             },
             {

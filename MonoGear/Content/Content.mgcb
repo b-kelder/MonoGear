@@ -25,18 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/s_generator.png
 
-#begin Sprites/guardsheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/guardsheet.png
-
 #begin Sprites/map.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -133,18 +121,6 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Owl_sound.wav
 
-#begin Sprites/Guard.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/Guard.png
-
 #begin Audio/AudioFX/Deja Vu.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -186,4 +162,28 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/AudioFX/StoneTrow_sound.wav
+
+#begin Sprites/Person.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Person.png
+
+#begin Sprites/Guard.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Guard.png
 

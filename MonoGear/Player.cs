@@ -20,7 +20,7 @@ namespace MonoGear
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Speed = 100.0f;
-            TextureAssetName = "Sprites/guardsheet";
+            TextureAssetName = "Sprites/Person";
 
             AnimationLength = 3;
             AnimationCurrentFrame = 1;
