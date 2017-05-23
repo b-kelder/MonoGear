@@ -171,6 +171,8 @@ namespace MonoGear
             var col = new ColliderTestEntity();
             col.Position = new Vector2(100, 100);
             lvl.AddEntity(col);
+
+            //Add birds
             var bird = new Bird();
             bird.Position = new Vector2(2333, 3166);
             lvl.AddEntity(bird);
@@ -180,6 +182,13 @@ namespace MonoGear
             bird = new Bird();
             bird.Position = new Vector2(2313, 3206);
             lvl.AddEntity(bird);
+
+            //Add cars
+            var car = new Car();
+            car.Position = new Vector2(2333, 3166);
+            lvl.AddEntity(car);
+
+            //Add guards
             var guard = new Guard();
             guard.Position = new Vector2(790, 850);
             lvl.AddEntity(guard);

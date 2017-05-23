@@ -101,6 +101,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AudioManager.cs" />
+    <Compile Include="Car.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Pathfinding.cs" />
     <Compile Include="Rock.cs" />
@@ -169,10 +170,8 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\birdsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Car.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Guard.xnb" />
-    <None Include="Content\bin\WindowsStoreApp\Sprites\guardsheet.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Content\bin\WindowsStoreApp\Sprites\Person.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Rock.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

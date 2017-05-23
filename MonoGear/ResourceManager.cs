@@ -27,6 +27,7 @@ namespace MonoGear
                     "Sprites/Rock",
                     "Sprites/Guard",
                     "Sprites/Person",
+                    "Sprites/Car",
                 }
             },
             {
