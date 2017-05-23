@@ -9,11 +9,19 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush Stretch="None" ImageSource="Assets/MenuBG.jpg" AlignmentY="Top" AlignmentX="Center" />
+            <ImageBrush Stretch="None" ImageSource="Assets/background.png" AlignmentY="Top" AlignmentX="Center" />
         </Grid.Background>
-        <Button x:Name="startGameButton" Content="Start Game" HorizontalAlignment="Left" Margin="1660,607,0,0" VerticalAlignment="Top" Height="75" Width="150" Foreground="White"/>
-        <Button x:Name="settingsButton" Content="Settings" HorizontalAlignment="Left" Margin="1660,704,0,0" VerticalAlignment="Top" Height="75" Width="150" Foreground="White"/>
-        <Button x:Name="creditsButton" Content="Credits" HorizontalAlignment="Left" Margin="1660,818,0,0" VerticalAlignment="Top" Height="75" Width="150" Foreground="White"/>
-        <Button x:Name="quitButton" Content="Quit" HorizontalAlignment="Left" Margin="1660,932,0,0" VerticalAlignment="Top" Height="75" Width="150" Click="quitButton_Click" Foreground="White"/>
+        <Button x:Name="startGameButton" HorizontalAlignment="Left" Margin="1390,676,0,0" VerticalAlignment="Top" Height="54" Width="484">
+            <Image Source="Assets/startgame.png" Margin="-51,-6,-50,-6"/>
+        </Button>
+        <Button x:Name="settingsButton" HorizontalAlignment="Left" Margin="1390,770,0,0" VerticalAlignment="Top" Height="52" Width="372">
+            <Image Source="Assets/settings.png" Margin="-43,-6"/>
+        </Button>
+        <Button x:Name="creditsButton" HorizontalAlignment="Left" Margin="1390,856,0,0" VerticalAlignment="Top" Height="52" Width="320">
+            <Image Source="Assets/credits.png" Margin="-37,-6"/>
+        </Button>
+        <Button x:Name="quitButton" HorizontalAlignment="Left" Margin="1390,948,0,0" VerticalAlignment="Top" Height="56" Width="192" Click="quitButton_Click">
+            <Image Source="Assets/quit.png" Margin="-31,-6"/>
+        </Button>
     </Grid>
 </Page>
