@@ -158,21 +158,29 @@ namespace MonoGear
             }
 
             // Check collisions
-            var prevPos = Position;
-            var deltaX = new Vector2(delta.X, 0);
-            var deltaY = new Vector2(0, delta.Y);
+            if(input.IsKeyDown(Keys.N))
+            {
+                Position += delta * (float)gameTime.ElapsedGameTime.TotalSeconds *  10;
+            }
+            else
+            {
+                var prevPos = Position;
+                var deltaX = new Vector2(delta.X, 0);
+                var deltaY = new Vector2(0, delta.Y);
 
-            Position += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if(Collider.CollidesAny())
-            {
-                Position = prevPos;
+                Position += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (Collider.CollidesAny())
+                {
+                    Position = prevPos;
+                }
+                prevPos = Position;
+                Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (Collider.CollidesAny())
+                {
+                    Position = prevPos;
+                }
             }
-            prevPos = Position;
-            Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if(Collider.CollidesAny())
-            {
-                Position = prevPos;
-            }
+            
 
             Camera.main.Position = new Vector2(Position.X, Position.Y);
         }

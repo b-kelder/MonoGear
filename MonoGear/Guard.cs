@@ -74,13 +74,17 @@ namespace MonoGear
             }
         }
 
-        public void Alert(Vector2 origin)
+        public async void Alert(Vector2 origin)
         {
             alerted = true;
-            Pathfinding pathFinder = new Pathfinding();
-            var path = pathFinder.FindPath(Position, origin);
-            currentPath = path;
-            currentPathIndex = 0;
+            Task.Run(() =>
+            {
+                Pathfinding.FindPath(Position, origin, (path) =>
+                {
+                    currentPath = path;
+                    currentPathIndex = 0;
+                });
+            });
         }
 
         public void MoveTo(Vector2 position)

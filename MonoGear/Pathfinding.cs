@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -8,27 +9,47 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    class Pathfinding
+    public static class Pathfinding
     {
-        UInt16[,] map;
+        struct PathRequest
+        {
+            public Vector2 from;
+            public Vector2 to;
+            public Action<List<Vector2>> callback;
+        }
 
-        public Pathfinding()
+        static UInt16[,] map;
+
+        static ConcurrentQueue<PathRequest> requests = new ConcurrentQueue<PathRequest>();
+
+        public static void UpdateInternalMap()
         {
             var tilemap = MonoGearGame.FindEntitiesWithTag("Tilemap");
             var col = tilemap[0].Collider as TilemapCollider;
             map = col.Tiles;
         }
 
-        public List<Vector2> FindPath(Vector2 from, Vector2 to)
+        public static void FindPath(Vector2 from, Vector2 to, Action<List<Vector2>> callback)
         {
-            Point pointFrom = new Point((int)(from.X / 16), (int)(from.Y / 16));
-            Point pointTo = new Point((int)(to.X / 16), (int)(to.Y/ 16));
+            var request = new PathRequest
+            {
+                from = from,
+                to = to,
+                callback = callback
+            };
+            requests.Enqueue(request);
+            DoNextRequest();
+        }
 
+        private static List<Vector2> FindPathImpl(Vector2 from, Vector2 to)
+        {
             Node current = null;
-            var start = new Node { Location = pointFrom };
-            var target = new Node { Location = pointTo };
+            var start = new Node { Location = new Point((int)(from.X / 16), (int)(from.Y / 16)) };
+            var target = new Node { Location = new Point((int)(to.X / 16), (int)(to.Y / 16)) };
             var openList = new List<Node>();
             var closedList = new List<Node>();
+            closedList.Clear();
+            openList.Clear();
             int g = 0;
 
             // start by adding the original position to the open list
@@ -94,8 +115,19 @@ namespace MonoGear
             }
 
             path.Reverse();
-
+            
+            
             return path;
+        }
+
+        private static void DoNextRequest()
+        {
+            PathRequest currentRequest;
+            if(requests.TryDequeue(out currentRequest))
+            {
+                currentRequest.callback(FindPathImpl(currentRequest.from, currentRequest.to));
+                DoNextRequest();
+            }
         }
 
         static Node GetNodeIfWalkable(int x, int y, UInt16[,] map, List<Node> list)
@@ -144,8 +176,8 @@ namespace MonoGear
     {
         public Point Location;
         public int G;
-    public int H;
-public int F;
+        public int H;
+        public int F;
         public Node Parent;
     }
 }

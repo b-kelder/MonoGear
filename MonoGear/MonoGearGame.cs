@@ -454,6 +454,8 @@ namespace MonoGear
                 {
                     e.OnLevelLoaded();
                 }
+
+                Pathfinding.UpdateInternalMap();
             }
         }
 
