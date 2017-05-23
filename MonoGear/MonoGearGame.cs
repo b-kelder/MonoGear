@@ -185,7 +185,7 @@ namespace MonoGear
 
             //Add cars
             var car = new Car();
-            car.Position = new Vector2(2333, 3166);
+            car.Position = new Vector2(-1, 3008);
             lvl.AddEntity(car);
 
             //Add guards

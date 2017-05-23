@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using Windows.ApplicationModel.Core;
 
 namespace MonoGear
 {
@@ -10,6 +11,7 @@ namespace MonoGear
         public float Speed { get; set; }
         public int ThrowingDelay { get; set; }
         public bool sneakMode { get; set; }
+
         private SoundEffectInstance walkingSound;
 
         private SoundEffectInstance walkingSoundGrass;
@@ -20,8 +22,9 @@ namespace MonoGear
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Speed = 100.0f;
-            TextureAssetName = "Sprites/Person";
 
+            TextureAssetName = "Sprites/Person";
+            
             AnimationLength = 3;
             AnimationCurrentFrame = 1;
             AnimationDelta = 0.1f;
@@ -157,10 +160,12 @@ namespace MonoGear
                 }
             }
 
+
             // Check collisions
-            if(input.IsKeyDown(Keys.N))
+            if (input.IsKeyDown(Keys.N))
             {
                 Position += delta * (float)gameTime.ElapsedGameTime.TotalSeconds *  10;
+
             }
             else
             {
@@ -169,8 +174,13 @@ namespace MonoGear
                 var deltaY = new Vector2(0, delta.Y);
 
                 Position += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (Collider.CollidesAny())
+                Collider other;
+                if (Collider.CollidesAny(out other))
                 {
+                    if(other.Entity.Tag == "Car")
+                    {
+                        CoreApplication.Exit();
+                    }
                     Position = prevPos;
                 }
                 prevPos = Position;

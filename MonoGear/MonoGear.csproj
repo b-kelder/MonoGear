@@ -148,6 +148,7 @@
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Guard_Alert_Sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Mario_Starman.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Owl_sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -172,6 +173,7 @@
     </None>
     <None Include="Content\bin\WindowsStoreApp\Sprites\Car.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Guard.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Mario.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Person.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Rock.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
