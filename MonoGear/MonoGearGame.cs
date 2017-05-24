@@ -111,7 +111,9 @@ namespace MonoGear
             //AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
            //AudioManager.MusicVolume(0.4f);
            // AudioManager.MusicPlay();
-
+            
+            // THESE SHOULD BE PART OF A LEVEL
+            /*
             // Fountain bottem left sound Source
             var fountain1 = new AudioSource();
             fountain1.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 250, 0.1f);
@@ -145,11 +147,15 @@ namespace MonoGear
 
             // Owl sound
             AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Owl_sound").CreateInstance(), true, 0.1f);
+            */
 
+            // GLOBALS
             player = new Player();
             RegisterGlobalEntity(player);
+            var pf = new Pathfinding();
+            RegisterGlobalEntity(pf);
 
-            // Test level
+            // TEST LEVELS
             var lvl = new Level();
             var layer = new LevelLayer()
             {
@@ -184,29 +190,27 @@ namespace MonoGear
             lvl.AddEntity(bird);
 
             //Add cars
-            var car = new Car();
+            var car = new Car(Direction.East);
             car.Position = new Vector2(-1, 3008);
+            car.Rotation = 0.5f * (float)Math.PI;
+            lvl.AddEntity(car);
+
+            var dick = new Dictionary<Vector2, Direction>();
+            dick.Add(new Vector2(768,620), Direction.South);
+            car = new Car(Direction.West, dick);
+            car.Position = new Vector2(3896, 620);
+            car.Rotation = -0.5f * (float)Math.PI;
             lvl.AddEntity(car);
 
             //Add guards
-            var guard = new Guard();
-            guard.Position = new Vector2(790, 850);
-            lvl.AddEntity(guard);
-            guard = new Guard();
-            guard.Position = new Vector2(790, 840);
-            lvl.AddEntity(guard);
-            guard = new Guard();
-            guard.Position = new Vector2(790, 830);
-            lvl.AddEntity(guard);
-            guard = new Guard();
-            guard.Position = new Vector2(790, 820);
-            lvl.AddEntity(guard);
-            guard = new Guard();
-            guard.Position = new Vector2(790, 810);
-            lvl.AddEntity(guard);
-            guard = new Guard();
-            guard.Position = new Vector2(790, 800);
-            lvl.AddEntity(guard);
+            int guardPosY = 800;
+            for(int i = 0; i < 125; i++)
+            {
+                lvl.AddEntity(new Guard() { Position = new Vector2(790, guardPosY) });
+                lvl.AddEntity(new Guard() { Position = new Vector2(800, guardPosY) });
+                lvl.AddEntity(new Guard() { Position = new Vector2(810, guardPosY) });
+                guardPosY += 10;
+            }
 
 
             var tilemap = new TilemapCollider(new WorldEntity() {
@@ -464,7 +468,8 @@ namespace MonoGear
                     e.OnLevelLoaded();
                 }
 
-                Pathfinding.UpdateInternalMap();
+                // Force GC
+                GC.Collect();
             }
         }
 

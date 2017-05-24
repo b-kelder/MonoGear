@@ -78,6 +78,29 @@ namespace MonoGear
             return false;
         }
 
+        public virtual bool CollidesAny(out Collider other, Collider ignored)
+        {
+            var colliders = BoxOverlapAny(this);
+            if(colliders.Count() != 0)
+            {
+                foreach(var col in colliders)
+                {
+                    if(col == ignored)
+                    {
+                        continue;
+                    }
+
+                    if(Collides(col))
+                    {
+                        other = col;
+                        return true;
+                    }
+                }
+            }
+            other = null;
+            return false;
+        }
+
         protected static bool BoxOverlap(Collider a, Collider b)
         {
             if(

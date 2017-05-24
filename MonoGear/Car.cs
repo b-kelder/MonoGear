@@ -8,6 +8,13 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
+    enum Direction
+    {
+        North,
+        East,
+        South,
+        West
+    }
     /// <summary>
     /// Car
     /// </summary>
@@ -15,12 +22,31 @@ namespace MonoGear
     {
         float speed;
         private AudioSource carSound;
+        private Direction direction;
+        private Dictionary<Vector2, Direction> turns;
+        private bool follow;
 
-        public Car()
+        public Car(Direction direction, Dictionary<Vector2, Direction> turns)
+        {
+            this.direction = direction;
+            this.turns = turns;
+            follow = true;
+
+            Construct();
+        }
+
+        public Car(Direction direction)
+        {
+            this.direction = direction;
+            follow = false;
+
+            Construct();
+        }
+
+        private void Construct()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
             speed = 200.0f;
-            Rotation = 0.5f * (float)Math.PI;
             TextureAssetName = "Sprites/Car";
 
             Tag = "Car";
@@ -32,11 +58,10 @@ namespace MonoGear
             Collider = new BoxCollider(this, Size);
 
             carSound = new AudioSource();
-            carSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 700);
+            carSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 500);
             carSound.Position = Position;
             AudioManager.AddAudioSource(carSound);
             carSound.Pause();
-
         }
 
         public override void OnLevelLoaded()
@@ -51,7 +76,22 @@ namespace MonoGear
             carSound.Pause();
         }
 
+        public void ChangeDirection(Direction newDirection)
+        {
+            direction = newDirection;
+        }
 
+        private void FollowRoute()
+        {
+            var locations = turns.Keys;
+            foreach (var location in locations)
+            {
+                if (Vector2.DistanceSquared(Position, location) < 25)
+                {
+                    ChangeDirection(turns[location]);
+                }
+            }
+        }
 
         public override void Update(Input input, GameTime gameTime)
         {
@@ -59,12 +99,34 @@ namespace MonoGear
             if (!Enabled)
                 return;
 
-            if (Position.X > 5000)
+            if (direction == Direction.East)
             {
-                Move(new Vector2(-6294, 0));
+                Move(new Vector2(speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0));
+            }
+            else if (direction == Direction.West)
+            {
+                Move(new Vector2(-speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0));
+            }
+            else if (direction == Direction.North)
+            {
+                Move(new Vector2(0, -speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
+            }
+            else if (direction == Direction.South)
+            {
+                Move(new Vector2(0, speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
             }
 
-            Move(new Vector2(speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0));
+            if (follow)
+            {
+                FollowRoute();
+            }
+            else
+            {
+                if (Position.X > 5000)
+                {
+                    Move(new Vector2(-6294, 0));
+                }
+            }
 
             carSound.Position = Position;
         }

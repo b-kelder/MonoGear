@@ -8,7 +8,7 @@ namespace MonoGear
     class Rock : WorldEntity
     {
         float Speed { get; set; }
-        bool triggered;
+        Collider playerCol;
 
         public Rock()
         {
@@ -24,6 +24,7 @@ namespace MonoGear
 
             LoadContent();
 
+            playerCol = MonoGearGame.FindEntitiesOfType<Player>()[0].Collider;
         }
 
         public override void Update(Input input, GameTime gameTime)
@@ -32,36 +33,32 @@ namespace MonoGear
                 return;
 
             base.Update(input, gameTime);
-            if (!triggered)
+            Collider collider;
+            var pos = Position;
+            var delta = Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Move(delta);
+
+            if(Collider.CollidesAny(out collider, playerCol))
             {
-                Collider collider;
-                var delta = Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                Move(delta);
-                if (Collider.CollidesAny(out collider))
+                Position = pos;
+                Speed = 0.0f;
+
+                foreach(var guard in MonoGearGame.FindEntitiesWithTag("Guard"))
                 {
-                    if (collider.Entity.Tag != "Player")
+                    if(Vector2.DistanceSquared(Position, guard.Position) < 100000000)
                     {
-                        Move(-delta);
-                        Speed = 0.0f;
-
-                        foreach (var guard in MonoGearGame.FindEntitiesWithTag("Guard"))
-                        {
-                            if (Vector2.DistanceSquared(Position, guard.Position) < 100000)
-                            {
-                                var g = guard as Guard;
-                                g.Alert(Position);
-                            }
-                        }
-
-                        triggered = true;
+                        var g = guard as Guard;
+                        g.Alert(Position);
                     }
                 }
 
-                if (Speed > 0)
-                    Speed -= 3;
-                else
-                    Speed = 0;
+                Enabled = false;
             }
+
+            if(Speed > 0)
+                Speed -= 3;
+            else
+                Speed = 0;
         }
     }
 }
