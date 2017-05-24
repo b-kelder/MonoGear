@@ -207,6 +207,7 @@ namespace MonoGear
                 guardPosY += 10;
             }
 
+            // Patrol test
             lvl.AddEntity(new Guard()
             {
                 Position = new Vector2(1360, 2048),
@@ -220,6 +221,16 @@ namespace MonoGear
                     new Vector2(1176, 1928),
                     new Vector2(1160, 1928),
                     new Vector2(1160, 2030),
+                }
+            });
+
+            lvl.AddEntity(new Guard()
+            {
+                Position = new Vector2(718, 578),
+                PatrolPath = new List<Vector2>
+                {
+                    new Vector2(854, 840),
+                    new Vector2(1068, 840),
                 }
             });
 
