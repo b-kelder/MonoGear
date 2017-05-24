@@ -107,14 +107,6 @@ namespace MonoGear
 
             carSound.Position = Position;
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            var rot = Rotation;
-            Rotation -= 0.6f;
-            base.Draw(spriteBatch);
-            rot = Rotation;
-        }
     }
 }
 
