@@ -8,13 +8,6 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    enum Direction
-    {
-        North,
-        East,
-        South,
-        West
-    }
     /// <summary>
     /// Car
     /// </summary>
@@ -22,34 +15,22 @@ namespace MonoGear
     {
         float speed;
         private AudioSource carSound;
-        private Direction direction;
-        private Dictionary<Vector2, Direction> turns;
-        private bool follow;
+        private List<Vector2> currentPath;
+        private int currentPathIndex;
+        public bool LoopPath { get; set; }
 
-        public Car(Direction direction, Dictionary<Vector2, Direction> turns)
+        public Car(Vector2 position, List<Vector2> currentPath)
         {
-            this.direction = direction;
-            this.turns = turns;
-            follow = true;
+            Position = position;
 
-            Construct();
-        }
-
-        public Car(Direction direction)
-        {
-            this.direction = direction;
-            follow = false;
-
-            Construct();
-        }
-
-        private void Construct()
-        {
             // Speed in units/sec. Right now 1 unit = 1 pixel
             speed = 200.0f;
             TextureAssetName = "Sprites/Car";
 
             Tag = "Car";
+
+            this.currentPath = currentPath;
+            LoopPath = true;
 
             Z = 100;
 
@@ -64,6 +45,22 @@ namespace MonoGear
             carSound.Pause();
         }
 
+        public async void GoTo(Vector2 origin)
+        {
+            AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
+            await Task.Delay(1000);
+
+            Task.Run(() =>
+            {
+                Pathfinding.FindPath(Position, origin, (path) =>
+                {
+                    currentPath = path;
+                    currentPathIndex = 0;
+                });
+            });
+        }
+
+
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
@@ -76,55 +73,36 @@ namespace MonoGear
             carSound.Pause();
         }
 
-        public void ChangeDirection(Direction newDirection)
-        {
-            direction = newDirection;
-        }
-
-        private void FollowRoute()
-        {
-            var locations = turns.Keys;
-            foreach (var location in locations)
-            {
-                if (Vector2.DistanceSquared(Position, location) < 25)
-                {
-                    ChangeDirection(turns[location]);
-                }
-            }
-        }
-
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
             if (!Enabled)
                 return;
 
-            if (direction == Direction.East)
+            if(currentPath != null && currentPathIndex >= 0)
             {
-                Move(new Vector2(speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0));
-            }
-            else if (direction == Direction.West)
-            {
-                Move(new Vector2(-speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0));
-            }
-            else if (direction == Direction.North)
-            {
-                Move(new Vector2(0, -speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
-            }
-            else if (direction == Direction.South)
-            {
-                Move(new Vector2(0, speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
-            }
-
-            if (follow)
-            {
-                FollowRoute();
-            }
-            else
-            {
-                if (Position.X > 5000)
+                if(currentPathIndex < currentPath.Count)
                 {
-                    Move(new Vector2(-6294, 0));
+                    var target = currentPath[currentPathIndex];
+                    if(Vector2.DistanceSquared(Position, target) < 24)
+                    {
+                        currentPathIndex++;
+                        if(LoopPath && currentPathIndex >= currentPath.Count)
+                        {
+                            currentPathIndex = 0;
+                        }
+                    }
+                    else
+                    {
+                        Rotation = MathExtensions.VectorToAngle(target - Position);
+
+                        var delta = MathExtensions.AngleToVector(Rotation) * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Move(delta);
+                    }
+                }
+                else
+                {
+                    currentPathIndex = -1;
                 }
             }
 

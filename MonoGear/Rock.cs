@@ -43,12 +43,13 @@ namespace MonoGear
                 Position = pos;
                 Speed = 0.0f;
 
-                foreach(var guard in MonoGearGame.FindEntitiesWithTag("Guard"))
+                var entities = MonoGearGame.FindEntitiesOfType<Guard>();
+
+                foreach(var guard in entities)
                 {
                     if(Vector2.DistanceSquared(Position, guard.Position) < 100000000)
                     {
-                        var g = guard as Guard;
-                        g.Alert(Position);
+                        guard.Alert(Position);
                     }
                 }
 

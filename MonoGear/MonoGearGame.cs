@@ -190,27 +190,38 @@ namespace MonoGear
             lvl.AddEntity(bird);
 
             //Add cars
-            var car = new Car(Direction.East);
-            car.Position = new Vector2(-1, 3008);
-            car.Rotation = 0.5f * (float)Math.PI;
-            lvl.AddEntity(car);
-
-            var dick = new Dictionary<Vector2, Direction>();
-            dick.Add(new Vector2(768,620), Direction.South);
-            car = new Car(Direction.West, dick);
-            car.Position = new Vector2(3896, 620);
-            car.Rotation = -0.5f * (float)Math.PI;
-            lvl.AddEntity(car);
+            lvl.AddEntity(new Car(new Vector2(768, 624), new List<Vector2> {
+                new Vector2(768, 624),
+                new Vector2(768, 2128),
+                new Vector2(3312, 2128),
+                new Vector2(3312, 624),
+            }));
 
             //Add guards
             int guardPosY = 800;
-            for(int i = 0; i < 125; i++)
+            for(int i = 0; i < 10; i++)
             {
                 lvl.AddEntity(new Guard() { Position = new Vector2(790, guardPosY) });
                 lvl.AddEntity(new Guard() { Position = new Vector2(800, guardPosY) });
                 lvl.AddEntity(new Guard() { Position = new Vector2(810, guardPosY) });
                 guardPosY += 10;
             }
+
+            lvl.AddEntity(new Guard()
+            {
+                Position = new Vector2(1360, 2048),
+                PatrolPath = new List<Vector2>
+                {
+                    new Vector2(1360, 2048),
+                    new Vector2(1338, 1640),
+                    new Vector2(1292, 1650),
+                    new Vector2(1292, 1900),
+                    new Vector2(1176, 1900),
+                    new Vector2(1176, 1928),
+                    new Vector2(1160, 1928),
+                    new Vector2(1160, 2030),
+                }
+            });
 
 
             var tilemap = new TilemapCollider(new WorldEntity() {
@@ -419,19 +430,19 @@ namespace MonoGear
         /// </summary>
         /// <typeparam name="T">Type of entity.</typeparam>
         /// <returns>List</returns>
-        public static List<WorldEntity> FindEntitiesOfType<T>() where T : WorldEntity
+        public static List<T> FindEntitiesOfType<T>() where T : WorldEntity
         {
-            var list = new List<WorldEntity>();
+            var list = new List<T>();
             list.AddRange(instance.levelEntities.Where(
                 ent =>
                 {
                     return typeof(T).IsAssignableFrom(ent.GetType());
-                }));
+                }).Cast<T>());
             list.AddRange(instance.globalEntities.Where(
                 ent =>
                 {
                     return typeof(T).IsAssignableFrom(ent.GetType());
-                }));
+                }).Cast<T>());
 
             return list;
         }
