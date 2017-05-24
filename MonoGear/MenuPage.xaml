@@ -11,27 +11,29 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="WindowStates">
-                <VisualState x:Name="WideState">
+                <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1080" />
+                        <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="parentGrid.Width" Value="1950" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="NarrowState">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="parentGrid.Width" Value="500" />
+                        <Setter Target="menuItems.Orientation" Value="Horizontal" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
         <Grid.Background>
             <ImageBrush ImageSource="Assets/background.png" AlignmentY="Top" AlignmentX="Center" />
         </Grid.Background>
+        
         <Button x:Name="startGameButton" HorizontalAlignment="Left" Margin="1390,676,0,0" VerticalAlignment="Top" Height="54" Width="484" Click="StartButton_Click">
             <Image Source="Assets/startgame.png" Margin="-51,-6,-50,-6"/>
         </Button>
