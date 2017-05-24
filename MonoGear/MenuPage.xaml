@@ -52,13 +52,13 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="startGameButton.Height" Value="54"/>
-                        <Setter Target="startGameButton.Width" Value="380"/>
+                        <Setter Target="startGameButton.Width" Value="340"/>
                         <Setter Target="settingsButton.Height" Value="52"/>
-                        <Setter Target="settingsButton.Width" Value="372"/>
+                        <Setter Target="settingsButton.Width" Value="280"/>
                         <Setter Target="creditsButton.Height" Value="52"/>
-                        <Setter Target="creditsButton.Width" Value="320"/>
+                        <Setter Target="creditsButton.Width" Value="240"/>
                         <Setter Target="quitButton.Height" Value="56"/>
-                        <Setter Target="quitButton.Width" Value="192"/>
+                        <Setter Target="quitButton.Width" Value="150"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -91,16 +91,16 @@
 
         <Image Source="Assets/LogoText.png" Grid.Column="4" Grid.Row="5"/>
 
-        <Button x:Name="startGameButton" Grid.Column="4" Grid.Row="6" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="54" Width="380" Click="StartButton_Click" Foreground="Transparent" Background="Transparent" BorderBrush="Transparent">
+        <Button x:Name="startGameButton" Grid.Column="4" Grid.Row="6" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="54" Width="330" Click="StartButton_Click" Foreground="Transparent" Background="Transparent" BorderBrush="Transparent">
             <Image Source="Assets/startgame.png"/>
         </Button>
-        <Button x:Name="settingsButton" Grid.Column="4" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="52" Width="372" Click="SettingsButton_Click" Foreground="Transparent" Background="Transparent" BorderBrush="Transparent">
+        <Button x:Name="settingsButton" Grid.Column="4" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="52" Width="280" Click="SettingsButton_Click" Foreground="Transparent" Background="Transparent" BorderBrush="Transparent">
             <Image Source="Assets/settings.png"/>
         </Button>
-        <Button x:Name="creditsButton" Grid.Column="4" Grid.Row="8" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="52" Width="320" Click="CreditsButton_Click" Background="Transparent" BorderBrush="Transparent" Foreground="Transparent">
+        <Button x:Name="creditsButton" Grid.Column="4" Grid.Row="8" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="52" Width="280" Click="CreditsButton_Click" Background="Transparent" BorderBrush="Transparent" Foreground="Transparent">
             <Image Source="Assets/credits.png"/>
         </Button>
-        <Button x:Name="quitButton" Grid.Column="4" Grid.Row="9" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="56" Width="192" Click="quitButton_Click" Background="Transparent" Foreground="Transparent" BorderBrush="Transparent">
+        <Button x:Name="quitButton" Grid.Column="4" Grid.Row="9" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="56" Width="180" Click="quitButton_Click" Background="Transparent" Foreground="Transparent" BorderBrush="Transparent">
             <Image Source="Assets/quit.png"/>
         </Button>
 
