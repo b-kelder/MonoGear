@@ -26,9 +26,9 @@ namespace MonoGear
         public SettingsPage()
         {
             this.InitializeComponent();
-            MasterVolumeSlider.Value = 100;
-            MusicVolumeSlider.Value = 100;
-            EffectVolumeSlider.Value = 100;
+            MasterVolumeSlider.Value = AudioManager.masterVolume * 100;
+            MusicVolumeSlider.Value = AudioManager.settingsMusicVolume * 100;
+            EffectVolumeSlider.Value = AudioManager.settingsEffectsVolume * 100;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
