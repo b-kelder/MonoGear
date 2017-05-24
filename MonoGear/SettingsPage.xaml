@@ -8,15 +8,81 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="backButton" HorizontalAlignment="Left" Margin="1600,945,0,0" VerticalAlignment="Top" Height="51" Width="215" Click="BackButton_Click">
-            <Image Source="Assets/back.png" Margin="-51,-6,-50,-6"/>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MasterVolume.FontSize" Value="12"/>
+                        <Setter Target="SoundVolume.FontSize" Value="12"/>
+                        <Setter Target="effectVolume.FontSize" Value="12"/>
+                        <Setter Target="pageTitle.FontSize" Value="24"/>
+                        <Setter Target="MasterVolumeSlider.Width" Value="100"/>
+                        <Setter Target="MusicVolumeSlider.Width" Value="100"/>
+                        <Setter Target="EffectVolumeSlider.Width" Value="100"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Tablet">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MasterVolume.FontSize" Value="24"/>
+                        <Setter Target="SoundVolume.FontSize" Value="24"/>
+                        <Setter Target="effectVolume.FontSize" Value="24"/>
+                        <Setter Target="pageTitle.FontSize" Value="36"/>
+                        <Setter Target="MasterVolumeSlider.Width" Value="250"/>
+                        <Setter Target="MusicVolumeSlider.Width" Value="250"/>
+                        <Setter Target="EffectVolumeSlider.Width" Value="250"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1300" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MasterVolume.FontSize" Value="36"/>
+                        <Setter Target="SoundVolume.FontSize" Value="36"/>
+                        <Setter Target="effectVolume.FontSize" Value="36"/>
+                        <Setter Target="pageTitle.FontSize" Value="45"/>
+                        <Setter Target="MasterVolumeSlider.Width" Value="475"/>
+                        <Setter Target="MusicVolumeSlider.Width" Value="475"/>
+                        <Setter Target="EffectVolumeSlider.Width" Value="475"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="backButton" Grid.Column="3" Grid.Row="10" HorizontalAlignment="Center" VerticalAlignment="Top" Height="50" Width="175" Click="BackButton_Click">
+            <Image Source="Assets/back.png"/>
         </Button>
-        <TextBlock x:Name="textBlock" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left" Margin="93,78,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" Height="56" Width="187"/>
-        <Slider x:Name="MasterVolumeSlider" HorizontalAlignment="Left" Margin="1500,279,0,0" VerticalAlignment="Top" Width="795" ValueChanged="MasterVolumeSlider_ValueChanged"/>
-        <Slider x:Name="MusicVolumeSlider" HorizontalAlignment="Left" Margin="1500,384,0,0" VerticalAlignment="Top" Width="795" ValueChanged="MusicVolumeSlider_ValueChanged"/>
-        <Slider x:Name="EffectVolumeSlider" HorizontalAlignment="Left" Margin="1500,487,0,0" VerticalAlignment="Top" Width="795" ValueChanged="EffectVolumeSlider_ValueChanged"/>
-        <TextBlock x:Name="MasterVolume" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left" Margin="300,279,0,0" TextWrapping="Wrap" Text="Master volume" VerticalAlignment="Top" Height="56" Width="376"/>
-        <TextBlock x:Name="SoundVolume" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left" Margin="300,384,0,0" TextWrapping="Wrap" Text="Music volume" VerticalAlignment="Top" Height="56" Width="356"/>
-        <TextBlock x:Name="effectVolume" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left" Margin="300,487,0,0" TextWrapping="Wrap" Text="Effect Volume" VerticalAlignment="Top" Height="56" Width="316"/>
+        
+        <TextBlock x:Name="pageTitle" Grid.Column="0" Grid.Row="0" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" Height="56" Width="187"/>
+        <Slider x:Name="MasterVolumeSlider" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="475" ValueChanged="MasterVolumeSlider_ValueChanged"/>
+        <Slider x:Name="MusicVolumeSlider" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="475" ValueChanged="MusicVolumeSlider_ValueChanged"/>
+        <Slider x:Name="EffectVolumeSlider" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="475" ValueChanged="EffectVolumeSlider_ValueChanged"/>
+        <TextBlock x:Name="MasterVolume" Grid.Column="1" Grid.Row="1" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Master volume" VerticalAlignment="Center" Height="56" Width="376"/>
+        <TextBlock x:Name="SoundVolume" Grid.Column="1" Grid.Row="2" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Music volume" VerticalAlignment="Center" Height="56" Width="356"/>
+        <TextBlock x:Name="effectVolume" Grid.Column="1" Grid.Row="3" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Effect Volume" VerticalAlignment="Center" Height="56" Width="316"/>
+        
     </Grid>
 </Page>
