@@ -197,7 +197,10 @@ namespace MonoGear
                 new Vector2(768 + 20, 2128 - 20),
                 new Vector2(768 + 50, 2128),
 
-                new Vector2(3312, 2128),
+                new Vector2(3312 - 40, 2128),
+                new Vector2(3312, 2128 - 20),
+                new Vector2(3312, 2128 - 50),
+
                 new Vector2(3312, 624),
             }, "Sprites/Car"));
 
