@@ -189,13 +189,21 @@ namespace MonoGear
             bird.Position = new Vector2(2313, 3206);
             lvl.AddEntity(bird);
 
-            //Add cars
+            //Add car
             lvl.AddEntity(new Car(new Vector2(768, 624), new List<Vector2> {
                 new Vector2(768, 624),
                 new Vector2(768, 2128),
                 new Vector2(3312, 2128),
                 new Vector2(3312, 624),
-            }));
+            }, "Sprites/Car"));
+
+            //Add taxi
+            lvl.AddEntity(new Car(new Vector2(865, 672), new List<Vector2> {
+                new Vector2(814, 668),
+                new Vector2(3267, 668),
+                new Vector2(3267, 2080),
+                new Vector2(814, 2080),
+            }, "Sprites/Taxi"));
 
             //Add guards
             int guardPosY = 800;
