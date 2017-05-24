@@ -11,16 +11,16 @@
         <Grid.Background>
             <ImageBrush Stretch="None" ImageSource="Assets/background.png" AlignmentY="Top" AlignmentX="Center" />
         </Grid.Background>
-        <Button x:Name="startGameButton" HorizontalAlignment="Left" Margin="1390,676,0,0" VerticalAlignment="Top" Height="54" Width="484" Click="StartButton_Click">
-            <Image Source="Assets/startgame.png" Margin="-51,-6,-50,-6"/>
+        <Button x:Name="startGameButton" HorizontalAlignment="Right" Margin="0,72,723,0" VerticalAlignment="Top" Height="54" Width="484" Click="StartButton_Click">
+            <Image Source="Assets/startgame.png" Margin="0,0,0,0"/>
         </Button>
-        <Button x:Name="settingsButton" HorizontalAlignment="Left" Margin="1390,770,0,0" VerticalAlignment="Top" Height="52" Width="372" Click="SettingsButton_Click">
+        <Button x:Name="settingsButton" HorizontalAlignment="Right" Margin="1390,770,0,0" VerticalAlignment="Bottom" Height="52" Width="372" Click="SettingsButton_Click">
             <Image Source="Assets/settings.png" Margin="-43,-6"/>
         </Button>
-        <Button x:Name="creditsButton" HorizontalAlignment="Left" Margin="1390,856,0,0" VerticalAlignment="Top" Height="52" Width="320" Click="CreditsButton_Click">
+        <Button x:Name="creditsButton" HorizontalAlignment="Right" Margin="1390,856,0,0" VerticalAlignment="Bottom" Height="52" Width="320" Click="CreditsButton_Click">
             <Image Source="Assets/credits.png" Margin="-37,-6"/>
         </Button>
-        <Button x:Name="quitButton" HorizontalAlignment="Left" Margin="1390,948,0,0" VerticalAlignment="Top" Height="56" Width="192" Click="quitButton_Click">
+        <Button x:Name="quitButton" HorizontalAlignment="Right" Margin="1390,948,0,0" VerticalAlignment="Bottom" Height="56" Width="192" Click="quitButton_Click">
             <Image Source="Assets/quit.png" Margin="-31,-6"/>
         </Button>
     </Grid>

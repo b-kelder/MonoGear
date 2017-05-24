@@ -78,7 +78,7 @@ namespace MonoGear
         {
             alerted = true;
 
-            await Task.Delay(1000);
+            //await Task.Delay(1000);
 
             Task.Run(() =>
             {
