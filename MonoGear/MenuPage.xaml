@@ -86,7 +86,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.Background>
-            <ImageBrush ImageSource="Assets/menuBackground.jpg" AlignmentY="Top" AlignmentX="Center" />
+            <ImageBrush ImageSource="Assets/background.png" AlignmentY="Top" AlignmentX="Center" />
         </Grid.Background>
 
         <Image Source="Assets/LogoText.png" Grid.Column="4" Grid.Row="5"/>
