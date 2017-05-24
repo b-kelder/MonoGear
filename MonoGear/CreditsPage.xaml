@@ -60,6 +60,6 @@
         <Button x:Name="backButton" Grid.Column="3" Grid.Row="10" HorizontalAlignment="Center" VerticalAlignment="Top" Height="50" Width="175" Click="BackButton_Click">
             <Image Source="Assets/back.png"/>
         </Button>
-        <MediaElement x:Name="player" Source="Assets/Credits.mp4" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Top" Height="720" Width="950"/>
+        <MediaElement x:Name="player" Source="Assets/Credits.mp4" HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Center" Height="720" Width="950"/>
     </Grid>
 </Page>
