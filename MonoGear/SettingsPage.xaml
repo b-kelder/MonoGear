@@ -11,17 +11,12 @@
         <Button x:Name="backButton" HorizontalAlignment="Left" Margin="1600,945,0,0" VerticalAlignment="Top" Height="51" Width="215" Click="BackButton_Click">
             <Image Source="Assets/back.png" Margin="-51,-6,-50,-6"/>
         </Button>
-        <TextBlock x:Name="textBlock" 
-                   FontFamily="Arial" 
-                   FontStyle="Italic"
-                   FontWeight="Bold"
-                   FontSize="45"
-                   HorizontalAlignment="Left" 
-                   Margin="93,78,0,0" 
-                   TextWrapping="Wrap" 
-                   Text="Settings" 
-                   VerticalAlignment="Top" 
-                   Height="56" 
-                   Width="187"/>
+        <TextBlock x:Name="textBlock" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left" Margin="93,78,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" Height="56" Width="187"/>
+        <Slider x:Name="MasterVolumeSlider" HorizontalAlignment="Left" Margin="1500,279,0,0" VerticalAlignment="Top" Width="795" ValueChanged="MasterVolumeSlider_ValueChanged"/>
+        <Slider x:Name="MusicVolumeSlider" HorizontalAlignment="Left" Margin="1500,384,0,0" VerticalAlignment="Top" Width="795" ValueChanged="MusicVolumeSlider_ValueChanged"/>
+        <Slider x:Name="EffectVolumeSlider" HorizontalAlignment="Left" Margin="1500,487,0,0" VerticalAlignment="Top" Width="795" ValueChanged="EffectVolumeSlider_ValueChanged"/>
+        <TextBlock x:Name="MasterVolume" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left" Margin="300,279,0,0" TextWrapping="Wrap" Text="Master volume" VerticalAlignment="Top" Height="56" Width="376"/>
+        <TextBlock x:Name="SoundVolume" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left" Margin="300,384,0,0" TextWrapping="Wrap" Text="Music volume" VerticalAlignment="Top" Height="56" Width="356"/>
+        <TextBlock x:Name="effectVolume" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left" Margin="300,487,0,0" TextWrapping="Wrap" Text="Effect Volume" VerticalAlignment="Top" Height="56" Width="316"/>
     </Grid>
 </Page>

@@ -9,8 +9,17 @@ namespace MonoGear
     {
         private static List<AudioSource> audioSources = new List<AudioSource>();
         private static Song music;
-        public static int settingsMusicVolume { get; set; }
-        public static int settingsEffectsVolume { get; set; }
+
+        public static float masterVolume { get; set; }
+        public static float settingsMusicVolume { get; set; }
+        public static float settingsEffectsVolume { get; set; }
+
+        static AudioManager()
+        {
+            settingsEffectsVolume = 1;
+            settingsMusicVolume = 1;
+            masterVolume = 1;
+        }
 
         #region Music controll
 
@@ -18,8 +27,9 @@ namespace MonoGear
         /// Method to set the 'background' music.
         /// </summary>
         /// <param name="music">The music to set.</param>
-        public static void MusicSet(Song newMusic)
+        public static void MusicSet(Song newMusic, float volume = 1)
         {
+            MediaPlayer.Volume = volume * settingsMusicVolume * masterVolume;
             music = newMusic;
             MediaPlayer.IsRepeating = true;
         }
@@ -56,7 +66,7 @@ namespace MonoGear
         /// </summary>
         public static void MusicVolume(float volume)
         {
-            MediaPlayer.Volume = volume;
+            MediaPlayer.Volume = volume * settingsMusicVolume *masterVolume;
         }
         #endregion
 
@@ -65,7 +75,7 @@ namespace MonoGear
         public static void PlayOnce(SoundEffect audio, float volume)
         {
             SoundEffectInstance audioInstance = audio.CreateInstance();
-            audioInstance.Volume = volume;
+            audioInstance.Volume = volume * settingsEffectsVolume * masterVolume;
             audioInstance.Play();
             audioInstance.IsLooped = false;
         }
@@ -73,7 +83,7 @@ namespace MonoGear
         public static void PlayOnce(SoundEffect audio, float volume, Vector2 location, int range)
         {
             AudioSource source = new AudioSource(location);
-            source.AddSoundEffect(audio, range);
+            source.AddSoundEffect(audio, range, (volume * settingsEffectsVolume * masterVolume));
             audioSources.Add(source);
         }
 
@@ -86,7 +96,7 @@ namespace MonoGear
         /// </summary>
         public static void GlobalAudioPlay(SoundEffectInstance audio, bool loop = false, float volume = 1)
         {
-            audio.Volume = volume * (settingsEffectsVolume / 100);
+            audio.Volume = volume * settingsEffectsVolume * masterVolume;
             audio.IsLooped = loop;
             if (audio.State != SoundState.Playing)
                 audio.Play();
@@ -126,7 +136,7 @@ namespace MonoGear
         /// <param name="volume">The volume to change to.</param>
         public static void GlobalAudioVolume(SoundEffectInstance audio , float volume)
         {
-            audio.Volume = volume * (settingsEffectsVolume / 100);
+            audio.Volume = volume * settingsEffectsVolume * masterVolume;
         }
 
         #endregion
@@ -173,7 +183,7 @@ namespace MonoGear
                         if (audio.Key.State != SoundState.Playing)
                             audio.Key.Play();
 
-                        audio.Key.Volume = audio.Value[1] * (1 - (distance / audio.Value[0])) * (settingsEffectsVolume / 100);
+                        audio.Key.Volume = audio.Value[1] * (1 - (distance / audio.Value[0])) * settingsEffectsVolume * masterVolume;
                     }
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +78,7 @@ namespace MonoGear
         public async void Alert(Vector2 origin)
         {
             alerted = true;
-
+            AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
             await Task.Delay(1000);
 
             Task.Run(() =>
