@@ -214,7 +214,7 @@ namespace MonoGear
 
             //Add guards
             int guardPosY = 800;
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < 1; i++)
             {
                 lvl.AddEntity(new Guard() { Position = new Vector2(790, guardPosY), PatrolPath = new List<Vector2> { new Vector2(790, guardPosY), new Vector2(790, guardPosY + 350) } });
                 lvl.AddEntity(new Guard() { Position = new Vector2(800, guardPosY), PatrolPath = new List<Vector2> { new Vector2(800, guardPosY), new Vector2(800, guardPosY + 350) } });

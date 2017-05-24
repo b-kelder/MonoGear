@@ -12,6 +12,7 @@ namespace MonoGear
     class Guard : WorldEntityAnimated
     {
         private static Texture2D alertSprite;
+        private static Texture2D searchSprite;
 
         enum State
         {
@@ -86,6 +87,10 @@ namespace MonoGear
             {
                 alertSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Alert");
             }
+            if(searchSprite == null)
+            {
+                searchSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Searching");
+            }
         }
 
         public override void Update(Input input, GameTime gameTime)
@@ -138,8 +143,7 @@ namespace MonoGear
 
                     if(state == State.Alerted)
                     {
-                        searchStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
-                        state = State.Searching;
+                        StartSearch(gameTime);
                     }
                     else if(state == State.ToPatrol)
                     {
@@ -185,7 +189,16 @@ namespace MonoGear
             {
                 spriteBatch.Draw(alertSprite, new Vector2(Position.X, Position.Y - 16), alertSprite.Bounds, Color.White, 0, new Vector2(alertSprite.Bounds.Size.X, alertSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
-            
+            else if(state == State.Searching)
+            {
+                spriteBatch.Draw(searchSprite, new Vector2(Position.X, Position.Y - 16), searchSprite.Bounds, Color.White, 0, new Vector2(searchSprite.Bounds.Size.X, searchSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+            }
+        }
+
+        private void StartSearch(GameTime gameTime)
+        {
+            searchStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
+            state = State.Searching;
         }
 
         /// <summary>
