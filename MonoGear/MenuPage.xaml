@@ -12,22 +12,98 @@
     
     >
 
-    <Grid>
+    <Grid x:Name="parentGrid">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="startGameButton.Height" Value="30"/>
+                        <Setter Target="startGameButton.Width" Value="115"/>
+                        <Setter Target="settingsButton.Height" Value="25"/>
+                        <Setter Target="settingsButton.Width" Value="100"/>
+                        <Setter Target="creditsButton.Height" Value="25"/>
+                        <Setter Target="creditsButton.Width" Value="100"/>
+                        <Setter Target="quitButton.Height" Value="25"/>
+                        <Setter Target="quitButton.Width" Value="100"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Tablet">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="startGameButton.Height" Value="36"/>
+                        <Setter Target="startGameButton.Width" Value="250"/>
+                        <Setter Target="settingsButton.Height" Value="36"/>
+                        <Setter Target="settingsButton.Width" Value="250"/>
+                        <Setter Target="creditsButton.Height" Value="36"/>
+                        <Setter Target="creditsButton.Width" Value="250"/>
+                        <Setter Target="quitButton.Height" Value="36"/>
+                        <Setter Target="quitButton.Width" Value="250"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1300" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="startGameButton.Height" Value="54"/>
+                        <Setter Target="startGameButton.Width" Value="450"/>
+                        <Setter Target="settingsButton.Height" Value="52"/>
+                        <Setter Target="settingsButton.Width" Value="372"/>
+                        <Setter Target="creditsButton.Height" Value="52"/>
+                        <Setter Target="creditsButton.Width" Value="320"/>
+                        <Setter Target="quitButton.Height" Value="56"/>
+                        <Setter Target="quitButton.Width" Value="192"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
         <Grid.Background>
-            <ImageBrush ImageSource="Assets/background.png" AlignmentY="Top" AlignmentX="Center"  />
-            
+            <ImageBrush ImageSource="Assets/menuBackground.jpg" AlignmentY="Top" AlignmentX="Center" />
         </Grid.Background>
-        <Button x:Name="startGameButton" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Height="54" Width="484" Click="StartButton_Click">
-            <Image Source="Assets/startgame.png" Margin="-51,-6,-50,-6"/>
+
+        <Image Source="Assets/LogoText.png" Grid.Column="4" Grid.Row="5"/>
+
+        <Button x:Name="startGameButton" Grid.Column="4" Grid.Row="6" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="54" Width="450" Click="StartButton_Click" Foreground="Transparent" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="Assets/startgame.png"/>
         </Button>
-        <Button x:Name="settingsButton" HorizontalAlignment="Left" Margin="1390,770,0,0" VerticalAlignment="Top" Height="52" Width="372" Click="SettingsButton_Click">
-            <Image Source="Assets/settings.png" Margin="-43,-6"/>
+        <Button x:Name="settingsButton" Grid.Column="4" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="52" Width="372" Click="SettingsButton_Click" Foreground="Transparent" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="Assets/settings.png"/>
         </Button>
-        <Button x:Name="creditsButton" HorizontalAlignment="Left" Margin="1390,856,0,0" VerticalAlignment="Top" Height="52" Width="320" Click="CreditsButton_Click">
-            <Image Source="Assets/credits.png" Margin="-37,-6"/>
+        <Button x:Name="creditsButton" Grid.Column="4" Grid.Row="8" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="52" Width="320" Click="CreditsButton_Click" Background="Transparent" BorderBrush="Transparent" Foreground="Transparent">
+            <Image Source="Assets/credits.png"/>
         </Button>
-        <Button x:Name="quitButton" HorizontalAlignment="Left" Margin="1390,948,0,0" VerticalAlignment="Top" Height="56" Width="192" Click="quitButton_Click">
-            <Image Source="Assets/quit.png" Margin="-31,-6"/>
+        <Button x:Name="quitButton" Grid.Column="4" Grid.Row="9" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="56" Width="192" Click="quitButton_Click" Background="Transparent" Foreground="Transparent" BorderBrush="Transparent">
+            <Image Source="Assets/quit.png"/>
         </Button>
+
     </Grid>
+
 </Page>

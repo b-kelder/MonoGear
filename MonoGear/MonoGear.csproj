@@ -199,15 +199,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\back.png" />
-    <Content Include="Assets\background.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\credits.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\LogoText.png" />
+    <Content Include="Assets\menuBackground.jpg" />
     <Content Include="Assets\NewStoreLogo.scale-100.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
