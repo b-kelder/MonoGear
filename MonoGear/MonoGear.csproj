@@ -212,6 +212,7 @@
   <ItemGroup>
     <Content Include="Assets\back.png" />
     <Content Include="Assets\background.png" />
+    <Content Include="Assets\Credits.mp4" />
     <Content Include="Assets\credits.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
