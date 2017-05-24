@@ -111,7 +111,9 @@ namespace MonoGear
             //AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
            //AudioManager.MusicVolume(0.4f);
            // AudioManager.MusicPlay();
-
+            
+            // THESE SHOULD BE PART OF A LEVEL
+            /*
             // Fountain bottem left sound Source
             var fountain1 = new AudioSource();
             fountain1.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 250, 0.1f);
@@ -145,11 +147,15 @@ namespace MonoGear
 
             // Owl sound
             AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Owl_sound").CreateInstance(), true, 0.1f);
+            */
 
+            // GLOBALS
             player = new Player();
             RegisterGlobalEntity(player);
+            var pf = new Pathfinding();
+            RegisterGlobalEntity(pf);
 
-            // Test level
+            // TEST LEVELS
             var lvl = new Level();
             var layer = new LevelLayer()
             {
@@ -472,7 +478,8 @@ namespace MonoGear
                     e.OnLevelLoaded();
                 }
 
-                Pathfinding.UpdateInternalMap();
+                // Force GC
+                GC.Collect();
             }
         }
 
