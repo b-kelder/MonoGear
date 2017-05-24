@@ -189,21 +189,36 @@ namespace MonoGear
             bird.Position = new Vector2(2313, 3206);
             lvl.AddEntity(bird);
 
-            //Add cars
+            //Add car
             lvl.AddEntity(new Car(new Vector2(768, 624), new List<Vector2> {
                 new Vector2(768, 624),
-                new Vector2(768, 2128),
-                new Vector2(3312, 2128),
+
+                new Vector2(768, 2128 - 50),
+                new Vector2(768 + 20, 2128 - 20),
+                new Vector2(768 + 50, 2128),
+
+                new Vector2(3312 - 40, 2128),
+                new Vector2(3312, 2128 - 20),
+                new Vector2(3312, 2128 - 50),
+
                 new Vector2(3312, 624),
-            }));
+            }, "Sprites/Car"));
+
+            //Add taxi
+            lvl.AddEntity(new Car(new Vector2(865, 672), new List<Vector2> {
+                new Vector2(814, 668),
+                new Vector2(3267, 668),
+                new Vector2(3267, 2080),
+                new Vector2(814, 2080),
+            }, "Sprites/Taxi"));
 
             //Add guards
             int guardPosY = 800;
             for(int i = 0; i < 10; i++)
             {
-                lvl.AddEntity(new Guard() { Position = new Vector2(790, guardPosY) });
-                lvl.AddEntity(new Guard() { Position = new Vector2(800, guardPosY) });
-                lvl.AddEntity(new Guard() { Position = new Vector2(810, guardPosY) });
+                lvl.AddEntity(new Guard() { Position = new Vector2(790, guardPosY), PatrolPath = new List<Vector2> { new Vector2(790, guardPosY), new Vector2(790, guardPosY + 350) } });
+                lvl.AddEntity(new Guard() { Position = new Vector2(800, guardPosY), PatrolPath = new List<Vector2> { new Vector2(800, guardPosY), new Vector2(800, guardPosY + 350) } });
+                lvl.AddEntity(new Guard() { Position = new Vector2(810, guardPosY), PatrolPath = new List<Vector2> { new Vector2(810, guardPosY), new Vector2(810, guardPosY + 350) } });
                 guardPosY += 10;
             }
 
@@ -231,6 +246,16 @@ namespace MonoGear
                 {
                     new Vector2(854, 840),
                     new Vector2(1068, 840),
+                }
+            });
+
+            lvl.AddEntity(new Guard()
+            {
+                Position = new Vector2(718, 1900),
+                PatrolPath = new List<Vector2>
+                {
+                    new Vector2(854 + 300, 840),
+                    new Vector2(1068 + 300, 840),
                 }
             });
 

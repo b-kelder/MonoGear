@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear
 {
@@ -17,15 +18,16 @@ namespace MonoGear
         private AudioSource carSound;
         private List<Vector2> currentPath;
         private int currentPathIndex;
+        private string textureAssetName;
         public bool LoopPath { get; set; }
 
-        public Car(Vector2 position, List<Vector2> currentPath)
+        public Car(Vector2 position, List<Vector2> currentPath, string textureAssetName)
         {
             Position = position;
 
             // Speed in units/sec. Right now 1 unit = 1 pixel
             speed = 200.0f;
-            TextureAssetName = "Sprites/Car";
+            TextureAssetName = textureAssetName;
 
             Tag = "Car";
 
@@ -39,7 +41,7 @@ namespace MonoGear
             Collider = new BoxCollider(this, Size);
 
             carSound = new AudioSource();
-            carSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 500);
+            carSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 500);
             carSound.Position = Position;
             AudioManager.AddAudioSource(carSound);
             carSound.Pause();
@@ -47,9 +49,6 @@ namespace MonoGear
 
         public async void GoTo(Vector2 origin)
         {
-            AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
-            await Task.Delay(1000);
-
             Task.Run(() =>
             {
                 Pathfinding.FindPath(Position, origin, (path) =>
