@@ -11,6 +11,8 @@ namespace MonoGear
 {
     class Guard : WorldEntityAnimated
     {
+        private static Texture2D alertSprite;
+
         enum State
         {
             Idle,
@@ -74,6 +76,16 @@ namespace MonoGear
             LoadContent();
 
             Collider = new BoxCollider(this, new Vector2(8));
+        }
+
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+
+            if(alertSprite == null)
+            {
+                alertSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Alert");
+            }
         }
 
         public override void Update(Input input, GameTime gameTime)
@@ -168,7 +180,12 @@ namespace MonoGear
             if(!Visible)
                 return;
 
-            // TODO: Draw exclamation mark when state == ToAlert and question mark when state == Seaching
+            // TODO: Draw question mark (or something like that) when state == Seaching
+            if(state == State.ToAlert || state == State.Alerted)
+            {
+                spriteBatch.Draw(alertSprite, new Vector2(Position.X, Position.Y - 16), alertSprite.Bounds, Color.White, 0, new Vector2(alertSprite.Bounds.Size.X, alertSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+            }
+            
         }
 
         /// <summary>

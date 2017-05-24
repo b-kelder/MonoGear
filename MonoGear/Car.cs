@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear
 {
@@ -39,7 +40,7 @@ namespace MonoGear
             Collider = new BoxCollider(this, Size);
 
             carSound = new AudioSource();
-            carSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 500);
+            carSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 500);
             carSound.Position = Position;
             AudioManager.AddAudioSource(carSound);
             carSound.Pause();
@@ -47,9 +48,6 @@ namespace MonoGear
 
         public async void GoTo(Vector2 origin)
         {
-            AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
-            await Task.Delay(1000);
-
             Task.Run(() =>
             {
                 Pathfinding.FindPath(Position, origin, (path) =>
@@ -107,6 +105,14 @@ namespace MonoGear
             }
 
             carSound.Position = Position;
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            var rot = Rotation;
+            Rotation -= 0.6f;
+            base.Draw(spriteBatch);
+            rot = Rotation;
         }
     }
 }
