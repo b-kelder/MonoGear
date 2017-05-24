@@ -113,7 +113,7 @@ namespace MonoGear
            // AudioManager.MusicPlay();
             
             // THESE SHOULD BE PART OF A LEVEL
-            /*
+            
             // Fountain bottem left sound Source
             var fountain1 = new AudioSource();
             fountain1.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 250, 0.1f);
@@ -147,7 +147,7 @@ namespace MonoGear
 
             // Owl sound
             AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Owl_sound").CreateInstance(), true, 0.1f);
-            */
+            
 
             // GLOBALS
             player = new Player();
@@ -321,7 +321,7 @@ namespace MonoGear
             var levelB = lvl;
 
             // Level transition trigger
-            var trans = new WorldBoxTrigger(new Vector2(208, 8), new Vector2(96, 16), (c, prev, current) => 
+            var trans = new WorldBoxTrigger(new Vector2(2350, 1761), new Vector2(96, 16), (c, prev, current) => 
             {
                 foreach(var collider in current)
                 {

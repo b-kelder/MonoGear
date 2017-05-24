@@ -5,12 +5,13 @@ using System;
 
 namespace MonoGear
 {
-    class Rock : WorldEntity
+    class Projectile : WorldEntity
     {
         float Speed { get; set; }
         Collider playerCol;
+        private string textureAssetName;
 
-        public Rock()
+        public Projectile(string textureAssetName)
         {
             CircleCollider collider = new CircleCollider(this, 2);
             collider.Trigger = true;
@@ -18,7 +19,7 @@ namespace MonoGear
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Random rand = new Random();
             Speed = 200f + rand.Next(-20, 20);
-            TextureAssetName = "Sprites/Rock";
+            TextureAssetName = textureAssetName;
 
             Tag = "TheRock";
 

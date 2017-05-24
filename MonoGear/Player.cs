@@ -151,7 +151,7 @@ namespace MonoGear
             {
                 if (ThrowingDelay <= 0)
                 {
-                    var dwayneThe = new Rock();
+                    var dwayneThe = new Projectile("Sprites/Rock");
                     dwayneThe.Position = Position;
                     dwayneThe.Rotation = Rotation;
                     MonoGearGame.RegisterLevelEntity(dwayneThe);
