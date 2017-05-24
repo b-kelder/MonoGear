@@ -18,15 +18,16 @@ namespace MonoGear
         private AudioSource carSound;
         private List<Vector2> currentPath;
         private int currentPathIndex;
+        private string textureAssetName;
         public bool LoopPath { get; set; }
 
-        public Car(Vector2 position, List<Vector2> currentPath)
+        public Car(Vector2 position, List<Vector2> currentPath, string textureAssetName)
         {
             Position = position;
 
             // Speed in units/sec. Right now 1 unit = 1 pixel
             speed = 200.0f;
-            TextureAssetName = "Sprites/Car";
+            TextureAssetName = textureAssetName;
 
             Tag = "Car";
 

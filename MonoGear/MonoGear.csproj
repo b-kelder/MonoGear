@@ -194,6 +194,7 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\s_generator.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Taxi.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\WhiteHouse.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

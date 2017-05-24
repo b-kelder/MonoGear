@@ -29,6 +29,7 @@ namespace MonoGear
                     "Sprites/Person",
                     "Sprites/Car",
                     "Sprites/Alert",
+                    "Sprites/Taxi",
                 }
             },
             {
