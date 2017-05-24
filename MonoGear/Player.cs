@@ -179,7 +179,7 @@ namespace MonoGear
                 {
                     if(other.Entity.Tag == "Car")
                     {
-                        CoreApplication.Exit();
+                        //CoreApplication.Exit();
                     }
                     Position = prevPos;
                 }
