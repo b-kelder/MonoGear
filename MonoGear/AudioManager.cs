@@ -9,7 +9,8 @@ namespace MonoGear
     {
         private static List<AudioSource> audioSources = new List<AudioSource>();
         private static Song music;
-        public static int settingsMusicVolume;
+        public static int settingsMusicVolume { get; set; }
+        public static int settingsEffectsVolume { get; set; }
 
         #region Music controll
 
@@ -85,7 +86,7 @@ namespace MonoGear
         /// </summary>
         public static void GlobalAudioPlay(SoundEffectInstance audio, bool loop = false, float volume = 1)
         {
-            audio.Volume = volume;
+            audio.Volume = volume * (settingsEffectsVolume / 100);
             audio.IsLooped = loop;
             if (audio.State != SoundState.Playing)
                 audio.Play();
@@ -125,7 +126,7 @@ namespace MonoGear
         /// <param name="volume">The volume to change to.</param>
         public static void GlobalAudioVolume(SoundEffectInstance audio , float volume)
         {
-            audio.Volume = volume;
+            audio.Volume = volume * (settingsEffectsVolume / 100);
         }
 
         #endregion
@@ -172,7 +173,7 @@ namespace MonoGear
                         if (audio.Key.State != SoundState.Playing)
                             audio.Key.Play();
 
-                        audio.Key.Volume = audio.Value[1] * (1 - (distance / audio.Value[0]));
+                        audio.Key.Volume = audio.Value[1] * (1 - (distance / audio.Value[0])) * (settingsEffectsVolume / 100);
                     }
                 }
             }
