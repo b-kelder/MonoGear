@@ -5,13 +5,19 @@
     xmlns:local="using:MonoGear"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Height="auto"
+    Width="auto"
+    
+    
+    >
 
     <Grid>
         <Grid.Background>
-            <ImageBrush Stretch="None" ImageSource="Assets/background.png" AlignmentY="Top" AlignmentX="Center" />
+            <ImageBrush ImageSource="Assets/background.png" AlignmentY="Top" AlignmentX="Center"  />
+            
         </Grid.Background>
-        <Button x:Name="startGameButton" HorizontalAlignment="Left" Margin="1390,676,0,0" VerticalAlignment="Top" Height="54" Width="484" Click="StartButton_Click">
+        <Button x:Name="startGameButton" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Top" Height="54" Width="484" Click="StartButton_Click">
             <Image Source="Assets/startgame.png" Margin="-51,-6,-50,-6"/>
         </Button>
         <Button x:Name="settingsButton" HorizontalAlignment="Left" Margin="1390,770,0,0" VerticalAlignment="Top" Height="52" Width="372" Click="SettingsButton_Click">

@@ -184,8 +184,16 @@ namespace MonoGear
             lvl.AddEntity(bird);
 
             //Add cars
-            var car = new Car();
+            var car = new Car(Direction.East);
             car.Position = new Vector2(-1, 3008);
+            car.Rotation = 0.5f * (float)Math.PI;
+            lvl.AddEntity(car);
+
+            var dick = new Dictionary<Vector2, Direction>();
+            dick.Add(new Vector2(768,620), Direction.South);
+            car = new Car(Direction.West, dick);
+            car.Position = new Vector2(3896, 620);
+            car.Rotation = -0.5f * (float)Math.PI;
             lvl.AddEntity(car);
 
             //Add guards
