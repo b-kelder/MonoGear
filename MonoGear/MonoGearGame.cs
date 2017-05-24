@@ -203,24 +203,14 @@ namespace MonoGear
             lvl.AddEntity(car);
 
             //Add guards
-            var guard = new Guard();
-            guard.Position = new Vector2(790, 850);
-            lvl.AddEntity(guard);
-            guard = new Guard();
-            guard.Position = new Vector2(790, 840);
-            lvl.AddEntity(guard);
-            guard = new Guard();
-            guard.Position = new Vector2(790, 830);
-            lvl.AddEntity(guard);
-            guard = new Guard();
-            guard.Position = new Vector2(790, 820);
-            lvl.AddEntity(guard);
-            guard = new Guard();
-            guard.Position = new Vector2(790, 810);
-            lvl.AddEntity(guard);
-            guard = new Guard();
-            guard.Position = new Vector2(790, 800);
-            lvl.AddEntity(guard);
+            int guardPosY = 800;
+            for(int i = 0; i < 125; i++)
+            {
+                lvl.AddEntity(new Guard() { Position = new Vector2(790, guardPosY) });
+                lvl.AddEntity(new Guard() { Position = new Vector2(800, guardPosY) });
+                lvl.AddEntity(new Guard() { Position = new Vector2(810, guardPosY) });
+                guardPosY += 10;
+            }
 
 
             var tilemap = new TilemapCollider(new WorldEntity() {
