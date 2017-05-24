@@ -52,7 +52,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="startGameButton.Height" Value="54"/>
-                        <Setter Target="startGameButton.Width" Value="425"/>
+                        <Setter Target="startGameButton.Width" Value="400"/>
                         <Setter Target="settingsButton.Height" Value="52"/>
                         <Setter Target="settingsButton.Width" Value="372"/>
                         <Setter Target="creditsButton.Height" Value="52"/>
@@ -91,7 +91,7 @@
 
         <Image Source="Assets/LogoText.png" Grid.Column="4" Grid.Row="5"/>
 
-        <Button x:Name="startGameButton" Grid.Column="4" Grid.Row="6" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="54" Width="425" Click="StartButton_Click" Foreground="Transparent" Background="Transparent" BorderBrush="Transparent">
+        <Button x:Name="startGameButton" Grid.Column="4" Grid.Row="6" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="54" Width="400" Click="StartButton_Click" Foreground="Transparent" Background="Transparent" BorderBrush="Transparent">
             <Image Source="Assets/startgame.png"/>
         </Button>
         <Button x:Name="settingsButton" Grid.Column="4" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="52" Width="372" Click="SettingsButton_Click" Foreground="Transparent" Background="Transparent" BorderBrush="Transparent">
