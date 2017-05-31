@@ -306,12 +306,15 @@ namespace MonoGear
                 {
                     //Check to see if nothing blocks view of the player
                     Collider hit;
-                    Collider.RaycastAny(Position, player.Position, out hit, Tag);              
-                    if (hit.Entity.Tag.Equals("Player"))
+                    if(Collider.RaycastAny(Position, player.Position, out hit, Tag))
                     {
-                        entityPos = hit.Entity.Position;
-                        return true;
-                    }
+                        if(hit.Entity.Tag.Equals("Player"))
+                        {
+                            entityPos = hit.Entity.Position;
+                            return true;
+                        }
+                    }   
+
                 }
             }
 
