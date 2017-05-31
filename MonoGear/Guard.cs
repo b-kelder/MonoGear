@@ -293,9 +293,7 @@ namespace MonoGear
             if (Vector2.Distance(Position, entity.Position) < viewRange)
             {
                 //Check to see if the guard is looking at the player
-                var degrees = System.Math.Abs(MathHelper.ToDegrees(Rotation) - (90 + MathHelper.ToDegrees(MathExtensions.AngleBetween(Position, entity.Position))));
-                Debug.WriteLine(degrees);
-                //TODO: MAKE WORK
+                var degrees = Math.Abs(MathHelper.ToDegrees(Rotation) - (90 + MathHelper.ToDegrees(MathExtensions.AngleBetween(Position, entity.Position))));
                 if (degrees <= (viewAngle / 2) || degrees >= (360 - (viewAngle / 2)))
                 {
                     //Check to see if nothing blocks view of the player
