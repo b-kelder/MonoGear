@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace MonoGear
 {
@@ -252,6 +253,7 @@ namespace MonoGear
             AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
             await Task.Delay(1000);
 
+            /*
             Task.Run(() =>
             {
                 Pathfinding.FindPath(Position, origin, (path) =>
@@ -261,6 +263,7 @@ namespace MonoGear
                     state = path != null ? State.Alerted : State.Idle;
                 });
             });
+            */
         }
 
         /// <summary>
@@ -290,10 +293,10 @@ namespace MonoGear
             if (Vector2.Distance(Position, entity.Position) < viewRange)
             {
                 //Check to see if the guard is looking at the player
-                var radians = MathExtensions.AngleBetween(Position, entity.Position);
-                var degrees = radians * (180 / Math.PI);
+                var degrees = System.Math.Abs(MathHelper.ToDegrees(Rotation) - (90 + MathHelper.ToDegrees(MathExtensions.AngleBetween(Position, entity.Position))));
+                Debug.WriteLine(degrees);
                 //TODO: MAKE WORK
-                if (degrees <= viewAngle)
+                if (degrees <= (viewAngle / 2) || degrees >= (360 - (viewAngle / 2)))
                 {
                     //Check to see if nothing blocks view of the player
                     Collider hit;
@@ -304,6 +307,7 @@ namespace MonoGear
                         return true;
                     }
                 }
+                
             }
             entityPos = new Vector2();
             return false;

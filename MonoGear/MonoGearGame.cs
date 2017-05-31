@@ -222,10 +222,7 @@ namespace MonoGear
                 guardPosY += 10;
             }
 
-            lvl.AddEntity(new Guard() { Position = new Vector2(1760, 1040), Rotation = (float)(0 / (180 / Math.PI)) });
-            lvl.AddEntity(new Guard() { Position = new Vector2(1760, 1020), Rotation = (float)(90 / (180 / Math.PI)) });
-            lvl.AddEntity(new Guard() { Position = new Vector2(1760, 1000), Rotation = (float)(180 / (180 / Math.PI)) });
-            lvl.AddEntity(new Guard() { Position = new Vector2(1760, 1060), Rotation = (float)(270 / (180 / Math.PI)) });
+            lvl.AddEntity(new Guard() { Position = new Vector2(1760, 1040), Rotation = (float)(90 / (180 / Math.PI)) });
 
             // Patrol test
             lvl.AddEntity(new Guard()
