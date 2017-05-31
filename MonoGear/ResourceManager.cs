@@ -32,6 +32,8 @@ namespace MonoGear
                     "Sprites/Searching",
                     "Sprites/Taxi",
                     "Sprites/Bullet",
+                    "Sprites/gameover",
+                    "Sprites/blank",
                 }
             },
             {

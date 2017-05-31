@@ -85,7 +85,12 @@ namespace MonoGear
                 sneakMode = false;
                 Speed = 100;
             }
-                
+
+            if (input.IsKeyDown(Keys.G))
+            {
+                var gameOver = MonoGearGame.FindEntitiesWithTag("GameOverScreen")[0] as GameOver;
+                gameOver.EnableGameOver();
+            }
 
             var delta = new Vector2(dx, dy);
             if(delta.LengthSquared() > Speed * Speed)

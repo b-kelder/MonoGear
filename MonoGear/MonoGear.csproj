@@ -108,6 +108,7 @@
     <Compile Include="CreditsPage.xaml.cs">
       <DependentUpon>CreditsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameOver.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Pathfinding.cs" />
     <Compile Include="Projectile.cs" />
@@ -143,7 +144,7 @@
     <Compile Include="WorldEntityAnimated.cs" />
   </ItemGroup>
   <ItemGroup>
-	<Content Include="Content\Levels\WhiteHouse.tmx">
+    <Content Include="Content\Levels\WhiteHouse.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Bird_sounds.xnb">
@@ -188,10 +189,12 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\birdsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\blank.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Bullet.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Car.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\gameover.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Guard.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

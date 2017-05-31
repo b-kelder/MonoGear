@@ -107,14 +107,14 @@ namespace MonoGear
             // Load global resources
             globalResources.LoadResources(Content);
 
-            // Add background music
-            //AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
-           //AudioManager.MusicVolume(0.4f);
-           // AudioManager.MusicPlay();
-            
-            // THESE SHOULD BE PART OF A LEVEL
-            
-      
+            // Load game over screen
+            var gameOver = new GameOver();
+            RegisterGlobalEntity(gameOver);
+
+            // Background music sould be in a level??
+            AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
+            AudioManager.MusicVolume(0.4f);
+            AudioManager.MusicPlay();
 
             // GLOBALS
             player = new Player();

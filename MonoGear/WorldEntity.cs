@@ -74,6 +74,8 @@ namespace MonoGear
 
         public virtual void Update(Input input, GameTime gameTime)
         {
+            if (!Enabled)
+                return;
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)

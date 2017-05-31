@@ -168,13 +168,13 @@ namespace MonoGear
 
             while(distance < prevDistance)
             {
-                if(_raycastCollider.CollidesAny(out firstHit) && firstHit.Entity.Tag != ignoreTag && firstHit.Entity.Tag != _raycastCollider.Entity.Tag)
+                if(_raycastCollider.CollidesAny(out firstHit) && firstHit.Entity.Tag != ignoreTag)
                 {
                     return true;
                 }
                 _raycastCollider.Entity.Move(deltaVec);
                 prevDistance = distance;
-                distance = Vector2.DistanceSquared(_raycastCollider.Entity.Position, to); ;
+                distance = Vector2.DistanceSquared(_raycastCollider.Entity.Position, to);
             }
 
             firstHit = null;

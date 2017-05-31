@@ -191,14 +191,6 @@ namespace MonoGear
                     AnimationCurrentFrame = 1;
                 }
             }
-            if (input.IsKeyPressed(Keys.G))
-            {
-                var bullet = new Projectile("Sprites/Bullet", "Bullet", MonoGearGame.FindEntitiesOfType<Guard>()[0].Collider);
-                bullet.Position = Position;
-                bullet.Rotation = Rotation;
-                MonoGearGame.RegisterLevelEntity(bullet);
-                AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
-            }
 
             if (CanSee(out playerPos) && state != State.Alerted && state != State.ToAlert)
             {
@@ -302,7 +294,6 @@ namespace MonoGear
                 var degrees = Math.Abs(MathHelper.ToDegrees(Rotation) - (90 + MathHelper.ToDegrees(MathExtensions.AngleBetween(Position, player.Position))));
                 if (degrees <= (sightFov / 2) || degrees >= (360 - (sightFov / 2)))
                 {
-                    Debug.WriteLine("");
                     //Check to see if nothing blocks view of the player
                     Collider hit;
                     if(Collider.RaycastAny(Position, player.Position, out hit, Tag))
