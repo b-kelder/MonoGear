@@ -146,12 +146,12 @@ namespace MonoGear
             if (ThrowingDelay > 0)
                 ThrowingDelay -= 1;
 
-            // Raycast test
+            // Throw rock
             if(input.IsKeyPressed(Keys.Space))
             {
                 if (ThrowingDelay <= 0)
                 {
-                    var dwayneThe = new Projectile("Sprites/Rock");
+                    var dwayneThe = new Projectile("Sprites/Rock", "TheRock", MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
                     dwayneThe.Position = Position;
                     dwayneThe.Rotation = Rotation;
                     MonoGearGame.RegisterLevelEntity(dwayneThe);
@@ -177,7 +177,7 @@ namespace MonoGear
                 Collider other;
                 if (Collider.CollidesAny(out other))
                 {
-                    if(other.Entity.Tag == "Car")
+                    if(other.Entity.Tag == "Bullet")
                     {
                         //CoreApplication.Exit();
                     }

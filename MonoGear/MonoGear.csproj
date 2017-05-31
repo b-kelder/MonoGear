@@ -154,6 +154,7 @@
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Guard_Alert_Sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Gunshot.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Owl_sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -179,6 +180,7 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\birdsheet.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Bullet.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Car.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

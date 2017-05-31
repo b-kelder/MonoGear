@@ -8,10 +8,10 @@ namespace MonoGear
     class Projectile : WorldEntity
     {
         float Speed { get; set; }
-        Collider playerCol;
-        private string textureAssetName;
+        Collider PlayerCol;
 
-        public Projectile(string textureAssetName)
+
+        public Projectile(string textureAssetName, string tag, Collider playerCol)
         {
             CircleCollider collider = new CircleCollider(this, 2);
             collider.Trigger = true;
@@ -20,12 +20,10 @@ namespace MonoGear
             Random rand = new Random();
             Speed = 200f + rand.Next(-20, 20);
             TextureAssetName = textureAssetName;
-
-            Tag = "TheRock";
-
+            Tag = tag;
             LoadContent();
 
-            playerCol = MonoGearGame.FindEntitiesOfType<Player>()[0].Collider;
+            PlayerCol = playerCol;
         }
 
         public override void Update(Input input, GameTime gameTime)
@@ -39,7 +37,7 @@ namespace MonoGear
             var delta = Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Move(delta);
 
-            if(Collider.CollidesAny(out collider, playerCol))
+            if(Collider.CollidesAny(out collider, PlayerCol))
             {
                 Position = pos;
                 Speed = 0.0f;

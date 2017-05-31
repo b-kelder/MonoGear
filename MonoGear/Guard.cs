@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
 
 namespace MonoGear
 {
@@ -38,7 +40,7 @@ namespace MonoGear
                 patrolPath = value;
                 patrolPathIndex = 0;
 
-                if(state == State.Patrolling)
+                if (state == State.Patrolling)
                 {
                     StartPatrol();
                 }
@@ -83,11 +85,11 @@ namespace MonoGear
         {
             base.LoadContent();
 
-            if(alertSprite == null)
+            if (alertSprite == null)
             {
                 alertSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Alert");
             }
-            if(searchSprite == null)
+            if (searchSprite == null)
             {
                 searchSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Searching");
             }
@@ -95,24 +97,25 @@ namespace MonoGear
 
         public override void Update(Input input, GameTime gameTime)
         {
-            base.Update(input, gameTime);
             if (!Enabled)
                 return;
 
+            base.Update(input, gameTime);
+
             // Follow current path
 
-            if(currentPath != null && currentPathIndex >= 0)
+            if (currentPath != null && currentPathIndex >= 0)
             {
                 AnimationRunning = true;
-                if(currentPathIndex < currentPath.Count && state != State.ToAlert)
+                if (currentPathIndex < currentPath.Count && state != State.ToAlert)
                 {
                     var target = currentPath[currentPathIndex];
                     if (Vector2.DistanceSquared(Position, target) < 24)
                     {
                         currentPathIndex++;
-                        if(state == State.Patrolling)  // Loop path when patrolling
+                        if (state == State.Patrolling)  // Loop path when patrolling
                         {
-                            if(currentPathIndex >= currentPath.Count)
+                            if (currentPathIndex >= currentPath.Count)
                             {
                                 currentPathIndex = 0;
                             }
@@ -123,7 +126,7 @@ namespace MonoGear
                         Rotation = MathExtensions.VectorToAngle(target - Position);
 
                         var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if(state == State.Alerted)
+                        if (state == State.Alerted)
                         {
                             delta *= runSpeed;
                             AnimationDelta = 0.05f;
@@ -141,11 +144,11 @@ namespace MonoGear
                     // Reached end of path or waiting for a new one
                     currentPathIndex = -1;
 
-                    if(state == State.Alerted)
+                    if (state == State.Alerted)
                     {
                         StartSearch(gameTime);
                     }
-                    else if(state == State.ToPatrol)
+                    else if (state == State.ToPatrol)
                     {
                         currentPath = PatrolPath;
                         currentPathIndex = patrolPathIndex;
@@ -155,17 +158,17 @@ namespace MonoGear
             }
 
             // State stuff
-            if(state == State.Idle)
+            if (state == State.Idle)
             {
                 StartPatrol();
 
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
             }
-            else if(state == State.Searching)
+            else if (state == State.Searching)
             {
                 // Wait a little bit at the spot when 'searching'
-                if(gameTime.TotalGameTime.TotalSeconds >= searchStartTime + searchTime)
+                if (gameTime.TotalGameTime.TotalSeconds >= searchStartTime + searchTime)
                 {
                     state = State.Idle;
                 }
@@ -175,21 +178,29 @@ namespace MonoGear
                     AnimationCurrentFrame = 1;
                 }
             }
+            if (input.IsKeyPressed(Keys.G))
+            {
+                var bullet = new Projectile("Sprites/Bullet", "Bullet", MonoGearGame.FindEntitiesOfType<Guard>()[0].Collider);
+                bullet.Position = Position;
+                bullet.Rotation = Rotation;
+                MonoGearGame.RegisterLevelEntity(bullet);
+                AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
 
-            if(!Visible)
+            if (!Visible)
                 return;
 
             // TODO: Draw question mark (or something like that) when state == Seaching
-            if(state == State.ToAlert || state == State.Alerted)
+            if (state == State.ToAlert || state == State.Alerted)
             {
                 spriteBatch.Draw(alertSprite, new Vector2(Position.X, Position.Y - 16), alertSprite.Bounds, Color.White, 0, new Vector2(alertSprite.Bounds.Size.X, alertSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
-            else if(state == State.Searching)
+            else if (state == State.Searching)
             {
                 spriteBatch.Draw(searchSprite, new Vector2(Position.X, Position.Y - 16), searchSprite.Bounds, Color.White, 0, new Vector2(searchSprite.Bounds.Size.X, searchSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
@@ -206,7 +217,7 @@ namespace MonoGear
         /// </summary>
         public void StartPatrol()
         {
-            if(PatrolPath == null)
+            if (PatrolPath == null)
             {
                 state = State.Idle;
                 return;
@@ -222,7 +233,7 @@ namespace MonoGear
         /// <param name="origin"></param>
         public async void Alert(Vector2 origin)
         {
-            if(state == State.Patrolling)
+            if (state == State.Patrolling)
             {
                 patrolPathIndex = currentPathIndex;
             }
@@ -263,5 +274,6 @@ namespace MonoGear
         {
             this.Position = position;
         }
+
     }
 }
