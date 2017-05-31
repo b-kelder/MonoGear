@@ -25,5 +25,10 @@ namespace MonoGear
         {
             return (float)Math.Atan2(vector.X, -vector.Y);
         }
+
+        public static float AngleBetween(Vector2 a, Vector2 b)
+        {
+            return (float)Math.Atan2(b.Y - a.Y, b.X - a.X);
+        }
     }
 }

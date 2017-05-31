@@ -114,47 +114,14 @@ namespace MonoGear
             
             // THESE SHOULD BE PART OF A LEVEL
             
-            // Fountain bottem left sound Source
-            var fountain1 = new AudioSource();
-            fountain1.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 250, 0.1f);
-            fountain1.Position = new Vector2(1823, 2448);
-            AudioManager.AddAudioSource(fountain1);
-            RegisterGlobalEntity(fountain1);
-
-            // Fountain bottem right sound Source
-            var fountain2 = new AudioSource();
-            fountain2.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 250, 0.1f);
-            fountain2.Position = new Vector2(2879, 2448);
-            AudioManager.AddAudioSource(fountain2);
-            RegisterGlobalEntity(fountain2);
-
-            // Fountain middel  sound Source
-            var fountain3 = new AudioSource();
-            fountain3.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 250, 0.1f);
-            fountain3.Position = new Vector2(2351, 1920);
-            AudioManager.AddAudioSource(fountain3);
-            RegisterGlobalEntity(fountain3);
-
-            // Fountain top sound Source
-            var fountain4 = new AudioSource();
-            fountain4.AddSoundEffect(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Water_Fountain_cut"), 250, 0.1f);
-            fountain4.Position = new Vector2(2351, 1215);
-            AudioManager.AddAudioSource(fountain4);
-            RegisterGlobalEntity(fountain4);
-
-            // Crickets sound
-            AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Crickets_sound").CreateInstance(), true, 0.6f);
-
-            // Owl sound
-            AudioManager.GlobalAudioPlay(globalResources.GetResource<SoundEffect>("Audio/AudioFX/Owl_sound").CreateInstance(), true, 0.1f);
-            
+      
 
             // GLOBALS
             player = new Player();
             RegisterGlobalEntity(player);
             var pf = new Pathfinding();
             RegisterGlobalEntity(pf);
-
+			
             var level = Level.LoadLevel("WhiteHouse");
             LoadLevel(level);
         }

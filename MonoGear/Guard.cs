@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace MonoGear
 {
@@ -27,6 +28,12 @@ namespace MonoGear
         float walkSpeed;
         float runSpeed;
 
+        float hearingRange;
+        float viewRange;
+        float viewAngle;
+        private Player player;
+        private Vector2 playerPos;
+
         public List<Vector2> PatrolPath
         {
             get
@@ -38,7 +45,7 @@ namespace MonoGear
                 patrolPath = value;
                 patrolPathIndex = 0;
 
-                if(state == State.Patrolling)
+                if (state == State.Patrolling)
                 {
                     StartPatrol();
                 }
@@ -62,8 +69,12 @@ namespace MonoGear
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
             walkSpeed = 60.0f;
-            runSpeed = 100.0f;
+            runSpeed = 90.0f;
             searchTime = 2.5f;  // sec
+
+            hearingRange = 75f;
+            viewRange = 450.0f;
+            viewAngle = 90f;
 
             TextureAssetName = "Sprites/Guard";
 
@@ -82,15 +93,21 @@ namespace MonoGear
             Collider = new BoxCollider(this, new Vector2(8));
         }
 
+        public override void OnLevelLoaded()
+        {
+            base.OnLevelLoaded();
+            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
+        }
+
         protected override void LoadContent()
         {
             base.LoadContent();
 
-            if(alertSprite == null)
+            if (alertSprite == null)
             {
                 alertSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Alert");
             }
-            if(searchSprite == null)
+            if (searchSprite == null)
             {
                 searchSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Searching");
             }
@@ -102,18 +119,18 @@ namespace MonoGear
 
             // Follow current path
 
-            if(currentPath != null && currentPathIndex >= 0)
+            if (currentPath != null && currentPathIndex >= 0)
             {
                 AnimationRunning = true;
-                if(currentPathIndex < currentPath.Count && state != State.ToAlert)
+                if (currentPathIndex < currentPath.Count && state != State.ToAlert)
                 {
                     var target = currentPath[currentPathIndex];
                     if (Vector2.DistanceSquared(Position, target) < 24)
                     {
                         currentPathIndex++;
-                        if(state == State.Patrolling)  // Loop path when patrolling
+                        if (state == State.Patrolling)  // Loop path when patrolling
                         {
-                            if(currentPathIndex >= currentPath.Count)
+                            if (currentPathIndex >= currentPath.Count)
                             {
                                 currentPathIndex = 0;
                             }
@@ -124,7 +141,7 @@ namespace MonoGear
                         Rotation = MathExtensions.VectorToAngle(target - Position);
 
                         var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if(state == State.Alerted)
+                        if (state == State.Alerted)
                         {
                             delta *= runSpeed;
                             AnimationDelta = 0.05f;
@@ -142,11 +159,11 @@ namespace MonoGear
                     // Reached end of path or waiting for a new one
                     currentPathIndex = -1;
 
-                    if(state == State.Alerted)
+                    if (state == State.Alerted)
                     {
                         StartSearch(gameTime);
                     }
-                    else if(state == State.ToPatrol)
+                    else if (state == State.ToPatrol)
                     {
                         currentPath = PatrolPath;
                         currentPathIndex = patrolPathIndex;
@@ -156,17 +173,17 @@ namespace MonoGear
             }
 
             // State stuff
-            if(state == State.Idle)
+            if (state == State.Idle)
             {
                 StartPatrol();
 
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
             }
-            else if(state == State.Searching)
+            else if (state == State.Searching)
             {
                 // Wait a little bit at the spot when 'searching'
-                if(gameTime.TotalGameTime.TotalSeconds >= searchStartTime + searchTime)
+                if (gameTime.TotalGameTime.TotalSeconds >= searchStartTime + searchTime)
                 {
                     state = State.Idle;
                 }
@@ -176,6 +193,20 @@ namespace MonoGear
                     AnimationCurrentFrame = 1;
                 }
             }
+            if (input.IsKeyPressed(Keys.G))
+            {
+                var bullet = new Projectile("Sprites/Bullet", "Bullet", MonoGearGame.FindEntitiesOfType<Guard>()[0].Collider);
+                bullet.Position = Position;
+                bullet.Rotation = Rotation;
+                MonoGearGame.RegisterLevelEntity(bullet);
+                AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
+            }
+
+            if (CanSee(out playerPos) && state != State.Alerted && state != State.ToAlert)
+            {
+                state = State.ToAlert;
+                Alert(playerPos);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -183,11 +214,11 @@ namespace MonoGear
             base.Draw(spriteBatch);
 
             // TODO: Draw question mark (or something like that) when state == Seaching
-            if(state == State.ToAlert || state == State.Alerted)
+            if (state == State.ToAlert || state == State.Alerted)
             {
                 spriteBatch.Draw(alertSprite, new Vector2(Position.X, Position.Y - 16), alertSprite.Bounds, Color.White, 0, new Vector2(alertSprite.Bounds.Size.X, alertSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
-            else if(state == State.Searching)
+            else if (state == State.Searching)
             {
                 spriteBatch.Draw(searchSprite, new Vector2(Position.X, Position.Y - 16), searchSprite.Bounds, Color.White, 0, new Vector2(searchSprite.Bounds.Size.X, searchSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
@@ -204,7 +235,7 @@ namespace MonoGear
         /// </summary>
         public void StartPatrol()
         {
-            if(PatrolPath == null)
+            if (PatrolPath == null)
             {
                 state = State.Idle;
                 return;
@@ -220,7 +251,7 @@ namespace MonoGear
         /// <param name="origin"></param>
         public async void Alert(Vector2 origin)
         {
-            if(state == State.Patrolling)
+            if (state == State.Patrolling)
             {
                 patrolPathIndex = currentPathIndex;
             }
@@ -260,6 +291,38 @@ namespace MonoGear
         public void MoveTo(Vector2 position)
         {
             this.Position = position;
+        }
+
+        public bool CanSee(out Vector2 entityPos)
+        {
+            var dis = Vector2.Distance(Position, player.Position);
+
+            //Check if player is within view range
+            if (dis < viewRange)
+            {
+                //Check to see if the guard is looking at the player
+                var degrees = Math.Abs(MathHelper.ToDegrees(Rotation) - (90 + MathHelper.ToDegrees(MathExtensions.AngleBetween(Position, player.Position))));
+                if (degrees <= (viewAngle / 2) || degrees >= (360 - (viewAngle / 2)))
+                {
+                    //Check to see if nothing blocks view of the player
+                    Collider hit;
+                    Collider.RaycastAny(Position, player.Position, out hit, Tag);              
+                    if (hit.Entity.Tag.Equals("Player"))
+                    {
+                        entityPos = hit.Entity.Position;
+                        return true;
+                    }
+                }
+            }
+
+            if (dis < hearingRange && !player.sneakMode)
+            {
+                entityPos = player.Position;
+                return true;
+            }
+
+            entityPos = new Vector2();
+            return false;
         }
     }
 }

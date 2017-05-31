@@ -8,16 +8,29 @@ namespace MonoGear
         public static Camera main;
 
         private Viewport viewport;
-
+        /// <summary>
+        /// Camera's position
+        /// </summary>
         public Vector2 Position { get; set; }
+        /// <summary>
+        /// Camera's rotation
+        /// </summary>
         public float Rotation { get; set; }
+        /// <summary>
+        /// Camera's zoom value
+        /// </summary>
         public float Zoom { get; set; }
+        /// <summary>
+        /// Camera's origin location
+        /// </summary>
         public Vector2 Origin { get; set; }
 
         public Camera(Viewport viewport)
         {
-            if(main == null)
+            if (main == null)
+            {
                 main = this;
+            }
 
             this.viewport = viewport;
             Rotation = 0;
@@ -37,6 +50,10 @@ namespace MonoGear
             RecalculateOrigin();
         }
 
+        /// <summary>
+        /// Method that returns a view matrix
+        /// </summary>
+        /// <returns></returns>
         public Matrix GetViewMatrix()
         {
             return

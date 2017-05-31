@@ -31,6 +31,7 @@ namespace MonoGear
                     "Sprites/Alert",
                     "Sprites/Searching",
                     "Sprites/Taxi",
+                    "Sprites/Bullet",
                 }
             },
             {
@@ -47,6 +48,8 @@ namespace MonoGear
                     "Audio/AudioFX/Car_sound",
                     "Audio/AudioFX/Deja Vu",
                     "Audio/AudioFX/StoneTrow_sound",
+                    "Audio/AudioFX/Gunshot",
+                    "Audio/AudioFX/Wasted_Sound",
 
                 }
             },
