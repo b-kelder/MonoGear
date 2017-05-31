@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="4">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="6">
  <tileset firstgid="1" name="Tiles" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="tilesets/WhiteHouse.png" width="272" height="272"/>
   <tile id="0">
@@ -4055,7 +4055,23 @@
     <property name="tag" value="PlayerSpawnPoint"/>
    </properties>
   </object>
-  <object id="2" name="guard 1" type="guard" gid="26" x="712" y="793" width="16" height="16"/>
-  <object id="3" name="guard 2" type="guard" gid="26" x="712" y="897" width="16" height="16"/>
+  <object id="2" name="guard 1" type="guard" gid="26" x="712" y="793" width="16" height="16">
+   <properties>
+    <property name="patrolpath" value="Patrol Path A"/>
+   </properties>
+  </object>
+  <object id="3" name="guard 2" type="guard" gid="26" x="712" y="897" width="16" height="16">
+   <properties>
+    <property name="patrolpath" value="Patrol Path B"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Paths">
+  <object id="4" name="Patrol Path A" type="path" x="770" y="837">
+   <polyline points="80,0 285,0 310,37 373,37 390,5 581,6 580,-125 341,-126 341,-35 305,-34 304,33 342,36 342,131 83,131 94,98"/>
+  </object>
+  <object id="5" name="Patrol Path B" type="path" x="857" y="1098">
+   <polyline points="0,0 494,-1 494,92 495,-1 -1,0 0,107"/>
+  </object>
  </objectgroup>
 </map>

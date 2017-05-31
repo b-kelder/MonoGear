@@ -229,11 +229,18 @@ namespace MonoGear
 
                 // Load objects
                 var groups = map.ObjectGroups;
+
+                var guardPaths = new Dictionary<Guard, string>();
+                var paths = new Dictionary<string, List<Vector2>>();
+
                 foreach(var objectGroup in groups)
                 {
                     foreach(var obj in objectGroup.Objects)
                     {
                         var halfTileOffset = new Vector2(level.TileWidth, level.TileHeight) / 2;
+
+
+
                         Debug.WriteLine("Found object of type " + obj.Type);
                         WorldEntity entity = null;
                         if(obj.Type == "spawnpoint")
@@ -244,6 +251,30 @@ namespace MonoGear
                         {
                             entity = new Guard();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+
+                            string path;
+                            if(obj.Properties.TryGetValue("patrolpath", out path))
+                            {
+                                guardPaths.Add(entity as Guard, path);
+                            }
+                        }
+                        else if(obj.Type == "path")
+                        {
+                            // A patrol path
+
+                            if(!paths.ContainsKey(obj.Name))
+                            {
+                                paths[obj.Name] = new List<Vector2>();
+                                foreach(var point in obj.Points)
+                                {
+                                    Debug.WriteLine(point.X + ", " + point.Y);
+                                    paths[obj.Name].Add(new Vector2((float)point.X + (float)obj.X, (float)point.Y + (float)obj.Y));
+                                }
+                            }
+                            else
+                            {
+                                Debug.WriteLine("Duplicate path name " + obj.Name);
+                            }
                         }
                         //TODO: Add other objects we want to load here
 
@@ -259,6 +290,21 @@ namespace MonoGear
                             level.AddEntity(entity);
                             Debug.WriteLine("Added entity");
                         }
+                    }
+                }
+
+
+                // Assing guard patrol paths
+                foreach(var guardPath in guardPaths)
+                {
+                    List<Vector2> path;
+                    if(paths.TryGetValue(guardPath.Value, out path))
+                    {
+                        guardPath.Key.PatrolPath = path;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Guard requested unknown path " + guardPath.Value);
                     }
                 }
                 
