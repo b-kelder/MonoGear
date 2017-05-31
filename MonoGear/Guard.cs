@@ -64,8 +64,8 @@ namespace MonoGear
         public Guard()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
-            walkSpeed = 0.0f;
-            runSpeed = 00.0f;
+            walkSpeed = 60.0f;
+            runSpeed = 90.0f;
             searchTime = 2.5f;  // sec
 
             viewRange = 30.0f;
@@ -253,7 +253,6 @@ namespace MonoGear
             AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
             await Task.Delay(1000);
 
-            /*
             Task.Run(() =>
             {
                 Pathfinding.FindPath(Position, origin, (path) =>
@@ -263,7 +262,6 @@ namespace MonoGear
                     state = path != null ? State.Alerted : State.Idle;
                 });
             });
-            */
         }
 
         /// <summary>
