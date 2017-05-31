@@ -22,7 +22,6 @@ namespace MonoGear
             ToPatrol,
             ToAlert,
             Searching,
-            SeenPlayer
         }
 
         float walkSpeed;
@@ -64,12 +63,12 @@ namespace MonoGear
         public Guard()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
-            walkSpeed = 60.0f;
-            runSpeed = 100.0f;
+            walkSpeed = 0.0f;
+            runSpeed = 00.0f;
             searchTime = 2.5f;  // sec
 
-            viewRange = 300.0f;
-            viewAngle = 65.0f;
+            viewRange = 30.0f;
+            viewAngle = 90f;
 
             TextureAssetName = "Sprites/Guard";
 
@@ -191,9 +190,9 @@ namespace MonoGear
                 }
             }
 
-            if (CanSee(player, out playerPos)  && state != State.SeenPlayer)
+            if (CanSee(player, out playerPos)  && state != State.Alerted && state != State.ToAlert)
             {
-                state = State.SeenPlayer;
+                state = State.ToAlert;
                 Alert(playerPos);
             }
         }
