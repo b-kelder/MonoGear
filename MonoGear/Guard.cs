@@ -55,6 +55,9 @@ namespace MonoGear
 
         State state;
 
+        private float sightRange;
+        private float sightFov;
+
         public Guard()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
@@ -96,8 +99,6 @@ namespace MonoGear
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
-            if (!Enabled)
-                return;
 
             // Follow current path
 
@@ -180,9 +181,6 @@ namespace MonoGear
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-
-            if(!Visible)
-                return;
 
             // TODO: Draw question mark (or something like that) when state == Seaching
             if(state == State.ToAlert || state == State.Alerted)

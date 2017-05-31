@@ -30,8 +30,6 @@ namespace MonoGear
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
-            if(!Enabled)
-                return;
 
             // Check for colliders
             var colliders = Collider.BoxOverlapAny(Collider);

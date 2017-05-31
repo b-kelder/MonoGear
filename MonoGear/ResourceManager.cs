@@ -61,6 +61,7 @@ namespace MonoGear
         };
 
         private Dictionary<string, object> loadedResources;
+        private ContentManager content;
 
         public ResourceManager()
         {
@@ -70,6 +71,7 @@ namespace MonoGear
 
         public void LoadResources(ContentManager content)
         {
+            this.content = content;
             foreach (var type in resources)
             {
                 if (type.Key == typeof(Texture2D))
@@ -112,6 +114,12 @@ namespace MonoGear
             if (loadedResources.TryGetValue(name, out result))
             {
                 return (T)result;
+            }
+            else
+            {
+                var asset = content.Load<T>(name);
+                RegisterLoadedResource(name, asset);
+                return asset;
             }
             throw new KeyNotFoundException("Unknow resource " + name);
         }

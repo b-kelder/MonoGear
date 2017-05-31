@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +24,11 @@ namespace MonoGear
             throw new NotImplementedException();
         }
 
+        public int GetTileValue(Vector2 pos)
+        {
+            return -1;
+        }
+
 
         /// <summary>
         /// Populates the collision array based on the given string.
@@ -47,15 +52,7 @@ namespace MonoGear
             BBSize = new Microsoft.Xna.Framework.Vector2(Tiles.GetLength(0) * TileSize, Tiles.GetLength(1) * TileSize) * 2;
         }
 
-        public int GetTileValue(Vector2 position)
-        {
-            var xy = (position - Entity.Position) / TileSize;
-            if(xy.X <0 || xy.Y <0 || xy.X > Tiles.GetLength(0) || xy.Y > Tiles.GetLength(1))
-            {
-                return -1;
-            }
-            return Tiles[(int)xy.X, (int)xy.Y];
-
-        }
+        
     }
 }
+*/

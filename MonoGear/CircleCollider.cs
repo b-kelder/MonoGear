@@ -32,10 +32,9 @@ namespace MonoGear
             {
                 return CircleOverlap(circle, this);
             }
-            var map = other as TilemapCollider;
-            if(map != null)
+            if(IsTilemap(other))
             {
-                return CircleTilemapOverlap(this, map);
+                return BoxTilemapOverlap(this, MonoGearGame.GetCurrentLevel());
             }
             if(BoxOverlap(this, other))
             {

@@ -75,8 +75,6 @@ namespace MonoGear
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
-            if (!Enabled)
-                return;
 
             if(currentPath != null && currentPathIndex >= 0)
             {

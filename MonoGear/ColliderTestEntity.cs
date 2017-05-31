@@ -10,15 +10,24 @@ namespace MonoGear
 {
     class ColliderTestEntity : WorldEntity
     {
+        public class NopeException : Exception
+        {
+            public NopeException() : base("Nope")
+            {
+            }
+        }
+
         public ColliderTestEntity()
         {
+            throw new NopeException();
+
             TextureAssetName = "Sprites/s_generator";
             Tag = "ColliderTest";
 
             LoadContent();
 
             Collider = new BoxCollider(this, Size);
-
+            /*
             // Fountain bottem left collision
             var fountain1 = new CircleCollider(new WorldEntity(), 3 * 16);
             fountain1.Entity.Position = new Microsoft.Xna.Framework.Vector2(1823, 2448);
@@ -38,7 +47,7 @@ namespace MonoGear
             var fountain4 = new CircleCollider(new WorldEntity(), 3 * 16);
             fountain4.Entity.Position = new Microsoft.Xna.Framework.Vector2(2351, 1215);
             fountain4.Entity.Tag = "Fountain";
-
+            */
         }
     }
 }

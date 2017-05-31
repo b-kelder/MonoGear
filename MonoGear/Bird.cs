@@ -33,14 +33,12 @@ namespace MonoGear
             Z = 100;
 
             LoadContent();
-
-            Collider = new BoxCollider(this, new Vector2(8));
             
-                birdSound = new AudioSource();
-                //birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 700);
-                birdSound.Position = Position;
-                AudioManager.AddAudioSource(birdSound);
-                birdSound.Pause();
+            birdSound = new AudioSource();
+            //birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 700);
+            birdSound.Position = Position;
+            AudioManager.AddAudioSource(birdSound);
+            birdSound.Pause();
             
         }
 
@@ -61,8 +59,6 @@ namespace MonoGear
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
-            if(!Enabled)
-                return;
 
             if(Position.Y < -200)
             {

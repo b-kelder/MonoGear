@@ -22,18 +22,18 @@ namespace MonoGear
 
         public override bool Collides(Collider other)
         {
-            if(BoxOverlap(this, other))
+            if(IsTilemap(other))
+            {
+                return BoxTilemapOverlap(this, MonoGearGame.GetCurrentLevel());
+            }
+            else if(BoxOverlap(this, other))
             {
                 var circle = other as CircleCollider;
                 if(circle != null)
                 {
                     return CircleBoxOverlap(circle, this);
                 }
-                var map = other as TilemapCollider;
-                if(map != null)
-                {
-                    return BoxTilemapOverlap(this, map);
-                }
+
                 return true;
             }
             return false;

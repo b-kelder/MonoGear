@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +13,13 @@ namespace MonoGear
         /// <summary>
         /// Contains all colliders
         /// </summary>
-        private static List<Collider> _colliders = new List<Collider>();
+        private static HashSet<Collider> _colliders = new HashSet<Collider>();
         /// <summary>
         /// Collider used for raycasting
         /// </summary>
-        private static BoxCollider _raycastCollider = new BoxCollider(new WorldEntity(), Vector2.One);
+        private static BoxCollider _raycastCollider = new BoxCollider(new Bird(), Vector2.One);  // Just need a WorldEntity that has no collider for this
+
+        private static BoxCollider _tilemapCollider = new BoxCollider(new Bird(), Vector2.Zero);
 
         public bool Trigger { get; set; }
         public bool Active { get; set; }
@@ -34,10 +37,15 @@ namespace MonoGear
             Active = true;
             Trigger = false;
 
+            Register();
+        }
+
+        public void Register()
+        {
             _colliders.Add(this);
         }
 
-        ~Collider()
+        public void Deregister()
         {
             _colliders.Remove(this);
         }
@@ -145,12 +153,6 @@ namespace MonoGear
             return (cornerDistance_sq <= MathExtensions.Square(a.Radius));
         }
 
-        public static bool CircleTilemapOverlap(CircleCollider circle, TilemapCollider map)
-        {
-            // I'm not doing this, everything's a box now
-            return BoxTilemapOverlap(circle, map);
-        }
-
         public static bool RaycastAny(Vector2 from, Vector2 to, out Collider firstHit, string ignoreTag, float delta = 8.0f)
         {
             Vector2 deltaVec = (to - from);
@@ -179,20 +181,26 @@ namespace MonoGear
             return false;
         }
 
-        public static bool BoxTilemapOverlap(Collider box, TilemapCollider map)
+        public static bool CircleTilemapOverlap(CircleCollider circle, Level level)
+        {
+            // I'm not doing this, everything's a box now
+            return BoxTilemapOverlap(circle, level);
+        }
+
+        public static bool BoxTilemapOverlap(Collider box, Level level)
         {
             var boxStart = new Vector2(box.Entity.Position.X - box.BBSize.X / 2, box.Entity.Position.Y - box.BBSize.Y / 2);
             var boxEnd = new Vector2(box.Entity.Position.X + box.BBSize.X / 2, box.Entity.Position.Y + box.BBSize.Y / 2);
-            int colStartX = Math.Max((int)(boxStart.X / map.TileSize), 0);
-            int colStartY = Math.Max((int)(boxStart.Y / map.TileSize), 0);
-            int colEndX = (int)(boxEnd.X / map.TileSize);
-            int colEndY = (int)(boxEnd.Y / map.TileSize);
+            int colStartX = Math.Max((int)(boxStart.X / level.TileWidth), 0);
+            int colStartY = Math.Max((int)(boxStart.Y / level.TileHeight), 0);
+            int colEndX = (int)(boxEnd.X / level.TileWidth);
+            int colEndY = (int)(boxEnd.Y / level.TileHeight);
 
-            for(int x = colStartX; x <= colEndX && x < map.Tiles.GetLength(0); x++)
+            for(int x = colStartX; x <= colEndX && x < level.Width; x++)
             {
-                for(int y = colStartY; y <= colEndY && y < map.Tiles.GetLength(1); y++)
+                for(int y = colStartY; y <= colEndY && y < level.Height; y++)
                 {
-                    if(map.Tiles[x, y] == 1)
+                    if(!level.Tiles[x + y * level.Width].Walkable)
                     {
                         return true;
                     }
@@ -203,8 +211,19 @@ namespace MonoGear
         }
 
         /// <summary>
+        /// Returns if the collider is the dummy used for indicating a tilemap collision.
+        /// </summary>
+        /// <param name="col">Collider to check</param>
+        /// <returns>True if it is the tilemap collider dummy</returns>
+        public static bool IsTilemap(Collider col)
+        {
+            return col == _tilemapCollider;
+        }
+
+        /// <summary>
         /// Checks collider list and returns any colliders the given collider has a box overlap with.
         /// Does not return inactive or trigger colliders or colliders who's entity is disabled.
+        /// Used in the first stage for collision checks to gather the colliders to do more precise collision detection against.
         /// </summary>
         /// <param name="col">Collider to check</param>
         /// <returns>Colliders that collide</returns>
@@ -213,7 +232,7 @@ namespace MonoGear
             List<Collider> cols = new List<Collider>();
             foreach(var other in _colliders)
             {
-                if(other == col || other.Active == false || other.Entity.Enabled == false || other.Trigger)
+                if(other == col || other.Active == false || other.Entity.Enabled == false || other.Trigger || other == _raycastCollider || other == _tilemapCollider)
                     continue;
 
                 if(BoxOverlap(col, other))
@@ -221,6 +240,10 @@ namespace MonoGear
                     cols.Add(other);
                 }
             }
+
+            // Always 'collide' with the tilemap
+            cols.Add(_tilemapCollider);
+
             return cols;
         }
     }

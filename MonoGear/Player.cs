@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using Windows.ApplicationModel.Core;
+using System.Diagnostics;
 
 namespace MonoGear
 {
@@ -61,9 +62,6 @@ namespace MonoGear
 
         public override void Update(Input input, GameTime gameTime)
         {
-            if(!Enabled)
-                return;
-
             base.Update(input, gameTime);
 
             var dx = 0.0f;
@@ -96,37 +94,30 @@ namespace MonoGear
                 delta *= Speed;
             }
 
-            var tilemap = MonoGearGame.FindEntitiesWithTag("Tilemap");
-            var col = tilemap[0].Collider as TilemapCollider;
-            int tilevalue = col.GetTileValue(Position);
-            if(tilevalue != -1)
+            var tilevalue = MonoGearGame.GetCurrentLevel().GetTile(Position)?.Sound;
+            SoundEffectInstance tilesound;
+            switch(tilevalue)
             {
-                SoundEffectInstance tilesound;
-                switch(tilevalue)
-                {
-                    case 0:
-                        tilesound = walkingSoundGrass;
-                        break;
-                    case 2:
-                        tilesound = walkingSoundWater;
-                        break;
-                    case 3:
-                        tilesound = walkingSoundStone;
-                        break;
-                    default:
-                        tilesound = null;
-                        break;
-                }
-
-                if(tilesound != null && tilesound != walkingSound)
-                {
-                    // stop old sound
-                    AudioManager.GlobalAudioStop(walkingSound);
-                    walkingSound = tilesound;
-                }
-             
+                case Tile.TileSound.Grass:
+                    tilesound = walkingSoundGrass;
+                    break;
+                case Tile.TileSound.Water:
+                    tilesound = walkingSoundWater;
+                    break;
+                case Tile.TileSound.Concrete:
+                    tilesound = walkingSoundStone;
+                    break;
+                default:
+                    tilesound = walkingSoundStone;
+                    break;
             }
 
+            if(tilesound != null && tilesound != walkingSound)
+            {
+                // stop old sound
+                AudioManager.GlobalAudioStop(walkingSound);
+                walkingSound = tilesound;
+            }
             if(delta.LengthSquared() > 0)
             {
                 Rotation = MathExtensions.VectorToAngle(delta);
@@ -174,13 +165,8 @@ namespace MonoGear
                 var deltaY = new Vector2(0, delta.Y);
 
                 Position += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                Collider other;
-                if (Collider.CollidesAny(out other))
+                if (Collider.CollidesAny())
                 {
-                    if(other.Entity.Tag == "Car")
-                    {
-                        //CoreApplication.Exit();
-                    }
                     Position = prevPos;
                 }
                 prevPos = Position;

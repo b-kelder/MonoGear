@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace MonoGear
 {
-    class WorldEntityAnimated : WorldEntity
+    public abstract class WorldEntityAnimated : WorldEntity
     {
         private float animationCounter;
 
@@ -81,7 +81,7 @@ namespace MonoGear
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if(!Visible || instanceTexture == null)
+            if(instanceTexture == null)
                 return;
 
             Rectangle sourceRect = new Rectangle(AnimationCurrentFrame * (int)Size.X, 0, (int)Size.X, (int)Size.Y);

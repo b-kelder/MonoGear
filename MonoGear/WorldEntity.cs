@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    public class WorldEntity
+    public abstract class WorldEntity
     {
         protected Texture2D instanceTexture;
 
@@ -63,24 +63,22 @@ namespace MonoGear
         public virtual void OnLevelLoaded()
         {
             if(Collider != null)
-                Collider.Active = true;
+                Collider.Deregister();
         }
 
         public virtual void OnLevelUnloaded()
         {
             if(Collider != null)
-                Collider.Active = false;
+                Collider.Register();
         }
 
         public virtual void Update(Input input, GameTime gameTime)
         {
-            if(!Enabled)
-                return;
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            if(!Visible || instanceTexture == null)
+            if(instanceTexture == null)
                 return;
 
             spriteBatch.Draw(instanceTexture, new Vector2(Position.X, Position.Y), instanceTexture.Bounds, Color.White, Rotation, Size / 2, 1, SpriteEffects.None, 0);

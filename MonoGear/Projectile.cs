@@ -30,10 +30,8 @@ namespace MonoGear
 
         public override void Update(Input input, GameTime gameTime)
         {
-            if (!Enabled)
-                return;
-
             base.Update(input, gameTime);
+
             Collider collider;
             var pos = Position;
             var delta = Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;

@@ -22,8 +22,8 @@ namespace MonoGear
         static Pathfinding instance;
         static HashSet<Point> unreachableTargets = new HashSet<Point>();
 
-        static UInt16[,] map;
-        static Node[,] nodes;
+        static Tile[] map;
+        static Node[] nodes;
         static ConcurrentQueue<PathRequest> requests = new ConcurrentQueue<PathRequest>();
 
         Task pathFindingTask;
@@ -73,24 +73,24 @@ namespace MonoGear
 
         private void UpdateInternalMap()
         {
-            var tilemap = MonoGearGame.FindEntitiesWithTag("Tilemap");
-            if(tilemap.Count > 0)
+            var level = MonoGearGame.GetCurrentLevel();
+            if(level != null)
             {
-                var col = tilemap[0].Collider as TilemapCollider;
-                map = col.Tiles;
+                map = level.Tiles;
 
-                nodes = new Node[map.GetLength(0), map.GetLength(1)];
+                nodes = new Node[map.Length];
 
-                for(int y = 0; y < map.GetLength(1); y++)
+                for(int y = 0; y < level.Height; y++)
                 {
-                    for(int x = 0; x < map.GetLength(0); x++)
+                    for(int x = 0; x < level.Width; x++)
                     {
-                        nodes[x, y] = new Node();
-                        nodes[x, y].Location.X = x;
-                        nodes[x, y].Location.Y = y;
+                        nodes[x + y * level.Width] = new Node();
+                        nodes[x + y * level.Width].Location.X = x;
+                        nodes[x + y * level.Width].Location.Y = y;
                     }
                 }
             }
+
         }
 
         private void DoNextRequest()
@@ -123,8 +123,9 @@ namespace MonoGear
         private static List<Vector2> FindPathImpl(Vector2 from, Vector2 to)
         {
             Node current = null;
-            var start = nodes[(int)(from.X / 16), (int)(from.Y / 16)];
-            var target = nodes[(int)(to.X / 16), (int)(to.Y / 16)];
+            var level = MonoGearGame.GetCurrentLevel();
+            var start = nodes[(int)(from.X / level.TileWidth) + (int)(from.Y / level.TileHeight) * level.Width];
+            var target = nodes[(int)(to.X / level.TileWidth) +  (int)(to.Y / level.TileHeight)   * level.Width];
 
             if(!unreachableTargets.Contains(target.Location))
             {
@@ -205,7 +206,7 @@ namespace MonoGear
 
                     while(current != null)
                     {
-                        path.Add(new Vector2(current.Location.X, current.Location.Y) * 16 + Vector2.One * 8);
+                        path.Add(new Vector2(current.Location.X, current.Location.Y) * level.TileHeight + Vector2.One * level.TileHeight / 2);
                         current = current.Parent;
                     }
 
@@ -223,15 +224,16 @@ namespace MonoGear
             return null;
         }
 
-        static void GetNodeIfWalkable(int x, int y, UInt16[,] map, List<Node> list)
+        static void GetNodeIfWalkable(int x, int y, Tile[] map, List<Node> list)
         {
-            if (x < map.GetLength(0) && x >= 0 && (y) < map.GetLength(1) && y >= 0 && map[x, y] != 1)
+            var level = MonoGearGame.GetCurrentLevel();
+            if (x < level.Width && x >= 0 && (y) < level.Height && y >= 0 && map[x + y * level.Width].Walkable)
             {
-                list.Add(nodes[x, y]);
+                list.Add(nodes[x + y * level.Width]);
             }
         }
 
-        static List<Node> GetWalkableAdjacentTiles(Point location, UInt16[,] map)
+        static List<Node> GetWalkableAdjacentTiles(Point location, Tile[] map)
         {
             int x = location.X;
             int y = location.Y;
