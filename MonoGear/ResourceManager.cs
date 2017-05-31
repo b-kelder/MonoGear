@@ -49,6 +49,7 @@ namespace MonoGear
                     "Audio/AudioFX/Deja Vu",
                     "Audio/AudioFX/StoneTrow_sound",
                     "Audio/AudioFX/Gunshot",
+                    "Audio/AudioFX/Wasted_Sound",
 
                 }
             },

@@ -200,6 +200,7 @@ namespace MonoGear
                 bullet.Rotation = Rotation;
                 MonoGearGame.RegisterLevelEntity(bullet);
                 AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
+            }
 
             if (CanSee(out playerPos) && state != State.Alerted && state != State.ToAlert)
             {

@@ -253,3 +253,9 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Bullet.png
 
+#begin Audio/AudioFX/Wasted_sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Wasted_sound.wav
+
