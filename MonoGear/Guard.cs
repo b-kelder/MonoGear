@@ -22,10 +22,16 @@ namespace MonoGear
             ToPatrol,
             ToAlert,
             Searching,
+            SeenPlayer
         }
 
         float walkSpeed;
         float runSpeed;
+
+        float viewRange;
+        float viewAngle;
+        private WorldEntity player;
+        private Vector2 playerPos;
 
         public List<Vector2> PatrolPath
         {
@@ -62,6 +68,9 @@ namespace MonoGear
             runSpeed = 100.0f;
             searchTime = 2.5f;  // sec
 
+            viewRange = 300.0f;
+            viewAngle = 65.0f;
+
             TextureAssetName = "Sprites/Guard";
 
             AnimationLength = 3;
@@ -77,6 +86,12 @@ namespace MonoGear
             LoadContent();
 
             Collider = new BoxCollider(this, new Vector2(8));
+        }
+
+        public override void OnLevelLoaded()
+        {
+            base.OnLevelLoaded();
+            player = MonoGearGame.FindEntitiesWithTag("Player")[0];
         }
 
         protected override void LoadContent()
@@ -175,6 +190,12 @@ namespace MonoGear
                     AnimationCurrentFrame = 1;
                 }
             }
+
+            if (CanSee(player, out playerPos)  && state != State.SeenPlayer)
+            {
+                state = State.SeenPlayer;
+                Alert(playerPos);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -262,6 +283,31 @@ namespace MonoGear
         public void MoveTo(Vector2 position)
         {
             this.Position = position;
+        }
+
+        public bool CanSee(WorldEntity entity, out Vector2 entityPos)
+        {
+            //Check if player is within view range
+            if (Vector2.Distance(Position, entity.Position) < viewRange)
+            {
+                //Check to see if the guard is looking at the player
+                var radians = MathExtensions.AngleBetween(Position, entity.Position);
+                var degrees = radians * (180 / Math.PI);
+                //TODO: MAKE WORK
+                if (degrees <= viewAngle)
+                {
+                    //Check to see if nothing blocks view of the player
+                    Collider hit;
+                    Collider.RaycastAny(Position, entity.Position, out hit, Tag);              
+                    if (hit.Entity.Tag.Equals("Player"))
+                    {
+                        entityPos = hit.Entity.Position;
+                        return true;
+                    }
+                }
+            }
+            entityPos = new Vector2();
+            return false;
         }
     }
 }
