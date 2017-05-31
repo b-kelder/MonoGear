@@ -28,9 +28,10 @@ namespace MonoGear
         float walkSpeed;
         float runSpeed;
 
+        float hearingRange;
         float viewRange;
         float viewAngle;
-        private WorldEntity player;
+        private Player player;
         private Vector2 playerPos;
 
         public List<Vector2> PatrolPath
@@ -68,7 +69,8 @@ namespace MonoGear
             runSpeed = 90.0f;
             searchTime = 2.5f;  // sec
 
-            viewRange = 300.0f;
+            hearingRange = 75f;
+            viewRange = 450.0f;
             viewAngle = 90f;
 
             TextureAssetName = "Sprites/Guard";
@@ -91,7 +93,7 @@ namespace MonoGear
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
-            player = MonoGearGame.FindEntitiesWithTag("Player")[0];
+            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
         }
 
         protected override void LoadContent()
@@ -191,7 +193,7 @@ namespace MonoGear
                 }
             }
 
-            if (CanSee(player, out playerPos)  && state != State.Alerted && state != State.ToAlert)
+            if (CanSee(out playerPos) && state != State.Alerted && state != State.ToAlert)
             {
                 state = State.ToAlert;
                 Alert(playerPos);
@@ -285,26 +287,34 @@ namespace MonoGear
             this.Position = position;
         }
 
-        public bool CanSee(WorldEntity entity, out Vector2 entityPos)
+        public bool CanSee(out Vector2 entityPos)
         {
+            var dis = Vector2.Distance(Position, player.Position);
+
             //Check if player is within view range
-            if (Vector2.Distance(Position, entity.Position) < viewRange)
+            if (dis < viewRange)
             {
                 //Check to see if the guard is looking at the player
-                var degrees = Math.Abs(MathHelper.ToDegrees(Rotation) - (90 + MathHelper.ToDegrees(MathExtensions.AngleBetween(Position, entity.Position))));
+                var degrees = Math.Abs(MathHelper.ToDegrees(Rotation) - (90 + MathHelper.ToDegrees(MathExtensions.AngleBetween(Position, player.Position))));
                 if (degrees <= (viewAngle / 2) || degrees >= (360 - (viewAngle / 2)))
                 {
                     //Check to see if nothing blocks view of the player
                     Collider hit;
-                    Collider.RaycastAny(Position, entity.Position, out hit, Tag);              
+                    Collider.RaycastAny(Position, player.Position, out hit, Tag);              
                     if (hit.Entity.Tag.Equals("Player"))
                     {
                         entityPos = hit.Entity.Position;
                         return true;
                     }
                 }
-                
             }
+
+            if (dis < hearingRange && !player.sneakMode)
+            {
+                entityPos = player.Position;
+                return true;
+            }
+
             entityPos = new Vector2();
             return false;
         }
