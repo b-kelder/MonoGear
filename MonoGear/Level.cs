@@ -277,6 +277,7 @@ namespace MonoGear
                             }
                         }
                         //TODO: Add other objects we want to load here
+                        //Like cars, birds, CCTV camera's
 
                         if(entity != null)
                         {

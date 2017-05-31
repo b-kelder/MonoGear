@@ -35,11 +35,9 @@ namespace MonoGear
             LoadContent();
             
             birdSound = new AudioSource();
-            //birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 700);
             birdSound.Position = Position;
             AudioManager.AddAudioSource(birdSound);
-            birdSound.Pause();
-            
+            birdSound.Pause();    
         }
 
         public override void OnLevelLoaded()

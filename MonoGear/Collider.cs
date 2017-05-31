@@ -115,7 +115,7 @@ namespace MonoGear
                 a.Entity.Position.X + a.BBSize.X / 2 < b.Entity.Position.X - b.BBSize.X / 2 ||    // a < b
                 a.Entity.Position.Y + a.BBSize.Y / 2 < b.Entity.Position.Y - b.BBSize.Y / 2 ||   // a ^ b
                 a.Entity.Position.X - a.BBSize.X / 2 > b.Entity.Position.X + b.BBSize.X / 2 ||   // a > b
-                a.Entity.Position.Y - a.BBSize.Y / 2 > b.Entity.Position.Y + b.BBSize.Y / 2)     // a under b
+                a.Entity.Position.Y - a.BBSize.Y / 2 > b.Entity.Position.Y + b.BBSize.Y / 2)     // a v b
             {
                 return false;
             }
@@ -168,7 +168,7 @@ namespace MonoGear
 
             while(distance < prevDistance)
             {
-                if(_raycastCollider.CollidesAny(out firstHit) && firstHit.Entity.Tag != ignoreTag)
+                if(_raycastCollider.CollidesAny(out firstHit) && firstHit.Entity.Tag != ignoreTag && firstHit.Entity.Tag != _raycastCollider.Entity.Tag)
                 {
                     return true;
                 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace MonoGear
 {
@@ -28,9 +29,9 @@ namespace MonoGear
         float walkSpeed;
         float runSpeed;
 
-        float hearingRange;
-        float viewRange;
-        float viewAngle;
+        private float hearingRange;
+        private float sightRange;
+        private float sightFov;
         private Player player;
         private Vector2 playerPos;
 
@@ -62,9 +63,6 @@ namespace MonoGear
 
         State state;
 
-        private float sightRange;
-        private float sightFov;
-
         public Guard()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
@@ -73,8 +71,8 @@ namespace MonoGear
             searchTime = 2.5f;  // sec
 
             hearingRange = 75f;
-            viewRange = 450.0f;
-            viewAngle = 90f;
+            sightRange = 450.0f;
+            sightFov = 90f;
 
             TextureAssetName = "Sprites/Guard";
 
@@ -298,12 +296,13 @@ namespace MonoGear
             var dis = Vector2.Distance(Position, player.Position);
 
             //Check if player is within view range
-            if (dis < viewRange)
+            if (dis < sightRange)
             {
                 //Check to see if the guard is looking at the player
                 var degrees = Math.Abs(MathHelper.ToDegrees(Rotation) - (90 + MathHelper.ToDegrees(MathExtensions.AngleBetween(Position, player.Position))));
-                if (degrees <= (viewAngle / 2) || degrees >= (360 - (viewAngle / 2)))
+                if (degrees <= (sightFov / 2) || degrees >= (360 - (sightFov / 2)))
                 {
+                    Debug.WriteLine("");
                     //Check to see if nothing blocks view of the player
                     Collider hit;
                     if(Collider.RaycastAny(Position, player.Position, out hit, Tag))

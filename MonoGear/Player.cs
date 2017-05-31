@@ -126,6 +126,7 @@ namespace MonoGear
             }
             else
             {
+                sneakMode = true;
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
                 AudioManager.GlobalAudioStop(walkingSound);
