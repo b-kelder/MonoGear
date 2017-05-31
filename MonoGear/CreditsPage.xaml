@@ -17,7 +17,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="player.Height" Value="220"/>
-                        <Setter Target="player.Width" Value="Auto"/>
+                        <Setter Target="player.Width" Value="650"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Tablet">
@@ -26,7 +26,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="player.Height" Value="520"/>
-                        <Setter Target="player.Width" Value="Auto"/>
+                        <Setter Target="player.Width" Value="950"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Desktop">
@@ -35,7 +35,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="player.Height" Value="720"/>
-                        <Setter Target="player.Width" Value="Auto"/>
+                        <Setter Target="player.Width" Value="1250"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -62,6 +62,6 @@
         <Button x:Name="backButton" Grid.Column="5" Grid.Row="10" HorizontalAlignment="Center" VerticalAlignment="Top" Height="50" Width="175" Click="BackButton_Click">
             <Image Source="Assets/back.png"/>
         </Button>
-        <MediaElement x:Name="player" Source="Assets/Credits.mp4" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Center" Height="720" Width="Auto" />
+        <MediaElement x:Name="player" Source="Assets/Credits.mp4" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="4" VerticalAlignment="Center" Height="720" Width="1250" />
     </Grid>
 </Page>
