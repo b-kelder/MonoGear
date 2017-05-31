@@ -16,8 +16,8 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="player.Height" Value="220"/>
-                        <Setter Target="player.Width" Value="650"/>
+                        <Setter Target="MediaPlayer.Height" Value="220"/>
+                        <Setter Target="MediaPlayer.Width" Value="650"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Tablet">
@@ -25,8 +25,8 @@
                         <AdaptiveTrigger MinWindowWidth="900" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="player.Height" Value="520"/>
-                        <Setter Target="player.Width" Value="950"/>
+                        <Setter Target="MediaPlayer.Height" Value="520"/>
+                        <Setter Target="MediaPlayer.Width" Value="950"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Desktop">
@@ -34,8 +34,8 @@
                         <AdaptiveTrigger MinWindowWidth="1300" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="player.Height" Value="720"/>
-                        <Setter Target="player.Width" Value="1350"/>
+                        <Setter Target="MediaPlayer.Height" Value="720"/>
+                        <Setter Target="MediaPlayer.Width" Value="1350"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
