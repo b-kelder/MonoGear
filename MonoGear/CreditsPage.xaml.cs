@@ -31,5 +31,10 @@ namespace MonoGear
         {
             this.Frame.Navigate(typeof(MenuPage));
         }
+
+        private void MediaPlayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MenuPage));
+        }
     }
 }

@@ -222,6 +222,8 @@ namespace MonoGear
                 guardPosY += 10;
             }
 
+            lvl.AddEntity(new Guard() { Position = new Vector2(1760, 1040), Rotation = (float)(90 / (180 / Math.PI)) });
+
             // Patrol test
             lvl.AddEntity(new Guard()
             {
