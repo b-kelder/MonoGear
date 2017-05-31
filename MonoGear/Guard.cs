@@ -68,7 +68,7 @@ namespace MonoGear
             runSpeed = 90.0f;
             searchTime = 2.5f;  // sec
 
-            viewRange = 30.0f;
+            viewRange = 300.0f;
             viewAngle = 90f;
 
             TextureAssetName = "Sprites/Guard";
