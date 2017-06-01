@@ -194,7 +194,6 @@ namespace MonoGear
 
             if (CanSee(out playerPos) && state != State.Alerted && state != State.ToAlert)
             {
-                state = State.ToAlert;
                 Alert(playerPos);
             }
         }
