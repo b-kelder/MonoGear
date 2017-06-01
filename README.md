@@ -6,4 +6,3 @@ In order to get inside this highly protected building Jake needs to go stealth a
 
 ### Avalible summer 2017
 <div align="center"><img src ="http://www.unitedtaxi.org/H2_preorder_button.png" /></div>
-and get access to the game 3 days before everyone else!
