@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGear
 {
@@ -20,7 +21,7 @@ namespace MonoGear
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Random rand = new Random();
             speed = 250f + rand.Next(-20, 20);
-            TextureAssetName = "Sprites/Rock";
+            TextureAssetName = "Sprites/SleepDart";
             Tag = "SleepDart";
             LoadContent();
 
@@ -44,6 +45,7 @@ namespace MonoGear
                 if (collider.Entity.Tag.Equals("Guard"))
                 {
                     collider.Entity.Enabled = false;
+                    AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/HitSound"), 1);
                 }
 
                 Enabled = false;

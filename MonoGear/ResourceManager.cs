@@ -34,6 +34,9 @@ namespace MonoGear
                     "Sprites/Bullet",
                     "Sprites/gameover",
                     "Sprites/blank",
+                    "Sprites/SleepDart",
+                    "Sprites/GuardHit",
+                    "Sprites/GuardSleeping",
                 }
             },
             {
@@ -52,6 +55,9 @@ namespace MonoGear
                     "Audio/AudioFX/StoneTrow_sound",
                     "Audio/AudioFX/Gunshot",
                     "Audio/AudioFX/Wasted_Sound",
+                    "Audio/AudioFX/Blowgun",
+                    "Audio/AudioFX/HitSound",
+                    "Audio/AudioFX/Snore",
 
                 }
             },
