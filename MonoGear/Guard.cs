@@ -197,6 +197,17 @@ namespace MonoGear
                 Alert(playerPos);
             }
 
+            if (CanSee(out playerPos))
+            {
+                {
+                    var bullet = new Projectile("Sprites/Bullet", "Bullet", MonoGearGame.FindEntitiesOfType<Guard>()[0].Collider);
+                    bullet.Position = Position;
+                    bullet.Rotation = Rotation;
+                    MonoGearGame.RegisterLevelEntity(bullet);
+                    AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
+                }
+            }
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
