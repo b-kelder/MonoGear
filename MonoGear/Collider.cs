@@ -19,8 +19,6 @@ namespace MonoGear
         /// </summary>
         private static BoxCollider _raycastCollider = new BoxCollider(new Bird(), Vector2.One);  // Just need a WorldEntity that has no collider for this
 
-        private static BoxCollider _tilemapCollider = new BoxCollider(new Bird(), Vector2.Zero);
-
         public bool Trigger { get; set; }
         public bool Active { get; set; }
         public Vector2 BBSize { get; protected set; }
@@ -50,6 +48,11 @@ namespace MonoGear
             _colliders.Remove(this);
         }
 
+        public static void OnReturnToMenu()
+        {
+            _colliders.Clear();
+        }
+
         public abstract bool Collides(Collider other);
 
         public virtual bool CollidesAny()
@@ -65,10 +68,20 @@ namespace MonoGear
                     }
                 }
             }
-            return false;
+
+            // Tilemap collision
+            var circle = this as CircleCollider;
+            if(circle != null)
+            {
+                return CircleTilemapOverlap(circle, MonoGearGame.GetCurrentLevel());
+            }
+            else
+            {
+                return BoxTilemapOverlap(this, MonoGearGame.GetCurrentLevel());
+            }
         }
 
-        public virtual bool CollidesAny(out Collider other)
+        public virtual bool CollidesAny(out Collider other, out bool hitTilemap)
         {
             var colliders = BoxOverlapAny(this);
             if(colliders.Count() != 0)
@@ -78,15 +91,28 @@ namespace MonoGear
                     if(Collides(col))
                     {
                         other = col;
+                        hitTilemap = false;
                         return true;
                     }
                 }
             }
             other = null;
-            return false;
+
+            // Tilemap collision
+            var circle = this as CircleCollider;
+            if(circle != null)
+            {
+                hitTilemap = CircleTilemapOverlap(circle, MonoGearGame.GetCurrentLevel());
+            }
+            else
+            {
+                hitTilemap = BoxTilemapOverlap(this, MonoGearGame.GetCurrentLevel());
+            }
+
+            return hitTilemap;
         }
 
-        public virtual bool CollidesAny(out Collider other, Collider ignored)
+        public virtual bool CollidesAny(out Collider other, out bool hitTilemap, Collider ignored)
         {
             var colliders = BoxOverlapAny(this);
             if(colliders.Count() != 0)
@@ -101,12 +127,25 @@ namespace MonoGear
                     if(Collides(col))
                     {
                         other = col;
+                        hitTilemap = false;
                         return true;
                     }
                 }
             }
             other = null;
-            return false;
+
+            // Tilemap collision
+            var circle = this as CircleCollider;
+            if(circle != null)
+            {
+                hitTilemap = CircleTilemapOverlap(circle, MonoGearGame.GetCurrentLevel());
+            }
+            else
+            {
+                hitTilemap = BoxTilemapOverlap(this, MonoGearGame.GetCurrentLevel());
+            }
+
+            return hitTilemap;
         }
 
         protected static bool BoxOverlap(Collider a, Collider b)
@@ -153,7 +192,7 @@ namespace MonoGear
             return (cornerDistance_sq <= MathExtensions.Square(a.Radius));
         }
 
-        public static bool RaycastAny(Vector2 from, Vector2 to, out Collider firstHit, string ignoreTag, float delta = 8.0f)
+        public static bool RaycastAny(Vector2 from, Vector2 to, out Collider firstHit, out bool hitTilemap, string ignoreTag, float delta = 8.0f)
         {
             Vector2 deltaVec = (to - from);
             deltaVec.Normalize();
@@ -168,9 +207,12 @@ namespace MonoGear
 
             while(distance < prevDistance)
             {
-                if(_raycastCollider.CollidesAny(out firstHit) && firstHit.Entity.Tag != ignoreTag)
+                if(_raycastCollider.CollidesAny(out firstHit, out hitTilemap))
                 {
-                    return true;
+                    if(hitTilemap || firstHit.Entity.Tag != ignoreTag)
+                    {
+                        return true;
+                    }
                 }
                 _raycastCollider.Entity.Move(deltaVec);
                 prevDistance = distance;
@@ -178,6 +220,7 @@ namespace MonoGear
             }
 
             firstHit = null;
+            hitTilemap = false;
             return false;
         }
 
@@ -211,16 +254,6 @@ namespace MonoGear
         }
 
         /// <summary>
-        /// Returns if the collider is the dummy used for indicating a tilemap collision.
-        /// </summary>
-        /// <param name="col">Collider to check</param>
-        /// <returns>True if it is the tilemap collider dummy</returns>
-        public static bool IsTilemap(Collider col)
-        {
-            return col == _tilemapCollider;
-        }
-
-        /// <summary>
         /// Checks collider list and returns any colliders the given collider has a box overlap with.
         /// Does not return inactive or trigger colliders or colliders who's entity is disabled.
         /// Used in the first stage for collision checks to gather the colliders to do more precise collision detection against.
@@ -232,7 +265,7 @@ namespace MonoGear
             List<Collider> cols = new List<Collider>();
             foreach(var other in _colliders)
             {
-                if(other == col || other.Active == false || other.Entity.Enabled == false || other.Trigger || other == _raycastCollider || other == _tilemapCollider)
+                if(other == col || other.Active == false || other.Entity.Enabled == false || other.Trigger || other == _raycastCollider)
                     continue;
 
                 if(BoxOverlap(col, other))
@@ -240,9 +273,6 @@ namespace MonoGear
                     cols.Add(other);
                 }
             }
-
-            // Always 'collide' with the tilemap
-            cols.Add(_tilemapCollider);
 
             return cols;
         }

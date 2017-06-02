@@ -55,7 +55,6 @@ namespace MonoGear
             Position = player.Position;
             Visible = true;
             player.Enabled = false;
-            Pathfinding.setInstance();
         }
 
         public void DisableGameOver()
@@ -73,8 +72,7 @@ namespace MonoGear
             {
                 if(input.IsKeyPressed(Keys.Space))
                 {
-                    var frame = Window.Current.Content as Frame;
-                    frame.Navigate(typeof(MenuPage));
+                    MonoGearGame.ReturnToMenu();
                     DisableGameOver();
                 }
             }

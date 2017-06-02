@@ -71,9 +71,13 @@ namespace MonoGear
             unreachableTargets.Clear();
         }
 
-        internal static void setInstance()
+        public static void OnReturnToMenu()
         {
-            instance = null;
+            if(instance != null)
+            {
+                instance.OnLevelUnloaded();         // Stops queue
+                instance = null;
+            }
         }
 
         private void UpdateInternalMap()

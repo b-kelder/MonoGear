@@ -6,6 +6,7 @@ using System.Reflection;
 using System;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using Windows.UI.Xaml.Controls;
 
 namespace MonoGear
 {
@@ -57,6 +58,9 @@ namespace MonoGear
         /// </summary>
         Player player;
 
+        Queue<WorldEntity> spawnQueueLocal;
+        Queue<WorldEntity> spawnQueueGlobal;
+
         public MonoGearGame()
         {
             // Required for static entity/level related methods
@@ -74,6 +78,21 @@ namespace MonoGear
             };
         }
 
+        public static void ReturnToMenu()
+        {
+            if(instance != null)
+            {
+                Pathfinding.OnReturnToMenu();
+                Collider.OnReturnToMenu();
+                
+                //instance.Exit();
+
+                //instance = null;
+                var frame = Windows.UI.Xaml.Window.Current.Content as Frame;
+                frame.Navigate(typeof(MenuPage));
+            }
+        }
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -87,6 +106,10 @@ namespace MonoGear
 
             levelEntities = new HashSet<WorldEntity>();
             globalEntities = new HashSet<WorldEntity>();
+
+            spawnQueueGlobal = new Queue<WorldEntity>();
+            spawnQueueLocal = new Queue<WorldEntity>();
+
             activeCamera = new Camera(graphics.GraphicsDevice.Viewport);
             // TODO: Make zoom based on resolution? Or see if we can change resolution otherwise.
             activeCamera.Zoom = 2;
@@ -149,21 +172,33 @@ namespace MonoGear
 
             input.Update();
 
+            // Register newly spawned entities
+            while(spawnQueueGlobal.Count > 0)
+            {
+                RegisterGlobalEntity(spawnQueueGlobal.Dequeue());
+            }
+
+            while(spawnQueueLocal.Count > 0)
+            {
+                RegisterLevelEntity(spawnQueueLocal.Dequeue());
+            }
+
+
             // Level reload by pressing L
-            if (input.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.L))
+            if(input.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.L))
             {
                 LoadLevel(activeLevel);
             }
 
             // Globals go first
-            foreach (var entity in globalEntities)
+            foreach(var entity in globalEntities)
             {
                 if(entity.Enabled)
                 {
                     entity.Update(input, gameTime);
                 }
             }
-            foreach (var entity in levelEntities)
+            foreach(var entity in levelEntities)
             {
                 if(entity.Enabled)
                 {
@@ -213,25 +248,35 @@ namespace MonoGear
             base.Draw(gameTime);
         }
 
+        public static void SpawnLevelEntity(WorldEntity entity)
+        {
+            instance.spawnQueueLocal.Enqueue(entity);
+        }
+
+        public static void SpawnGlobalEntity(WorldEntity entity)
+        {
+            instance.spawnQueueGlobal.Enqueue(entity);
+        }
+
         // Static entity stuff
         /// <summary>
         /// Adds an entity to the level list.
         /// </summary>
         /// <param name="entity">Entity to add</param>
-        public static void RegisterLevelEntity(WorldEntity entity)
+        private void RegisterLevelEntity(WorldEntity entity)
         {
             entity.OnLevelLoaded();
-            instance.levelEntities.Add(entity);
+            levelEntities.Add(entity);
         }
 
         /// <summary>
         /// Adds an entity to the global list.
         /// </summary>
         /// <param name="entity">Entity to add</param>
-        public static void RegisterGlobalEntity(WorldEntity entity)
+        private void RegisterGlobalEntity(WorldEntity entity)
         {
             entity.OnLevelLoaded();
-            instance.globalEntities.Add(entity);
+            globalEntities.Add(entity);
         }
 
         /// <summary>
@@ -314,6 +359,8 @@ namespace MonoGear
                 {
                     e.OnLevelLoaded();
                 }
+
+                spawnQueueLocal.Clear();            // Clear local spawn queue to prevent them from appearing in the new level
 
                 // Force GC
                 GC.Collect();

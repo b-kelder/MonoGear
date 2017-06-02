@@ -296,9 +296,10 @@ namespace MonoGear
                 {
                     //Check to see if nothing blocks view of the player
                     Collider hit;
-                    if(Collider.RaycastAny(Position, player.Position, out hit, Tag))
+                    bool tilemap;
+                    if(Collider.RaycastAny(Position, player.Position, out hit, out tilemap, Tag))
                     {
-                        if(hit.Entity.Tag.Equals("Player"))
+                        if(hit != null && hit.Entity.Tag.Equals("Player"))
                         {
                             entityPos = hit.Entity.Position;
                             return true;
