@@ -38,6 +38,7 @@ namespace MonoGear
                     "Sprites/GuardHit",
                     "Sprites/GuardSleeping",
                     "Sprites/Hit",
+                    "Sprites/Heart",
                 }
             },
             {
