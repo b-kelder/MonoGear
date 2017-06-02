@@ -34,7 +34,7 @@ namespace MonoGear
 
             Tag = "Player";
 
-            amoutOfDarts = 3;
+            amoutOfDarts = 100;
 
             LoadContent();
 
