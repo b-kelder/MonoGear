@@ -15,7 +15,7 @@ namespace MonoGear
         /// </summary>
         private static HashSet<Collider> _colliders = new HashSet<Collider>();
         /// <summary>
-        /// Collider used for raycasting
+        /// Collider used for raycasting since 
         /// </summary>
         private static BoxCollider _raycastCollider = new BoxCollider(new Bird(), Vector2.One);  // Just need a WorldEntity that has no collider for this
 
