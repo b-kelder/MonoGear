@@ -42,10 +42,13 @@ namespace MonoGear
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            
+
             base.Draw(spriteBatch);
             if (gameOver)
             {
-                spriteBatch.Draw(gameOverSprite, new Vector2(Position.X, Position.Y - 16), gameOverSprite.Bounds, Color.White, 0, new Vector2(gameOverSprite.Bounds.Size.X, gameOverSprite.Bounds.Size.Y) / 2, 0.3f, SpriteEffects.None, 0);
+                var clipRect = Camera.main.GetClippingRect();
+                spriteBatch.Draw(gameOverSprite, clipRect, Color.White);
             }
         }
 
@@ -60,13 +63,6 @@ namespace MonoGear
             AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound"), 1);
         }
 
-        public void DisableGameOver()
-        {
-            gameOver = false;
-            Visible = false;
-            player.Enabled = true;
-        }
-
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
@@ -76,7 +72,6 @@ namespace MonoGear
                 if(input.IsKeyPressed(Keys.Space))
                 {
                     MonoGearGame.ReturnToMenu();
-                    DisableGameOver();
                 }
             }
         }

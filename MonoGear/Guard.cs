@@ -19,10 +19,12 @@ namespace MonoGear
         enum State
         {
             Idle,
+            Interested,
             Alerted,
             Patrolling,
             ToPatrol,
             ToAlert,
+            ToInterest,
             Searching,
         }
 
@@ -77,7 +79,7 @@ namespace MonoGear
             shootTime = 0.4f;
 
             hearingRange = 75f;
-            sightRange = 450.0f;
+            sightRange = 295f;
             sightFov = 90f;
 
             TextureAssetName = "Sprites/Guard";
@@ -126,7 +128,7 @@ namespace MonoGear
             if (currentPath != null && currentPathIndex >= 0)
             {
                 AnimationRunning = true;
-                if (currentPathIndex < currentPath.Count && state != State.ToAlert)
+                if (currentPathIndex < currentPath.Count && state != State.ToAlert && state != State.ToInterest)
                 {
                     var target = currentPath[currentPathIndex];
                     if (Vector2.DistanceSquared(Position, target) < 24)
@@ -142,6 +144,7 @@ namespace MonoGear
                     }
                     else
                     {
+                        // Move down the path
                         Rotation = MathExtensions.VectorToAngle(target - Position);
 
                         var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -163,7 +166,7 @@ namespace MonoGear
                     // Reached end of path or waiting for a new one
                     currentPathIndex = -1;
 
-                    if (state == State.Alerted)
+                    if (state == State.Alerted || state == State.Interested)
                     {
                         StartSearch(gameTime);
                     }
@@ -198,20 +201,26 @@ namespace MonoGear
                 }
             }
 
-            if(CanSee(out playerPos) && state != State.Alerted && state != State.ToAlert)
+            if(state != State.Alerted && state != State.ToAlert)
             {
-                Alert(playerPos);
+                if(CanHear(out playerPos))
+                {
+                    Interest(playerPos);
+                }
+                else if(CanSee(out playerPos))
+                {
+                    Alert(playerPos);
+                }
             }
 
             if(CanSee(out playerPos))
             {
                 if(gameTime.TotalGameTime.TotalSeconds >= shootStartTime + shootTime)
                 {
-                    //TODO: Make bullet
                     var bullet = new Bullet(Collider);
                     bullet.Position = Position;
+                    bullet.Rotation = Rotation;
                     bullet.Rotation = MathExtensions.VectorToAngle(playerPos - Position);
-
                     MonoGearGame.SpawnLevelEntity(bullet);
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
 
@@ -224,12 +233,11 @@ namespace MonoGear
         {
             base.Draw(spriteBatch);
 
-            // TODO: Draw question mark (or something like that) when state == Seaching
             if (state == State.ToAlert || state == State.Alerted)
             {
                 spriteBatch.Draw(alertSprite, new Vector2(Position.X, Position.Y - 16), alertSprite.Bounds, Color.White, 0, new Vector2(alertSprite.Bounds.Size.X, alertSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
-            else if (state == State.Searching)
+            else if (state == State.Searching || state == State.Interested || state == State.ToInterest)
             {
                 spriteBatch.Draw(searchSprite, new Vector2(Position.X, Position.Y - 16), searchSprite.Bounds, Color.White, 0, new Vector2(searchSprite.Bounds.Size.X, searchSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
@@ -239,16 +247,6 @@ namespace MonoGear
         {
             searchStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
             state = State.Searching;
-        }
-
-        public void Hit()
-        {
-            AnimationCurrentFrame = 4;
-            snoreSound = new AudioSource();
-            snoreSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Snore"), 250);
-            snoreSound.Position = Position;
-            AudioManager.AddAudioSource(snoreSound);
-            snoreSound.Pause();
         }
 
         /// <summary>
@@ -272,14 +270,21 @@ namespace MonoGear
         /// <param name="origin"></param>
         public async void Alert(Vector2 origin)
         {
+            if(state == State.ToAlert)
+                return;
+
             if (state == State.Patrolling)
             {
                 patrolPathIndex = currentPathIndex;
             }
 
+            if(state != State.Alerted)
+            {
+                AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
+            }
+
             state = State.ToAlert;
 
-            AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
             await Task.Delay(1000);
 
             Task.Run(() =>
@@ -289,6 +294,39 @@ namespace MonoGear
                     currentPath = path;
                     currentPathIndex = 0;
                     state = path != null ? State.Alerted : State.Idle;
+                });
+            });
+        }
+
+        /// <summary>
+        /// Alerts a guard to the specified position and changes state
+        /// </summary>
+        /// <param name="origin"></param>
+        public async void Interest(Vector2 origin)
+        {
+            if(state == State.ToInterest)
+                return;
+
+            if(state == State.Patrolling)
+            {
+                patrolPathIndex = currentPathIndex;
+            }
+
+            if(state != State.Interested)
+            {
+                AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
+            }
+
+            state = State.ToInterest;
+            await Task.Delay(1000);
+
+            Task.Run(() =>
+            {
+                Pathfinding.FindPath(Position, origin, (path) =>
+                {
+                    currentPath = path;
+                    currentPathIndex = 0;
+                    state = path != null ? State.Interested : State.Idle;
                 });
             });
         }
@@ -309,12 +347,16 @@ namespace MonoGear
             });
         }
 
-        public void MoveTo(Vector2 position)
+        private bool CanDetect(out Vector2 entityPos)
         {
-            this.Position = position;
+            if(CanHear(out entityPos))
+            {
+                return true;
+            }
+            return CanSee(out entityPos);
         }
 
-        public bool CanSee(out Vector2 entityPos)
+        private bool CanSee(out Vector2 entityPos)
         {
             var dis = Vector2.Distance(Position, player.Position);
 
@@ -340,13 +382,22 @@ namespace MonoGear
                 }
             }
 
-            if (dis < hearingRange && !player.sneakMode)
+            entityPos = Vector2.Zero;
+            return false;
+        }
+
+        private bool CanHear(out Vector2 entityPos)
+        {
+            var dis = Vector2.Distance(Position, player.Position);
+
+            // Check if guard is within hearing range
+            if(dis < hearingRange && !player.sneakMode)
             {
                 entityPos = player.Position;
                 return true;
             }
 
-            entityPos = new Vector2();
+            entityPos = Vector2.Zero;
             return false;
         }
     }

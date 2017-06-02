@@ -51,7 +51,6 @@ namespace MonoGear
                     guard.Hit();
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/DartHit"), 5);
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/HurtSound"), 5);
-
                 }
 
                 Enabled = false;
