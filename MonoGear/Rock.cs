@@ -5,25 +5,25 @@ using System;
 
 namespace MonoGear
 {
-    class Projectile : WorldEntity
+    class Rock : WorldEntity
     {
-        float Speed { get; set; }
-        Collider PlayerCol;
+        float speed { get; set; }
+        Collider originCollider;
 
 
-        public Projectile(string textureAssetName, string tag, Collider playerCol)
+        public Rock(Collider originCollider)
         {
             CircleCollider collider = new CircleCollider(this, 2);
             collider.Trigger = true;
 
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Random rand = new Random();
-            Speed = 200f + rand.Next(-20, 20);
-            TextureAssetName = textureAssetName;
-            Tag = tag;
+            speed = 200f + rand.Next(-20, 20);
+            TextureAssetName = "Sprites/Rock";
+            Tag = "TheRock";
             LoadContent();
 
-            PlayerCol = playerCol;
+            this.originCollider = originCollider;
         }
 
         public override void Update(Input input, GameTime gameTime)
@@ -32,13 +32,13 @@ namespace MonoGear
 
             Collider collider;
             var pos = Position;
-            var delta = Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            var delta = Forward * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Move(delta);
 
-            if(Collider.CollidesAny(out collider, PlayerCol))
+            if(Collider.CollidesAny(out collider, originCollider))
             {
                 Position = pos;
-                Speed = 0.0f;
+                speed = 0.0f;
 
                 var entities = MonoGearGame.FindEntitiesOfType<Guard>();
 
@@ -53,10 +53,10 @@ namespace MonoGear
                 Enabled = false;
             }
 
-            if(Speed > 0)
-                Speed -= 3;
+            if(speed > 0)
+                speed -= 3;
             else
-                Speed = 0;
+                speed = 0;
         }
     }
 }

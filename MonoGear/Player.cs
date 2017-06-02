@@ -13,8 +13,9 @@ namespace MonoGear
         public int ThrowingDelay { get; set; }
         public bool sneakMode { get; set; }
 
-        private SoundEffectInstance walkingSound;
+        private int amountOfDarts;
 
+        private SoundEffectInstance walkingSound;
         private SoundEffectInstance walkingSoundGrass;
         private SoundEffectInstance walkingSoundWater;
         private SoundEffectInstance walkingSoundStone;
@@ -32,6 +33,8 @@ namespace MonoGear
             AnimationPingPong = true;
 
             Tag = "Player";
+
+            amountOfDarts = 3;
 
             LoadContent();
 
@@ -144,17 +147,30 @@ namespace MonoGear
                 ThrowingDelay -= 1;
 
             // Throw rock
-            if(input.IsKeyPressed(Keys.Space))
+            if(input.IsKeyPressed(Keys.Z))
             {
                 if (ThrowingDelay <= 0)
                 {
-                    var dwayneThe = new Projectile("Sprites/Rock", "TheRock", MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
+                    var dwayneThe = new Rock(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
                     dwayneThe.Position = Position;
                     dwayneThe.Rotation = Rotation;
                     MonoGearGame.RegisterLevelEntity(dwayneThe);
                     ThrowingDelay = 45;
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/StoneTrow_sound"), 1);
                 }
+            }
+
+            // Throw sleep dart
+            if (input.IsKeyPressed(Keys.X))
+            {
+                if (amountOfDarts > 0)
+                {
+                    var sleepDart = new SleepDart(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
+                    sleepDart.Position = Position;
+                    sleepDart.Rotation = Rotation;
+                    MonoGearGame.RegisterLevelEntity(sleepDart);
+                    amountOfDarts--;
+                }    
             }
 
 
