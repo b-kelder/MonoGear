@@ -111,7 +111,7 @@
     <Compile Include="GameOver.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Pathfinding.cs" />
-    <Compile Include="Projectile.cs" />
+    <Compile Include="Rock.cs" />
     <Compile Include="AudioSource.cs" />
     <Compile Include="Bird.cs" />
     <Compile Include="BoxCollider.cs" />
@@ -136,6 +136,7 @@
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SleepDart.cs" />
     <Compile Include="SpawnPoint.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TilemapCollider.cs" />
