@@ -170,6 +170,7 @@ namespace MonoGear
                     sleepDart.Rotation = Rotation;
                     MonoGearGame.SpawnLevelEntity(sleepDart);
                     amoutOfDarts--;
+                    AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Blowgun"), 1);
                 }    
             }
 

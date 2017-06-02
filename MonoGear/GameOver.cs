@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGear
 {
@@ -55,6 +56,8 @@ namespace MonoGear
             Position = player.Position;
             Visible = true;
             player.Enabled = false;
+
+            AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound"), 1);
         }
 
         public void DisableGameOver()
