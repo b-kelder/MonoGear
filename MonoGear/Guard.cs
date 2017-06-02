@@ -198,7 +198,7 @@ namespace MonoGear
                     var bullet = new Rock(MonoGearGame.FindEntitiesOfType<Guard>()[0].Collider);
                     bullet.Position = Position;
                     bullet.Rotation = Rotation;
-                    MonoGearGame.RegisterLevelEntity(bullet);
+                    MonoGearGame.SpawnLevelEntity(bullet);
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
                 }
             }
@@ -208,7 +208,6 @@ namespace MonoGear
         {
             base.Draw(spriteBatch);
 
-            // TODO: Draw question mark (or something like that) when state == Seaching
             if (state == State.ToAlert || state == State.Alerted)
             {
                 spriteBatch.Draw(alertSprite, new Vector2(Position.X, Position.Y - 16), alertSprite.Bounds, Color.White, 0, new Vector2(alertSprite.Bounds.Size.X, alertSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
@@ -223,11 +222,6 @@ namespace MonoGear
         {
             searchStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
             state = State.Searching;
-        }
-
-        public void Hit()
-        {
-            AnimationCurrentFrame = 4;
         }
 
         /// <summary>
