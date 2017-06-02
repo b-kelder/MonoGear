@@ -61,6 +61,9 @@ namespace MonoGear
         private float searchTime;
         private float searchStartTime;
 
+        private float shootTime;
+        private float shootStartTime;
+
         State state;
 
         public Guard()
@@ -69,6 +72,8 @@ namespace MonoGear
             walkSpeed = 60.0f;
             runSpeed = 90.0f;
             searchTime = 2.5f;  // sec
+
+            shootTime = 0.4f;
 
             hearingRange = 75f;
             sightRange = 450.0f;
@@ -171,14 +176,14 @@ namespace MonoGear
             }
 
             // State stuff
-            if (state == State.Idle)
+            if(state == State.Idle)
             {
                 StartPatrol();
 
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
             }
-            else if (state == State.Searching)
+            else if(state == State.Searching)
             {
                 // Wait a little bit at the spot when 'searching'
                 if (gameTime.TotalGameTime.TotalSeconds >= searchStartTime + searchTime)
@@ -192,19 +197,24 @@ namespace MonoGear
                 }
             }
 
-            if (CanSee(out playerPos) && state != State.Alerted && state != State.ToAlert)
+            if(CanSee(out playerPos) && state != State.Alerted && state != State.ToAlert)
             {
                 Alert(playerPos);
             }
 
-            if (CanSee(out playerPos))
+            if(CanSee(out playerPos))
             {
+                if(gameTime.TotalGameTime.TotalSeconds >= shootStartTime + shootTime)
                 {
-                    var bullet = new Rock(MonoGearGame.FindEntitiesOfType<Guard>()[0].Collider);
+                    //TODO: Make bullet
+                    var bullet = new Bullet(Collider);
                     bullet.Position = Position;
-                    bullet.Rotation = Rotation;
-                    MonoGearGame.RegisterLevelEntity(bullet);
+                    bullet.Rotation = MathExtensions.VectorToAngle(playerPos - Position);
+
+                    MonoGearGame.SpawnLevelEntity(bullet);
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
+
+                    shootStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
                 }
             }
 

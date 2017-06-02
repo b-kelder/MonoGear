@@ -75,7 +75,7 @@ namespace MonoGear
         {
             if(instance != null)
             {
-                instance.OnLevelUnloaded();         // Stops queue
+                instance.OnLevelUnloaded();         // Stops pathfinding queue
                 instance = null;
             }
         }
