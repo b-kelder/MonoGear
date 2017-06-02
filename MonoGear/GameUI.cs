@@ -30,7 +30,7 @@ namespace MonoGear
                 pos += 15;
             }
 
-            if (player.DartCount > 6)
+            if (player.DartCount <= 6)
             {
                 pos = rect.Right - 100;
                 for (int i = 0; i < player.DartCount; i++)
