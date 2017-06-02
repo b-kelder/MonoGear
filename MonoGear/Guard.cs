@@ -217,7 +217,6 @@ namespace MonoGear
                     shootStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
                 }
             }
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -239,6 +238,11 @@ namespace MonoGear
         {
             searchStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
             state = State.Searching;
+        }
+
+        public void Hit()
+        {
+            AnimationCurrentFrame = 4;
         }
 
         /// <summary>
