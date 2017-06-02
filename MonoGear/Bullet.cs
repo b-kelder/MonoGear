@@ -45,7 +45,7 @@ namespace MonoGear
                 if(!hitTilemap && collider.Entity.Tag == "Player")
                 {
                     var gameOver = MonoGearGame.FindEntitiesWithTag("GameOverScreen")[0] as GameOver;
-                    //gameOver.EnableGameOver();
+                    gameOver.EnableGameOver();
                 }
 
                 Enabled = false;
