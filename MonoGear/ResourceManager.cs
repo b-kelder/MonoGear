@@ -58,7 +58,7 @@ namespace MonoGear
                     "Audio/AudioFX/Wasted_Sound",
                     "Audio/AudioFX/Blowgun",
                     "Audio/AudioFX/DartHit",
-                    "Audio/AudioFX/Snore",
+                    "Audio/AudioFX/snoreWhistle",
                     "Audio/AudioFX/HurtSound",
 
                 }

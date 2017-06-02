@@ -296,12 +296,6 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Blowgun.wav
 
-#begin Audio/AudioFX/Snore.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/AudioFX/Snore.wav
-
 #begin Sprites/Guard.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -362,15 +356,9 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/DartHit.wav
 
-#begin Sprites/Hit.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/Hit.png
+#begin Audio/AudioFX/snoreWhistle.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/snoreWhistle.wav
 

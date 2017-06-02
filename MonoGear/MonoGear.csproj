@@ -176,6 +176,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Snore.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\snoreWhistle.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\StoneTrow_sound.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Wasted_sound.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Water_Drop_Sound.xnb">
