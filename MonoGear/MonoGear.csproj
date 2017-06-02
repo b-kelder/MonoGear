@@ -160,6 +160,7 @@
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Crickets_sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\DartHit.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Deja Vu.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -167,7 +168,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Gunshot.xnb" />
-    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\HitSound.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\HurtSound.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Owl_sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

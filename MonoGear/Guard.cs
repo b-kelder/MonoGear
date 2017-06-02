@@ -34,6 +34,7 @@ namespace MonoGear
         private float sightFov;
         private Player player;
         private Vector2 playerPos;
+        private AudioSource snoreSound;
 
         public List<Vector2> PatrolPath
         {
@@ -243,6 +244,11 @@ namespace MonoGear
         public void Hit()
         {
             AnimationCurrentFrame = 4;
+            snoreSound = new AudioSource();
+            snoreSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Snore"), 250);
+            snoreSound.Position = Position;
+            AudioManager.AddAudioSource(snoreSound);
+            snoreSound.Pause();
         }
 
         /// <summary>

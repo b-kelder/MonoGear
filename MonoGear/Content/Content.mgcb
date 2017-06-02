@@ -350,9 +350,15 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Person.png
 
-#begin Audio/AudioFX/HitSound.wav
+#begin Audio/AudioFX/HurtSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/AudioFX/HitSound.wav
+/build:Audio/AudioFX/HurtSound.wav
+
+#begin Audio/AudioFX/DartHit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/DartHit.wav
 
