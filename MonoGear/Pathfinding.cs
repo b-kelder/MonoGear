@@ -71,6 +71,11 @@ namespace MonoGear
             unreachableTargets.Clear();
         }
 
+        internal static void setInstance()
+        {
+            instance = null;
+        }
+
         private void UpdateInternalMap()
         {
             var level = MonoGearGame.GetCurrentLevel();
