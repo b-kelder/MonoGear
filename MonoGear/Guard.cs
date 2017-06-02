@@ -196,6 +196,7 @@ namespace MonoGear
             {
                 Alert(playerPos);
             }
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
