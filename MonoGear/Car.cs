@@ -72,6 +72,12 @@ namespace MonoGear
             carSound.Pause();
         }
 
+        public void SetPath(List<Vector2> path)
+        {
+            currentPath = path;
+            currentPathIndex = 0;
+        }
+
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);

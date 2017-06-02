@@ -13,6 +13,7 @@ namespace MonoGear
 {
     public class Level
     {
+        public string Name { get; private set; }
         /// <summary>
         /// All layers as loaded from the level file
         /// </summary>
@@ -90,6 +91,7 @@ namespace MonoGear
 
         public void DrawTiles(SpriteBatch batch, Camera camera)
         {
+            // TODO: Bake to image on level load and use that for rendering?
             var clip = camera.GetClippingRect();
 
             int ys = Math.Max(0, clip.Y / TileHeight - 1);
@@ -137,6 +139,8 @@ namespace MonoGear
             Task.Run(() =>
             {
                 var map = new TmxMap(Path.Combine("Content/Levels", resource + ".tmx"));
+
+                level.Name = resource;
 
                 level.Width = map.Width;
                 level.Height = map.Height;
@@ -231,6 +235,7 @@ namespace MonoGear
                 var groups = map.ObjectGroups;
 
                 var guardPaths = new Dictionary<Guard, string>();
+                var carPaths = new Dictionary<Car, string>();
                 var paths = new Dictionary<string, List<Vector2>>();
 
                 foreach(var objectGroup in groups)
@@ -257,6 +262,21 @@ namespace MonoGear
                             {
                                 guardPaths.Add(entity as Guard, path);
                             }
+                        }
+                        else if(obj.Type == "car")
+                        {
+                            entity = new Car(new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset, null, "Sprites/Car");
+
+                            string path;
+                            if(obj.Properties.TryGetValue("path", out path))
+                            {
+                                carPaths.Add(entity as Car, path);
+                            }
+                        }
+                        else if(obj.Type == "bird")
+                        {
+                            entity = new Bird() { YResetValue = level.Height * level.TileHeight + 200 };
+                            entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
                         }
                         else if(obj.Type == "path")
                         {
@@ -308,7 +328,21 @@ namespace MonoGear
                         Debug.WriteLine("Guard requested unknown path " + guardPath.Value);
                     }
                 }
-                
+
+                // Assing car paths
+                foreach(var carPath in carPaths)
+                {
+                    List<Vector2> path;
+                    if(paths.TryGetValue(carPath.Value, out path))
+                    {
+                        carPath.Key.SetPath(path);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Car requested unknown path " + carPath.Value);
+                    }
+                }
+
             }).Wait();
             return level;
 

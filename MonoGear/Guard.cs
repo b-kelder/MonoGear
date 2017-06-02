@@ -391,7 +391,7 @@ namespace MonoGear
             var dis = Vector2.Distance(Position, player.Position);
 
             // Check if guard is within hearing range
-            if(dis < hearingRange && !player.sneakMode)
+            if(dis < hearingRange && !player.SneakMode)
             {
                 entityPos = player.Position;
                 return true;

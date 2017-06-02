@@ -63,6 +63,16 @@ namespace MonoGear
             AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound"), 1);
         }
 
+        public void DisableGameOver()
+        {
+            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
+            gameOver = false;
+            Visible = false;
+            player.Enabled = true;
+
+            AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound"), 1);
+        }
+
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
@@ -71,7 +81,8 @@ namespace MonoGear
             {
                 if(input.IsKeyPressed(Keys.Space))
                 {
-                    MonoGearGame.ReturnToMenu();
+                    MonoGearGame.Restart();
+                    DisableGameOver();
                 }
             }
         }
