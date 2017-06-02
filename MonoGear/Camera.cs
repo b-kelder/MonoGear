@@ -27,10 +27,7 @@ namespace MonoGear
 
         public Camera(Viewport viewport)
         {
-            if (main == null)
-            {
-                main = this;
-            }
+            main = this;
 
             this.viewport = viewport;
             Rotation = 0;

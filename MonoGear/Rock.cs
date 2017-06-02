@@ -46,9 +46,9 @@ namespace MonoGear
 
                 foreach(var guard in entities)
                 {
-                    if(Vector2.DistanceSquared(Position, guard.Position) < 100000000)
+                    if(Vector2.Distance(Position, guard.Position) < 150)
                     {
-                        guard.Alert(Position);
+                        guard.Interest(Position);
                     }
                 }
 
