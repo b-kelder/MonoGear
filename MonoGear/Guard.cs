@@ -192,11 +192,6 @@ namespace MonoGear
                 }
             }
 
-            if (CanSee(out playerPos) && state != State.Alerted && state != State.ToAlert)
-            {
-                Alert(playerPos);
-            }
-
             if (CanSee(out playerPos))
             {
                 {
@@ -207,7 +202,6 @@ namespace MonoGear
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
                 }
             }
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -229,6 +223,11 @@ namespace MonoGear
         {
             searchStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
             state = State.Searching;
+        }
+
+        public void Hit()
+        {
+            AnimationCurrentFrame = 4;
         }
 
         /// <summary>

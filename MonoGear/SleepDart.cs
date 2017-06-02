@@ -44,7 +44,9 @@ namespace MonoGear
 
                 if (collider.Entity.Tag.Equals("Guard"))
                 {
-                    collider.Entity.Enabled = false;
+                    var guard = collider.Entity as Guard;
+                    guard.Enabled = false;
+                    guard.Hit();
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/HitSound"), 1);
                 }
 
