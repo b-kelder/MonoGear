@@ -151,6 +151,7 @@
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Bird_sounds.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Blowgun.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Car_sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -165,12 +166,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Gunshot.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\HitSound.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Owl_sound.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Running On Grass.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Snore.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\StoneTrow_sound.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Wasted_sound.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Audio\AudioFX\Water_Drop_Sound.xnb">
@@ -200,6 +203,8 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\Guard.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\GuardHit.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Sprites\GuardSleeping.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Person.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -209,6 +214,7 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\Searching.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\SleepDart.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\s_generator.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

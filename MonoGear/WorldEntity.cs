@@ -63,13 +63,14 @@ namespace MonoGear
         public virtual void OnLevelLoaded()
         {
             if(Collider != null)
-                Collider.Deregister();
+                Collider.Register();
+
         }
 
         public virtual void OnLevelUnloaded()
         {
             if(Collider != null)
-                Collider.Register();
+                Collider.Deregister();
         }
 
         public virtual void Update(Input input, GameTime gameTime)

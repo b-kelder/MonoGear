@@ -58,9 +58,6 @@ namespace MonoGear
             player.Enabled = false;
 
             AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound"), 1);
-
-            Pathfinding.setInstance();
-
         }
 
         public void DisableGameOver()
@@ -78,8 +75,7 @@ namespace MonoGear
             {
                 if(input.IsKeyPressed(Keys.Space))
                 {
-                    var frame = Window.Current.Content as Frame;
-                    frame.Navigate(typeof(MenuPage));
+                    MonoGearGame.ReturnToMenu();
                     DisableGameOver();
                 }
             }

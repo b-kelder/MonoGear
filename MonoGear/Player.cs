@@ -34,7 +34,7 @@ namespace MonoGear
 
             Tag = "Player";
 
-            amoutOfDarts = 3;
+            amoutOfDarts = 100;
 
             LoadContent();
 
@@ -69,13 +69,13 @@ namespace MonoGear
 
             var dx = 0.0f;
             var dy = 0.0f;
-            if(input.IsKeyDown(Keys.A) || input.IsKeyDown(Keys.Left))
+            if(input.IsButtonDown(Input.Button.Left))
                 dx -= Speed;
-            if(input.IsKeyDown(Keys.D) || input.IsKeyDown(Keys.Right))
+            if(input.IsButtonDown(Input.Button.Right))
                 dx += Speed;
-            if(input.IsKeyDown(Keys.W) || input.IsKeyDown(Keys.Up))
+            if(input.IsButtonDown(Input.Button.Up))
                 dy -= Speed;
-            if(input.IsKeyDown(Keys.S) || input.IsKeyDown(Keys.Down))
+            if(input.IsButtonDown(Input.Button.Down))
                 dy += Speed;
 
             if (input.IsKeyDown(Keys.LeftShift))
@@ -147,28 +147,28 @@ namespace MonoGear
                 ThrowingDelay -= 1;
 
             // Throw rock
-            if(input.IsKeyPressed(Keys.Z) || input.IsKeyPressed(Keys.J))
+            if(input.IsButtonPressed(Input.Button.Throw))
             {
                 if (ThrowingDelay <= 0)
                 {
                     var dwayneThe = new Rock(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
                     dwayneThe.Position = Position;
                     dwayneThe.Rotation = Rotation;
-                    MonoGearGame.RegisterLevelEntity(dwayneThe);
+                    MonoGearGame.SpawnLevelEntity(dwayneThe);
                     ThrowingDelay = 45;
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/StoneTrow_sound"), 1);
                 }
             }
 
-            // Throw sleep dart
-            if (input.IsKeyPressed(Keys.X) || input.IsKeyPressed(Keys.K))
+            // Shoot sleep dart
+            if(input.IsButtonPressed(Input.Button.Shoot))
             {
-                if (amoutOfDarts > 0)
+                if(amoutOfDarts > 0)
                 {
                     var sleepDart = new SleepDart(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
                     sleepDart.Position = Position;
                     sleepDart.Rotation = Rotation;
-                    MonoGearGame.RegisterLevelEntity(sleepDart);
+                    MonoGearGame.SpawnLevelEntity(sleepDart);
                     amoutOfDarts--;
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Blowgun"), 1);
                 }    

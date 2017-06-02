@@ -37,12 +37,14 @@ namespace MonoGear
             var delta = Forward * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Move(delta);
 
-            if (Collider.CollidesAny(out collider, originCollider))
+            bool hitTilemap;
+
+            if(Collider.CollidesAny(out collider, out hitTilemap, originCollider))
             {
                 Position = pos;
                 speed = 0.0f;
 
-                if (collider.Entity.Tag.Equals("Guard"))
+                if(collider != null && collider.Entity.Tag.Equals("Guard"))
                 {
                     var guard = collider.Entity as Guard;
                     guard.Enabled = false;
