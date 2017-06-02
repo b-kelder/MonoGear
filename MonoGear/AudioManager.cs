@@ -21,6 +21,12 @@ namespace MonoGear
             MasterVolume = 1;
         }
 
+        public static void Clear()
+        {
+            audioSources = new List<AudioSource>();
+            music = null;
+        }
+
         #region Music control
 
         /// <summary>
