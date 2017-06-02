@@ -209,12 +209,8 @@ namespace MonoGear
                     //TODO: Make bullet
                     var bullet = new Bullet(Collider);
                     bullet.Position = Position;
-<<<<<<< HEAD
                     bullet.Rotation = Rotation;
-=======
                     bullet.Rotation = MathExtensions.VectorToAngle(playerPos - Position);
-
->>>>>>> ef8a3d61253959d77266f7997cca9f563850e84d
                     MonoGearGame.SpawnLevelEntity(bullet);
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
 
