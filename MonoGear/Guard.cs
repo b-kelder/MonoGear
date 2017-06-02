@@ -197,7 +197,7 @@ namespace MonoGear
                 }
             }
 
-            if(CanSee(out playerPos) && state != State.Alerted && state != State.ToAlert)
+            if(CanDetect(out playerPos) && state != State.Alerted && state != State.ToAlert)
             {
                 Alert(playerPos);
             }
@@ -206,7 +206,6 @@ namespace MonoGear
             {
                 if(gameTime.TotalGameTime.TotalSeconds >= shootStartTime + shootTime)
                 {
-                    //TODO: Make bullet
                     var bullet = new Bullet(Collider);
                     bullet.Position = Position;
                     bullet.Rotation = Rotation;
@@ -302,6 +301,16 @@ namespace MonoGear
             this.Position = position;
         }
 
+
+        public bool CanDetect(out Vector2 entityPos)
+        {
+            if(CanHear(out entityPos))
+            {
+                return true;
+            }
+            return CanSee(out entityPos);
+        }
+
         public bool CanSee(out Vector2 entityPos)
         {
             var dis = Vector2.Distance(Position, player.Position);
@@ -328,13 +337,22 @@ namespace MonoGear
                 }
             }
 
-            if (dis < hearingRange && !player.sneakMode)
+            entityPos = Vector2.Zero;
+            return false;
+        }
+
+        public bool CanHear(out Vector2 entityPos)
+        {
+            var dis = Vector2.Distance(Position, player.Position);
+
+            // Check if guard is within hearing range
+            if(dis < hearingRange && !player.sneakMode)
             {
                 entityPos = player.Position;
                 return true;
             }
 
-            entityPos = new Vector2();
+            entityPos = Vector2.Zero;
             return false;
         }
     }
