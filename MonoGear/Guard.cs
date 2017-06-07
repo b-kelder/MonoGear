@@ -289,15 +289,18 @@ namespace MonoGear
             else if (state == State.ToAlert || state == State.Alerted || state == State.Pursuit)
             {
                 spriteBatch.Draw(alertSprite, new Vector2(Position.X, Position.Y - 16), alertSprite.Bounds, Color.White, 0, new Vector2(alertSprite.Bounds.Size.X, alertSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+                // Red FOV
                 DrawFOVDebug(spriteBatch, Position, Rotation, player.Position, SightRange, fovColor);
             }
             else if (state == State.Searching || state == State.Interested || state == State.ToInterest)
             {
                 spriteBatch.Draw(searchSprite, new Vector2(Position.X, Position.Y - 16), searchSprite.Bounds, Color.White, 0, new Vector2(searchSprite.Bounds.Size.X, searchSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+                // Yellow FOV
                 DrawFOVDebug(spriteBatch, Position, Rotation, player.Position, SightRange, new Color(100, 100, 0, 10));
             }
             else
             {
+                // Blue FOV
                 DrawFOVDebug(spriteBatch, Position, Rotation, player.Position, SightRange, new Color(0, 0, 100, 10));
             }
         }
