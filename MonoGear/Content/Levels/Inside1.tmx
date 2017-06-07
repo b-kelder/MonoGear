@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="13">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="20">
  <tileset firstgid="1" name="TilesInside" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="TileSets/Inside1.png" width="272" height="272"/>
   <tile id="1">
@@ -1314,6 +1314,13 @@
   <object id="12" name="Guard S2" type="guard" gid="57" x="849" y="127.333" width="16" height="16">
    <properties>
     <property name="patrolpath" value=""/>
+    <property name="rotation" type="float" value="180"/>
+   </properties>
+  </object>
+  <object id="18" name="Computer 1" type="pc" gid="58" x="1039" y="427" width="16" height="16"/>
+  <object id="19" name="Camera" type="cctv" gid="58" x="831.5" y="286" width="16" height="16">
+   <properties>
+    <property name="pc" value="Computer 1"/>
     <property name="rotation" type="float" value="180"/>
    </properties>
   </object>
