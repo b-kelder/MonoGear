@@ -38,9 +38,7 @@ namespace MonoGear
                     "Sprites/GuardHit",
                     "Sprites/Sleeping",
                     "Sprites/Hit",
-
-                    "Sprites/Die",
-
+                    "Sprites/Dead",
                     "Sprites/Heart",
 
                 }
