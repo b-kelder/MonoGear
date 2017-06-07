@@ -31,11 +31,11 @@ namespace MonoGear
             Sleeping,
         }
 
-        float walkSpeed;
-        float runSpeed;
+        public float WalkSpeed { get; set; }
+        public float RunSpeed { get; set; }
 
         private float hearingRange;
-        private float sightRange;
+        public float SightRange { get; set; }
         private float sightFov;
         private Player player;
         private Vector2 playerPos;
@@ -74,14 +74,14 @@ namespace MonoGear
         public Guard()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
-            walkSpeed = 60.0f;
-            runSpeed = 90.0f;
+            WalkSpeed = 60.0f;
+            RunSpeed = 90.0f;
             searchTime = 2.5f;  // sec
 
             shootTime = 0.4f;
 
             hearingRange = 75f;
-            sightRange = 295f;
+            SightRange = 295f;
             sightFov = 90f;
 
             TextureAssetName = "Sprites/Guard";
@@ -144,7 +144,7 @@ namespace MonoGear
                     Rotation = MathExtensions.VectorToAngle(target - Position);
 
                     var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    delta *= runSpeed;
+                    delta *= RunSpeed;
                     AnimationDelta = 0.05f;
                     Move(delta);
                 }
@@ -178,12 +178,12 @@ namespace MonoGear
                             var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             if (state == State.Alerted)
                             {
-                                delta *= runSpeed;
+                                delta *= RunSpeed;
                                 AnimationDelta = 0.05f;
                             }
                             else
                             {
-                                delta *= walkSpeed;
+                                delta *= WalkSpeed;
                                 AnimationDelta = 0.1f;
                             }
                             Move(delta);
@@ -426,7 +426,7 @@ namespace MonoGear
             var dis = Vector2.Distance(Position, player.Position);
 
             //Check if player is within view range
-            if (dis < sightRange)
+            if (dis < SightRange)
             {
                 //Check to see if the guard is looking at the player
                 var degrees = Math.Abs(MathHelper.ToDegrees(Rotation) - (90 + MathHelper.ToDegrees(MathExtensions.AngleBetween(Position, player.Position))));

@@ -93,6 +93,6 @@
         <TextBlock x:Name="SoundVolume" Grid.Column="1" Grid.Row="2" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Music volume" VerticalAlignment="Center" Height="56" Width="356"/>
         <TextBlock x:Name="effectVolume" Grid.Column="1" Grid.Row="3" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" FontSize="45" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Effect Volume" VerticalAlignment="Center" Height="56" Width="316"/>
         <TextBlock x:Name="DifficultyLevel" Grid.Column="1" HorizontalAlignment="Left"  FontFamily="Arial" FontStyle="Italic" Grid.Row="4" FontSize="45" FontWeight="Bold" TextWrapping="Wrap" Text="Difficulty Level" Height="56" Width="376" VerticalAlignment="Center"/>
-        <ComboBox x:Name="DifficultyComboBox" Grid.Column="2" FontFamily="Arial" FontSize="45" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Width="475"/>
+        <ComboBox x:Name="DifficultyComboBox" SelectionChanged="DifficultyComboBox_SelectionChanged" Grid.Column="2" FontFamily="Arial" FontSize="45" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Width="475"/>
     </Grid>
 </Page>
