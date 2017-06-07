@@ -31,4 +31,65 @@ namespace MonoGear
             return (float)Math.Atan2(b.Y - a.Y, b.X - a.X);
         }
     }
+
+    public class FloatRect
+    {
+        public float X;
+        public float Y;
+        public float Width;
+        public float Height;
+
+        public float Left
+        {
+            get
+            {
+                return X;
+            }
+        }
+
+        public float Right
+        {
+            get
+            {
+                return X + Width;
+            }
+        }
+
+        public float Top
+        {
+            get
+            {
+                return Y;
+            }
+        }
+
+        public float Bottom
+        {
+            get
+            {
+                return Y + Height;
+            }
+        }
+
+        public FloatRect(float x, float y, float w, float h)
+        {
+            X = x;
+            Y = y;
+            Width = w;
+            Height = h;
+        }
+
+        public FloatRect()
+        {
+            X = 0;
+            Y = 0;
+            Width = 0;
+            Height = 0;
+        }
+
+        public static implicit operator Rectangle(FloatRect m)
+        {
+            return new Rectangle((int)m.X, (int)m.Y, (int)m.Width, (int)m.Height);
+        }
+    }
 }

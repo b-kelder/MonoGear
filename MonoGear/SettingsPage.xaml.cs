@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -23,12 +24,24 @@ namespace MonoGear
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+
         public SettingsPage()
         {
             this.InitializeComponent();
             MasterVolumeSlider.Value = AudioManager.MasterVolume * 100;
             MusicVolumeSlider.Value = AudioManager.SettingsMusicVolume * 100;
             EffectVolumeSlider.Value = AudioManager.SettingsEffectsVolume * 100;
+            AddDifficultyLevels();
+            DifficultyComboBox.SelectedIndex = 0;
+        }
+
+
+        private void AddDifficultyLevels()
+        {
+            DifficultyComboBox.Items.Add("Intern");
+            DifficultyComboBox.Items.Add("Professional");
+            DifficultyComboBox.Items.Add("Veteran");
+            DifficultyComboBox.Items.Add("James Bond");
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
