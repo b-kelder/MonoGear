@@ -190,8 +190,7 @@ namespace MonoGear
             var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
             var scaleFactor = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
 
-            // TODO: Make zoom based on resolution? Or see if we can change resolution otherwise.
-            activeCamera.Zoom = (int)graphics.GraphicsDevice.Viewport.Height / 350;
+            activeCamera.Zoom = graphics.GraphicsDevice.Viewport.Height / 320;
             globalResources = new ResourceManager();
             
             base.Initialize();
