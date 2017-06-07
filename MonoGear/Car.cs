@@ -18,7 +18,6 @@ namespace MonoGear
         private AudioSource carSound;
         private List<Vector2> currentPath;
         private int currentPathIndex;
-        private string textureAssetName;
         public bool LoopPath { get; set; }
 
         public Car(Vector2 position, List<Vector2> currentPath, string textureAssetName)

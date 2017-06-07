@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    class PC : WorldEntity
+    class PC : WorldEntityAnimated
     {
         public List<CCTV> connectedCameras { get; set; }
         public float progressPerClick { get; set; }
@@ -17,12 +17,19 @@ namespace MonoGear
 
         public PC()
         {
-            TextureAssetName = "Sprites/birdsheet";
+            TextureAssetName = "Sprites/Pc";
             Tag = "PC";
+
+            AnimationLength = 2;
+            AnimationCurrentFrame = 1;
+            AnimationDelta = 0.50f;
+            AnimationPingPong = true;
+            AnimationRunning = true;
 
             connectedCameras = new List<CCTV>();
             hackingProgress = 0;
             progressPerClick = 1;
+            LoadContent();
         }
 
         public void AddCCTV(CCTV cctv)

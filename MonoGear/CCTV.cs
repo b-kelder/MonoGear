@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    class CCTV : WorldEntity
+    class CCTV : WorldEntityAnimated
     {
-        private static Texture2D fovSprite;
-
         public int SightRange { get; set; }
         public int SightFOV { get; set; }
 
@@ -20,13 +18,19 @@ namespace MonoGear
 
         public CCTV()
         {
-            TextureAssetName = "Sprites/birdsheet";
+            TextureAssetName = "Sprites/CameraOn";
             Tag = "CCTV";
 
             SightRange = 120;
             SightFOV = 90;
 
             hacked = false;
+
+            AnimationLength = 2;
+            AnimationCurrentFrame = 1;
+            AnimationDelta = 0.50f;
+            AnimationPingPong = true;
+            AnimationRunning = true;
 
             LoadContent();
         }
@@ -35,15 +39,6 @@ namespace MonoGear
         {
             base.OnLevelLoaded();
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
-        }
-
-        protected override void LoadContent()
-        {
-            base.LoadContent();
-            if(fovSprite == null)
-            {
-                fovSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/fov100");
-            }
         }
 
         public override void Update(Input input, GameTime gameTime)
