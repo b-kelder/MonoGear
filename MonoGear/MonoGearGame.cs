@@ -122,7 +122,7 @@ namespace MonoGear
 
         private void UpdateDifficulty()
         {
-            var sightRange = 220f;
+            var sightRange = 295f;
             var runSpeed = 90.0f;
             var walkSpeed = 35.0f;
 
@@ -218,6 +218,7 @@ namespace MonoGear
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            
             // Load global resources
             globalResources.LoadResources(Content);
 
@@ -229,6 +230,7 @@ namespace MonoGear
             /*AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
             AudioManager.MusicVolume(0.4f);
             AudioManager.MusicPlay();*/
+            
 
             // Global Entities
             player = new Player();
