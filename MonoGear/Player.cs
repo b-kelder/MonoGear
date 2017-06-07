@@ -10,16 +10,18 @@ namespace MonoGear
 {
     class Player : WorldEntityAnimated
     {
+        private static Texture2D deadSprite;
         public float Speed { get; set; }
         public int ThrowingDelay { get; set; }
         public bool SneakMode { get; set; }
 
         private float health;
+        private bool wasDead;
         public float Health {
             get { return health; }
             set
             {
-                bool wasDead = health <= 0;
+                wasDead = health <= 0;
                 health = value;
                 if(health <= 0 && !wasDead)
                 {
@@ -35,7 +37,7 @@ namespace MonoGear
         private SoundEffectInstance walkingSoundGrass;
         private SoundEffectInstance walkingSoundWater;
         private SoundEffectInstance walkingSoundStone;
-        private static Texture2D deathSprite;
+
 
         public Player() : base()
         {
@@ -60,6 +62,14 @@ namespace MonoGear
         protected override void LoadContent()
         {
             base.LoadContent();
+
+            if (deadSprite == null)
+            {
+
+                deadSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Dead");
+                
+
+            }
 
             walkingSoundGrass = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
             walkingSoundWater = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Water_Drop_Sound").CreateInstance();
@@ -224,6 +234,17 @@ namespace MonoGear
             
 
             Camera.main.Position = new Vector2(Position.X, Position.Y);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+
+            if (health <= 0 && !wasDead)
+            {
+                spriteBatch.Draw(deadSprite, new Vector2(Position.X, Position.Y + 1), deadSprite.Bounds, Color.White, 0, new Vector2(deadSprite.Bounds.Size.X, deadSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+                
+            }
         }
 
     }

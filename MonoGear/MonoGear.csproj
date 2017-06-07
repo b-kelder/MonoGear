@@ -207,6 +207,8 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\Car.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Dead.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Die.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\gameover.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Guard.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
