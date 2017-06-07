@@ -65,6 +65,8 @@ namespace MonoGear
         Player player;
         LevelListData levelList;
 
+        bool rollingCredits;
+
         Queue<WorldEntity> spawnQueueLocal;
         Queue<WorldEntity> spawnQueueGlobal;
 
@@ -104,6 +106,13 @@ namespace MonoGear
                 else
                 {
                     // Roll Credits
+                    // Block update
+                    instance.rollingCredits = true;
+                    // Mute audio?
+
+                    // Roll credits
+                    var frame = Windows.UI.Xaml.Window.Current.Content as Frame;
+                    frame.Navigate(typeof(CreditsPage));
                 }
             }
         }
@@ -195,6 +204,11 @@ namespace MonoGear
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            if(rollingCredits)
+            {
+                return;
+            }
+
             if(nextLevel != null)
             {
                 LoadLevel();

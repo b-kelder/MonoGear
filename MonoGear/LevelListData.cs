@@ -24,7 +24,7 @@ namespace MonoGear
         public string NextLevel()
         {
             index++;
-            return Levels[0];
+            return Levels[index];
         }
 
         public string FirstLevel()

@@ -12,7 +12,6 @@ namespace MonoGear
     {
         float speed { get; set; }
         Collider originCollider;
-        private AudioSource snoreSound;
 
         public SleepDart(Collider originCollider)
         {
@@ -48,14 +47,9 @@ namespace MonoGear
                 if(collider != null && collider.Entity.Tag.Equals("Guard"))
                 {
                     var guard = collider.Entity as Guard;
-                    guard.Enabled = false;
+                    guard.Sleep();
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/DartHit"), 1);
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/HurtSound"), 1);
-                    snoreSound = new AudioSource();
-                    snoreSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/snoreWhistle"), 250);
-                    snoreSound.Position = guard.Position;
-                    AudioManager.AddAudioSource(snoreSound);
-                    snoreSound.Pause();
                 }
 
                 Enabled = false;

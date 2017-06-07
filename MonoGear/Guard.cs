@@ -15,17 +15,20 @@ namespace MonoGear
     {
         private static Texture2D alertSprite;
         private static Texture2D searchSprite;
+        private static Texture2D sleepSprite;
 
-        enum State
+        public enum State
         {
             Idle,
-            Interested,
-            Alerted,
-            Patrolling,
-            ToPatrol,
-            ToAlert,
-            ToInterest,
-            Searching,
+            Interested,         // Interested in a location, walks to it
+            Alerted,            // Alterted to a location, runs to it
+            Patrolling,         // Following patrol path
+            ToPatrol,           // Pathfinding to patrol path
+            ToAlert,            // Pathfinding to alert location
+            ToInterest,         // Pathfinding to interest location
+            Searching,          // Waiting
+            Pursuit,            // Following the player
+            Sleeping,
         }
 
         float walkSpeed;
@@ -36,7 +39,6 @@ namespace MonoGear
         private float sightFov;
         private Player player;
         private Vector2 playerPos;
-        private AudioSource snoreSound;
 
         public List<Vector2> PatrolPath
         {
@@ -117,115 +119,158 @@ namespace MonoGear
             {
                 searchSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Searching");
             }
+            if (sleepSprite == null)
+            {
+                sleepSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Sleeping");
+            }
         }
 
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
+            
+            if(state == State.Sleeping)
+            {
+                return;
+            }
 
-            // Follow current path
-
-            if (currentPath != null && currentPathIndex >= 0)
+            if(state == State.Pursuit)
             {
                 AnimationRunning = true;
-                if (currentPathIndex < currentPath.Count && state != State.ToAlert && state != State.ToInterest)
+                var target = playerPos;
+                if(Vector2.DistanceSquared(Position, target) > 90)
                 {
-                    var target = currentPath[currentPathIndex];
-                    if (Vector2.DistanceSquared(Position, target) < 24)
+                    // Move towards player
+                    Rotation = MathExtensions.VectorToAngle(target - Position);
+
+                    var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    delta *= runSpeed;
+                    AnimationDelta = 0.05f;
+                    Move(delta);
+                }
+            }
+            // Follow current path
+            else if (currentPath != null && currentPathIndex >= 0)
+            {
+                // Follow current path
+                if (currentPath != null && currentPathIndex >= 0)
+                {
+                    AnimationRunning = true;
+                    if (currentPathIndex < currentPath.Count && state != State.ToAlert && state != State.ToInterest)
                     {
-                        currentPathIndex++;
-                        if (state == State.Patrolling)  // Loop path when patrolling
+                        var target = currentPath[currentPathIndex];
+                        if (Vector2.DistanceSquared(Position, target) < 24)
                         {
-                            if (currentPathIndex >= currentPath.Count)
+                            currentPathIndex++;
+                            if (state == State.Patrolling)  // Loop path when patrolling
                             {
-                                currentPathIndex = 0;
+                                if (currentPathIndex >= currentPath.Count)
+                                {
+                                    currentPathIndex = 0;
+                                }
                             }
+                        }
+                        else
+                        {
+                            // Move down the path
+                            Rotation = MathExtensions.VectorToAngle(target - Position);
+
+                            var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            if (state == State.Alerted)
+                            {
+                                delta *= runSpeed;
+                                AnimationDelta = 0.05f;
+                            }
+                            else
+                            {
+                                delta *= walkSpeed;
+                                AnimationDelta = 0.1f;
+                            }
+                            Move(delta);
                         }
                     }
                     else
                     {
-                        // Move down the path
-                        Rotation = MathExtensions.VectorToAngle(target - Position);
+                        // Reached end of path or waiting for a new one
+                        currentPathIndex = -1;
 
-                        var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (state == State.Alerted)
+                        if (state == State.Alerted || state == State.Interested)
                         {
-                            delta *= runSpeed;
-                            AnimationDelta = 0.05f;
+                            StartSearch(gameTime);
                         }
-                        else
+                        else if (state == State.ToPatrol)
                         {
-                            delta *= walkSpeed;
-                            AnimationDelta = 0.1f;
+                            currentPath = PatrolPath;
+                            currentPathIndex = patrolPathIndex;
+                            state = State.Patrolling;
                         }
-                        Move(delta);
                     }
                 }
-                else
-                {
-                    // Reached end of path or waiting for a new one
-                    currentPathIndex = -1;
 
-                    if (state == State.Alerted || state == State.Interested)
-                    {
-                        StartSearch(gameTime);
-                    }
-                    else if (state == State.ToPatrol)
-                    {
-                        currentPath = PatrolPath;
-                        currentPathIndex = patrolPathIndex;
-                        state = State.Patrolling;
-                    }
-                }
-            }
-
-            // State stuff
-            if(state == State.Idle)
-            {
-                StartPatrol();
-
-                AnimationRunning = false;
-                AnimationCurrentFrame = 1;
-            }
-            else if(state == State.Searching)
-            {
-                // Wait a little bit at the spot when 'searching'
-                if (gameTime.TotalGameTime.TotalSeconds >= searchStartTime + searchTime)
+                // State stuff
+                if (state == State.Idle)
                 {
-                    state = State.Idle;
-                }
-                else
-                {
+                    StartPatrol();
+
                     AnimationRunning = false;
                     AnimationCurrentFrame = 1;
                 }
+                else if (state == State.Searching)
+                {
+                    // Wait a little bit at the spot when 'searching'
+                    if (gameTime.TotalGameTime.TotalSeconds >= searchStartTime + searchTime)
+                    {
+                        state = State.Idle;
+                    }
+                    else
+                    {
+                        AnimationRunning = false;
+                        AnimationCurrentFrame = 1;
+                    }
+                }
+
+                if (state != State.Alerted && state != State.ToAlert)
+                {
+                    if (CanHear(out playerPos))
+                    {
+                        Interest(playerPos);
+                    }
+                    else if (CanSee(out playerPos))
+                    {
+                        Alert(playerPos);
+                    }
+                }
             }
 
-            if(state != State.Alerted && state != State.ToAlert)
+            // We can hear the player but not see him
+            if(!CanSee(out playerPos) && CanHear(out playerPos))
             {
-                if(CanHear(out playerPos))
-                {
-                    Interest(playerPos);
-                }
-                else if(CanSee(out playerPos))
-                {
-                    Alert(playerPos);
-                }
+                Interest(playerPos);
             }
 
             if(CanSee(out playerPos))
             {
-                if(gameTime.TotalGameTime.TotalSeconds >= shootStartTime + shootTime)
+                // We can see the player
+                state = State.Pursuit;
+                if (CanSee(out playerPos))
                 {
-                    var bullet = new Bullet(Collider);
-                    bullet.Position = Position;
-                    bullet.Rotation = Rotation;
-                    bullet.Rotation = MathExtensions.VectorToAngle(playerPos - Position);
-                    MonoGearGame.SpawnLevelEntity(bullet);
-                    AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
+                    if (gameTime.TotalGameTime.TotalSeconds >= shootStartTime + shootTime)
+                    {
+                        var bullet = new Bullet(Collider);
+                        bullet.Position = Position;
+                        bullet.Rotation = Rotation;
+                        bullet.Rotation = MathExtensions.VectorToAngle(playerPos - Position);
+                        MonoGearGame.SpawnLevelEntity(bullet);
+                        AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
 
-                    shootStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
+                        shootStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
+                    }
                 }
+            }
+            else if(state == State.Pursuit)
+            {
+                // Can't see player anymore, but we just followed him so go looking for him
+                Interest(playerPos);
             }
         }
 
@@ -233,7 +278,7 @@ namespace MonoGear
         {
             base.Draw(spriteBatch);
 
-            if (state == State.ToAlert || state == State.Alerted)
+            if (state == State.ToAlert || state == State.Alerted || state == State.Pursuit)
             {
                 spriteBatch.Draw(alertSprite, new Vector2(Position.X, Position.Y - 16), alertSprite.Bounds, Color.White, 0, new Vector2(alertSprite.Bounds.Size.X, alertSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
@@ -241,6 +286,26 @@ namespace MonoGear
             {
                 spriteBatch.Draw(searchSprite, new Vector2(Position.X, Position.Y - 16), searchSprite.Bounds, Color.White, 0, new Vector2(searchSprite.Bounds.Size.X, searchSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
+            else if (state == State.Sleeping)
+            {
+                spriteBatch.Draw(sleepSprite, new Vector2(Position.X, Position.Y - 16), sleepSprite.Bounds, Color.White, 0, new Vector2(sleepSprite.Bounds.Size.X, sleepSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+            }
+        }
+
+        public void Sleep()
+        {
+            if (state != State.Sleeping)
+            {
+                AnimationRunning = false;
+                AnimationCurrentFrame = 1;
+                state = State.Sleeping;
+                var snoreSound = new AudioSource();
+                snoreSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/snoreWhistle"), 150);
+                snoreSound.Position = Position;
+                AudioManager.AddAudioSource(snoreSound);
+                snoreSound.Pause();
+            }
+           
         }
 
         private void StartSearch(GameTime gameTime)
@@ -382,7 +447,7 @@ namespace MonoGear
                 }
             }
 
-            entityPos = Vector2.Zero;
+            entityPos = player.Position;
             return false;
         }
 
@@ -397,7 +462,7 @@ namespace MonoGear
                 return true;
             }
 
-            entityPos = Vector2.Zero;
+            entityPos = player.Position;
             return false;
         }
     }
