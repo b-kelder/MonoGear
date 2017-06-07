@@ -59,7 +59,7 @@ namespace MonoGear
             Position = player.Position;
             Visible = true;
             player.Enabled = false;
-
+            AudioManager.Clear();
             AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound"), 1);
         }
 
