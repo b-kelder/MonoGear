@@ -56,10 +56,10 @@
                         <Setter Target="DifficultyLevel.FontSize" Value="36"/>
                         <Setter Target="DifficultyComboBox.FontSize" Value="36"/>
                         <Setter Target="pageTitle.FontSize" Value="45"/>
-                        <Setter Target="MasterVolumeSlider.Width" Value="375"/>
-                        <Setter Target="MusicVolumeSlider.Width" Value="375"/>
-                        <Setter Target="EffectVolumeSlider.Width" Value="375"/>
-                        <Setter Target="DifficultyComboBox.Width" Value="375"/>
+                        <Setter Target="MasterVolumeSlider.Width" Value="355"/>
+                        <Setter Target="MusicVolumeSlider.Width" Value="355"/>
+                        <Setter Target="EffectVolumeSlider.Width" Value="355"/>
+                        <Setter Target="DifficultyComboBox.Width" Value="355"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
