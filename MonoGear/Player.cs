@@ -12,9 +12,24 @@ namespace MonoGear
     {
         public float Speed { get; set; }
         public int ThrowingDelay { get; set; }
-        public bool sneakMode { get; set; }
+        public bool SneakMode { get; set; }
 
-        private int amoutOfDarts;
+        private float health;
+        public float Health {
+            get { return health; }
+            set
+            {
+                bool wasDead = health <= 0;
+                health = value;
+                if(health <= 0 && !wasDead)
+                {
+                    var gameOver = MonoGearGame.FindEntitiesWithTag("GameOverScreen")[0] as GameOver;
+                    gameOver.EnableGameOver();
+                }
+            }
+        }
+
+        public int DartCount { get; set; }
 
         private SoundEffectInstance walkingSound;
         private SoundEffectInstance walkingSoundGrass;
@@ -27,6 +42,7 @@ namespace MonoGear
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Speed = 100.0f;
 
+
             TextureAssetName = "Sprites/Person";
             
             AnimationLength = 3;
@@ -35,8 +51,6 @@ namespace MonoGear
             AnimationPingPong = true;
 
             Tag = "Player";
-
-            amoutOfDarts = 100;
 
             LoadContent();
 
@@ -59,6 +73,10 @@ namespace MonoGear
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
+
+            // Give health and items
+            Health = 5.0f;
+            DartCount = 100;
 
             var ents = MonoGearGame.FindEntitiesWithTag("PlayerSpawnPoint");
             if(ents.Count > 0)
@@ -84,12 +102,12 @@ namespace MonoGear
 
             if (input.IsKeyDown(Keys.LeftShift))
             {
-                sneakMode = true;
+                SneakMode = true;
                 Speed = 50;
             }
             else
             {
-                sneakMode = false;
+                SneakMode = false;
                 Speed = 100;
             }
 
@@ -138,13 +156,13 @@ namespace MonoGear
             }
             else
             {
-                sneakMode = true;
+                SneakMode = true;
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
                 AudioManager.GlobalAudioStop(walkingSound);
             }
 
-            if (sneakMode)
+            if (SneakMode)
                 AudioManager.GlobalAudioStop(walkingSound);
 
             if (ThrowingDelay > 0)
@@ -167,13 +185,13 @@ namespace MonoGear
             // Shoot sleep dart
             if(input.IsButtonPressed(Input.Button.Shoot))
             {
-                if(amoutOfDarts > 0)
+                if(DartCount > 0)
                 {
                     var sleepDart = new SleepDart(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
                     sleepDart.Position = Position;
                     sleepDart.Rotation = Rotation;
                     MonoGearGame.SpawnLevelEntity(sleepDart);
-                    amoutOfDarts--;
+                    DartCount--;
                     AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Blowgun"), 1);
                 }    
             }

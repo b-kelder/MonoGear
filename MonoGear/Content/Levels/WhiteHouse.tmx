@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="10">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="55">
  <tileset firstgid="1" name="Tiles" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="tilesets/WhiteHouse.png" width="272" height="272"/>
   <tile id="0">
@@ -4450,6 +4450,57 @@
     <property name="patrolpath" value="Front Gate Circle"/>
    </properties>
   </object>
+  <object id="10" name="Car1" type="car" gid="32" x="754.667" y="1937.33" width="16" height="16">
+   <properties>
+    <property name="path" value="Car PathA"/>
+   </properties>
+  </object>
+  <object id="14" name="Trekkervogel" type="bird" gid="99" x="2269.33" y="3046.67" width="16" height="16"/>
+  <object id="15" name="Trekkervogel" type="bird" gid="99" x="2321.33" y="2998.67" width="16" height="16"/>
+  <object id="16" name="Trekkervogel" type="bird" gid="99" x="2364" y="3049.33" width="16" height="16"/>
+  <object id="17" name="Trekkervogel" type="bird" gid="99" x="2420" y="3000" width="16" height="16"/>
+  <object id="18" name="Trekkervogel" type="bird" gid="99" x="2453.33" y="3045.33" width="16" height="16"/>
+  <object id="19" name="Trekkervogel" type="bird" gid="99" x="2365.33" y="2938.67" width="16" height="16"/>
+  <object id="20" name="Trekkervogel" type="bird" gid="99" x="2589.33" y="3138" width="16" height="16"/>
+  <object id="21" name="Trekkervogel" type="bird" gid="99" x="2677.33" y="3244.66" width="16" height="16"/>
+  <object id="22" name="Trekkervogel" type="bird" gid="99" x="2644" y="3199.33" width="16" height="16"/>
+  <object id="23" name="Trekkervogel" type="bird" gid="99" x="2588" y="3248.66" width="16" height="16"/>
+  <object id="24" name="Trekkervogel" type="bird" gid="99" x="2545.33" y="3198" width="16" height="16"/>
+  <object id="25" name="Trekkervogel" type="bird" gid="99" x="2493.33" y="3246" width="16" height="16"/>
+  <object id="26" name="Trekkervogel" type="bird" gid="99" x="2106.67" y="3310" width="16" height="16"/>
+  <object id="27" name="Trekkervogel" type="bird" gid="99" x="2158.67" y="3262" width="16" height="16"/>
+  <object id="28" name="Trekkervogel" type="bird" gid="99" x="2201.34" y="3312.66" width="16" height="16"/>
+  <object id="29" name="Trekkervogel" type="bird" gid="99" x="2257.34" y="3263.33" width="16" height="16"/>
+  <object id="30" name="Trekkervogel" type="bird" gid="99" x="2290.67" y="3308.66" width="16" height="16"/>
+  <object id="31" name="Trekkervogel" type="bird" gid="99" x="2202.67" y="3202" width="16" height="16"/>
+  <object id="32" name="Trekkervogel" type="bird" gid="99" x="1622.67" y="3068.34" width="16" height="16"/>
+  <object id="33" name="Trekkervogel" type="bird" gid="99" x="1710.67" y="3174.99" width="16" height="16"/>
+  <object id="34" name="Trekkervogel" type="bird" gid="99" x="1677.34" y="3129.66" width="16" height="16"/>
+  <object id="35" name="Trekkervogel" type="bird" gid="99" x="1621.34" y="3178.99" width="16" height="16"/>
+  <object id="36" name="Trekkervogel" type="bird" gid="99" x="1578.67" y="3128.34" width="16" height="16"/>
+  <object id="37" name="Trekkervogel" type="bird" gid="99" x="1526.67" y="3176.34" width="16" height="16"/>
+  <object id="38" name="Trekkervogel" type="bird" gid="99" x="1913.33" y="3112.34" width="16" height="16"/>
+  <object id="39" name="Trekkervogel" type="bird" gid="99" x="1965.33" y="3064.34" width="16" height="16"/>
+  <object id="40" name="Trekkervogel" type="bird" gid="99" x="2008" y="3114.99" width="16" height="16"/>
+  <object id="41" name="Trekkervogel" type="bird" gid="99" x="2064" y="3065.66" width="16" height="16"/>
+  <object id="42" name="Trekkervogel" type="bird" gid="99" x="2097.33" y="3110.99" width="16" height="16"/>
+  <object id="43" name="Trekkervogel" type="bird" gid="99" x="2009.33" y="3004.34" width="16" height="16"/>
+  <object id="44" name="Trekkervogel" type="bird" gid="99" x="1785.33" y="2805.01" width="16" height="16"/>
+  <object id="45" name="Trekkervogel" type="bird" gid="99" x="1873.33" y="2911.66" width="16" height="16"/>
+  <object id="46" name="Trekkervogel" type="bird" gid="99" x="1840" y="2866.34" width="16" height="16"/>
+  <object id="47" name="Trekkervogel" type="bird" gid="99" x="1784" y="2915.66" width="16" height="16"/>
+  <object id="48" name="Trekkervogel" type="bird" gid="99" x="1741.33" y="2865.01" width="16" height="16"/>
+  <object id="49" name="Trekkervogel" type="bird" gid="99" x="1689.33" y="2913.01" width="16" height="16"/>
+  <object id="53" name="Guard Back 2" type="guard" gid="100" x="2604" y="1302.67" width="16" height="16">
+   <properties>
+    <property name="patrolpath" value="Backyard Half Right"/>
+   </properties>
+  </object>
+  <object id="54" name="Guard Back 1" type="guard" gid="100" x="2085.33" y="1306.67" width="16" height="16">
+   <properties>
+    <property name="patrolpath" value="Backyard Half Left"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Paths">
   <object id="4" name="Patrol Path A" type="path" x="770" y="837">
@@ -4460,6 +4511,15 @@
   </object>
   <object id="6" name="Front Gate Circle" type="path" x="2137.33" y="2001.33">
    <polyline points="0,0 22.6667,-86.6667 80,-162.667 158.667,-208 214.667,-216 277.333,-205.333 346.667,-157.333 396,-92 425.333,-29.3333 426.667,5.33333 420,-44 390.667,-106.667 356,-145.333 312,-188 260,-208 192,-214.667 146.667,-198.667 97.3333,-172 56,-137.333 24,-90.6667 6.66667,-37.3333"/>
+  </object>
+  <object id="13" name="Car PathA" type="path" x="798.667" y="2101.33">
+   <polyline points="-29.3333,30.6667 586.667,29.3333 592,714.667 2512,716 2512,-25.3333 641.333,-20 644,-1098.67 20,-1097.33 18.6667,-1424 592,-1426.67 589.333,-17.3333 24,-17.3333 16,-1038.67 642.667,-1041.33 644,-1428 3086.67,-1426.67 3088,-1097.33 2460,-1097.33 2458.67,32 3138.67,30.6667 3130.67,-1096 2517.33,-1097.33 2513.33,-1478.67 -36,-1478.67 -34.6667,-45.3333"/>
+  </object>
+  <object id="51" name="Backyard Half Left" type="path" x="2106.67" y="1324">
+   <polyline points="0,0 61.3333,81.3333 161.333,145.333 234.667,145.333 153.333,142.667 64,85.3333 4,0 -90.6667,-14.6667 -180,13.3333 -96,-13.3333 -12,-44 -13.3333,-160 9.33333,-236 66.6667,-302.667 144,-352 232,-368 137.333,-352 66.6667,-305.333 14.6667,-238.667 -10.6667,-168 -13.3333,-48"/>
+  </object>
+  <object id="52" name="Backyard Half Right" type="path" x="2602.67" y="1316">
+   <polyline points="0,0 -48,66.6667 -137.333,138.667 -237.333,154.667 -130.667,140 -56,74.6667 6.66667,2.66667 102.667,-4 200,41.3333 93.3333,-2.66667 1.33333,-52 4,-144 -17.3333,-224 -69.3333,-298.667 -160,-342.667 -240,-360 -161.333,-344 -73.3333,-297.333 -22.6667,-225.333 6.66667,-141.333 5.33333,-38.6667"/>
   </object>
  </objectgroup>
 </map>

@@ -16,6 +16,8 @@ namespace MonoGear
         float speed;
         private AudioSource birdSound;
 
+        public float YResetValue { get; set; }
+
         public Bird()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
@@ -33,8 +35,9 @@ namespace MonoGear
             Z = 100;
 
             LoadContent();
-            
+
             birdSound = new AudioSource();
+            birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 210);
             birdSound.Position = Position;
             AudioManager.AddAudioSource(birdSound);
             birdSound.Pause();    
@@ -60,7 +63,7 @@ namespace MonoGear
 
             if(Position.Y < -200)
             {
-                Move(new Vector2(0, 5000));
+                Move(new Vector2(0, YResetValue));
             }
 
             Move(new Vector2(0, -speed * (float)gameTime.ElapsedGameTime.TotalSeconds));

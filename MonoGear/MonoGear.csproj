@@ -110,7 +110,9 @@
       <DependentUpon>CreditsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameOver.cs" />
+    <Compile Include="GameUI.cs" />
     <Compile Include="Guard.cs" />
+    <Compile Include="LevelListData.cs" />
     <Compile Include="Pathfinding.cs" />
     <Compile Include="Rock.cs" />
     <Compile Include="AudioSource.cs" />
@@ -146,6 +148,9 @@
     <Compile Include="WorldEntityAnimated.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Levels\LevelList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Levels\WhiteHouse.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

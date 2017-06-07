@@ -362,7 +362,11 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Hit.png
 
+
 #begin Sprites/Sleeping.png
+
+#begin Sprites/HalfHeart.png
+
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -372,9 +376,15 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+
 /build:Sprites/Sleeping.png
 
 #begin Sprites/Die.png
+
+/build:Sprites/HalfHeart.png
+
+#begin Sprites/Heart.png
+>>>>>>> origin/master
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -384,5 +394,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+
 /build:Sprites/Die.png
+
+/build:Sprites/Heart.png
+
 

@@ -7,6 +7,12 @@ using System;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using Windows.UI.Xaml.Controls;
+using System.Xml.Serialization;
+using System.IO;
+using System.Diagnostics;
+using Windows.Storage;
+using System.Threading.Tasks;
+using Windows.ApplicationModel;
 
 namespace MonoGear
 {
@@ -57,6 +63,7 @@ namespace MonoGear
         /// Active Player
         /// </summary>
         Player player;
+        LevelListData levelList;
 
         Queue<WorldEntity> spawnQueueLocal;
         Queue<WorldEntity> spawnQueueGlobal;
@@ -78,18 +85,26 @@ namespace MonoGear
             };
         }
 
-        public static void ReturnToMenu()
+        public static void Restart()
         {
             if(instance != null)
             {
-                Pathfinding.OnReturnToMenu();
-                Collider.OnReturnToMenu();
-                
-                //instance.Exit();
+                LoadLevel(Level.LoadLevel(instance.activeLevel.Name));
+            }
+        }
 
-                //instance = null;
-                var frame = Windows.UI.Xaml.Window.Current.Content as Frame;
-                frame.Navigate(typeof(MenuPage));
+        public static void NextLevel()
+        {
+            if(instance != null)
+            {
+                if(instance.levelList.LastLevel() != instance.activeLevel.Name)
+                {
+                    LoadLevel(Level.LoadLevel(instance.levelList.NextLevel()));
+                }
+                else
+                {
+                    // Roll Credits
+                }
             }
         }
 
@@ -124,6 +139,18 @@ namespace MonoGear
         /// </summary>
         protected override void LoadContent()
         {
+            // Load level list
+            Task.Run(async () =>
+            {
+                var sf = await Package.Current.InstalledLocation.TryGetItemAsync(@"Content\Levels\LevelList.xml") as StorageFile;
+
+                using(var stream = await sf.OpenStreamForReadAsync())
+                {
+                    XmlSerializer xml = new XmlSerializer(typeof(LevelListData));
+                    levelList = xml.Deserialize(stream) as LevelListData;
+                }
+            }).Wait();
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -139,13 +166,16 @@ namespace MonoGear
             AudioManager.MusicVolume(0.4f);
             AudioManager.MusicPlay();*/
 
-            // GLOBALS
+            // Global Entities
             player = new Player();
             RegisterGlobalEntity(player);
+            var ui = new GameUI();
+            RegisterGlobalEntity(ui);
             var pf = new Pathfinding();
             RegisterGlobalEntity(pf);
 			
-            var level = Level.LoadLevel("WhiteHouse");
+            // Load first level in the list
+            var level = Level.LoadLevel(levelList.Start());
             LoadLevel(level);
         }
 
@@ -181,13 +211,6 @@ namespace MonoGear
             while(spawnQueueLocal.Count > 0)
             {
                 RegisterLevelEntity(spawnQueueLocal.Dequeue());
-            }
-
-
-            // Level reload by pressing L
-            if(input.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.L))
-            {
-                LoadLevel(activeLevel);
             }
 
             // Globals go first
