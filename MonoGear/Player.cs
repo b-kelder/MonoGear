@@ -65,10 +65,7 @@ namespace MonoGear
 
             if (deadSprite == null)
             {
-
-                deadSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Dead");
-                
-
+                deadSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Dead");                
             }
 
             walkingSoundGrass = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
@@ -240,6 +237,7 @@ namespace MonoGear
         {
             base.Draw(spriteBatch);
 
+            //Draw deadSprite
             if (health <= 0 && !wasDead)
             {
                 spriteBatch.Draw(deadSprite, new Vector2(Position.X, Position.Y + 1), deadSprite.Bounds, Color.White, 0, new Vector2(deadSprite.Bounds.Size.X, deadSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
