@@ -303,6 +303,8 @@ namespace MonoGear
                 snoreSound.Position = Position;
                 AudioManager.AddAudioSource(snoreSound);
                 snoreSound.Pause();
+
+                Enabled = false;
             }
         }
 
@@ -333,7 +335,7 @@ namespace MonoGear
         /// <param name="origin"></param>
         public async void Alert(Vector2 origin)
         {
-            if(state == State.ToAlert)
+            if(!Enabled || state == State.ToAlert)
                 return;
 
             if (state == State.Patrolling)
@@ -368,7 +370,7 @@ namespace MonoGear
         /// <param name="origin"></param>
         public async void Interest(Vector2 origin)
         {
-            if(state == State.ToInterest)
+            if(!Enabled || state == State.ToInterest)
                 return;
 
             // Escalate to an alert if we're already alerted
