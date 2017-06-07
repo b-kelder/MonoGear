@@ -28,7 +28,7 @@ namespace MonoGear
 
             connectedCameras = new List<CCTV>();
             hackingProgress = 0;
-            progressPerClick = 1;
+            progressPerClick = 25;
             LoadContent();
         }
 
