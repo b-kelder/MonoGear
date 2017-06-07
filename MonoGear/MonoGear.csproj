@@ -234,6 +234,9 @@
     <None Include="Content\bin\WindowsStoreApp\Sprites\WhiteHouseShadows.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="Content\Levels\InsideTest.tmx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>

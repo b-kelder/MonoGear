@@ -19,13 +19,14 @@ namespace MonoGear
         enum State
         {
             Idle,
-            Interested,
-            Alerted,
-            Patrolling,
-            ToPatrol,
-            ToAlert,
-            ToInterest,
-            Searching,
+            Interested,         // Interested in a location, walks to it
+            Alerted,            // Alterted to a location, runs to it
+            Patrolling,         // Following patrol path
+            ToPatrol,           // Pathfinding to patrol path
+            ToAlert,            // Pathfinding to alert location
+            ToInterest,         // Pathfinding to interest location
+            Searching,          // Waiting
+            Pursuit,            // Following the player
         }
 
         float walkSpeed;
@@ -123,9 +124,23 @@ namespace MonoGear
         {
             base.Update(input, gameTime);
 
-            // Follow current path
+            if(state == State.Pursuit)
+            {
+                AnimationRunning = true;
+                var target = playerPos;
+                if(Vector2.DistanceSquared(Position, target) > 90)
+                {
+                    // Move towards player
+                    Rotation = MathExtensions.VectorToAngle(target - Position);
 
-            if (currentPath != null && currentPathIndex >= 0)
+                    var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    delta *= runSpeed;
+                    AnimationDelta = 0.05f;
+                    Move(delta);
+                }
+            }
+            // Follow current path
+            else if (currentPath != null && currentPathIndex >= 0)
             {
                 AnimationRunning = true;
                 if (currentPathIndex < currentPath.Count && state != State.ToAlert && state != State.ToInterest)
@@ -201,20 +216,16 @@ namespace MonoGear
                 }
             }
 
-            if(state != State.Alerted && state != State.ToAlert)
+            // We can hear the player but not see him
+            if(!CanSee(out playerPos) && CanHear(out playerPos))
             {
-                if(CanHear(out playerPos))
-                {
-                    Interest(playerPos);
-                }
-                else if(CanSee(out playerPos))
-                {
-                    Alert(playerPos);
-                }
+                Interest(playerPos);
             }
 
             if(CanSee(out playerPos))
             {
+                // We can see the player
+                state = State.Pursuit;
                 if(gameTime.TotalGameTime.TotalSeconds >= shootStartTime + shootTime)
                 {
                     var bullet = new Bullet(Collider);
@@ -227,13 +238,18 @@ namespace MonoGear
                     shootStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
                 }
             }
+            else if(state == State.Pursuit)
+            {
+                // Can't see player anymore, but we just followed him so go looking for him
+                Interest(playerPos);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
 
-            if (state == State.ToAlert || state == State.Alerted)
+            if (state == State.ToAlert || state == State.Alerted || state == State.Pursuit)
             {
                 spriteBatch.Draw(alertSprite, new Vector2(Position.X, Position.Y - 16), alertSprite.Bounds, Color.White, 0, new Vector2(alertSprite.Bounds.Size.X, alertSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
@@ -382,7 +398,7 @@ namespace MonoGear
                 }
             }
 
-            entityPos = Vector2.Zero;
+            entityPos = player.Position;
             return false;
         }
 
@@ -397,7 +413,7 @@ namespace MonoGear
                 return true;
             }
 
-            entityPos = Vector2.Zero;
+            entityPos = player.Position;
             return false;
         }
     }

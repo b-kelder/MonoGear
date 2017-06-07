@@ -94,10 +94,10 @@ namespace MonoGear
             // TODO: Bake to image on level load and use that for rendering?
             var clip = camera.GetClippingRect();
 
-            int ys = Math.Max(0, clip.Y / TileHeight - 1);
-            int ye = Math.Min(Height, clip.Bottom / TileHeight + 1);
-            int xs = Math.Max(0, clip.X / TileWidth - 1);
-            int xe = Math.Min(Width, clip.Right / TileWidth + 1);
+            int ys = Math.Max(0, (int)clip.Y / TileHeight - 1);
+            int ye = Math.Min(Height, (int)clip.Bottom / TileHeight + 1);
+            int xs = Math.Max(0, (int)clip.X / TileWidth - 1);
+            int xe = Math.Min(Width, (int)clip.Right / TileWidth + 1);
 
             foreach(var layer in tileLayers)
             {
@@ -277,6 +277,60 @@ namespace MonoGear
                         {
                             entity = new Bird() { YResetValue = level.Height * level.TileHeight + 200 };
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                        }
+                        else if(obj.Type == "trigger")
+                        {
+                            string action;
+                            if(obj.Properties.TryGetValue("action", out action))
+                            {
+                                Action<Collider, IEnumerable<Collider>, IEnumerable<Collider>> actionL = null;
+                                if(action == "nextlevel")
+                                {
+                                    actionL = (self, previous, current) =>
+                                    {
+                                        foreach(var col in current)
+                                        {
+                                            if(col.Entity.Tag == "Player")
+                                            {
+                                                MonoGearGame.NextLevel();
+                                            }
+                                        }
+                                    };
+                                }
+                                else if(action == "alert")
+                                {
+                                    actionL = (self, previous, current) =>
+                                    {
+                                        foreach(var col in current)
+                                        {
+                                            if(col.Entity.Tag == "Player" && !previous.Contains(col))
+                                            {
+                                                var guards = MonoGearGame.FindEntitiesOfType<Guard>();
+                                                foreach(var guard in guards)
+                                                {
+                                                    guard.Alert(col.Entity.Position);
+                                                }
+                                            }
+                                        }
+                                    };
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("Trigger " + obj.Name + " with unknown action " + action);
+                                }
+
+                                if(actionL != null)
+                                {
+                                    var size = new Vector2((float)obj.Width, (float)obj.Height);
+                                    entity = new WorldBoxTrigger(new Vector2((float)obj.X, (float)obj.Y) + size / 2,
+                                        size,
+                                        actionL);
+                                }
+                            }
+                            else
+                            {
+                                Debug.WriteLine("Trigger " + obj.Name + " with no action!");
+                            }
                         }
                         else if(obj.Type == "path")
                         {

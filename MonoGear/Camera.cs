@@ -60,7 +60,7 @@ namespace MonoGear
                 Matrix.CreateTranslation(new Vector3(Origin, 0.0f));
         }
 
-        public Rectangle GetClippingRect()
+        public FloatRect GetClippingRect()
         {
             var matrix = Matrix.Invert(GetViewMatrix());
             var topLeft = -new Vector2(viewport.Width / 2, viewport.Height / 2) + Origin;
@@ -69,7 +69,7 @@ namespace MonoGear
             topLeft = Vector2.Transform(topLeft, matrix);
             bottomRight = Vector2.Transform(bottomRight, matrix);
 
-            return new Rectangle((int)topLeft.X, (int)topLeft.Y, (int)bottomRight.X - (int)topLeft.X, (int)bottomRight.Y - (int)topLeft.Y);
+            return new FloatRect(topLeft.X, topLeft.Y, bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y);
         }
     }
 }
