@@ -155,7 +155,7 @@ namespace MonoGear
             else if(currentPath != null && currentPathIndex >= 0)
             {
                 AnimationRunning = true;
-                if(currentPathIndex < currentPath.Count && state != State.ToAlert && state != State.ToInterest)
+                if(currentPathIndex < currentPath.Count)
                 {
                     var target = currentPath[currentPathIndex];
                     if(Vector2.DistanceSquared(Position, target) < 8)
@@ -175,7 +175,7 @@ namespace MonoGear
                         Rotation = MathExtensions.VectorToAngle(target - Position);
 
                         var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if(state == State.Alerted)
+                        if(state == State.Alerted || state == State.ToAlert)
                         {
                             delta *= RunSpeed;
                             AnimationDelta = 0.05f;
@@ -275,7 +275,11 @@ namespace MonoGear
         {
             base.Draw(spriteBatch);
 
-            if (state == State.ToAlert || state == State.Alerted || state == State.Pursuit)
+            if(state == State.Sleeping || !Enabled)
+            {
+                spriteBatch.Draw(sleepSprite, new Vector2(Position.X, Position.Y - 16), sleepSprite.Bounds, Color.White, 0, new Vector2(sleepSprite.Bounds.Size.X, sleepSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+            }
+            else if (state == State.ToAlert || state == State.Alerted || state == State.Pursuit)
             {
                 spriteBatch.Draw(alertSprite, new Vector2(Position.X, Position.Y - 16), alertSprite.Bounds, Color.White, 0, new Vector2(alertSprite.Bounds.Size.X, alertSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
@@ -283,17 +287,13 @@ namespace MonoGear
             {
                 spriteBatch.Draw(searchSprite, new Vector2(Position.X, Position.Y - 16), searchSprite.Bounds, Color.White, 0, new Vector2(searchSprite.Bounds.Size.X, searchSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
-            else if (state == State.Sleeping)
-            {
-                spriteBatch.Draw(sleepSprite, new Vector2(Position.X, Position.Y - 16), sleepSprite.Bounds, Color.White, 0, new Vector2(sleepSprite.Bounds.Size.X, sleepSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
-            }
         }
 
         public void Sleep()
         {
             if (state != State.Sleeping)
             {
-                Collider.Active = false;
+                Enabled = false;
                 Z = -1;                     // Display below player
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
@@ -303,8 +303,6 @@ namespace MonoGear
                 snoreSound.Position = Position;
                 AudioManager.AddAudioSource(snoreSound);
                 snoreSound.Pause();
-
-                Enabled = false;
             }
         }
 

@@ -52,6 +52,7 @@ namespace MonoGear
             if (hackingProgress >= 100)
             {
                 HackPC();
+                Enabled = false;
             }
         }
     }
