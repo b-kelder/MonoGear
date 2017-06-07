@@ -218,8 +218,13 @@ namespace MonoGear
                     {
                         levelLayer.tiles[tileIndex] = tilesetDict[layer.Tiles[tileIndex].Gid];
 
-                        // Update top layer
-                        if(level.combinedLayer.tiles[tileIndex] == null && levelLayer.tiles[tileIndex] != null)
+                        // Update top layer if:
+                        // level layer has a tile AND
+                        // top layer is walkable but level is not OR
+                        // top layer has no tile
+                        if(levelLayer.tiles[tileIndex] != null &&
+                        (level.combinedLayer.tiles[tileIndex] == null ||
+                        (level.combinedLayer.tiles[tileIndex].Walkable && levelLayer.tiles[tileIndex].Walkable == false)))
                         {
                             level.combinedLayer.tiles[tileIndex] = levelLayer.tiles[tileIndex];
                         }
@@ -243,8 +248,6 @@ namespace MonoGear
                     foreach(var obj in objectGroup.Objects)
                     {
                         var halfTileOffset = new Vector2(level.TileWidth, level.TileHeight) / 2;
-
-
 
                         Debug.WriteLine("Found object of type " + obj.Type);
                         WorldEntity entity = null;
