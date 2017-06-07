@@ -67,7 +67,10 @@ namespace MonoGear
         {
             base.Draw(spriteBatch);
 
-            Guard.DrawFOVDebug(spriteBatch, Position, Rotation, player.Position, SightRange, new Color(0, 100, 0, 10));
+            if(!hacked)
+            {
+                Guard.DrawFOVDebug(spriteBatch, Position, Rotation, player.Position, SightRange, new Color(0, 100, 0, 10));
+            }
         }
 
         public void Hack()

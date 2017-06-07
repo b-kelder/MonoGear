@@ -5,7 +5,7 @@ namespace MonoGear
     public class BoxCollider : Collider
     {
         /// <summary>
-        /// Property for the size of teh BoxCollider
+        /// Property for the size of the BoxCollider
         /// </summary>
         public Vector2 Size
         {

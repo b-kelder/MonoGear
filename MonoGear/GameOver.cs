@@ -70,7 +70,6 @@ namespace MonoGear
             Visible = false;
             player.Enabled = true;
 
-            AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound"), 1);
         }
 
         public override void Update(Input input, GameTime gameTime)
