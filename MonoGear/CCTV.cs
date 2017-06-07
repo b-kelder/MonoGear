@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    class CCTV : WorldEntity
+    class CCTV : WorldEntityAnimated
     {
         public int sightRange { get; set; }
         public int sightFov { get; set; }
@@ -17,13 +17,20 @@ namespace MonoGear
 
         public CCTV()
         {
-            TextureAssetName = "Sprites/birdsheet";
+            TextureAssetName = "Sprites/CameraOn";
             Tag = "CCTV";
+
+            AnimationLength = 2;
+            AnimationCurrentFrame = 1;
+            AnimationDelta = 0.50f;
+            AnimationPingPong = true;
+            AnimationRunning = true;
 
             sightRange = 400;
             sightFov = 45;
 
             hacked = false;
+            LoadContent();
         }
 
         public override void OnLevelLoaded()

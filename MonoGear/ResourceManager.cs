@@ -40,6 +40,9 @@ namespace MonoGear
                     "Sprites/Hit",
                     "Sprites/Dead",
                     "Sprites/Heart",
+                    "Sprites/Pc",
+                    "Sprites/CameraOn",
+                    "Sprites/CameraOff"
 
                 }
             },
