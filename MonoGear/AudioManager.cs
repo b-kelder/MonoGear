@@ -21,6 +21,9 @@ namespace MonoGear
             MasterVolume = 1;
         }
 
+        /// <summary>
+        /// Method to clear all audio sources and music.
+        /// </summary>
         public static void Clear()
         {
             audioSources = new List<AudioSource>();
