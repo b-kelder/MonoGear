@@ -13,6 +13,9 @@ using System.Diagnostics;
 using Windows.Storage;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.UI.ViewManagement;
+using Windows.Graphics.Display;
+using Windows.Foundation;
 
 namespace MonoGear
 {
@@ -183,8 +186,12 @@ namespace MonoGear
             spawnQueueLocal = new Queue<WorldEntity>();
 
             activeCamera = new Camera(graphics.GraphicsDevice.Viewport);
+
+            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
+            var scaleFactor = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+
             // TODO: Make zoom based on resolution? Or see if we can change resolution otherwise.
-            activeCamera.Zoom = 5;
+            activeCamera.Zoom = (int)graphics.GraphicsDevice.Viewport.Height / 350;
             globalResources = new ResourceManager();
             
             base.Initialize();
