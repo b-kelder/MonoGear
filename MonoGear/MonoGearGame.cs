@@ -121,7 +121,7 @@ namespace MonoGear
         {
             var sightRange = 295f;
             var runSpeed = 90.0f;
-            var walkSpeed = 60.0f;
+            var walkSpeed = 35.0f;
 
             var dif = SettingsPage.GetDifficulty();
             if (dif.Equals(DifficultyLevels.Intern))

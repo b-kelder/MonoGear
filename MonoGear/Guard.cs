@@ -74,7 +74,7 @@ namespace MonoGear
         public Guard()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
-            WalkSpeed = 60.0f;
+            WalkSpeed = 35.0f;
             RunSpeed = 90.0f;
             searchTime = 2.5f;  // sec
 
@@ -128,7 +128,9 @@ namespace MonoGear
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
-            
+
+            //Debug.WriteLine("Guard is " + state);
+
             if(state == State.Sleeping)
             {
                 return;
@@ -150,97 +152,92 @@ namespace MonoGear
                 }
             }
             // Follow current path
-            else if (currentPath != null && currentPathIndex >= 0)
+            else if(currentPath != null && currentPathIndex >= 0)
             {
-                // Follow current path
-                if (currentPath != null && currentPathIndex >= 0)
+                AnimationRunning = true;
+                if(currentPathIndex < currentPath.Count && state != State.ToAlert && state != State.ToInterest)
                 {
-                    AnimationRunning = true;
-                    if (currentPathIndex < currentPath.Count && state != State.ToAlert && state != State.ToInterest)
+                    var target = currentPath[currentPathIndex];
+                    if(Vector2.DistanceSquared(Position, target) < 8)
                     {
-                        var target = currentPath[currentPathIndex];
-                        if (Vector2.DistanceSquared(Position, target) < 24)
+                        currentPathIndex++;
+                        if(state == State.Patrolling)  // Loop path when patrolling
                         {
-                            currentPathIndex++;
-                            if (state == State.Patrolling)  // Loop path when patrolling
+                            if(currentPathIndex >= currentPath.Count)
                             {
-                                if (currentPathIndex >= currentPath.Count)
-                                {
-                                    currentPathIndex = 0;
-                                }
+                                currentPathIndex = 0;
                             }
+                        }
+                    }
+                    else
+                    {
+                        // Move down the path
+                        Rotation = MathExtensions.VectorToAngle(target - Position);
+
+                        var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        if(state == State.Alerted)
+                        {
+                            delta *= RunSpeed;
+                            AnimationDelta = 0.05f;
                         }
                         else
                         {
-                            // Move down the path
-                            Rotation = MathExtensions.VectorToAngle(target - Position);
-
-                            var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            if (state == State.Alerted)
-                            {
-                                delta *= RunSpeed;
-                                AnimationDelta = 0.05f;
-                            }
-                            else
-                            {
-                                delta *= WalkSpeed;
-                                AnimationDelta = 0.1f;
-                            }
-                            Move(delta);
+                            delta *= WalkSpeed;
+                            AnimationDelta = 0.1f;
                         }
-                    }
-                    else
-                    {
-                        // Reached end of path or waiting for a new one
-                        currentPathIndex = -1;
-
-                        if (state == State.Alerted || state == State.Interested)
-                        {
-                            StartSearch(gameTime);
-                        }
-                        else if (state == State.ToPatrol)
-                        {
-                            currentPath = PatrolPath;
-                            currentPathIndex = patrolPathIndex;
-                            state = State.Patrolling;
-                        }
+                        Move(delta);
                     }
                 }
-
-                // State stuff
-                if (state == State.Idle)
+                else
                 {
-                    StartPatrol();
+                    // Reached end of path or waiting for a new one
+                    currentPathIndex = -1;
 
-                    AnimationRunning = false;
-                    AnimationCurrentFrame = 1;
-                }
-                else if (state == State.Searching)
-                {
-                    // Wait a little bit at the spot when 'searching'
-                    if (gameTime.TotalGameTime.TotalSeconds >= searchStartTime + searchTime)
+                    if(state == State.Alerted || state == State.Interested)
                     {
-                        state = State.Idle;
+                        StartSearch(gameTime);
                     }
-                    else
+                    else if(state == State.ToPatrol)
                     {
-                        AnimationRunning = false;
-                        AnimationCurrentFrame = 1;
-                    }
-                }
-
-                if (state != State.Alerted && state != State.ToAlert)
-                {
-                    if (CanHear(out playerPos))
-                    {
-                        Interest(playerPos);
-                    }
-                    else if (CanSee(out playerPos))
-                    {
-                        Alert(playerPos);
+                        currentPath = PatrolPath;
+                        currentPathIndex = patrolPathIndex;
+                        state = State.Patrolling;
                     }
                 }
             }
+            // State stuff
+            if (state == State.Idle)
+            {
+                StartPatrol();
+
+                AnimationRunning = false;
+                AnimationCurrentFrame = 1;
+            }
+            else if (state == State.Searching)
+            {
+                // Wait a little bit at the spot when 'searching'
+                if (gameTime.TotalGameTime.TotalSeconds >= searchStartTime + searchTime)
+                {
+                    state = State.Idle;
+                }
+                else
+                {
+                    AnimationRunning = false;
+                    AnimationCurrentFrame = 1;
+                }
+            }
+
+            /*if (state != State.Alerted && state != State.ToAlert)
+            {
+                if (CanHear(out playerPos))
+                {
+                    Interest(playerPos);
+                }
+                else if (CanSee(out playerPos))
+                {
+                    Alert(playerPos);
+                }
+            }*/
 
             // We can hear the player but not see him
             if(!CanSee(out playerPos) && CanHear(out playerPos))
@@ -270,7 +267,7 @@ namespace MonoGear
             else if(state == State.Pursuit)
             {
                 // Can't see player anymore, but we just followed him so go looking for him
-                Interest(playerPos);
+                Alert(playerPos);
             }
         }
 
@@ -296,6 +293,8 @@ namespace MonoGear
         {
             if (state != State.Sleeping)
             {
+                Collider.Active = false;
+                Z = -1;                     // Display below player
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
                 state = State.Sleeping;
@@ -305,7 +304,6 @@ namespace MonoGear
                 AudioManager.AddAudioSource(snoreSound);
                 snoreSound.Pause();
             }
-           
         }
 
         private void StartSearch(GameTime gameTime)
@@ -364,13 +362,21 @@ namespace MonoGear
         }
 
         /// <summary>
-        /// Alerts a guard to the specified position and changes state
+        /// Alerts a guard to the specified position and changes state.
+        /// Will call Alert if the guard is already alerted.
         /// </summary>
         /// <param name="origin"></param>
         public async void Interest(Vector2 origin)
         {
             if(state == State.ToInterest)
                 return;
+
+            // Escalate to an alert if we're already alerted
+            if(state == State.Alerted || state == State.ToAlert)
+            {
+                Alert(origin);
+                return;
+            }
 
             if(state == State.Patrolling)
             {

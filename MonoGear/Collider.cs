@@ -243,7 +243,7 @@ namespace MonoGear
             {
                 for(int y = colStartY; y <= colEndY && y < level.Height; y++)
                 {
-                    if(!level.Tiles[x + y * level.Width].Walkable)
+                    if((level.Tiles[x + y * level.Width]?.Walkable) != true)
                     {
                         return true;
                     }
