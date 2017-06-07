@@ -288,7 +288,7 @@ namespace MonoGear
                         else if(obj.Type == "cctv")
                         {
                             entity = new CCTV();
-                            entity.Position = new Vector2((float)obj.X, (float)obj.Y);
+                            entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
 
                             string console;
                             if(obj.Properties.TryGetValue("pc", out console))
