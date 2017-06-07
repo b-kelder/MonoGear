@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="16">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="20">
  <tileset firstgid="1" name="TilesInside" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="Tilesets/Inside.png" width="272" height="272"/>
   <tile id="1">
@@ -403,6 +403,11 @@
    </properties>
   </tile>
   <tile id="182">
+   <properties>
+    <property name="solid" type="bool" value="true"/>
+   </properties>
+  </tile>
+  <tile id="183">
    <properties>
     <property name="solid" type="bool" value="true"/>
    </properties>
@@ -1383,10 +1388,18 @@
     <property name="patrolpath" value="Path stairs"/>
    </properties>
   </object>
+  <object id="18" name="Guard table" type="guard" gid="57" x="1082.75" y="175.5" width="16" height="16">
+   <properties>
+    <property name="patrolpath" value="Path table"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Paths">
   <object id="11" name="Path stairs" type="path" x="581.5" y="412.5">
    <polyline points="0.476563,-0.507813 0.492188,-102.523 195.008,-102.516 194.996,-3.49219 138.504,-3.50391 138.5,-29.4922 91,-29.5 91.0078,20.5039 107.5,20.5 91.0078,20.5 91.0039,-29.5 138.5,-29.4961 138.5,-3.5 195,-3.49609 195,-102.523 0.5,-102.523 0.484375,-0.507813"/>
+  </object>
+  <object id="17" name="Path table" type="path" x="1081.45" y="166.727">
+   <polyline points="0,0 -171.091,0 -171.455,65.6364 -69.0909,66.1818 -69.0909,157.818 2.72727,156.909 3.09091,-0.181818"/>
   </object>
  </objectgroup>
  <objectgroup name="Triggers">
