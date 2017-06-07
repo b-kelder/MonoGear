@@ -117,6 +117,54 @@ namespace MonoGear
             }
         }
 
+        private void UpdateDifficulty()
+        {
+            var sightRange = 295f;
+            var runSpeed = 90.0f;
+            var walkSpeed = 60.0f;
+
+            var dif = SettingsPage.GetDifficulty();
+            if (dif.Equals(DifficultyLevels.Intern))
+            {
+                player.DartCount = 3;
+                
+            }
+            else if(dif.Equals(DifficultyLevels.Professional))
+            {
+                player.DartCount = 2;
+                sightRange += 10;
+                runSpeed += 10;
+                walkSpeed += 10;
+            }
+            else if(dif.Equals(DifficultyLevels.Veteran))
+            {
+                player.DartCount = 1;
+                sightRange += 20;
+                runSpeed += 20;
+                walkSpeed += 20;
+            }
+            else if(dif.Equals(DifficultyLevels.JamesBond))
+            {
+                player.DartCount = 0;
+                sightRange += 30;
+                runSpeed += 30;
+                walkSpeed += 30;
+            }
+
+            var guards = FindEntitiesWithTag("Guard");
+            foreach (var guard in guards)
+            {
+                var g = guard as Guard;
+                if (g != null)
+                {
+                    g.SightRange = sightRange;
+                    g.RunSpeed = runSpeed;
+                    g.WalkSpeed = walkSpeed;
+                }
+            }
+            
+        }
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -398,6 +446,8 @@ namespace MonoGear
                 }
 
                 spawnQueueLocal.Clear();            // Clear local spawn queue to prevent them from appearing in the new level
+
+                UpdateDifficulty();
 
                 // Force GC
                 GC.Collect();

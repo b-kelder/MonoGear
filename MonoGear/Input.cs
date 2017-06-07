@@ -17,7 +17,8 @@ namespace MonoGear
             Right,
             Throw,
             Shoot,
-            Restart
+            Restart,
+            Interact
         }
 
         KeyboardState currentState;
@@ -36,6 +37,7 @@ namespace MonoGear
                 { Button.Throw,     new Tuple<Keys, Keys>(Keys.Z,       Keys.J) },
                 { Button.Shoot,     new Tuple<Keys, Keys>(Keys.X,       Keys.K) },
                 { Button.Restart,   new Tuple<Keys, Keys>(Keys.G,    Keys.G) },
+                { Button.Interact,  new Tuple<Keys, Keys>(Keys.C,    Keys.L) },
             };
         }
 

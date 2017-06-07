@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -18,17 +19,44 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MonoGear
 {
+
+    public enum DifficultyLevels
+    {
+        Intern,
+        Professional,
+        Veteran,
+        JamesBond
+    }
+
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+        private static DifficultyLevels selectedDifficulty;
+
         public SettingsPage()
         {
             this.InitializeComponent();
             MasterVolumeSlider.Value = AudioManager.MasterVolume * 100;
             MusicVolumeSlider.Value = AudioManager.SettingsMusicVolume * 100;
             EffectVolumeSlider.Value = AudioManager.SettingsEffectsVolume * 100;
+            AddDifficultyLevels();
+            DifficultyComboBox.SelectedIndex = 0;
+        }
+
+       
+        private void AddDifficultyLevels()
+        {
+            foreach (var item in Enum.GetValues(typeof(DifficultyLevels)))
+            {
+                DifficultyComboBox.Items.Add(item);
+            }    
+        }
+
+        private void DifficultyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedDifficulty = (DifficultyLevels)Enum.Parse(typeof(DifficultyLevels), DifficultyComboBox.SelectedItem.ToString());
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -49,6 +77,11 @@ namespace MonoGear
         private void EffectVolumeSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             AudioManager.SettingsEffectsVolume = (float)EffectVolumeSlider.Value / 100;
+        }
+
+        public static DifficultyLevels GetDifficulty()
+        {
+            return selectedDifficulty;
         }
     }
 }
