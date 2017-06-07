@@ -26,7 +26,19 @@ namespace MonoGear
         /// </summary>
         public static void Clear()
         {
+            foreach (var audioSource in audioSources)
+            {
+                foreach (var audio in audioSource.GetSoundEffect())
+                {
+                    //Stop playing the audio.
+                    if (audio.Key.State != SoundState.Stopped)
+                    {
+                        audio.Key.Stop();
+                    }
+                }
+            }
             audioSources = new List<AudioSource>();
+            
             music = null;
         }
 
