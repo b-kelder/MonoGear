@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="7">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="11">
  <tileset firstgid="1" name="TilesInside" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="TileSets/Inside1.png" width="272" height="272"/>
   <tile id="1">
@@ -1295,6 +1295,16 @@
     <property name="patrolpath" value="Guard Path Stairs"/>
    </properties>
   </object>
+  <object id="9" name="Guard C" type="guard" gid="57" x="577" y="421" width="16" height="16">
+   <properties>
+    <property name="patrolpath" value="Guard Path Left"/>
+   </properties>
+  </object>
+  <object id="10" name="Guard D" type="guard" gid="57" x="1038" y="325" width="16" height="16">
+   <properties>
+    <property name="patrolpath" value="Guard Path Right"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Triggers">
   <object id="6" name="Chamber Of Trump" type="trigger" x="751" y="129" width="129" height="128">
@@ -1309,6 +1319,12 @@
   </object>
   <object id="4" name="Guard Path Stairs" type="path" x="689" y="433">
    <polyline points="0,0 -18.5455,0 -18,-51.7273 32.8182,-52.7273 33,-25.1818 221.273,-25.0909 223,2 269,3 270,-50 249,-50 269,-48 270,4 221,1 220.545,-25 32.9091,-25.1818 32.2727,-52.6364 -18.1818,-52.2727 -18.8182,0.181818"/>
+  </object>
+  <object id="7" name="Guard Path Right" type="path" x="1084" y="337">
+   <polyline points="0,0 0,-169 -152,-170 -152,-106 -75.5,-106 -76,-1"/>
+  </object>
+  <object id="8" name="Guard Path Left" type="path" x="555" y="426">
+   <polyline points="0,0 0,-253"/>
   </object>
  </objectgroup>
 </map>
