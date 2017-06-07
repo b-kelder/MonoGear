@@ -184,7 +184,7 @@ namespace MonoGear
 
             activeCamera = new Camera(graphics.GraphicsDevice.Viewport);
             // TODO: Make zoom based on resolution? Or see if we can change resolution otherwise.
-            activeCamera.Zoom = 2;
+            activeCamera.Zoom = 5;
             globalResources = new ResourceManager();
             
             base.Initialize();

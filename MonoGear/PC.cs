@@ -12,6 +12,7 @@ namespace MonoGear
         public List<CCTV> connectedCameras { get; set; }
         public float progressPerClick { get; set; }
 
+        private Player player;
         private float hackingProgress;
 
         public PC()
@@ -22,6 +23,12 @@ namespace MonoGear
             connectedCameras = new List<CCTV>();
             hackingProgress = 0;
             progressPerClick = 1;
+        }
+
+        public override void OnLevelLoaded()
+        {
+            base.OnLevelLoaded();
+            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
         }
 
         public void HackPC()
@@ -37,7 +44,7 @@ namespace MonoGear
         {
             base.Update(input, gameTime);
 
-            if (input.IsButtonPressed(Input.Button.Interact))
+            if (input.IsButtonPressed(Input.Button.Interact) && Vector2.Distance(Position, player.Position) < 20)
             {
                 hackingProgress += progressPerClick;
             }
