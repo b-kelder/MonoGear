@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using Windows.ApplicationModel.Core;
 using System.Diagnostics;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear
 {
@@ -19,6 +20,7 @@ namespace MonoGear
         private SoundEffectInstance walkingSoundGrass;
         private SoundEffectInstance walkingSoundWater;
         private SoundEffectInstance walkingSoundStone;
+        private static Texture2D deathSprite;
 
         public Player() : base()
         {
@@ -50,6 +52,8 @@ namespace MonoGear
             walkingSoundStone = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Concrete").CreateInstance();
 
             walkingSound = walkingSoundGrass;
+
+
         }
 
         public override void OnLevelLoaded()
@@ -203,6 +207,7 @@ namespace MonoGear
 
             Camera.main.Position = new Vector2(Position.X, Position.Y);
         }
+
     }
 }
 

@@ -207,7 +207,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\bin\WindowsStoreApp\Sprites\GuardHit.xnb" />
-    <None Include="Content\bin\WindowsStoreApp\Sprites\GuardSleeping.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Hit.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\Person.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -219,6 +218,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\bin\WindowsStoreApp\Sprites\SleepDart.xnb" />
+    <None Include="Content\bin\WindowsStoreApp\Sprites\Sleeping.xnb" />
     <None Include="Content\bin\WindowsStoreApp\Sprites\s_generator.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

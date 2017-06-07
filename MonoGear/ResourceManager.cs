@@ -36,8 +36,9 @@ namespace MonoGear
                     "Sprites/blank",
                     "Sprites/SleepDart",
                     "Sprites/GuardHit",
-                    "Sprites/GuardSleeping",
+                    "Sprites/Sleeping",
                     "Sprites/Hit",
+                    "Sprites/Die",
                 }
             },
             {
