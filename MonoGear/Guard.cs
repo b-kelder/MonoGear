@@ -13,6 +13,9 @@ namespace MonoGear
 {
     class Guard : WorldEntityAnimated
     {
+        private static Texture2D fovSprite;
+        private static Color fovColor = new Color(100, 0, 0, 10);
+
         private static Texture2D alertSprite;
         private static Texture2D searchSprite;
         private static Texture2D sleepSprite;
@@ -122,6 +125,10 @@ namespace MonoGear
             if (sleepSprite == null)
             {
                 sleepSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Sleeping");
+            }
+            if(fovSprite == null)
+            {
+                fovSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/fov100");
             }
         }
 
@@ -282,11 +289,33 @@ namespace MonoGear
             else if (state == State.ToAlert || state == State.Alerted || state == State.Pursuit)
             {
                 spriteBatch.Draw(alertSprite, new Vector2(Position.X, Position.Y - 16), alertSprite.Bounds, Color.White, 0, new Vector2(alertSprite.Bounds.Size.X, alertSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+                // Red FOV
+                DrawFOVDebug(spriteBatch, Position, Rotation, player.Position, SightRange, fovColor);
             }
             else if (state == State.Searching || state == State.Interested || state == State.ToInterest)
             {
                 spriteBatch.Draw(searchSprite, new Vector2(Position.X, Position.Y - 16), searchSprite.Bounds, Color.White, 0, new Vector2(searchSprite.Bounds.Size.X, searchSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+                // Yellow FOV
+                DrawFOVDebug(spriteBatch, Position, Rotation, player.Position, SightRange, new Color(100, 100, 0, 10));
             }
+            else
+            {
+                // Blue FOV
+                DrawFOVDebug(spriteBatch, Position, Rotation, player.Position, SightRange, new Color(0, 0, 100, 10));
+            }
+        }
+
+        public static void DrawFOVDebug(SpriteBatch spriteBatch, Vector2 pos, float rot, Vector2 playerPos, float range)
+        {
+            DrawFOVDebug(spriteBatch, pos, rot, playerPos, range, fovColor);
+        }
+
+        public static void DrawFOVDebug(SpriteBatch spriteBatch, Vector2 pos, float rot, Vector2 playerPos, float range, Color color)
+        {
+            spriteBatch.Draw(fovSprite, pos, fovSprite.Bounds, color, rot, new Vector2(fovSprite.Bounds.Size.X, fovSprite.Bounds.Size.Y) / 2, range / 50, SpriteEffects.None, 0);
+
+            var dis = Vector2.Distance(pos, playerPos);
+            spriteBatch.DrawString(ResourceManager.GetManager().GetResource<SpriteFont>("Fonts/Arial"), dis.ToString(), pos + new Vector2(-8, 16), Color.Red);
         }
 
         public void Sleep()

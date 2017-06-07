@@ -122,7 +122,7 @@ namespace MonoGear
 
         private void UpdateDifficulty()
         {
-            var sightRange = 295f;
+            var sightRange = 220f;
             var runSpeed = 90.0f;
             var walkSpeed = 35.0f;
 

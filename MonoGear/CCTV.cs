@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,23 +8,31 @@ using System.Threading.Tasks;
 
 namespace MonoGear
 {
-    class CCTV : WorldEntity
+    class CCTV : WorldEntityAnimated
     {
-        public int sightRange { get; set; }
-        public int sightFov { get; set; }
+        public int SightRange { get; set; }
+        public int SightFOV { get; set; }
 
         private bool hacked;
         private Player player;
 
         public CCTV()
         {
-            TextureAssetName = "Sprites/birdsheet";
+            TextureAssetName = "Sprites/CameraOn";
             Tag = "CCTV";
 
-            sightRange = 400;
-            sightFov = 45;
+            SightRange = 120;
+            SightFOV = 90;
 
             hacked = false;
+
+            AnimationLength = 2;
+            AnimationCurrentFrame = 1;
+            AnimationDelta = 0.50f;
+            AnimationPingPong = true;
+            AnimationRunning = true;
+
+            LoadContent();
         }
 
         public override void OnLevelLoaded()
@@ -54,6 +63,16 @@ namespace MonoGear
             }
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+
+            if(Enabled)
+            {
+                Guard.DrawFOVDebug(spriteBatch, Position, Rotation, player.Position, SightRange, new Color(0, 100, 0, 10));
+            }
+        }
+
         public void Hack()
         {
             hacked = true;
@@ -64,11 +83,11 @@ namespace MonoGear
             var dis = Vector2.Distance(Position, player.Position);
 
             //Check if player is within view range
-            if (dis < sightRange)
+            if (dis < SightRange)
             {
                 //Check to see if the guard is looking at the player
                 var degrees = Math.Abs(MathHelper.ToDegrees(Rotation) - (90 + MathHelper.ToDegrees(MathExtensions.AngleBetween(Position, player.Position))));
-                if (degrees <= (sightFov / 2) || degrees >= (360 - (sightFov / 2)))
+                if (degrees <= (SightFOV / 2) || degrees >= (360 - (SightFOV / 2)))
                 {
                     //Check to see if nothing blocks view of the player
                     Collider hit;
