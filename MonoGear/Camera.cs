@@ -25,6 +25,10 @@ namespace MonoGear
         /// </summary>
         public Vector2 Origin { get; set; }
 
+        /// <summary>
+        /// Creates a new camera for the given viewport size.
+        /// </summary>
+        /// <param name="viewport">Initial viewport</param>
         public Camera(Viewport viewport)
         {
             main = this;
@@ -36,11 +40,18 @@ namespace MonoGear
             RecalculateOrigin();
         }
 
+        /// <summary>
+        /// Recalculates the origin based on the viewport.
+        /// </summary>
         public void RecalculateOrigin()
         {
             Origin = new Vector2(viewport.Width / 2f, viewport.Height / 2f);
         }
 
+        /// <summary>
+        /// Updates the camera's viewport
+        /// </summary>
+        /// <param name="viewport">The new viewport</param>
         public void UpdateViewport(Viewport viewport)
         {
             this.viewport = viewport;
@@ -48,9 +59,9 @@ namespace MonoGear
         }
 
         /// <summary>
-        /// Method that returns a view matrix
+        /// Method that returns the camera's view matrix
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Matrix</returns>
         public Matrix GetViewMatrix()
         {
             return
@@ -60,6 +71,10 @@ namespace MonoGear
                 Matrix.CreateTranslation(new Vector3(Origin, 0.0f));
         }
 
+        /// <summary>
+        /// Returns a rectangle in world space that indicates the area the camera is currently showing.
+        /// </summary>
+        /// <returns>Rectangle</returns>
         public FloatRect GetClippingRect()
         {
             var matrix = Matrix.Invert(GetViewMatrix());

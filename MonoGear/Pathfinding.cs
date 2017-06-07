@@ -236,7 +236,7 @@ namespace MonoGear
         static void GetNodeIfWalkable(int x, int y, Tile[] map, List<Node> list)
         {
             var level = MonoGearGame.GetCurrentLevel();
-            if (x < level.Width && x >= 0 && (y) < level.Height && y >= 0 && map[x + y * level.Width].Walkable)
+            if (x < level.Width && x >= 0 && (y) < level.Height && y >= 0 && (map[x + y * level.Width]?.Walkable) == true)
             {
                 list.Add(nodes[x + y * level.Width]);
             }
@@ -251,10 +251,10 @@ namespace MonoGear
 
             GetNodeIfWalkable(x, y - 1, map, proposedLocations);
             GetNodeIfWalkable(x, y + 1, map, proposedLocations);
-            GetNodeIfWalkable(x - 1, y - 1, map, proposedLocations);
-            GetNodeIfWalkable(x + 1, y + 1, map, proposedLocations);
-            GetNodeIfWalkable(x + 1, y - 1, map, proposedLocations);
-            GetNodeIfWalkable(x - 1, y + 1, map, proposedLocations);
+            //GetNodeIfWalkable(x - 1, y - 1, map, proposedLocations);
+            //GetNodeIfWalkable(x + 1, y + 1, map, proposedLocations);
+            //GetNodeIfWalkable(x + 1, y - 1, map, proposedLocations);
+            //GetNodeIfWalkable(x - 1, y + 1, map, proposedLocations);
             GetNodeIfWalkable(x - 1, y, map, proposedLocations);
             GetNodeIfWalkable(x + 1, y, map, proposedLocations);
 

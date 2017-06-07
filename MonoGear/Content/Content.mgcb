@@ -1,4 +1,3 @@
-
 #----------------------------- Global Properties ----------------------------#
 
 /outputDir:bin/$(Platform)
@@ -422,7 +421,7 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Die.png
 
-#begin Sprites/Dead.png
+#begin Levels/Tilesets/Inside1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -432,5 +431,4 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Dead.png
-
+/build:Levels/Tilesets/Inside1.png
