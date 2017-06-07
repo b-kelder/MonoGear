@@ -24,6 +24,11 @@ namespace MonoGear
             progressPerClick = 1;
         }
 
+        public void AddCCTV(CCTV cctv)
+        {
+            connectedCameras.Add(cctv);
+        }
+
         public void HackPC()
         {
             //Hack all connected camera's

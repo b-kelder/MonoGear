@@ -242,12 +242,14 @@ namespace MonoGear
                 var guardPaths = new Dictionary<Guard, string>();
                 var carPaths = new Dictionary<Car, string>();
                 var paths = new Dictionary<string, List<Vector2>>();
+                var consoles = new Dictionary<string, PC>();
+                var cameraConsole = new Dictionary<CCTV, string>();
 
                 foreach(var objectGroup in groups)
                 {
                     foreach(var obj in objectGroup.Objects)
                     {
-                        var halfTileOffset = new Vector2(level.TileWidth, level.TileHeight) / 2;
+                        var halfTileOffset = -new Vector2(-level.TileWidth, level.TileHeight) / 2;
 
                         Debug.WriteLine("Found object of type " + obj.Type);
                         WorldEntity entity = null;
@@ -280,6 +282,31 @@ namespace MonoGear
                         {
                             entity = new Bird() { YResetValue = level.Height * level.TileHeight + 200 };
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                        }
+                        else if(obj.Type == "cctv")
+                        {
+                            entity = new CCTV();
+                            entity.Position = new Vector2((float)obj.X, (float)obj.Y);
+
+                            string console;
+                            if(obj.Properties.TryGetValue("pc", out console))
+                            {
+                                cameraConsole.Add(entity as CCTV, console);
+                            }
+                        }
+                        else if(obj.Type == "pc")
+                        {
+                            entity = new PC();
+                            entity.Position = new Vector2((float)obj.X, (float)obj.Y);
+
+                            if(!consoles.ContainsKey(obj.Name))
+                            {
+                                consoles[obj.Name] = entity as PC;
+                            }
+                            else
+                            {
+                                Debug.WriteLine("Duplicate PC name " + obj.Name);
+                            }
                         }
                         else if(obj.Type == "trigger")
                         {
@@ -338,7 +365,6 @@ namespace MonoGear
                         else if(obj.Type == "path")
                         {
                             // A patrol path
-
                             if(!paths.ContainsKey(obj.Name))
                             {
                                 paths[obj.Name] = new List<Vector2>();
@@ -363,6 +389,22 @@ namespace MonoGear
                             if(obj.Properties.TryGetValue("tag", out tag))
                             {
                                 entity.Tag = tag;
+                            }
+
+                            // Set rotation (read in degrees)
+                            string rotation;
+                            if(obj.Properties.TryGetValue("rotation", out rotation))
+                            {
+                                float rot;
+                                if(float.TryParse(rotation, out rot))
+                                {
+                                    entity.Rotation = MathHelper.ToRadians(rot);
+                                    Debug.WriteLine("Loaded rotation " + entity.Rotation + "rad");
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("Failed to parse rotation " + rotation);
+                                }
                             }
 
                             level.AddEntity(entity);
@@ -399,6 +441,21 @@ namespace MonoGear
                         Debug.WriteLine("Car requested unknown path " + carPath.Value);
                     }
                 }
+
+                // Assing PC/CCTV
+                foreach(var kvPair in cameraConsole)
+                {
+                    PC pc;
+                    if(consoles.TryGetValue(kvPair.Value, out pc))
+                    {
+                        pc.AddCCTV(kvPair.Key);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("CCTV requested unknown PC " + kvPair.Value);
+                    }
+                }
+
 
             }).Wait();
             return level;

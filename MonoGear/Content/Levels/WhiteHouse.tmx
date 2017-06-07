@@ -4430,7 +4430,7 @@
 </data>
  </layer>
  <objectgroup name="Spawns">
-  <object id="1" name="playerspawn" type="spawnpoint" gid="26" x="2379" y="1294.33" width="16" height="16">
+  <object id="1" name="playerspawn" type="spawnpoint" gid="26" x="2345" y="2174.33" width="16" height="16">
    <properties>
     <property name="tag" value="PlayerSpawnPoint"/>
    </properties>
