@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -306,6 +308,36 @@ namespace MonoGear
                             else
                             {
                                 Debug.WriteLine("Duplicate PC name " + obj.Name);
+                            }
+                        }
+                        else if (obj.Type == "audio")
+                        {
+                            string audio;
+                            string loop = "false";
+                            string volume = "1";
+                            bool willWork = true;
+
+                            if (!obj.Properties.TryGetValue("source", out audio))
+                                willWork = false;
+                            obj.Properties.TryGetValue("loop", out loop);
+                            obj.Properties.TryGetValue("volume", out volume);
+
+                            if (willWork)
+                            {
+                                if (loop.Equals("true"))
+                                    AudioManager.GlobalAudioPlay(ResourceManager.GetManager().GetResource<SoundEffect>(audio).CreateInstance(), true, float.Parse(volume));
+                                else
+                                    AudioManager.GlobalAudioPlay(ResourceManager.GetManager().GetResource<SoundEffect>(audio).CreateInstance(), false, float.Parse(volume));
+                            }
+                        }
+                        else if (obj.Type == "backgroundmusic")
+                        {
+                            string audio;
+
+                            if (!obj.Properties.TryGetValue("source", out audio))
+                            {
+                                AudioManager.MusicSet(ResourceManager.GetManager().GetResource<Song>(audio));
+                                AudioManager.MusicPlay();
                             }
                         }
                         else if(obj.Type == "trigger")
