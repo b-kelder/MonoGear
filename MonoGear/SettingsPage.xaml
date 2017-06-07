@@ -39,10 +39,10 @@
                         <Setter Target="DifficultyLevel.FontSize" Value="24"/>
                         <Setter Target="DifficultyComboBox.FontSize" Value="24"/>
                         <Setter Target="pageTitle.FontSize" Value="36"/>
-                        <Setter Target="MasterVolumeSlider.Width" Value="250"/>
-                        <Setter Target="MusicVolumeSlider.Width" Value="250"/>
-                        <Setter Target="EffectVolumeSlider.Width" Value="250"/>
-                        <Setter Target="DifficultyComboBox.Width" Value="250"/>
+                        <Setter Target="MasterVolumeSlider.Width" Value="230"/>
+                        <Setter Target="MusicVolumeSlider.Width" Value="230"/>
+                        <Setter Target="EffectVolumeSlider.Width" Value="230"/>
+                        <Setter Target="DifficultyComboBox.Width" Value="230"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Desktop">
@@ -56,10 +56,10 @@
                         <Setter Target="DifficultyLevel.FontSize" Value="36"/>
                         <Setter Target="DifficultyComboBox.FontSize" Value="36"/>
                         <Setter Target="pageTitle.FontSize" Value="45"/>
-                        <Setter Target="MasterVolumeSlider.Width" Value="355"/>
-                        <Setter Target="MusicVolumeSlider.Width" Value="355"/>
-                        <Setter Target="EffectVolumeSlider.Width" Value="355"/>
-                        <Setter Target="DifficultyComboBox.Width" Value="355"/>
+                        <Setter Target="MasterVolumeSlider.Width" Value="335"/>
+                        <Setter Target="MusicVolumeSlider.Width" Value="335"/>
+                        <Setter Target="EffectVolumeSlider.Width" Value="335"/>
+                        <Setter Target="DifficultyComboBox.Width" Value="335"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
