@@ -294,6 +294,7 @@ namespace MonoGear
             if (state != State.Sleeping)
             {
                 Collider.Active = false;
+                Z = -1;                     // Display below player
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
                 state = State.Sleeping;
