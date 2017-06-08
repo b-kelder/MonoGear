@@ -255,19 +255,26 @@ namespace MonoGear
             if(CanSee(out playerPos))
             {
                 // We can see the player
-                state = State.Pursuit;
-                if (CanSee(out playerPos))
+                if (SettingsPage.GetDifficulty().Equals(DifficultyLevels.JamesBond))
                 {
-                    if (gameTime.TotalGameTime.TotalSeconds >= shootStartTime + shootTime)
+                    player.Health -= 50;
+                }
+                else
+                {
+                    state = State.Pursuit;
+                    if (CanSee(out playerPos))
                     {
-                        var bullet = new Bullet(Collider);
-                        bullet.Position = Position;
-                        bullet.Rotation = Rotation;
-                        bullet.Rotation = MathExtensions.VectorToAngle(playerPos - Position);
-                        MonoGearGame.SpawnLevelEntity(bullet);
-                        AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
+                        if (gameTime.TotalGameTime.TotalSeconds >= shootStartTime + shootTime)
+                        {
+                            var bullet = new Bullet(Collider);
+                            bullet.Position = Position;
+                            bullet.Rotation = Rotation;
+                            bullet.Rotation = MathExtensions.VectorToAngle(playerPos - Position);
+                            MonoGearGame.SpawnLevelEntity(bullet);
+                            AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
 
-                        shootStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
+                            shootStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
+                        }
                     }
                 }
             }
