@@ -125,12 +125,12 @@ namespace MonoGear
             if (dif.Equals(DifficultyLevels.Intern))
             {
                 player.DartCount = 5;
-                player.Health = 25;
+                player.Health = 6;
             }
             else if(dif.Equals(DifficultyLevels.Professional))
             {
                 player.DartCount = 2;
-                player.Health = 5;
+                player.Health = 3;
                 sightRange += 10;
                 runSpeed += 10;
                 walkSpeed += 10;
@@ -138,7 +138,7 @@ namespace MonoGear
             else if(dif.Equals(DifficultyLevels.Veteran))
             {
                 player.DartCount = 1;
-                player.Health = 3;
+                player.Health = 2;
                 sightRange += 20;
                 runSpeed += 20;
                 walkSpeed += 20;
