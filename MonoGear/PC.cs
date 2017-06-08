@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear
 {
@@ -14,6 +15,8 @@ namespace MonoGear
 
         private Player player;
         private float hackingProgress;
+        private bool inRange;
+        private bool hacked;
 
         public PC()
         {
@@ -29,6 +32,7 @@ namespace MonoGear
             connectedCameras = new List<CCTV>();
             hackingProgress = 0;
             progressPerClick = 25;
+            hacked = false;
             LoadContent();
         }
 
@@ -37,11 +41,21 @@ namespace MonoGear
             connectedCameras.Add(cctv);
         }
 
-	public override void OnLevelLoaded()
+	    public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
+        }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+
+            if (inRange && !hacked)
+            {
+                spriteBatch.DrawString(ResourceManager.GetManager().GetResource<SpriteFont>("Fonts/Arial"), "PRESS C TO HACK...", Position + new Vector2(-35, 16), Color.White);
+                spriteBatch.DrawString(ResourceManager.GetManager().GetResource<SpriteFont>("Fonts/Arial"), "PROGRESS: " + hackingProgress.ToString() + "%", Position + new Vector2(-35, 24), Color.White);
+            }
         }
 
         public void HackPC()
@@ -51,17 +65,22 @@ namespace MonoGear
             {
                 CCTV.Hack();
             }
+            hacked = true;
         }
 
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
 
-            if (input.IsButtonPressed(Input.Button.Interact) && Vector2.Distance(Position, player.Position) < 20)
+            if (Vector2.Distance(Position, player.Position) < 20)
+                inRange = true;
+            else
+                inRange = false;
+
+            if (input.IsButtonPressed(Input.Button.Interact) && inRange)
             {
                 hackingProgress += progressPerClick;
             }
-
             if (hackingProgress >= 100)
             {
                 HackPC();

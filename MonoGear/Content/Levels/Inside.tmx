@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="20">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="21">
  <tileset firstgid="1" name="TilesInside" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="Tilesets/Inside.png" width="272" height="272"/>
   <tile id="1">
@@ -1371,12 +1371,12 @@
 </data>
  </layer>
  <objectgroup name="Spawns">
-  <object id="1" name="Player spawn" type="spawnpoint" gid="3" x="808" y="448" width="16" height="16">
+  <object id="1" name="Player spawn" type="spawnpoint" gid="3" x="808" y="452" width="16" height="16">
    <properties>
     <property name="tag" value="PlayerSpawnPoint"/>
    </properties>
   </object>
-  <object id="8" name="Computer" type="pc" gid="57" x="928" y="384" width="16" height="16"/>
+  <object id="8" name="Computer" type="pc" gid="57" x="936" y="376" width="16" height="16"/>
   <object id="9" name="Camera" type="cctv" gid="211" x="752" y="288" width="16" height="16">
    <properties>
     <property name="pc" value="Computer"/>
@@ -1391,6 +1391,12 @@
   <object id="18" name="Guard table" type="guard" gid="57" x="1082.75" y="175.5" width="16" height="16">
    <properties>
     <property name="patrolpath" value="Path table"/>
+   </properties>
+  </object>
+  <object id="20" name="Camera 2" type="cctv" gid="211" x="864.5" y="288" width="16" height="16">
+   <properties>
+    <property name="pc" value="Computer"/>
+    <property name="rotation" type="float" value="180"/>
    </properties>
   </object>
  </objectgroup>
