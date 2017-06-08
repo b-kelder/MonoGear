@@ -61,6 +61,10 @@ namespace MonoGear
                     }
                 }
             }
+            else
+            {
+                Enabled = false;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
