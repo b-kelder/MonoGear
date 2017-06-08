@@ -36,7 +36,7 @@ namespace MonoGear
 
             if (gameOverSprite == null)
             {
-                gameOverSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/gameover");
+                gameOverSprite = MonoGearGame.GetResource<Texture2D>("Sprites/gameover");
             }
         }
 
@@ -60,7 +60,7 @@ namespace MonoGear
             Visible = true;
             player.Enabled = false;
             AudioManager.Clear();
-            AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound"), 1);
+            AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound"), 1);
         }
 
         public void DisableGameOver()

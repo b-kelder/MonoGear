@@ -25,11 +25,6 @@ namespace MonoGear
     public class MonoGearGame : Game
     {
         static MonoGearGame instance;
-
-        /// <summary>
-        /// Main resource manager. Name is "Global"
-        /// </summary>
-        ResourceManager globalResources;
         /// <summary>
         /// GDM
         /// </summary>
@@ -129,12 +124,13 @@ namespace MonoGear
             var dif = SettingsPage.GetDifficulty();
             if (dif.Equals(DifficultyLevels.Intern))
             {
-                player.DartCount = 3;
-                
+                player.DartCount = 5;
+                player.Health = 25;
             }
             else if(dif.Equals(DifficultyLevels.Professional))
             {
                 player.DartCount = 2;
+                player.Health = 5;
                 sightRange += 10;
                 runSpeed += 10;
                 walkSpeed += 10;
@@ -142,6 +138,7 @@ namespace MonoGear
             else if(dif.Equals(DifficultyLevels.Veteran))
             {
                 player.DartCount = 1;
+                player.Health = 3;
                 sightRange += 20;
                 runSpeed += 20;
                 walkSpeed += 20;
@@ -191,7 +188,6 @@ namespace MonoGear
             var scaleFactor = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
 
             activeCamera.Zoom = graphics.GraphicsDevice.Viewport.Height / 320;
-            globalResources = new ResourceManager();
             
             base.Initialize();
         }
@@ -216,10 +212,6 @@ namespace MonoGear
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            
-            // Load global resources
-            globalResources.LoadResources(Content);
 
             // Load game over screen
             var gameOver = new GameOver();
@@ -466,6 +458,11 @@ namespace MonoGear
         public static void LoadLevel(Level level)
         {
             instance.nextLevel = level;
+        }
+
+        public static T GetResource<T>(string name)
+        {
+            return instance.Content.Load<T>(name);
         }
     }
 }

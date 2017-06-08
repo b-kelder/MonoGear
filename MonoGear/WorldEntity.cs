@@ -53,7 +53,7 @@ namespace MonoGear
 
         protected virtual void LoadContent()
         {
-            instanceTexture = ResourceManager.GetManager().GetResource<Texture2D>(TextureAssetName);
+            instanceTexture = MonoGearGame.GetResource<Texture2D>(TextureAssetName);
             if(instanceTexture != null)
             {
                 Size = new Vector2(instanceTexture.Bounds.Size.X, instanceTexture.Bounds.Size.Y);

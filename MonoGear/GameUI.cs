@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace MonoGear
 {
@@ -23,30 +24,38 @@ namespace MonoGear
         {
             var rect = Camera.main.GetClippingRect();
             var pos = rect.Right - 100;
+            var rows = Math.Ceiling(player.Health / 5);
+            var healthToDraw = player.Health;
+            var h = 5.0f;
 
-            if (!SettingsPage.GetDifficulty().Equals(DifficultyLevels.JamesBond))
+            for (int j = 0; j < rows; j++)
             {
-                for (int i = 0; i < player.Health; i++)
+                if (healthToDraw < 5)
+                    h = healthToDraw;
+
+                for (int i = 0; i < h; i++)
                 {
-                    spriteBatch.Draw(ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Heart"), new Vector2(pos, rect.Bottom - 50), Color.White);
+                    spriteBatch.Draw(MonoGearGame.GetResource<Texture2D>("Sprites/Heart"), new Vector2(pos, rect.Bottom - (50 + (j * 18))), Color.White);
                     pos += 15;
                 }
+                pos = rect.Right - 100;
+                healthToDraw -= 5;
+            }
 
-                if (player.DartCount <= 6)
+            if (player.DartCount <= 6)
+            {
+                pos = rect.Right - 100;
+                for (int i = 0; i < player.DartCount; i++)
                 {
-                    pos = rect.Right - 100;
-                    for (int i = 0; i < player.DartCount; i++)
-                    {
-                        spriteBatch.Draw(ResourceManager.GetManager().GetResource<Texture2D>("Sprites/SleepDart"), new Vector2(pos, rect.Bottom - 32), Color.White);
-                        pos += 15;
-                    }
-                }
-                else
-                {
-                    spriteBatch.DrawString(ResourceManager.GetManager().GetResource<SpriteFont>("Fonts/Arial"), "Darts: " + player.DartCount, new Vector2(rect.Right - 100, rect.Bottom - 32), Color.Red);
+                    spriteBatch.Draw(MonoGearGame.GetResource<Texture2D>("Sprites/SleepDart"), new Vector2(pos, rect.Bottom - 32), Color.White);
+                    pos += 15;
                 }
             }
-            //spriteBatch.DrawString(ResourceManager.GetManager().GetResource<SpriteFont>("Fonts/Arial"), "Health: " + player.Health, new Vector2(rect.Right - 100, rect.Bottom - 50), Color.Red);
+            else
+            {
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Darts: " + player.DartCount, new Vector2(rect.Right - 100, rect.Bottom - 32), Color.Red);
+            }
+            //spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Health: " + player.Health, new Vector2(rect.Right - 100, rect.Bottom - 50), Color.Red);
         }
     }
 }

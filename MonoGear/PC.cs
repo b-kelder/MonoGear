@@ -53,8 +53,8 @@ namespace MonoGear
 
             if (inRange && !hacked)
             {
-                spriteBatch.DrawString(ResourceManager.GetManager().GetResource<SpriteFont>("Fonts/Arial"), "PRESS C TO HACK...", Position + new Vector2(-35, 16), Color.White);
-                spriteBatch.DrawString(ResourceManager.GetManager().GetResource<SpriteFont>("Fonts/Arial"), "PROGRESS: " + hackingProgress.ToString() + "%", Position + new Vector2(-35, 24), Color.White);
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "PRESS C TO HACK...", Position + new Vector2(-35, 16), Color.White);
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "PROGRESS: " + hackingProgress.ToString() + "%", Position + new Vector2(-35, 24), Color.White);
             }
         }
 

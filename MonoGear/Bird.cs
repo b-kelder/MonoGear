@@ -33,7 +33,7 @@ namespace MonoGear
             LoadContent();
 
             birdSound = new AudioSource();
-            birdSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 210);
+            birdSound.AddSoundEffect(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 210);
             birdSound.Position = Position;
             AudioManager.AddAudioSource(birdSound);
             birdSound.Pause();    

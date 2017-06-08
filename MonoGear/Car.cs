@@ -40,7 +40,7 @@ namespace MonoGear
             Collider = new BoxCollider(this, Size);
 
             carSound = new AudioSource();
-            carSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 500);
+            carSound.AddSoundEffect(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 500);
             carSound.Position = Position;
             AudioManager.AddAudioSource(carSound);
             carSound.Pause();

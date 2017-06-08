@@ -48,7 +48,7 @@ namespace MonoGear
             spriteBatch.Draw(Texture, destRect, textureRect, Color.White);
 
             // Debug
-            //var font = ResourceManager.GetManager().GetResource<SpriteFont>("Fonts/Arial");
+            //var font = MonoGearGame.GetResource<SpriteFont>("Fonts/Arial");
             //spriteBatch.DrawString(font, tilesetId.ToString(), new Vector2(destRect.X, destRect.Y), Color.Red);
         }
     }

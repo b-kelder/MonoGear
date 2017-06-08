@@ -65,12 +65,12 @@ namespace MonoGear
 
             if (deadSprite == null)
             {
-                deadSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Dead");                
+                deadSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Dead");                
             }
 
-            walkingSoundGrass = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
-            walkingSoundWater = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Water_Drop_Sound").CreateInstance();
-            walkingSoundStone = ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Concrete").CreateInstance();
+            walkingSoundGrass = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
+            walkingSoundWater = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Water_Drop_Sound").CreateInstance();
+            walkingSoundStone = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Concrete").CreateInstance();
 
             walkingSound = walkingSoundGrass;
 
@@ -185,7 +185,7 @@ namespace MonoGear
                     dwayneThe.Rotation = Rotation;
                     MonoGearGame.SpawnLevelEntity(dwayneThe);
                     ThrowingDelay = 45;
-                    AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/StoneTrow_sound"), 1);
+                    AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/StoneTrow_sound"), 1);
                 }
             }
 
@@ -199,7 +199,7 @@ namespace MonoGear
                     sleepDart.Rotation = Rotation;
                     MonoGearGame.SpawnLevelEntity(sleepDart);
                     DartCount--;
-                    AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Blowgun"), 1);
+                    AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Blowgun"), 1);
                 }    
             }
 

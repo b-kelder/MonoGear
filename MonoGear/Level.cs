@@ -49,7 +49,7 @@ namespace MonoGear
         {
             if(layer.texture == null)
             {
-                layer.texture = ResourceManager.GetManager().GetResource<Texture2D>(layer.textureName);
+                layer.texture = MonoGearGame.GetResource<Texture2D>(layer.textureName);
             }
             
             backgroundLayers.Add(layer);
@@ -64,7 +64,7 @@ namespace MonoGear
         {
             if (layer.texture == null)
             {
-                layer.texture = ResourceManager.GetManager().GetResource<Texture2D>(layer.textureName);
+                layer.texture = MonoGearGame.GetResource<Texture2D>(layer.textureName);
             }
 
             foregroundLayers.Add(layer);
@@ -156,7 +156,7 @@ namespace MonoGear
                 var tilesetDict = new Dictionary<int, Tile>();
                 tilesetDict.Add(0, null);                       // 0 means no tile
 
-                var tilesetTexture = ResourceManager.GetManager().GetResource<Texture2D>(Path.Combine("Levels\\Tilesets", Path.GetFileNameWithoutExtension(tileset.Image.Source)));
+                var tilesetTexture = MonoGearGame.GetResource<Texture2D>(Path.Combine("Levels\\Tilesets", Path.GetFileNameWithoutExtension(tileset.Image.Source)));
 
                 int rows = (int)tileset.TileCount / (int)tileset.Columns;
                 bool done = false;
@@ -325,9 +325,9 @@ namespace MonoGear
                             if (willWork)
                             {
                                 if (loop.Equals("true"))
-                                    AudioManager.GlobalAudioPlay(ResourceManager.GetManager().GetResource<SoundEffect>(audio).CreateInstance(), true, float.Parse(volume));
+                                    AudioManager.GlobalAudioPlay(MonoGearGame.GetResource<SoundEffect>(audio).CreateInstance(), true, float.Parse(volume));
                                 else
-                                    AudioManager.GlobalAudioPlay(ResourceManager.GetManager().GetResource<SoundEffect>(audio).CreateInstance(), false, float.Parse(volume));
+                                    AudioManager.GlobalAudioPlay(MonoGearGame.GetResource<SoundEffect>(audio).CreateInstance(), false, float.Parse(volume));
                             }
                         }
                         else if (obj.Type == "backgroundmusic")
@@ -336,7 +336,7 @@ namespace MonoGear
 
                             if (!obj.Properties.TryGetValue("source", out audio))
                             {
-                                AudioManager.MusicSet(ResourceManager.GetManager().GetResource<Song>(audio));
+                                AudioManager.MusicSet(MonoGearGame.GetResource<Song>(audio));
                                 AudioManager.MusicPlay();
                             }
                         }

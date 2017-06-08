@@ -116,19 +116,19 @@ namespace MonoGear
 
             if (alertSprite == null)
             {
-                alertSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Alert");
+                alertSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Alert");
             }
             if (searchSprite == null)
             {
-                searchSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Searching");
+                searchSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Searching");
             }
             if (sleepSprite == null)
             {
-                sleepSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/Sleeping");
+                sleepSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Sleeping");
             }
             if(fovSprite == null)
             {
-                fovSprite = ResourceManager.GetManager().GetResource<Texture2D>("Sprites/fov100");
+                fovSprite = MonoGearGame.GetResource<Texture2D>("Sprites/fov100");
             }
         }
 
@@ -271,7 +271,7 @@ namespace MonoGear
                             bullet.Rotation = Rotation;
                             bullet.Rotation = MathExtensions.VectorToAngle(playerPos - Position);
                             MonoGearGame.SpawnLevelEntity(bullet);
-                            AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
+                            AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
 
                             shootStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
                         }
@@ -322,7 +322,7 @@ namespace MonoGear
             spriteBatch.Draw(fovSprite, pos, fovSprite.Bounds, color, rot, new Vector2(fovSprite.Bounds.Size.X, fovSprite.Bounds.Size.Y) / 2, range / 50, SpriteEffects.None, 0);
 
             var dis = Vector2.Distance(pos, playerPos);
-            spriteBatch.DrawString(ResourceManager.GetManager().GetResource<SpriteFont>("Fonts/Arial"), dis.ToString(), pos + new Vector2(-8, 16), Color.Red);
+            spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), dis.ToString(), pos + new Vector2(-8, 16), Color.Red);
         }
 
         public void Sleep()
@@ -335,7 +335,7 @@ namespace MonoGear
                 AnimationCurrentFrame = 1;
                 state = State.Sleeping;
                 var snoreSound = new AudioSource();
-                snoreSound.AddSoundEffect(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/snoreWhistle"), 150);
+                snoreSound.AddSoundEffect(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/snoreWhistle"), 150);
                 snoreSound.Position = Position;
                 AudioManager.AddAudioSource(snoreSound);
                 snoreSound.Pause();
@@ -379,7 +379,7 @@ namespace MonoGear
 
             if(state != State.Alerted)
             {
-                AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
+                AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
             }
 
             state = State.ToAlert;
@@ -421,7 +421,7 @@ namespace MonoGear
 
             if(state != State.Interested)
             {
-                AudioManager.PlayOnce(ResourceManager.GetManager().GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
+                AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
             }
 
             state = State.ToInterest;
