@@ -313,14 +313,16 @@ namespace MonoGear
                         else if (obj.Type == "audio")
                         {
                             string audio;
-                            string loop = "false";
-                            string volume = "1";
+                            string loop;
+                            string volume;
                             bool willWork = true;
 
                             if (!obj.Properties.TryGetValue("source", out audio))
                                 willWork = false;
-                            obj.Properties.TryGetValue("loop", out loop);
-                            obj.Properties.TryGetValue("volume", out volume);
+                            if (!obj.Properties.TryGetValue("loop", out loop))
+                                loop = "false";
+                            if (!obj.Properties.TryGetValue("volume", out volume))
+                                volume = "1";
 
                             if (willWork)
                             {
