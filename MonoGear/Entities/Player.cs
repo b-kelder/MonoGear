@@ -5,8 +5,11 @@ using Microsoft.Xna.Framework.Audio;
 using Windows.ApplicationModel.Core;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGear.Engine;
+using MonoGear.Engine.Collisions;
+using MonoGear.Engine.Audio;
 
-namespace MonoGear
+namespace MonoGear.Entities
 {
     class Player : WorldEntityAnimated
     {

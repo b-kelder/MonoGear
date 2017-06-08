@@ -17,6 +17,10 @@ using Windows.UI.ViewManagement;
 using Windows.Graphics.Display;
 using Windows.Foundation;
 
+using MonoGear.Engine;
+using MonoGear.Engine.Audio;
+using MonoGear.Entities;
+
 namespace MonoGear
 {
     /// <summary>

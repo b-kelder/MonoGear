@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGear.Engine;
 
-namespace MonoGear
+
+namespace MonoGear.Entities
 {
     class PC : WorldEntityAnimated
     {

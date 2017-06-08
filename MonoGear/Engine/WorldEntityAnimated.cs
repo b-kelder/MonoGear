@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace MonoGear
+namespace MonoGear.Engine
 {
     public abstract class WorldEntityAnimated : WorldEntity
     {

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using MonoGear.Engine;
 
-namespace MonoGear
+
+namespace MonoGear.Entities
 {
     public class GameUI : WorldEntity
     {

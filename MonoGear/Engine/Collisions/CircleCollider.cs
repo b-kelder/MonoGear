@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoGear
+namespace MonoGear.Engine.Collisions
 {
     public class CircleCollider : Collider
     {

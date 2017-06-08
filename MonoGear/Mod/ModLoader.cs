@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoGear
+namespace MonoGear.Mod
 {
-    class ModLoader
+    public class ModLoader
     {
+
     }
 }

@@ -10,8 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TiledSharp;
+using MonoGear.Engine.Collisions;
+using MonoGear.Engine.Audio;
+using MonoGear.Entities;
 
-namespace MonoGear
+namespace MonoGear.Engine
 {
     public class Level
     {

@@ -5,8 +5,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MonoGear.Entities;
 
-namespace MonoGear
+namespace MonoGear.Engine.Collisions
 {
     public abstract class Collider
     {

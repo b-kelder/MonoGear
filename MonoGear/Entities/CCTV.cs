@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MonoGear.Engine;
+using MonoGear.Engine.Collisions;
 
-namespace MonoGear
+namespace MonoGear.Entities
 {
     class CCTV : WorldEntityAnimated
     {

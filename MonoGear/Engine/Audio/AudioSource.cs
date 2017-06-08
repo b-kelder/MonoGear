@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 
-namespace MonoGear
+namespace MonoGear.Engine.Audio
 {
     class AudioSource : WorldEntity
     {

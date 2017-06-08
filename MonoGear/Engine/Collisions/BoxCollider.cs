@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace MonoGear
+namespace MonoGear.Engine.Collisions
 {
     public class BoxCollider : Collider
     {

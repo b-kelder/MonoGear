@@ -2,8 +2,9 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
+using MonoGear.Entities;
 
-namespace MonoGear
+namespace MonoGear.Engine.Audio
 {
     static class AudioManager
     {

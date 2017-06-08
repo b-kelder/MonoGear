@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonoGear
+namespace MonoGear.Engine
 {
     public class Tile
     {

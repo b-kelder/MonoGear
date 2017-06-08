@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using MonoGear.Engine;
+using MonoGear.Engine.Audio;
 
-namespace MonoGear
+namespace MonoGear.Entities
 {
     /// <summary>
     /// Bird that flies towards the top of the screen.
