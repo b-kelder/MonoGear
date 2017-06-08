@@ -1370,15 +1370,13 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="Spawns" visible="0">
+ <objectgroup name="Spawns">
   <object id="1" name="Player spawn" type="spawnpoint" gid="3" x="808" y="452" width="16" height="16">
    <properties>
     <property name="tag" value="PlayerSpawnPoint"/>
    </properties>
   </object>
-
-  <object id="8" name="Computer" type="pc" gid="57" x="928" y="384" width="16" height="16"/>
-  
+  <object id="8" name="Computer" type="pc" gid="57" x="936" y="376" width="16" height="16"/>
   <object id="9" name="Camera left" type="cctv" gid="211" x="752" y="288" width="16" height="16">
    <properties>
     <property name="pc" value="Computer"/>
@@ -1395,7 +1393,6 @@
     <property name="patrolpath" value="Path table"/>
    </properties>
   </object>
-
   <object id="20" name="Guard left" type="guard" gid="57" x="558.333" y="196" width="16" height="16">
    <properties>
     <property name="patrolpath" value="Path left"/>
@@ -1407,7 +1404,6 @@
     <property name="rotation" type="float" value="180"/>
    </properties>
   </object>
-  
  </objectgroup>
  <objectgroup name="Paths">
   <object id="11" name="Path stairs" type="path" x="581.5" y="412.5">
