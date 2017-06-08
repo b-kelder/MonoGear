@@ -760,28 +760,28 @@
  <objectgroup name="Audio">
   <object id="56" name="Fountain_top" type="audiosource" gid="141" x="2352" y="1211" width="16" height="16">
    <properties>
-    <property name="range" type="float" value="150"/>
+    <property name="range" type="float" value="200"/>
     <property name="source" value="Audio/AudioFX/Water_Fountain_cut"/>
     <property name="volume" type="float" value="0.6"/>
    </properties>
   </object>
   <object id="58" name="Fountain_middle" type="audiosource" gid="141" x="2353" y="1916" width="16" height="16">
    <properties>
-    <property name="range" type="float" value="150"/>
+    <property name="range" type="float" value="200"/>
     <property name="source" value="Audio/AudioFX/Water_Fountain_cut"/>
     <property name="volume" type="float" value="0.6"/>
    </properties>
   </object>
   <object id="59" name="Fountain_bottem_left" type="audiosource" gid="141" x="1824" y="2450" width="16" height="16">
    <properties>
-    <property name="range" type="float" value="150"/>
+    <property name="range" type="float" value="200"/>
     <property name="source" value="Audio/AudioFX/Water_Fountain_cut"/>
     <property name="volume" type="float" value="0.6"/>
    </properties>
   </object>
   <object id="60" name="Fountain_bottem_right" type="audiosource" gid="141" x="2877" y="2448" width="16" height="16">
    <properties>
-    <property name="range" type="float" value="150"/>
+    <property name="range" type="float" value="200"/>
     <property name="source" value="Audio/AudioFX/Water_Fountain_cut"/>
     <property name="volume" type="float" value="0.6"/>
    </properties>
@@ -789,13 +789,13 @@
   <object id="63" name="Owl_sound" type="audio" gid="141" x="743" y="617" width="16" height="16">
    <properties>
     <property name="source" value="Audio/AudioFX/Owl_sound"/>
-    <property name="volume" type="float" value="0.6"/>
+    <property name="volume" type="float" value="0.3"/>
    </properties>
   </object>
   <object id="64" name="Cricket_sound" type="audio" gid="141" x="767" y="619" width="16" height="16">
    <properties>
     <property name="source" value="Audio/AudioFX/Crickets_sound"/>
-    <property name="volume" type="float" value="0.6"/>
+    <property name="volume" type="float" value="1"/>
    </properties>
   </object>
  </objectgroup>
