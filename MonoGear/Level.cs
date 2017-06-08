@@ -320,7 +320,7 @@ namespace MonoGear
                             if (!obj.Properties.TryGetValue("source", out audio))
                                 willWork = false;
                             if (!obj.Properties.TryGetValue("loop", out loop))
-                                loop = "false";
+                                loop = "true";
                             if (!obj.Properties.TryGetValue("volume", out volume))
                                 volume = "1";
 
