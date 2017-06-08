@@ -332,6 +332,27 @@ namespace MonoGear
                                     AudioManager.GlobalAudioPlay(MonoGearGame.GetResource<SoundEffect>(audio).CreateInstance(), false, float.Parse(volume));
                             }
                         }
+                        else if (obj.Type == "audiosource")
+                        {
+                            string audio;
+                            string range;
+                            string volume;
+                            bool willWork = true;
+
+                            if (!obj.Properties.TryGetValue("source", out audio))
+                                willWork = false;
+                            if (!obj.Properties.TryGetValue("range", out range))
+                                range = "100";
+                            if (!obj.Properties.TryGetValue("volume", out volume))
+                                volume = "1";
+                            if (willWork)
+                            {
+                                var source = new AudioSource();
+                                source.AddSoundEffect(MonoGearGame.GetResource<SoundEffect>(audio), float.Parse(range), float.Parse(volume));
+                                source.Position = new Vector2((float)obj.X, (float)obj.Y);
+                                AudioManager.AddAudioSource(source);
+                            }
+                        }
                         else if (obj.Type == "backgroundmusic")
                         {
                             string audio;
