@@ -190,13 +190,31 @@ namespace MonoGear.Engine
                         if (tileset.Tiles.TryGetValue(index, out tileData))
                         {
                             Debug.WriteLine("Loading custom properties for tile " + index);
+
                             string solid;
-                            if (tileData.Properties.TryGetValue("solid", out solid))
+                            if(tileData.Properties.TryGetValue("solid", out solid))
                             {
-                                if (solid == "true")
+                                if(solid == "true")
                                 {
-                                    Debug.WriteLine("Tile " + index + " is SOLID");
                                     tile.Walkable = false;
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("Tile is not solid but has the property?");
+                                }
+                            }
+
+                            string sound;
+                            if(tileData.Properties.TryGetValue("sound", out sound))
+                            {
+                                Tile.TileSound soundEnum;
+                                if(Enum.TryParse(sound, out soundEnum))
+                                {
+                                    tile.Sound = soundEnum;
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("Unknown TileSound value " + sound);
                                 }
                             }
                         }
@@ -249,7 +267,7 @@ namespace MonoGear.Engine
                 var paths = new Dictionary<string, List<Vector2>>();
                 var consoles = new Dictionary<string, PC>();
                 var cameraConsole = new Dictionary<CCTV, string>();
-                var objectives = new Dictionary<string, Objective>();
+                var objectives = new Dictionary<string, Objective>();       // Remains during gameplay due to some triggers needing it
                 var pcWithObjective = new Dictionary<PC, string>();
 
 

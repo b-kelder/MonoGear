@@ -392,6 +392,12 @@ namespace MonoGear.Entities
                     currentPath = path;
                     currentPathIndex = 0;
                     state = path != null ? State.Alerted : State.Idle;
+                    Random rand = new Random();
+                    int number = rand.Next(0, 9);
+                    if (number == 0)
+                    {
+                        AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Get_over_here"), 1);
+                    }
                 });
             });
         }

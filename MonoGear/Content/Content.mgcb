@@ -506,12 +506,6 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Pc.png
 
-#begin Audio/AudioFX/Hacking_sound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/AudioFX/Hacking_sound.wav
-
 #begin Fonts/Verdana.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -519,4 +513,15 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Verdana.spritefont
 
+#begin Audio/AudioFX/Hacking_sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Hacking_sound.wav
+
+#begin Audio/AudioFX/Get_over_here.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Get_over_here.wav
 
