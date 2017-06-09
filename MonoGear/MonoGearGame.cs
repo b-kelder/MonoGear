@@ -177,7 +177,6 @@ namespace MonoGear
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             input = new Input();
 
             levelEntities = new HashSet<WorldEntity>();
