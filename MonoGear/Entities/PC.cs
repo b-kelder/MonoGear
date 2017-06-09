@@ -14,11 +14,13 @@ namespace MonoGear.Entities
     {
         public List<CCTV> connectedCameras { get; set; }
         public float progressPerClick { get; set; }
+        public Objective objective { get; set; }
 
         private Player player;
         private float hackingProgress;
         private bool inRange;
         private bool hacked;
+        
 
         public PC()
         {
@@ -87,7 +89,12 @@ namespace MonoGear.Entities
             {
                 HackPC();
                 Enabled = false;
+                if (objective != null)
+                {
+                    GameUI.CompleteObjective(objective);
+                }
             }
+            
         }
     }
 }

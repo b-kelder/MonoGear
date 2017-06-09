@@ -13,14 +13,19 @@ namespace MonoGear.Entities
     public class GameUI : WorldEntity
     {
         Player player;
-        List<Objective> objectives;
+        static List<Objective> objectives = new List<Objective>();
 
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
 
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
-            objectives = MonoGearGame.FindEntitiesOfType<Objective>(); 
+            objectives.AddRange(MonoGearGame.FindEntitiesOfType<Objective>());
+        }
+
+        public static void CompleteObjective(Objective obj)
+        {
+            objectives.Remove(obj);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

@@ -315,7 +315,18 @@ namespace MonoGear.Engine
                             entity = new PC();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y);
 
-                            if(!consoles.ContainsKey(obj.Name))
+                            string objective;
+                            if (obj.Properties.TryGetValue("objective", out objective))
+                            {
+                                var ob = objectives[objective];
+                                if (ob != null)
+                                {
+                                    var pc = entity as PC;
+                                    pc.objective = ob;
+                                }
+                            }
+
+                            if (!consoles.ContainsKey(obj.Name))
                             {
                                 consoles[obj.Name] = entity as PC;
                             }
@@ -413,6 +424,27 @@ namespace MonoGear.Engine
                                         }
                                     };
                                 }
+                                else if (action == "objective")
+                                {
+                                    string objective;
+                                    if (obj.Properties.TryGetValue("objective", out objective))
+                                    {
+                                        actionL = (self, previous, current) =>
+                                        {
+                                            foreach (var col in current)
+                                            {
+                                                if (col.Entity.Tag == "Player")
+                                                {
+                                                    var ob = objectives[objective];
+                                                    if (ob != null)
+                                                    {
+                                                        GameUI.CompleteObjective(ob);
+                                                    }
+                                                }
+                                            }
+                                        };
+                                    }
+                                }
                                 else
                                 {
                                     Debug.WriteLine("Trigger " + obj.Name + " with unknown action " + action);
@@ -448,8 +480,6 @@ namespace MonoGear.Engine
                                 Debug.WriteLine("Duplicate path name " + obj.Name);
                             }
                         }
-                        //TODO: Add other objects we want to load here
-                        //Like cars, birds, CCTV camera's
 
                         if(entity != null)
                         {

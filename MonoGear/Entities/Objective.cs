@@ -7,7 +7,7 @@ using MonoGear.Engine;
 
 namespace MonoGear.Entities
 {
-    class Objective : WorldEntity
+    public class Objective : WorldEntity
     {
         string Description;
 
