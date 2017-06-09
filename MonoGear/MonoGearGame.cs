@@ -220,12 +220,6 @@ namespace MonoGear
             var gameOver = new GameOver();
             RegisterGlobalEntity(gameOver);
 
-            // Background music sould be in a level??
-            /*AudioManager.MusicSet(globalResources.GetResource<Song>("Audio/Music/Main menu theme"));
-            AudioManager.MusicVolume(0.4f);
-            AudioManager.MusicPlay();*/
-            
-
             // Global Entities
             player = new Player();
             RegisterGlobalEntity(player);
