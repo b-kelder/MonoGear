@@ -4565,13 +4565,13 @@
   </object>
  </objectgroup>
  <objectgroup name="Triggers">
-  <object id="55" name="Objective Location" type="trigger" x="1499.67" y="731.5" width="1705.33" height="1287.17">
+  <object id="55" name="Objective Location" type="trigger" x="1500.86" y="729.875" width="1705.33" height="1287.17">
    <properties>
     <property name="action" value="objective"/>
     <property name="objective" value="Objective1"/>
    </properties>
   </object>
-  <object id="66" name="Trigger Level" type="trigger" x="2325.83" y="1760.42" width="52.3333" height="13.667">
+  <object id="66" name="Trigger Level" type="trigger" x="2325.77" y="1760.17" width="51.2083" height="12.2295">
    <properties>
     <property name="action" value="nextlevel"/>
    </properties>
@@ -4581,7 +4581,7 @@
     <property name="description" value="Get into the guarded whitehouse area"/>
    </properties>
   </object>
-  <object id="68" name="ObjectiveLevel" type="trigger" x="2325.33" y="1759.17" width="52.3333" height="13.667">
+  <object id="68" name="ObjectiveLevel" type="trigger" x="2325.27" y="1759.42" width="52.3333" height="13.667">
    <properties>
     <property name="action" value="objective"/>
     <property name="objective" value="Objective2"/>

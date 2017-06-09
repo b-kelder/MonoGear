@@ -446,7 +446,6 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Dead.png
 
-
 #begin Levels/Tilesets/Inside.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -507,5 +506,10 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Pc.png
 
-
+#begin Fonts/Verdana.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Verdana.spritefont
 

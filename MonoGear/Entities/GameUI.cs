@@ -72,16 +72,16 @@ namespace MonoGear.Entities
             if (objectives.Count > 0)
             {
                 float top = rect.Top + 20;
-                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Objective:", new Vector2(rect.Left + 16, rect.Top + 10), Color.White);
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Objective:", new Vector2(rect.Left + 16, rect.Top + 10), Color.LightGray);
                 foreach (var objective in objectives)
                 {
-                    spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), objective.ToString(), new Vector2(rect.Left + 16, top), Color.White);
+                    spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), objective.ToString(), new Vector2(rect.Left + 16, top), Color.LightGray);
                     top += 10;
                 }
             }
             else
             {
-                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "No objective", new Vector2(rect.Left + 16, rect.Top + 16), Color.White);
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "No objective", new Vector2(rect.Left + 16, rect.Top + 16), Color.LightGray);
             }
             #endregion
         }

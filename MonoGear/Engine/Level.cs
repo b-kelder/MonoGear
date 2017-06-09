@@ -556,7 +556,7 @@ namespace MonoGear.Engine
                     }
                 }
 
-
+                // Assing PC/Objective
                 foreach (var pc in pcWithObjective)
                 {
                     Objective ob;
