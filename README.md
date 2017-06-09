@@ -8,4 +8,4 @@ In order to get inside this highly protected building Jake needs to go stealth a
 <div align="center"><img src ="http://www.unitedtaxi.org/H2_preorder_button.png" /></div>
 
 ### MonoGear: WhiteHouse Gold Edition, Per-order Now!
-<div align="center"><img src ="http://www.bellsbike.com/PixbySKU/1189-gold.jpg" /></div>
+<div align="center"><img src ="https://previews.123rf.com/images/bigfatnapoleon/bigfatnapoleon1204/bigfatnapoleon120400034/13361812-Golden-Gear-Icon-Stock-Vector-gear-machinery-engineering.jpg" /></div>
