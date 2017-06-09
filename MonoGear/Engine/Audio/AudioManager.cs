@@ -19,10 +19,12 @@ namespace MonoGear.Engine.Audio
             posAudio.Range = range;
             posAudio.Position = position;
             posAudio.SoundEffect.IsLooped = loop;
+
+            positionalAudio.Add(posAudio);
             return posAudio;
         }
 
-        public static void UpdatepositionalAudio(Player player)
+        public static void UpdatePositionalAudio(Player player)
         {
             foreach (var audio in positionalAudio)
             {
@@ -46,6 +48,19 @@ namespace MonoGear.Engine.Audio
                     audio.SoundEffect.Volume = audio.Volume * (1 - (distance / audio.Range));
                 }
             }
+        }
+
+        public static void ClearPositionalAudio()
+        {
+            foreach(var audio in positionalAudio)
+            {
+                if(audio.SoundEffect.State != SoundState.Stopped)
+                {
+                    audio.SoundEffect.Stop();
+                }
+            }
+
+            positionalAudio.Clear();
         }
     }
 

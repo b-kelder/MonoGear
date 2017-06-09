@@ -288,7 +288,7 @@ namespace MonoGear
                 }
             }
 
-            AudioManager.UpdatepositionalAudio(player);
+            AudioManager.UpdatePositionalAudio(player);
 
             base.Update(gameTime);
         }
@@ -414,6 +414,8 @@ namespace MonoGear
         {
             if(nextLevel != null)
             {
+                AudioManager.ClearPositionalAudio();
+
                 activeLevel = nextLevel;
                 nextLevel = null;
 
