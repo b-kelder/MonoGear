@@ -115,7 +115,6 @@
     <Compile Include="Entities\GameUI.cs" />
     <Compile Include="Entities\Guard.cs" />
     <Compile Include="Engine\LevelListData.cs" />
-    <Compile Include="Mod\ModLoader.cs" />
     <Compile Include="Entities\PC.cs" />
     <Compile Include="Engine\Pathfinding.cs" />
     <Compile Include="Entities\Rock.cs" />

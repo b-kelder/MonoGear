@@ -75,7 +75,7 @@ namespace MonoGear.Entities
                 spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Objective:", new Vector2(rect.Left + 16, rect.Top + 10), Color.White);
                 foreach (var objective in objectives)
                 {
-                    spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), objective.ToString(), new Vector2(rect.Left + 16, rect.Top + 20), Color.White);
+                    spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), objective.ToString(), new Vector2(rect.Left + 16, top), Color.White);
                     top += 10;
                 }
             }
