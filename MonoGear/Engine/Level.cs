@@ -191,12 +191,26 @@ namespace MonoGear.Engine
                         {
                             Debug.WriteLine("Loading custom properties for tile " + index);
                             string solid;
-                            if (tileData.Properties.TryGetValue("solid", out solid))
+                            if(tileData.Properties.TryGetValue("solid", out solid))
                             {
-                                if (solid == "true")
+                                if(solid == "true")
                                 {
                                     Debug.WriteLine("Tile " + index + " is SOLID");
                                     tile.Walkable = false;
+                                }
+                            }
+
+                            string sound;
+                            if(tileData.Properties.TryGetValue("sound", out sound))
+                            {
+                                Tile.TileSound soundEnum;
+                                if(Enum.TryParse(sound, out soundEnum))
+                                {
+                                    tile.Sound = soundEnum;
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("Unknown TileSound value " + sound);
                                 }
                             }
                         }
