@@ -1413,7 +1413,7 @@
     <property name="rotation" type="float" value="180"/>
    </properties>
   </object>
-  <object id="26" name="ObjectivePC" type="objective" gid="31" x="944.5" y="408.125" width="7.875" height="7.875">
+  <object id="26" name="ObjectivePC" type="objective" gid="31" x="978.25" y="369.5" width="7.875" height="7.875">
    <properties>
     <property name="description" value="Hack the CCTV system"/>
    </properties>
