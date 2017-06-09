@@ -301,7 +301,7 @@ namespace MonoGear
             GraphicsDevice.Clear(Color.Black);
 
             var matrix = activeCamera.GetViewMatrix();
-            spriteBatch.Begin(transformMatrix: matrix);
+            spriteBatch.Begin(transformMatrix: matrix, blendState:BlendState.AlphaBlend, samplerState:SamplerState.PointClamp);
 
             activeLevel.DrawTiles(spriteBatch, activeCamera);
             activeLevel.DrawBackground(spriteBatch);
