@@ -1,26 +1,32 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Audio;
 
-namespace MonoGear
+using MonoGear.Engine;
+using MonoGear.Engine.Collisions;
+using MonoGear.Engine.Audio;
+
+namespace MonoGear.Entities
 {
-    class Rock : WorldEntity
+    class SleepDart : WorldEntity
     {
         float speed { get; set; }
         Collider originCollider;
 
-
-        public Rock(Collider originCollider)
+        public SleepDart(Collider originCollider)
         {
             CircleCollider collider = new CircleCollider(this, 2);
             collider.Trigger = true;
 
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Random rand = new Random();
-            speed = 200f + rand.Next(-20, 20);
-            TextureAssetName = "Sprites/Rock";
-            Tag = "TheRock";
+            speed = 250f + rand.Next(-20, 20);
+            TextureAssetName = "Sprites/SleepDart";
+            Tag = "SleepDart";
             LoadContent();
 
             this.originCollider = originCollider;
@@ -42,23 +48,22 @@ namespace MonoGear
                 Position = pos;
                 speed = 0.0f;
 
-                var entities = MonoGearGame.FindEntitiesOfType<Guard>();
-
-                foreach(var guard in entities)
+                if(collider != null && collider.Entity.Tag.Equals("Guard"))
                 {
-                    if(Vector2.Distance(Position, guard.Position) < 150)
-                    {
-                        guard.Interest(Position);
-                    }
+                    var guard = collider.Entity as Guard;
+                    guard.Sleep();
+                    AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/DartHit"), 1);
+                    AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/HurtSound"), 1);
                 }
 
                 Enabled = false;
             }
 
-            if(speed > 0)
-                speed -= 3;
-            else
-                speed = 0;
+            //if (speed > 0)
+            //    speed -= 3;
+            //else
+            //    speed = 0;
         }
     }
 }
+

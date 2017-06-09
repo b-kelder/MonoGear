@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using MonoGear.Engine;
+using MonoGear.Engine.Collisions;
+using MonoGear.Engine.Audio;
 
-namespace MonoGear
+namespace MonoGear.Entities
 {
     class Guard : WorldEntityAnimated
     {

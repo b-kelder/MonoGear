@@ -512,3 +512,11 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Hacking_sound.wav
 
+#begin Fonts/Verdana.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Verdana.spritefont
+
+

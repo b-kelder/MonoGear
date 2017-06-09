@@ -6,18 +6,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
+using MonoGear.Engine;
 
-namespace MonoGear
+
+namespace MonoGear.Entities
 {
     class PC : WorldEntityAnimated
     {
         public List<CCTV> connectedCameras { get; set; }
         public float progressPerClick { get; set; }
+        public Objective objective { get; set; }
 
         private Player player;
         private float hackingProgress;
         private bool inRange;
         private bool hacked;
+        
 
         public PC()
         {
@@ -87,7 +91,12 @@ namespace MonoGear
             {
                 HackPC();
                 Enabled = false;
+                if (objective != null)
+                {
+                    GameUI.CompleteObjective(objective);
+                }
             }
+            
         }
     }
 }

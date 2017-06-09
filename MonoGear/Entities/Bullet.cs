@@ -2,8 +2,10 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using System;
+using MonoGear.Engine;
+using MonoGear.Engine.Collisions;
 
-namespace MonoGear
+namespace MonoGear.Entities
 {
     class Bullet : WorldEntity
     {

@@ -6,23 +6,33 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using MonoGear.Engine;
 
-namespace MonoGear
+namespace MonoGear.Entities
 {
     public class GameUI : WorldEntity
     {
         Player player;
+        static List<Objective> objectives = new List<Objective>();
 
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
 
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
+            objectives.AddRange(MonoGearGame.FindEntitiesOfType<Objective>());
+        }
+
+        public static void CompleteObjective(Objective obj)
+        {
+            objectives.Remove(obj);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             var rect = Camera.main.GetClippingRect();
+
+            #region Draw Health and darts
             var pos = rect.Right - 100;
             var rows = Math.Ceiling(player.Health / 5);
             var healthToDraw = player.Health;
@@ -55,7 +65,25 @@ namespace MonoGear
             {
                 spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Darts: " + player.DartCount, new Vector2(rect.Right - 100, rect.Bottom - 32), Color.Red);
             }
-            //spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Health: " + player.Health, new Vector2(rect.Right - 100, rect.Bottom - 50), Color.Red);
+            #endregion
+
+            #region Draw Objective
+
+            if (objectives.Count > 0)
+            {
+                float top = rect.Top + 20;
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Objective:", new Vector2(rect.Left + 16, rect.Top + 10), Color.LightGray);
+                foreach (var objective in objectives)
+                {
+                    spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), objective.ToString(), new Vector2(rect.Left + 16, top), Color.LightGray);
+                    top += 10;
+                }
+            }
+            else
+            {
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "No objective", new Vector2(rect.Left + 16, rect.Top + 16), Color.LightGray);
+            }
+            #endregion
         }
     }
 }

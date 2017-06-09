@@ -103,49 +103,48 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AudioManager.cs" />
-    <Compile Include="Bullet.cs" />
-    <Compile Include="Car.cs" />
-    <Compile Include="CCTV.cs" />
+    <Compile Include="Engine\Audio\AudioManager.cs" />
+    <Compile Include="Entities\Objective.cs" />
+    <Compile Include="Entities\Bullet.cs" />
+    <Compile Include="Entities\Car.cs" />
+    <Compile Include="Entities\CCTV.cs" />
     <Compile Include="CreditsPage.xaml.cs">
       <DependentUpon>CreditsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameOver.cs" />
-    <Compile Include="GameUI.cs" />
-    <Compile Include="Guard.cs" />
-    <Compile Include="LevelListData.cs" />
-    <Compile Include="PC.cs" />
-    <Compile Include="Pathfinding.cs" />
-    <Compile Include="Rock.cs" />
-    <Compile Include="AudioSource.cs" />
-    <Compile Include="Bird.cs" />
-    <Compile Include="BoxCollider.cs" />
-    <Compile Include="Camera.cs" />
-    <Compile Include="CircleCollider.cs" />
-    <Compile Include="Collider.cs" />
-    <Compile Include="ColliderTestEntity.cs" />
+    <Compile Include="Entities\GameOver.cs" />
+    <Compile Include="Entities\GameUI.cs" />
+    <Compile Include="Entities\Guard.cs" />
+    <Compile Include="Engine\LevelListData.cs" />
+    <Compile Include="Entities\PC.cs" />
+    <Compile Include="Engine\Pathfinding.cs" />
+    <Compile Include="Entities\Rock.cs" />
+    <Compile Include="Engine\Audio\AudioSource.cs" />
+    <Compile Include="Entities\Bird.cs" />
+    <Compile Include="Engine\Collisions\BoxCollider.cs" />
+    <Compile Include="Engine\Camera.cs" />
+    <Compile Include="Engine\Collisions\CircleCollider.cs" />
+    <Compile Include="Engine\Collisions\Collider.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Input.cs" />
-    <Compile Include="Level.cs" />
+    <Compile Include="Engine\Input.cs" />
+    <Compile Include="Engine\Level.cs" />
     <Compile Include="MathExtensions.cs" />
     <Compile Include="MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MonoGearGame.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Entities\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SleepDart.cs" />
-    <Compile Include="SpawnPoint.cs" />
-    <Compile Include="Tile.cs" />
-    <Compile Include="TilemapCollider.cs" />
-    <Compile Include="WorldBoxTrigger.cs" />
-    <Compile Include="WorldEntity.cs" />
-    <Compile Include="WorldEntityAnimated.cs" />
+    <Compile Include="Entities\SleepDart.cs" />
+    <Compile Include="Entities\SpawnPoint.cs" />
+    <Compile Include="Engine\Tile.cs" />
+    <Compile Include="Entities\WorldBoxTrigger.cs" />
+    <Compile Include="Engine\WorldEntity.cs" />
+    <Compile Include="Engine\WorldEntityAnimated.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Levels\LevelList.xml">

@@ -9,8 +9,11 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Xna.Framework.Audio;
+using MonoGear.Engine;
+using MonoGear.Engine.Audio;
 
-namespace MonoGear
+
+namespace MonoGear.Entities
 {
     class GameOver : WorldEntity
     {

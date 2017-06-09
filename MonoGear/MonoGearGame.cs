@@ -17,6 +17,10 @@ using Windows.UI.ViewManagement;
 using Windows.Graphics.Display;
 using Windows.Foundation;
 
+using MonoGear.Engine;
+using MonoGear.Engine.Audio;
+using MonoGear.Entities;
+
 namespace MonoGear
 {
     /// <summary>
@@ -173,7 +177,6 @@ namespace MonoGear
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             input = new Input();
 
             levelEntities = new HashSet<WorldEntity>();

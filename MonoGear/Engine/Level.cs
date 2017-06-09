@@ -10,8 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TiledSharp;
+using MonoGear.Engine.Collisions;
+using MonoGear.Engine.Audio;
+using MonoGear.Entities;
 
-namespace MonoGear
+namespace MonoGear.Engine
 {
     public class Level
     {
@@ -47,11 +50,11 @@ namespace MonoGear
 
         public void AddBackgroundLayer(LevelOverlay layer)
         {
-            if(layer.texture == null)
+            if (layer.texture == null)
             {
                 layer.texture = MonoGearGame.GetResource<Texture2D>(layer.textureName);
             }
-            
+
             backgroundLayers.Add(layer);
             backgroundLayers.Sort(
                 (a, b) =>
@@ -77,7 +80,7 @@ namespace MonoGear
 
         public void DrawForeground(SpriteBatch batch)
         {
-            foreach(var layer in foregroundLayers)
+            foreach (var layer in foregroundLayers)
             {
                 batch.Draw(layer.texture, layer.offset, Color.White);
             }
@@ -85,7 +88,7 @@ namespace MonoGear
 
         public void DrawBackground(SpriteBatch batch)
         {
-            foreach(var layer in backgroundLayers)
+            foreach (var layer in backgroundLayers)
             {
                 batch.Draw(layer.texture, layer.offset, Color.White);
             }
@@ -101,11 +104,11 @@ namespace MonoGear
             int xs = Math.Max(0, (int)clip.X / TileWidth - 1);
             int xe = Math.Min(Width, (int)clip.Right / TileWidth + 1);
 
-            foreach(var layer in tileLayers)
+            foreach (var layer in tileLayers)
             {
-                for(int y = ys; y < ye; y++)
+                for (int y = ys; y < ye; y++)
                 {
-                    for(int x = xs; x < xe; x++)
+                    for (int x = xs; x < xe; x++)
                     {
                         layer.tiles[x + y * Width]?.Draw(x, y, batch);
                     }
@@ -127,7 +130,7 @@ namespace MonoGear
         public Tile GetTile(Vector2 position)
         {
             var xy = new Vector2(position.X / TileWidth, position.Y / TileHeight);
-            if(xy.X < 0 || xy.Y < 0 || xy.X > Width || xy.Y > Height)
+            if (xy.X < 0 || xy.Y < 0 || xy.X > Width || xy.Y > Height)
             {
                 return null;
             }
@@ -160,11 +163,11 @@ namespace MonoGear
 
                 int rows = (int)tileset.TileCount / (int)tileset.Columns;
                 bool done = false;
-                for(int x = 0; x < tileset.Columns && !done; x++)
+                for (int x = 0; x < tileset.Columns && !done; x++)
                 {
-                    for(int y = 0; y < rows; y++)
+                    for (int y = 0; y < rows; y++)
                     {
-                        if(x + y * tileset.Columns > tileset.TileCount)
+                        if (x + y * tileset.Columns > tileset.TileCount)
                         {
                             done = true;
                             break;
@@ -177,20 +180,20 @@ namespace MonoGear
                         tile.textureRect.Width = tileset.TileWidth;
                         tile.textureRect.Height = tileset.TileHeight;
 
-                        
+
                         int index = x + y * (int)tileset.Columns;
                         tile.tilesetId = index;
 
 
                         // Load custom properties
                         TmxTilesetTile tileData;
-                        if(tileset.Tiles.TryGetValue(index, out tileData))
+                        if (tileset.Tiles.TryGetValue(index, out tileData))
                         {
                             Debug.WriteLine("Loading custom properties for tile " + index);
                             string solid;
-                            if(tileData.Properties.TryGetValue("solid", out solid))
+                            if (tileData.Properties.TryGetValue("solid", out solid))
                             {
-                                if(solid == "true")
+                                if (solid == "true")
                                 {
                                     Debug.WriteLine("Tile " + index + " is SOLID");
                                     tile.Walkable = false;
@@ -207,16 +210,16 @@ namespace MonoGear
                 level.combinedLayer.tiles = new Tile[map.Width * map.Height];
 
                 var reversedLayers = map.Layers.Reverse();          // Layers get stored bottom to top, we need top to bottom
-                foreach(var layer in reversedLayers)
+                foreach (var layer in reversedLayers)
                 {
                     Debug.WriteLine("Loading layer: " + layer.Name);
 
-                    
+
                     // Add layer
                     var levelLayer = new LevelLayer();
                     levelLayer.tiles = new Tile[map.Width * map.Height];
 
-                    for(int tileIndex = 0; tileIndex < map.Width * map.Height; tileIndex++)
+                    for (int tileIndex = 0; tileIndex < map.Width * map.Height; tileIndex++)
                     {
                         levelLayer.tiles[tileIndex] = tilesetDict[layer.Tiles[tileIndex].Gid];
 
@@ -224,7 +227,7 @@ namespace MonoGear
                         // level layer has a tile AND
                         // top layer is walkable but level is not OR
                         // top layer has no tile
-                        if(levelLayer.tiles[tileIndex] != null &&
+                        if (levelLayer.tiles[tileIndex] != null &&
                         (level.combinedLayer.tiles[tileIndex] == null ||
                         (level.combinedLayer.tiles[tileIndex].Walkable && levelLayer.tiles[tileIndex].Walkable == false)))
                         {
@@ -246,62 +249,81 @@ namespace MonoGear
                 var paths = new Dictionary<string, List<Vector2>>();
                 var consoles = new Dictionary<string, PC>();
                 var cameraConsole = new Dictionary<CCTV, string>();
+                var objectives = new Dictionary<string, Objective>();
+                var pcWithObjective = new Dictionary<PC, string>();
 
-                foreach(var objectGroup in groups)
+
+                foreach (var objectGroup in groups)
                 {
-                    foreach(var obj in objectGroup.Objects)
+                    foreach (var obj in objectGroup.Objects)
                     {
                         var halfTileOffset = -new Vector2(-level.TileWidth, level.TileHeight) / 2;
 
-                        Debug.WriteLine("Found object of type " + obj.Type);
+                        //Debug.WriteLine("Found object of type " + obj.Type);
                         WorldEntity entity = null;
-                        if(obj.Type == "spawnpoint")
+                        if (obj.Type == "spawnpoint")
                         {
                             entity = new SpawnPoint(new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset);
                         }
-                        else if(obj.Type == "guard")
+                        else if (obj.Type == "guard")
                         {
                             entity = new Guard();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
 
                             string path;
-                            if(obj.Properties.TryGetValue("patrolpath", out path))
+                            if (obj.Properties.TryGetValue("patrolpath", out path))
                             {
                                 guardPaths.Add(entity as Guard, path);
                             }
                         }
-                        else if(obj.Type == "car")
+                        else if (obj.Type == "car")
                         {
                             entity = new Car(new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset, null, "Sprites/Car");
 
                             string path;
-                            if(obj.Properties.TryGetValue("path", out path))
+                            if (obj.Properties.TryGetValue("path", out path))
                             {
                                 carPaths.Add(entity as Car, path);
                             }
                         }
-                        else if(obj.Type == "bird")
+                        else if (obj.Type == "bird")
                         {
                             entity = new Bird() { YResetValue = level.Height * level.TileHeight + 200 };
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
                         }
-                        else if(obj.Type == "cctv")
+                        else if (obj.Type == "objective")
+                        {
+                            string description;
+
+                            if (obj.Properties.TryGetValue("description", out description))
+                            {
+                                entity = new Objective(description);
+                                objectives.Add(obj.Name, entity as Objective);
+                            }
+                        }
+                        else if (obj.Type == "cctv")
                         {
                             entity = new CCTV();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
 
                             string console;
-                            if(obj.Properties.TryGetValue("pc", out console))
+                            if (obj.Properties.TryGetValue("pc", out console))
                             {
                                 cameraConsole.Add(entity as CCTV, console);
                             }
                         }
-                        else if(obj.Type == "pc")
+                        else if (obj.Type == "pc")
                         {
                             entity = new PC();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y);
 
-                            if(!consoles.ContainsKey(obj.Name))
+                            string objective;
+                            if (obj.Properties.TryGetValue("objective", out objective))
+                            {
+                                pcWithObjective.Add(entity as PC, objective);
+                            }
+
+                            if (!consoles.ContainsKey(obj.Name))
                             {
                                 consoles[obj.Name] = entity as PC;
                             }
@@ -363,35 +385,35 @@ namespace MonoGear
                                 AudioManager.MusicPlay();
                             }
                         }
-                        else if(obj.Type == "trigger")
+                        else if (obj.Type == "trigger")
                         {
                             string action;
-                            if(obj.Properties.TryGetValue("action", out action))
+                            if (obj.Properties.TryGetValue("action", out action))
                             {
                                 Action<Collider, IEnumerable<Collider>, IEnumerable<Collider>> actionL = null;
-                                if(action == "nextlevel")
+                                if (action == "nextlevel")
                                 {
                                     actionL = (self, previous, current) =>
                                     {
-                                        foreach(var col in current)
+                                        foreach (var col in current)
                                         {
-                                            if(col.Entity.Tag == "Player")
+                                            if (col.Entity.Tag == "Player")
                                             {
                                                 MonoGearGame.NextLevel();
                                             }
                                         }
                                     };
                                 }
-                                else if(action == "alert")
+                                else if (action == "alert")
                                 {
                                     actionL = (self, previous, current) =>
                                     {
-                                        foreach(var col in current)
+                                        foreach (var col in current)
                                         {
-                                            if(col.Entity.Tag == "Player" && !previous.Contains(col))
+                                            if (col.Entity.Tag == "Player" && !previous.Contains(col))
                                             {
                                                 var guards = MonoGearGame.FindEntitiesOfType<Guard>();
-                                                foreach(var guard in guards)
+                                                foreach (var guard in guards)
                                                 {
                                                     guard.Alert(col.Entity.Position);
                                                 }
@@ -399,12 +421,37 @@ namespace MonoGear
                                         }
                                     };
                                 }
+                                else if (action == "objective")
+                                {
+                                    string objective;
+                                    if (obj.Properties.TryGetValue("objective", out objective))
+                                    {
+                                        actionL = (self, previous, current) =>
+                                        {
+                                            foreach (var col in current)
+                                            {
+                                                if (col.Entity.Tag == "Player")
+                                                {
+                                                    Objective ob;
+                                                    if (objectives.TryGetValue(objective, out ob))
+                                                    {
+                                                        GameUI.CompleteObjective(ob);
+                                                    }
+                                                    else
+                                                    {
+                                                        Debug.WriteLine("Trgger could not find objective: " + objectives);
+                                                    }
+                                                }
+                                            }
+                                        };
+                                    }
+                                }
                                 else
                                 {
                                     Debug.WriteLine("Trigger " + obj.Name + " with unknown action " + action);
                                 }
 
-                                if(actionL != null)
+                                if (actionL != null)
                                 {
                                     var size = new Vector2((float)obj.Width, (float)obj.Height);
                                     entity = new WorldBoxTrigger(new Vector2((float)obj.X, (float)obj.Y) + size / 2,
@@ -417,15 +464,15 @@ namespace MonoGear
                                 Debug.WriteLine("Trigger " + obj.Name + " with no action!");
                             }
                         }
-                        else if(obj.Type == "path")
+                        else if (obj.Type == "path")
                         {
                             // A patrol path
-                            if(!paths.ContainsKey(obj.Name))
+                            if (!paths.ContainsKey(obj.Name))
                             {
                                 paths[obj.Name] = new List<Vector2>();
-                                foreach(var point in obj.Points)
+                                foreach (var point in obj.Points)
                                 {
-                                    Debug.WriteLine(point.X + ", " + point.Y);
+                                    //Debug.WriteLine(point.X + ", " + point.Y);
                                     paths[obj.Name].Add(new Vector2((float)point.X + (float)obj.X, (float)point.Y + (float)obj.Y));
                                 }
                             }
@@ -434,27 +481,25 @@ namespace MonoGear
                                 Debug.WriteLine("Duplicate path name " + obj.Name);
                             }
                         }
-                        //TODO: Add other objects we want to load here
-                        //Like cars, birds, CCTV camera's
 
-                        if(entity != null)
+                        if (entity != null)
                         {
                             // Set tag
                             string tag;
-                            if(obj.Properties.TryGetValue("tag", out tag))
+                            if (obj.Properties.TryGetValue("tag", out tag))
                             {
                                 entity.Tag = tag;
                             }
 
                             // Set rotation (read in degrees)
                             string rotation;
-                            if(obj.Properties.TryGetValue("rotation", out rotation))
+                            if (obj.Properties.TryGetValue("rotation", out rotation))
                             {
                                 float rot;
-                                if(float.TryParse(rotation, out rot))
+                                if (float.TryParse(rotation, out rot))
                                 {
                                     entity.Rotation = MathHelper.ToRadians(rot);
-                                    Debug.WriteLine("Loaded rotation " + entity.Rotation + "rad");
+                                    //Debug.WriteLine("Loaded rotation " + entity.Rotation + "rad");
                                 }
                                 else
                                 {
@@ -463,17 +508,17 @@ namespace MonoGear
                             }
 
                             level.AddEntity(entity);
-                            Debug.WriteLine("Added entity");
+                            //Debug.WriteLine("Added entity");
                         }
                     }
                 }
 
 
                 // Assing guard patrol paths
-                foreach(var guardPath in guardPaths)
+                foreach (var guardPath in guardPaths)
                 {
                     List<Vector2> path;
-                    if(paths.TryGetValue(guardPath.Value, out path))
+                    if (paths.TryGetValue(guardPath.Value, out path))
                     {
                         guardPath.Key.PatrolPath = path;
                     }
@@ -484,10 +529,10 @@ namespace MonoGear
                 }
 
                 // Assing car paths
-                foreach(var carPath in carPaths)
+                foreach (var carPath in carPaths)
                 {
                     List<Vector2> path;
-                    if(paths.TryGetValue(carPath.Value, out path))
+                    if (paths.TryGetValue(carPath.Value, out path))
                     {
                         carPath.Key.SetPath(path);
                     }
@@ -498,10 +543,10 @@ namespace MonoGear
                 }
 
                 // Assing PC/CCTV
-                foreach(var kvPair in cameraConsole)
+                foreach (var kvPair in cameraConsole)
                 {
                     PC pc;
-                    if(consoles.TryGetValue(kvPair.Value, out pc))
+                    if (consoles.TryGetValue(kvPair.Value, out pc))
                     {
                         pc.AddCCTV(kvPair.Key);
                     }
@@ -511,10 +556,23 @@ namespace MonoGear
                     }
                 }
 
+                // Assing PC/Objective
+                foreach (var pc in pcWithObjective)
+                {
+                    Objective ob;
+                    if (objectives.TryGetValue(pc.Value, out ob))
+                    {
+                        pc.Key.objective = ob;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("PC could not find objective: " + pc.Value);
+                    }
+                }
+
 
             }).Wait();
             return level;
-
         }
     }
 
