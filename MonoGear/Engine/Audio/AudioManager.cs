@@ -10,6 +10,28 @@ namespace MonoGear.Engine.Audio
     public static class AudioManager
     {
         static List<PositionalAudio> positionalAudio = new List<PositionalAudio>();
+        static List<SoundEffectInstance> globalSounds = new List<SoundEffectInstance>();
+
+        public static void PlayGlobal(SoundEffectInstance instance)
+        {
+            globalSounds.Add(instance);
+            instance.Play();
+        }
+
+        public static void StopGlobal(SoundEffectInstance instance)
+        {
+            if(globalSounds.Contains(instance))
+            {
+                globalSounds.Remove(instance);
+            }
+            instance.Stop();
+        }
+
+        public static void PlayGlobalOnce(SoundEffectInstance instance)
+        {
+            instance.IsLooped = false;
+            instance.Play();
+        }
 
         public static PositionalAudio AddPositionalAudio(SoundEffect soundEffect, float volume, float range, Vector2 position, bool loop)
         {
@@ -61,6 +83,19 @@ namespace MonoGear.Engine.Audio
             }
 
             positionalAudio.Clear();
+        }
+
+        public static void ClearGlobalAudio()
+        {
+            foreach(var audio in globalSounds)
+            {
+                if(audio.State != SoundState.Stopped)
+                {
+                    audio.Stop();
+                }
+            }
+
+            globalSounds.Clear();
         }
     }
 

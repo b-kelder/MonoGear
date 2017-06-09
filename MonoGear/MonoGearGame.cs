@@ -93,7 +93,7 @@ namespace MonoGear
         {
             if(instance != null)
             {
-                LoadLevel(Level.LoadLevel(instance.activeLevel.Name));
+                LoadLevel(instance.activeLevel.Name);
             }
         }
 
@@ -103,7 +103,7 @@ namespace MonoGear
             {
                 if(instance.levelList.LastLevel() != instance.activeLevel.Name)
                 {
-                    LoadLevel(Level.LoadLevel(instance.levelList.NextLevel()));
+                    LoadLevel(instance.levelList.NextLevel());
                 }
                 else
                 {
@@ -229,8 +229,7 @@ namespace MonoGear
             RegisterGlobalEntity(pf);
 			
             // Load first level in the list
-            var level = Level.LoadLevel(levelList.Start());
-            LoadLevel(level);
+            LoadLevel(levelList.Start());
         }
 
         /// <summary>
@@ -414,8 +413,6 @@ namespace MonoGear
         {
             if(nextLevel != null)
             {
-                AudioManager.ClearPositionalAudio();
-
                 activeLevel = nextLevel;
                 nextLevel = null;
 
@@ -454,9 +451,12 @@ namespace MonoGear
         }
 
         // static level stuff
-        public static void LoadLevel(Level level)
+        public static void LoadLevel(string levelName)
         {
-            instance.nextLevel = level;
+            AudioManager.ClearPositionalAudio();
+            AudioManager.ClearGlobalAudio();
+
+            instance.nextLevel = Level.LoadLevel(levelName);
         }
 
         public static T GetResource<T>(string name)
