@@ -349,9 +349,18 @@ namespace MonoGear.Engine
                             if (willWork)
                             {
                                 if (loop.Equals("true"))
-                                    AudioManager.GlobalAudioPlay(MonoGearGame.GetResource<SoundEffect>(audio).CreateInstance(), true, float.Parse(volume));
+                                {
+                                    var soundEffect = MonoGearGame.GetResource<SoundEffect>(audio).CreateInstance();
+                                    soundEffect.IsLooped = true;
+                                    soundEffect.Volume = float.Parse(volume);
+
+                                }
                                 else
-                                    AudioManager.GlobalAudioPlay(MonoGearGame.GetResource<SoundEffect>(audio).CreateInstance(), false, float.Parse(volume));
+                                {
+                                    var soundEffect = MonoGearGame.GetResource<SoundEffect>(audio).CreateInstance();
+                                    soundEffect.IsLooped = false;
+                                    soundEffect.Volume = float.Parse(volume);
+                                }
                             }
                         }
                         else if (obj.Type == "audiosource")
@@ -369,10 +378,7 @@ namespace MonoGear.Engine
                                 volume = "1";
                             if (willWork)
                             {
-                                var source = new AudioSource();
-                                source.AddSoundEffect(MonoGearGame.GetResource<SoundEffect>(audio), float.Parse(range), float.Parse(volume));
-                                source.Position = new Vector2((float)obj.X, (float)obj.Y);
-                                AudioManager.AddAudioSource(source);
+                                AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>(audio), float.Parse(volume), float.Parse(range), new Vector2((float)obj.X, (float)obj.Y));
                             }
                         }
                         else if (obj.Type == "backgroundmusic")
@@ -381,8 +387,7 @@ namespace MonoGear.Engine
 
                             if (!obj.Properties.TryGetValue("source", out audio))
                             {
-                                AudioManager.MusicSet(MonoGearGame.GetResource<Song>(audio));
-                                AudioManager.MusicPlay();
+                                MediaPlayer.Play(MonoGearGame.GetResource<Song>(audio));
                             }
                         }
                         else if (obj.Type == "trigger")

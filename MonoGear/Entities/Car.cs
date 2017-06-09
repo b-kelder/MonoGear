@@ -18,10 +18,10 @@ namespace MonoGear.Entities
     class Car : WorldEntity
     {
         float speed;
-        private AudioSource carSound;
         private List<Vector2> currentPath;
         private int currentPathIndex;
         public bool LoopPath { get; set; }
+        private PositionalAudio carSound;
 
         public Car(Vector2 position, List<Vector2> currentPath, string textureAssetName)
         {
@@ -41,12 +41,6 @@ namespace MonoGear.Entities
             LoadContent();
 
             Collider = new BoxCollider(this, Size);
-
-            carSound = new AudioSource();
-            carSound.AddSoundEffect(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 500);
-            carSound.Position = Position;
-            AudioManager.AddAudioSource(carSound);
-            carSound.Pause();
         }
 
         public async void GoTo(Vector2 origin)
@@ -65,13 +59,12 @@ namespace MonoGear.Entities
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
-            carSound.PlayAll();
+            carSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 1, 500, Position);
         }
 
         public override void OnLevelUnloaded()
         {
             base.OnLevelUnloaded();
-            carSound.Pause();
         }
 
         public void SetPath(List<Vector2> path)

@@ -288,7 +288,7 @@ namespace MonoGear
                 }
             }
 
-            AudioManager.UpdateAudioSourceAudio(player);
+            AudioManager.UpdatepositionalAudio(player);
 
             base.Update(gameTime);
         }

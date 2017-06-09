@@ -118,7 +118,6 @@
     <Compile Include="Entities\PC.cs" />
     <Compile Include="Engine\Pathfinding.cs" />
     <Compile Include="Entities\Rock.cs" />
-    <Compile Include="Engine\Audio\AudioSource.cs" />
     <Compile Include="Entities\Bird.cs" />
     <Compile Include="Engine\Collisions\BoxCollider.cs" />
     <Compile Include="Engine\Camera.cs" />

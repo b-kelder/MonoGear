@@ -62,8 +62,7 @@ namespace MonoGear.Entities
             Position = player.Position;
             Visible = true;
             player.Enabled = false;
-            AudioManager.Clear();
-            AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound"), 1);
+            MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound").Play();
         }
 
         public void DisableGameOver()

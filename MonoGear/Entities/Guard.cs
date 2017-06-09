@@ -274,7 +274,7 @@ namespace MonoGear.Entities
                             bullet.Rotation = Rotation;
                             bullet.Rotation = MathExtensions.VectorToAngle(playerPos - Position);
                             MonoGearGame.SpawnLevelEntity(bullet);
-                            AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Gunshot"), 1);
+                            MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Gunshot").Play();
 
                             shootStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
                         }
@@ -337,11 +337,7 @@ namespace MonoGear.Entities
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
                 state = State.Sleeping;
-                var snoreSound = new AudioSource();
-                snoreSound.AddSoundEffect(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/snoreWhistle"), 150);
-                snoreSound.Position = Position;
-                AudioManager.AddAudioSource(snoreSound);
-                snoreSound.Pause();
+                AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/snoreWhistle"), 1, 150, Position);
             }
         }
 
@@ -382,7 +378,7 @@ namespace MonoGear.Entities
 
             if(state != State.Alerted)
             {
-                AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
+                MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound").Play();
             }
 
             state = State.ToAlert;
@@ -424,7 +420,7 @@ namespace MonoGear.Entities
 
             if(state != State.Interested)
             {
-                AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound"), 1);
+                MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound").Play();
             }
 
             state = State.ToInterest;

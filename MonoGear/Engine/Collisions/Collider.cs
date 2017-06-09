@@ -14,16 +14,22 @@ namespace MonoGear.Engine.Collisions
         /// <summary>
         /// Contains all colliders
         /// </summary>
-        private static HashSet<Collider> _colliders = new HashSet<Collider>();
+        private static HashSet<Collider> _colliders;
         /// <summary>
         /// Collider used for raycasting since 
         /// </summary>
-        private static BoxCollider _raycastCollider = new BoxCollider(new Bird(), Vector2.One);  // Just need a WorldEntity that has no collider for this
+        private static BoxCollider _raycastCollider;
 
         public bool Trigger { get; set; }
         public bool Active { get; set; }
         public Vector2 BBSize { get; protected set; }
         public WorldEntity Entity { get; protected set; } 
+
+        static Collider()
+        {
+            _colliders = new HashSet<Collider>();
+            
+        }
 
         public Collider(WorldEntity entity)
         {
@@ -199,9 +205,16 @@ namespace MonoGear.Engine.Collisions
             deltaVec.Normalize();
             deltaVec *= delta;
 
-            _raycastCollider.Active = false;
-            _raycastCollider.Entity.Enabled = false;
+            if(_raycastCollider == null)
+            {
+                _raycastCollider = new BoxCollider(new Bird(), Vector2.One);  // Just need a WorldEntity that has no collider for this
+                _raycastCollider.Active = false;
+                _raycastCollider.Entity.Enabled = false;
+                
+            }
             _raycastCollider.Entity.Position = from;
+
+
 
             float prevDistance = float.MaxValue;
             float distance = Vector2.DistanceSquared(_raycastCollider.Entity.Position, to);

@@ -40,9 +40,6 @@ namespace MonoGear
         public SettingsPage()
         {
             this.InitializeComponent();
-            MasterVolumeSlider.Value = AudioManager.MasterVolume * 100;
-            MusicVolumeSlider.Value = AudioManager.SettingsMusicVolume * 100;
-            EffectVolumeSlider.Value = AudioManager.SettingsEffectsVolume * 100;
             AddDifficultyLevels();
             DifficultyComboBox.SelectedIndex = 0;
         }
@@ -68,17 +65,14 @@ namespace MonoGear
 
         private void MasterVolumeSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            AudioManager.MasterVolume = (float)MasterVolumeSlider.Value / 100;
         }
 
         private void MusicVolumeSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            AudioManager.SettingsMusicVolume = (float)MusicVolumeSlider.Value / 100;
         }
 
         private void EffectVolumeSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            AudioManager.SettingsEffectsVolume = (float)EffectVolumeSlider.Value / 100;
         }
 
         public static DifficultyLevels GetDifficulty()

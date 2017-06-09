@@ -11,7 +11,7 @@ using MonoGear.Engine.Audio;
 
 namespace MonoGear.Entities
 {
-    class Player : WorldEntityAnimated
+    public class Player : WorldEntityAnimated
     {
         private static Texture2D deadSprite;
         public float Speed { get; set; }
@@ -155,25 +155,25 @@ namespace MonoGear.Entities
             if(tilesound != null && tilesound != walkingSound)
             {
                 // stop old sound
-                AudioManager.GlobalAudioStop(walkingSound);
+                walkingSound.Stop();
                 walkingSound = tilesound;
             }
             if(delta.LengthSquared() > 0)
             {
                 Rotation = MathExtensions.VectorToAngle(delta);
                 AnimationRunning = true;
-                AudioManager.GlobalAudioPlay(walkingSound);
+                walkingSound.Play();
             }
             else
             {
                 SneakMode = true;
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
-                AudioManager.GlobalAudioStop(walkingSound);
+                walkingSound.Stop();
             }
 
             if (SneakMode)
-                AudioManager.GlobalAudioStop(walkingSound);
+                walkingSound.Play();
 
             if (ThrowingDelay > 0)
                 ThrowingDelay -= 1;
@@ -188,7 +188,7 @@ namespace MonoGear.Entities
                     dwayneThe.Rotation = Rotation;
                     MonoGearGame.SpawnLevelEntity(dwayneThe);
                     ThrowingDelay = 45;
-                    AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/StoneTrow_sound"), 1);
+                    MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/StoneTrow_sound").Play();
                 }
             }
 
@@ -202,7 +202,7 @@ namespace MonoGear.Entities
                     sleepDart.Rotation = Rotation;
                     MonoGearGame.SpawnLevelEntity(sleepDart);
                     DartCount--;
-                    AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Blowgun"), 1);
+                    MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Blowgun").Play();
                 }    
             }
 

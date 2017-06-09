@@ -52,8 +52,8 @@ namespace MonoGear.Entities
                 {
                     var guard = collider.Entity as Guard;
                     guard.Sleep();
-                    AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/DartHit"), 1);
-                    AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/HurtSound"), 1);
+                    MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/DartHit").Play();
+                    MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/HurtSound").Play();
                 }
 
                 Enabled = false;

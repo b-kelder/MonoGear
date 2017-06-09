@@ -11,9 +11,9 @@ namespace MonoGear.Entities
     class Bird : WorldEntityAnimated
     {
         float speed;
-        private AudioSource birdSound;
 
         public float YResetValue { get; set; }
+        PositionalAudio birdSound;
 
         public Bird()
         {
@@ -33,12 +33,6 @@ namespace MonoGear.Entities
             Z = 100;
 
             LoadContent();
-
-            birdSound = new AudioSource();
-            birdSound.AddSoundEffect(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 210);
-            birdSound.Position = Position;
-            AudioManager.AddAudioSource(birdSound);
-            birdSound.Pause();    
         }
 
         /// <summary>
@@ -47,8 +41,7 @@ namespace MonoGear.Entities
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
-            // Play the sound
-            birdSound.PlayAll();
+            birdSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 1, 210, Position);
         }
 
         /// <summary>
@@ -57,8 +50,6 @@ namespace MonoGear.Entities
         public override void OnLevelUnloaded()
         {
             base.OnLevelUnloaded();
-            // Pause the sound
-            birdSound.Pause();
         }
 
         /// <summary>

@@ -86,7 +86,7 @@ namespace MonoGear.Entities
             if (input.IsButtonPressed(Input.Button.Interact) && inRange)
             {
                 hackingProgress += progressPerClick;
-                AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Hacking_sound"), 1);
+                MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Hacking_sound").Play();
             }
             if (hackingProgress >= 100)
             {
