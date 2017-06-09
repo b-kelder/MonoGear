@@ -1387,7 +1387,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Triggers">
-  <object id="2" name="Level trigger" type="trigger" x="400" y="832" width="16" height="16">
+  <object id="2" name="Level trigger" type="trigger" x="401" y="832" width="16" height="16">
    <properties>
     <property name="action" value="nextlevel"/>
    </properties>
