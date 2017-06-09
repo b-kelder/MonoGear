@@ -59,7 +59,7 @@ namespace MonoGear.Entities
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
-            carSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 1, 500, Position);
+            carSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 1, 500, Position, true);
         }
 
         public override void OnLevelUnloaded()

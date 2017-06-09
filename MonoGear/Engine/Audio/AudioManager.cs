@@ -11,13 +11,14 @@ namespace MonoGear.Engine.Audio
     {
         static List<PositionalAudio> positionalAudio = new List<PositionalAudio>();
 
-        public static PositionalAudio AddPositionalAudio(SoundEffect soundEffect, float volume, float range, Vector2 position)
+        public static PositionalAudio AddPositionalAudio(SoundEffect soundEffect, float volume, float range, Vector2 position, bool loop)
         {
             PositionalAudio posAudio = new PositionalAudio();
             posAudio.SoundEffect = soundEffect.CreateInstance();
             posAudio.Volume = volume;
             posAudio.Range = range;
             posAudio.Position = position;
+            posAudio.SoundEffect.IsLooped = loop;
             return posAudio;
         }
 
@@ -54,5 +55,6 @@ namespace MonoGear.Engine.Audio
         public float Volume { get; set; }
         public float Range { get; set; }
         public Vector2 Position { get; set; }
+        public bool Loop { get; set; }
     }
 }

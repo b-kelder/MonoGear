@@ -396,7 +396,7 @@ namespace MonoGear.Engine
                                 volume = "1";
                             if (willWork)
                             {
-                                AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>(audio), float.Parse(volume), float.Parse(range), new Vector2((float)obj.X, (float)obj.Y));
+                                AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>(audio), float.Parse(volume), float.Parse(range), new Vector2((float)obj.X, (float)obj.Y), true);
                             }
                         }
                         else if (obj.Type == "backgroundmusic")

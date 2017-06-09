@@ -337,7 +337,7 @@ namespace MonoGear.Entities
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
                 state = State.Sleeping;
-                AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/snoreWhistle"), 1, 150, Position);
+                AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/snoreWhistle"), 1, 150, Position,true );
             }
         }
 
@@ -396,7 +396,7 @@ namespace MonoGear.Entities
                     int number = rand.Next(0, 9);
                     if (number == 0)
                     {
-                        AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Get_over_here"), 1);
+                        MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Get_over_here").Play();
                     }
                 });
             });
