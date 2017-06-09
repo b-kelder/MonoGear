@@ -249,8 +249,9 @@ namespace MonoGear.Engine
                 var paths = new Dictionary<string, List<Vector2>>();
                 var consoles = new Dictionary<string, PC>();
                 var cameraConsole = new Dictionary<CCTV, string>();
+                var objectives = new Dictionary<string, Objective>();
 
-                foreach(var objectGroup in groups)
+                foreach (var objectGroup in groups)
                 {
                     foreach(var obj in objectGroup.Objects)
                     {
@@ -287,6 +288,16 @@ namespace MonoGear.Engine
                         {
                             entity = new Bird() { YResetValue = level.Height * level.TileHeight + 200 };
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                        }
+                        else if (obj.Type == "objective")
+                        {
+                            string description;
+
+                            if (obj.Properties.TryGetValue("description", out description))
+                            {
+                                entity = new Objective(description);
+                                objectives.Add(obj.Name, entity as Objective);
+                            }
                         }
                         else if(obj.Type == "cctv")
                         {
