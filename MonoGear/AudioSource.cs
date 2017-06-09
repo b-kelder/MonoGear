@@ -84,6 +84,17 @@ namespace MonoGear
         }
 
         /// <summary>
+        /// Method that stops all sound effects that are a part of this audio source.
+        /// </summary>
+        public void Stop()
+        {
+            foreach (var soundEffect in soundEffects)
+            {
+                soundEffect.Key.Stop();
+            }
+        }
+
+        /// <summary>
         /// Method that plays all sound effects that are a part of this audio source.
         /// </summary>
         public void PlayAll()

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGear
 {
@@ -80,6 +81,7 @@ namespace MonoGear
             if (input.IsButtonPressed(Input.Button.Interact) && inRange)
             {
                 hackingProgress += progressPerClick;
+                AudioManager.PlayOnce(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Hacking_sound"), 1);
             }
             if (hackingProgress >= 100)
             {

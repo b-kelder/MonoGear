@@ -446,7 +446,6 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Dead.png
 
-
 #begin Levels/Tilesets/Inside.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -507,5 +506,9 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Pc.png
 
-
+#begin Audio/AudioFX/Hacking_sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Hacking_sound.wav
 
