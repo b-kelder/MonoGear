@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using MonoGear.Engine;
+using MonoGear.Engine.Audio;
 
 
 namespace MonoGear.Entities
