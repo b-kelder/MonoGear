@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="71">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="72">
  <tileset firstgid="1" name="Tiles" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="tilesets/WhiteHouse.png" width="272" height="272"/>
   <tile id="0">
@@ -4902,7 +4902,7 @@
     <property name="objective" value="Objective1"/>
    </properties>
   </object>
-  <object id="66" name="Trigger Level" type="trigger" x="2337.83" y="1755.67" width="52.3333" height="13.667">
+  <object id="66" name="Trigger Level" type="trigger" x="2324.83" y="1759.67" width="52.3333" height="13.667">
    <properties>
     <property name="action" value="nextlevel"/>
    </properties>
@@ -4931,5 +4931,6 @@
     <property name="index" value="3"/>
    </properties>
   </object>
+  <object id="71" name="Roflcopter" type="roflcopter" x="2347.5" y="2099.83" width="8.66663" height="7.667"/>
  </objectgroup>
 </map>

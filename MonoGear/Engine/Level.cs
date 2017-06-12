@@ -309,6 +309,11 @@ namespace MonoGear.Engine
                             entity = new Bird() { YResetValue = level.Height * level.TileHeight + 200 };
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
                         }
+                        else if (obj.Type == "roflcopter")
+                        {
+                            entity = new ApacheRoflCopter();
+                            entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                        }
                         else if (obj.Type == "objective")
                         {
                             string description;
