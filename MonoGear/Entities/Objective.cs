@@ -9,16 +9,19 @@ namespace MonoGear.Entities
 {
     public class Objective : WorldEntity
     {
-        string Description;
+        public int index { get; set; }
 
-        public Objective(string description)
+        string description;
+
+        public Objective(string description, int index)
         {
-            Description = description;
+            this.description = description;
+            this.index = index;
         }
 
         public override string ToString()
         {
-            return Description;
+            return description;
         }
     }
 }

@@ -312,11 +312,29 @@ namespace MonoGear.Engine
                         else if (obj.Type == "objective")
                         {
                             string description;
+                            string index;
 
                             if (obj.Properties.TryGetValue("description", out description))
                             {
-                                entity = new Objective(description);
-                                objectives.Add(obj.Name, entity as Objective);
+                                if (obj.Properties.TryGetValue("index", out index))
+                                {
+                                    int ind = Int32.Parse(index);
+                                    bool newIndex = true;
+
+                                    foreach (var item in objectives)
+                                    {
+                                        if (item.Value.index == ind)
+                                        {
+                                            newIndex = false;
+                                        }
+                                    }
+                                    if (newIndex)
+                                    {
+                                        entity = new Objective(description, ind);
+                                        objectives.Add(obj.Name, entity as Objective);
+                                    }
+                                }
+                                
                             }
                         }
                         else if (obj.Type == "cctv")

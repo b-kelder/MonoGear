@@ -12,8 +12,16 @@ namespace MonoGear.Entities
 {
     public class GameUI : WorldEntity
     {
-        Player player;
+        private Player player;
+        private bool showAllObjective;
+
         static List<Objective> objectives = new List<Objective>();
+
+        public GameUI()
+        {
+            showAllObjective = false;
+            objectivesCompleted = 0;
+        }
 
         public override void OnLevelLoaded()
         {
@@ -21,11 +29,22 @@ namespace MonoGear.Entities
 
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
             objectives.AddRange(MonoGearGame.FindEntitiesOfType<Objective>());
+            objectives.Sort((a, b) => a.index.CompareTo(b.index));
         }
 
         public static void CompleteObjective(Objective obj)
         {
             objectives.Remove(obj);
+        }
+
+        public override void Update(Input input, GameTime gameTime)
+        {
+            base.Update(input, gameTime);
+
+            if (input.IsButtonDown(Input.Button.Interact))
+                showAllObjective = true;
+            else
+                showAllObjective = false;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -71,18 +90,24 @@ namespace MonoGear.Entities
 
             if (objectives.Count > 0)
             {
-                float top = rect.Top + 20;
                 spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Objective:", new Vector2(rect.Left + 16, rect.Top + 10), Color.LightGray);
-                foreach (var objective in objectives)
-                {
-                    spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), objective.ToString(), new Vector2(rect.Left + 16, top), Color.LightGray);
-                    top += 10;
-                }
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), objectives[0].ToString(), new Vector2(rect.Left + 16, rect.Top + 21), Color.LightGray);
             }
             else
             {
                 spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "No objective", new Vector2(rect.Left + 16, rect.Top + 16), Color.LightGray);
             }
+
+            if (showAllObjective)
+            {
+                float top = rect.Top + 32;
+                for (int i = 1; i < objectives.Count; i++)
+                {
+                    spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), objectives[i].ToString(), new Vector2(rect.Left + 16, top), Color.LightGray);
+                    top += 11;
+                }
+            }
+            
             #endregion
         }
     }
