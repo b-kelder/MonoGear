@@ -34,7 +34,7 @@ namespace MonoGear.Entities
             ToInterest,         // Pathfinding to interest location
             Searching,          // Waiting
             Pursuit,            // Following the player
-            Sleeping,
+            Sleeping,           // Sleeping
         }
 
         public float WalkSpeed { get; set; }
@@ -237,18 +237,6 @@ namespace MonoGear.Entities
                 }
             }
 
-            /*if (state != State.Alerted && state != State.ToAlert)
-            {
-                if (CanHear(out playerPos))
-                {
-                    Interest(playerPos);
-                }
-                else if (CanSee(out playerPos))
-                {
-                    Alert(playerPos);
-                }
-            }*/
-
             // We can hear the player but not see him
             if(!CanSee(out playerPos) && CanHear(out playerPos))
             {
@@ -258,6 +246,9 @@ namespace MonoGear.Entities
             if(CanSee(out playerPos))
             {
                 // We can see the player
+                AnimationRunning = false;
+                RunSpeed = 0;
+                WalkSpeed = 0;
                 if (SettingsPage.GetDifficulty().Equals(DifficultyLevels.JamesBond))
                 {
                     player.Health -= 50;
@@ -283,8 +274,17 @@ namespace MonoGear.Entities
             }
             else if(state == State.Pursuit)
             {
+                AnimationRunning = true;
+                WalkSpeed = 35.0f;
+                RunSpeed = 90.0f;
                 // Can't see player anymore, but we just followed him so go looking for him
                 Alert(playerPos);
+            }
+            else
+            {
+                AnimationRunning = true;
+                WalkSpeed = 35.0f;
+                RunSpeed = 90.0f;
             }
         }
 

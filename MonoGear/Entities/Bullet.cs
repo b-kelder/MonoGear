@@ -15,14 +15,14 @@ namespace MonoGear.Entities
 
         public Bullet(Collider originCollider)
         {
-            CircleCollider collider = new CircleCollider(this, 2);
+            CircleCollider collider = new CircleCollider(this, 1);
             collider.Trigger = true;
 
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Random rand = new Random();
             speed = 350f;
             TextureAssetName = "Sprites/Bullet";
-            Tag = ".45 ACP";
+            Tag = ".50 HEIAP";
             LoadContent();
 
             this.originCollider = originCollider;

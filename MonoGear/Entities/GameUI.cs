@@ -20,7 +20,8 @@ namespace MonoGear.Entities
         public GameUI()
         {
             showAllObjective = false;
-            objectivesCompleted = 0;
+
+            Z = Int32.MaxValue;
         }
 
         public override void OnLevelLoaded()
@@ -41,10 +42,8 @@ namespace MonoGear.Entities
         {
             base.Update(input, gameTime);
 
-            if (input.IsButtonDown(Input.Button.Interact))
-                showAllObjective = true;
-            else
-                showAllObjective = false;
+            if (input.IsButtonPressed(Input.Button.Interact))
+                showAllObjective = !showAllObjective;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
