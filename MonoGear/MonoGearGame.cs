@@ -125,7 +125,7 @@ namespace MonoGear
             var runSpeed = 90.0f;
             var walkSpeed = 35.0f;
 
-            var dif = SettingsPage.GetDifficulty();
+            var dif = SettingsPage.Difficulty;
             if (dif.Equals(DifficultyLevels.Intern))
             {
                 player.DartCount = 5;

@@ -74,6 +74,9 @@ namespace MonoGear.Entities
             walkingSoundGrass = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
             walkingSoundWater = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Water_Drop_Sound").CreateInstance();
             walkingSoundStone = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Concrete").CreateInstance();
+            walkingSoundGrass.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+            walkingSoundWater.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+            walkingSoundStone.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
 
             walkingSound = walkingSoundGrass;
 
@@ -188,7 +191,9 @@ namespace MonoGear.Entities
                     dwayneThe.Rotation = Rotation;
                     MonoGearGame.SpawnLevelEntity(dwayneThe);
                     ThrowingDelay = 45;
-                    MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/StoneTrow_sound").Play();
+                    var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/StoneTrow_sound").CreateInstance();
+                    sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                    sound.Play();
                 }
             }
 
@@ -202,7 +207,9 @@ namespace MonoGear.Entities
                     sleepDart.Rotation = Rotation;
                     MonoGearGame.SpawnLevelEntity(sleepDart);
                     DartCount--;
-                    MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Blowgun").Play();
+                    var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Blowgun").CreateInstance();
+                    sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                    sound.Play();
                 }    
             }
 

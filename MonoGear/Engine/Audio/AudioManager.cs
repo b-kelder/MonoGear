@@ -37,7 +37,7 @@ namespace MonoGear.Engine.Audio
         {
             PositionalAudio posAudio = new PositionalAudio();
             posAudio.SoundEffect = soundEffect.CreateInstance();
-            posAudio.Volume = volume;
+            posAudio.Volume = volume * SettingsPage.Volume * SettingsPage.EffectVolume;
             posAudio.Range = range;
             posAudio.Position = position;
             posAudio.SoundEffect.IsLooped = loop;

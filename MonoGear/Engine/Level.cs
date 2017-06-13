@@ -392,7 +392,7 @@ namespace MonoGear.Engine
                             {
                                 var soundEffect = MonoGearGame.GetResource<SoundEffect>(audio).CreateInstance();
                                 soundEffect.IsLooped = (loop == "true");
-                                soundEffect.Volume = float.Parse(volume);
+                                soundEffect.Volume = float.Parse(volume) * SettingsPage.Volume * SettingsPage.EffectVolume;
                                 AudioManager.PlayGlobal(soundEffect);
                             }
                         }
@@ -419,6 +419,7 @@ namespace MonoGear.Engine
 
                             if (!obj.Properties.TryGetValue("source", out audio))
                             {
+                                MediaPlayer.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
                                 MediaPlayer.Play(MonoGearGame.GetResource<Song>(audio));
                             }
                         }
