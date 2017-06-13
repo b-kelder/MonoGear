@@ -104,6 +104,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Engine\Audio\AudioManager.cs" />
+    <Compile Include="Entities\Willys.cs" />
     <Compile Include="Entities\ApacheRoflCopter.cs" />
     <Compile Include="Entities\Objective.cs" />
     <Compile Include="Entities\Bullet.cs" />

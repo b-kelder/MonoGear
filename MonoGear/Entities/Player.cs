@@ -47,6 +47,7 @@ namespace MonoGear.Entities
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Speed = 100.0f;
 
+            Z = 2;
 
             TextureAssetName = "Sprites/Person";
             
@@ -79,8 +80,6 @@ namespace MonoGear.Entities
             walkingSoundStone.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
 
             walkingSound = walkingSoundGrass;
-
-
         }
 
         public override void OnLevelLoaded()
