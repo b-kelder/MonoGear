@@ -10,7 +10,10 @@ namespace MonoGear.Entities
         float Speed { get; set; }
         Collider originCollider;
 
-
+        /// <summary>
+        /// Constructor of the bullet class. Creates an instance of a bullet.
+        /// </summary>
+        /// <param name="originCollider">The bullet's origin collider</param>
         public Bullet(Collider originCollider)
         {
             CircleCollider collider = new CircleCollider(this, 1);

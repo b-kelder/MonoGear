@@ -86,23 +86,37 @@ namespace MonoGear.Entities
             }
         }
 
+        /// <summary>
+        /// Draws a fan-shaped area that indicates the range of the CCTV camera.
+        /// </summary>
+        /// <param name="spriteBatch">The SpriteBatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
 
+            // Check if the CCTV camera is hacked
             if(!hacked)
             {
                 Guard.DrawFOVDebug(spriteBatch, Position, Rotation, player.Position, SightRange, new Color(0, 100, 0, 10));
             }
         }
 
+        /// <summary>
+        /// Method that sets the CCTV camera to hacked.
+        /// </summary>
         public void Hack()
         {
             hacked = true;
         }
 
+        /// <summary>
+        /// Method that checks if the CCTV camera can see the player.
+        /// </summary>
+        /// <param name="entityPos">Position</param>
+        /// <returns>True if the CCTV camera sees the player, false if not</returns>
         private bool CanSee(out Vector2 entityPos)
         {
+            // The distance to the player
             var dis = Vector2.Distance(Position, player.Position);
 
             //Check if player is within view range
@@ -115,6 +129,7 @@ namespace MonoGear.Entities
                     //Check to see if nothing blocks view of the player
                     Collider hit;
                     bool tilemap;
+                    // Check if the player is in the CCTV camera area
                     if (Collider.RaycastAny(Position, player.Position, out hit, out tilemap, Tag))
                     {
                         if (hit != null && hit.Entity.Tag.Equals("Player"))
