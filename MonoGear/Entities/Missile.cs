@@ -44,6 +44,7 @@ namespace MonoGear.Entities
                 speed = 0.0f;
 
                 MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
+                MonoGearGame.DestroyEntity(this);
             }
         }
     }

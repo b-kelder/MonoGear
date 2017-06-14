@@ -23,8 +23,7 @@ namespace MonoGear.Entities
             collider.Trigger = true;
 
             // Speed in units/sec. Right now 1 unit = 1 pixel
-            Random rand = new Random();
-            speed = 250f + rand.Next(-20, 20);
+            speed = 250f;
             TextureAssetName = "Sprites/SleepDart";
             Tag = "SleepDart";
             LoadContent();
@@ -58,15 +57,11 @@ namespace MonoGear.Entities
                     MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/HurtSound").CreateInstance();
                     sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
                     sound.Play();
+                    MonoGearGame.DestroyEntity(this);
                 }
 
                 Enabled = false;
             }
-
-            //if (speed > 0)
-            //    speed -= 3;
-            //else
-            //    speed = 0;
         }
     }
 }
