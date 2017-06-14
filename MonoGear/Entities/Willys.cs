@@ -21,8 +21,10 @@ namespace MonoGear.Entities
         private PositionalAudio willysSound;
         public float Speed { get; set; }
         private bool on;
+        private bool destroyed;
         private Player player;
         private Texture2D playerSprite;
+        private Texture2D destroyedSprite;
 
         public Willys()
         {
@@ -30,6 +32,7 @@ namespace MonoGear.Entities
             Tag = "Willys jeep";
             Speed = 230;
             on = false;
+            destroyed = false;
 
             Z = 1;
 
@@ -47,6 +50,7 @@ namespace MonoGear.Entities
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
             willysSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter Sound Effect"), 0, 300, Position, true);
             playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer");
+            destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -55,6 +59,10 @@ namespace MonoGear.Entities
             if (on)
             {
                 spriteBatch.Draw(playerSprite, Position, playerSprite.Bounds, Color.White, Rotation, new Vector2(playerSprite.Bounds.Size.X, playerSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+            }
+            if(destroyed)
+            {
+                spriteBatch.Draw(destroyedSprite, Position, destroyedSprite.Bounds, Color.White, Rotation, new Vector2(destroyedSprite.Bounds.Size.X, destroyedSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
         }
 
@@ -118,6 +126,7 @@ namespace MonoGear.Entities
                         Enabled = false;
                         player.Visible = true;
                         player.Health -= 100;
+                        destroyed = true;
                     }
                     prevPos = Position;
                     Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -128,6 +137,7 @@ namespace MonoGear.Entities
                         Enabled = false;
                         player.Visible = true;
                         player.Health -= 100;
+                        destroyed = true;
                     }
 
                     player.Position = Position;
