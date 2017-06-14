@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using MonoGear.Engine;
-using MonoGear.Engine.Audio;
 
 namespace MonoGear.Entities
 {
@@ -10,6 +9,9 @@ namespace MonoGear.Entities
     /// </summary>
     class Explosion : WorldEntityAnimated
     {
+        /// <summary>
+        /// Constructor of the explosion class. Creates an instance of an explosion.
+        /// </summary>
         public Explosion()
         {
             // Bird texture
@@ -31,10 +33,16 @@ namespace MonoGear.Entities
             LoadContent();
         }
 
+        /// <summary>
+        /// Method that updates the game
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
 
+            // Check if the animation is at its last frame
             if (AnimationCurrentFrame == 14)
             {
                 Visible = false;

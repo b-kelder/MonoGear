@@ -15,6 +15,9 @@ namespace MonoGear.Entities
         public float YResetValue { get; set; }
         PositionalAudio birdSound;
 
+        /// <summary>
+        /// Constructor of the bird class. Creates an instance of a bird.
+        /// </summary>
         public Bird()
         {
             // Speed in units/sec. Right now 1 unit = 1 pixel
