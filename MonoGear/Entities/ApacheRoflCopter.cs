@@ -84,7 +84,7 @@ namespace MonoGear.Entities
             if (delay > 0)
                 delay -= 1;
 
-            if (delay <=0)
+            if (delay <=0 && input.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
             {
                 var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
                 missile.Rotation = Rotation;
