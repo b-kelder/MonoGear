@@ -1,16 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Microsoft.Xna.Framework.Audio;
 using MonoGear.Engine;
-using MonoGear.Engine.Audio;
+
 
 
 namespace MonoGear.Entities
@@ -21,6 +14,9 @@ namespace MonoGear.Entities
         private Player player;
         private Texture2D gameOverSprite;
 
+        /// <summary>
+        /// Constructor of the game over class. Creates a game over screen.
+        /// </summary>
         public GameOver()
         {
             TextureAssetName = "Sprites/blank";
@@ -33,6 +29,9 @@ namespace MonoGear.Entities
             LoadContent();
         }
 
+        /// <summary>
+        /// Method that loads the content.
+        /// </summary>
         protected override void LoadContent()
         {
             base.LoadContent();
@@ -43,11 +42,15 @@ namespace MonoGear.Entities
             }
         }
 
+        /// <summary>
+        /// Method that draws the game over screen.
+        /// </summary>
+        /// <param name="spriteBatch">The SpriteBatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            
-
             base.Draw(spriteBatch);
+
+            // Check if the game is over
             if (gameOver)
             {
                 var clipRect = Camera.main.GetClippingRect();
@@ -76,14 +79,22 @@ namespace MonoGear.Entities
 
         }
 
+        /// <summary>
+        /// Method that updates the game
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
 
+            // Check if the game is over
             if (gameOver)
             {
+                // Check if space is pressed
                 if(input.IsKeyPressed(Keys.Space))
                 {
+                    // Restart the game
                     MonoGearGame.Restart();
                     DisableGameOver();
                 }

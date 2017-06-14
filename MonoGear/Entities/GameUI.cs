@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 using MonoGear.Engine;
 
 namespace MonoGear.Entities
@@ -21,9 +17,12 @@ namespace MonoGear.Entities
         {
             showAllObjective = false;
 
-            Z = Int32.MaxValue;
+            Z = int.MaxValue;
         }
 
+        /// <summary>
+        /// Method that executes when the level is loaded.
+        /// </summary>
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
@@ -34,19 +33,35 @@ namespace MonoGear.Entities
             objectives.Sort((a, b) => a.index.CompareTo(b.index));
         }
 
+        /// <summary>
+        /// Method that completes an objective
+        /// </summary>
+        /// <param name="obj">The completed objective</param>
         public static void CompleteObjective(Objective obj)
         {
+            // Remove the objectives from the list of objectives
             objectives.Remove(obj);
         }
 
+        /// <summary>
+        /// Method that updates the game
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
 
             if (input.IsButtonPressed(Input.Button.Interact))
+            {
                 showAllObjective = !showAllObjective;
+            }
         }
 
+        /// <summary>
+        /// Draws the UI.
+        /// </summary>
+        /// <param name="spriteBatch">The SpriteBatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             var rect = Camera.main.GetClippingRect();
@@ -60,10 +75,13 @@ namespace MonoGear.Entities
             for (int j = 0; j < rows; j++)
             {
                 if (healthToDraw < 5)
+                {
                     h = healthToDraw;
+                }
 
                 for (int i = 0; i < h; i++)
                 {
+                    // Draw a heart
                     spriteBatch.Draw(MonoGearGame.GetResource<Texture2D>("Sprites/Heart"), new Vector2(pos, rect.Bottom - (50 + (j * 18))), Color.White);
                     pos += 15;
                 }
@@ -71,11 +89,13 @@ namespace MonoGear.Entities
                 healthToDraw -= 5;
             }
 
+            // Check if the player has six or less darts.
             if (player.DartCount <= 6)
             {
                 pos = rect.Right - 100;
                 for (int i = 0; i < player.DartCount; i++)
                 {
+                    // Draw a dart
                     spriteBatch.Draw(MonoGearGame.GetResource<Texture2D>("Sprites/SleepDart"), new Vector2(pos, rect.Bottom - 32), Color.White);
                     pos += 15;
                 }
@@ -88,8 +108,10 @@ namespace MonoGear.Entities
 
             #region Draw Objective
 
+            // Check if there are any objectives
             if (objectives.Count > 0)
             {
+                // Draw a string with the objective text
                 spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Objective:", new Vector2(rect.Left + 16, rect.Top + 10), Color.LightGray);
                 spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), objectives[0].ToString(), new Vector2(rect.Left + 16, rect.Top + 21), Color.LightGray);
             }
