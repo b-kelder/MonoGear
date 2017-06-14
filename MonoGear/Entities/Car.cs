@@ -20,7 +20,7 @@ namespace MonoGear.Entities
         private PositionalAudio carSound;
 
         /// <summary>
-        /// Constructor of the car class. Creates an instance of a car at a given position
+        /// Constructor of the car class. Creates an instance of a car at a given position.
         /// </summary>
         /// <param name="position">The position of the car</param>
         /// <param name="currentPath">The path the car should follow</param>

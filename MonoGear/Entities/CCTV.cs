@@ -12,12 +12,18 @@ namespace MonoGear.Entities
 {
     class CCTV : WorldEntityAnimated
     {
+        /// <summary>
+        /// Sight range of the CCTV camera
+        /// </summary>
         public int SightRange { get; set; }
         public int SightFOV { get; set; }
 
         private bool hacked;
         private Player player;
 
+        /// <summary>
+        /// Constructor of the car class. Creates an instance of a CCTV camera.
+        /// </summary>
         public CCTV()
         {
             TextureAssetName = "Sprites/CameraOn";
@@ -37,22 +43,32 @@ namespace MonoGear.Entities
             LoadContent();
         }
 
+        /// <summary>
+        /// Method that executes when the level is loaded.
+        /// </summary>
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
         }
 
+        /// <summary>
+        /// Method that updates the game
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
-
+            // Check if the camera is not hacked
             if (!hacked)
             {
                 var pos = new Vector2();
+                // Check if the CCTV camera can see the player
                 if (CanSee(out pos))
                 {
                     var guards = MonoGearGame.FindEntitiesWithTag("Guard");
+                    // Alert all guards in the vicinity
                     foreach (var g in guards)
                     {
                         var guard = g as Guard;
@@ -65,6 +81,7 @@ namespace MonoGear.Entities
             }
             else
             {
+                // Disable the CCTV camera if it's hacked
                 Enabled = false;
             }
         }
