@@ -45,8 +45,7 @@ namespace MonoGear.Entities
             // Check if the animation is at its last frame
             if (AnimationCurrentFrame == 14)
             {
-                Visible = false;
-                Enabled = false;
+                MonoGearGame.DestroyEntity(this);
             }
         }
     }

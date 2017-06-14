@@ -82,7 +82,7 @@ namespace MonoGear.Entities
                 {
                     on = false;
                     player.Visible = true;
-                    player.Position = Position + new Vector2(0, -30);
+                    player.Position = Position + Right * -30;
                 }
                 else
                 {

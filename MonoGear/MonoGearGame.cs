@@ -71,6 +71,8 @@ namespace MonoGear
         Queue<WorldEntity> spawnQueueLocal;
         Queue<WorldEntity> spawnQueueGlobal;
 
+        Queue<WorldEntity> destroyQueue;
+                           
         public MonoGearGame()
         {
             // Required for static entity/level related methods
@@ -199,6 +201,8 @@ namespace MonoGear
             spawnQueueGlobal = new Queue<WorldEntity>();
             spawnQueueLocal = new Queue<WorldEntity>();
 
+            destroyQueue= new Queue<WorldEntity>();
+
             activeCamera = new Camera(graphics.GraphicsDevice.Viewport);
 
             var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
@@ -273,6 +277,16 @@ namespace MonoGear
             }
 
             input.Update();
+
+            // Destroy entities
+            while(destroyQueue.Count > 0)
+            {
+                var entity = destroyQueue.Dequeue();
+                entity.OnLevelUnloaded();
+
+                globalEntities.Remove(entity);
+                levelEntities.Remove(entity);
+            }
 
             // Register newly spawned entities
             while(spawnQueueGlobal.Count > 0)
@@ -351,6 +365,11 @@ namespace MonoGear
         public static void SpawnGlobalEntity(WorldEntity entity)
         {
             instance.spawnQueueGlobal.Enqueue(entity);
+        }
+
+        public static void DestroyEntity(WorldEntity entity)
+        {
+            instance.destroyQueue.Enqueue(entity);
         }
 
         // Static entity stuff
@@ -464,7 +483,7 @@ namespace MonoGear
                 }
 
                 spawnQueueLocal.Clear();            // Clear local spawn queue to prevent them from appearing in the new level
-
+                
                 UpdateDifficulty();
 
                 // Force GC
