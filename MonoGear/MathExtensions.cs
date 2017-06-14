@@ -1,19 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonoGear
 {
     public static class MathExtensions
     {
+        /// <summary>
+        /// Method that calculates the square of a value.
+        /// </summary>
+        /// <param name="val">The value</param>
+        /// <returns>The square of the value</returns>
         public static float Square(float val)
         {
             return val * val;
         }
 
+        /// <summary>
+        /// Method that converts an angle to a vector.
+        /// </summary>
+        /// <param name="angle">The angle that need to be converted</param>
+        /// <returns>The angle converted to a vector</returns>
         public static Vector2 AngleToVector(float angle)
         {
             var v = new Vector2((float)Math.Sin(angle), -(float)Math.Cos(angle));
@@ -21,11 +27,22 @@ namespace MonoGear
             return v;
         }
 
+        /// <summary>
+        /// Method that converts a vector to an angle
+        /// </summary>
+        /// <param name="vector">The vector that needs to be converted</param>
+        /// <returns>The vector converted to an angle</returns>
         public static float VectorToAngle(Vector2 vector)
         {
             return (float)Math.Atan2(vector.X, -vector.Y);
         }
 
+        /// <summary>
+        /// Method that calculates the angle between two vectors
+        /// </summary>
+        /// <param name="a">First vector</param>
+        /// <param name="b">Second vector</param>
+        /// <returns>The angle between the two vectores</returns>
         public static float AngleBetween(Vector2 a, Vector2 b)
         {
             return (float)Math.Atan2(b.Y - a.Y, b.X - a.X);
