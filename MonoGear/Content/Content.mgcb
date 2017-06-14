@@ -591,3 +591,9 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/boem.png
 
+#begin Audio/AudioFX/Explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Explosion.wav
+

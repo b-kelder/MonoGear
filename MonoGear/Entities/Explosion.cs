@@ -24,6 +24,9 @@ namespace MonoGear.Entities
             Tag = "BOEM!";
 
             Z = 100;
+            var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Explosion").CreateInstance();
+            sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+            sound.Play();
 
             LoadContent();
         }
