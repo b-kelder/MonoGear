@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
+using System.Diagnostics;
 
 namespace MonoGear.Entities
 {
@@ -119,11 +120,11 @@ namespace MonoGear.Entities
                         {
                             if(input.IsButtonDown(Input.Button.Left))
                             {
-                                Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(forwardSpeed / Speed);
+                                Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
                             }
                             if(input.IsButtonDown(Input.Button.Right))
                             {
-                                Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(forwardSpeed / Speed);
+                                Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
                             }
                         }
 
