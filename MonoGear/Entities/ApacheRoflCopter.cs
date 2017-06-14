@@ -21,6 +21,8 @@ namespace MonoGear.Entities
         private Texture2D props;
         private int rot = 0;
         private PositionalAudio heliSound;
+        private float delay;
+        private int barrelNr;
 
         public ApacheRoflCopter()
         {
@@ -29,6 +31,9 @@ namespace MonoGear.Entities
             Tag = "I SEXUALY IDENTIFY AS AN APACHE HELICOPTER";
 
             Z = 100;
+
+            delay = 0;
+            barrelNr = 0;
 
             Rotation = MathHelper.ToRadians(90);
 
@@ -76,12 +81,27 @@ namespace MonoGear.Entities
 
             heliSound.Position = Position;
 
-            if (input.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
+            var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
+            missile.Rotation = Rotation;
+
+            Vector2 vec = new Vector2(18, 0);
+            if (barrelNr == 0)
+                vec.Y = 24;
+            if (barrelNr == 1)
+                vec.Y = -24;
+            if (barrelNr == 2)
+                vec.Y = 18;
+            if (barrelNr == 3)
+                vec.Y = -18;
+
+            missile.Position = Position + vec;
+
+            MonoGearGame.SpawnLevelEntity(missile);
+
+            barrelNr++;
+            if (barrelNr > 3)
             {
-                var sleepDart = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
-                sleepDart.Position = Position;
-                sleepDart.Rotation = Rotation;
-                MonoGearGame.SpawnLevelEntity(sleepDart);
+                barrelNr = 0;
             }
         }
     }

@@ -9,9 +9,14 @@ namespace MonoGear.Entities
     /// </summary>
     class Explosion : WorldEntityAnimated
     {
+        private float blastRadius;
+        private float maxDamage;
+
         /// <summary>
         /// Constructor of the explosion class. Creates an instance of an explosion.
         /// </summary>
+        /// 
+        private Player player;
         public Explosion()
         {
             // Bird texture
@@ -25,12 +30,22 @@ namespace MonoGear.Entities
 
             Tag = "BOEM!";
 
+            blastRadius = 100;
+            maxDamage = 10;
+
             Z = 100;
             var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Explosion").CreateInstance();
             sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
             sound.Play();
 
             LoadContent();
+        }
+
+        public override void OnLevelLoaded()
+        {
+            base.OnLevelLoaded();
+
+            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
         }
 
         /// <summary>
@@ -45,6 +60,11 @@ namespace MonoGear.Entities
             // Check if the animation is at its last frame
             if (AnimationCurrentFrame == 14)
             {
+                var dis = Vector2.Distance(player.Position, Position);
+                if (dis < blastRadius)
+                {
+                    player.Health -= maxDamage * (dis / blastRadius * 100);
+                }
                 MonoGearGame.DestroyEntity(this);
             }
         }
