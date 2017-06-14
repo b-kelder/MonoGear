@@ -48,7 +48,7 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
-            willysSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter Sound Effect"), 0, 300, Position, true);
+            willysSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 0, 300, Position, true);
             playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer");
             destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
         }
