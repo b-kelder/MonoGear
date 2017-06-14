@@ -59,8 +59,7 @@ namespace MonoGear.Entities
                     // Decrease the player's health by 1
                     player.Health -= 1.0f;
                 }
-                // Disable the bullet
-                Enabled = false;
+                MonoGearGame.DestroyEntity(this);
             }
 
             if (Speed > 0)
@@ -70,6 +69,7 @@ namespace MonoGear.Entities
             else
             {
                 Speed = 0;
+                MonoGearGame.DestroyEntity(this);
             }
         }
     }

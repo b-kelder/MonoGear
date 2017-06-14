@@ -13,7 +13,7 @@ using MonoGear.Engine.Audio;
 namespace MonoGear.Entities
 {
     /// <summary>
-    /// ApacheRoflCopter
+    /// Willys jeep, player controlled vehicle
     /// </summary>
     ///
     class Willys : WorldEntity
@@ -66,6 +66,21 @@ namespace MonoGear.Entities
             }
         }
 
+        public void Enter()
+        {
+            on = true;
+            player.Visible = false;
+            player.Enabled = false;
+        }
+
+        public void Exit()
+        {
+            on = false;
+            player.Visible = true;
+            player.Enabled = true;
+            player.Position = Position + Right * -30;
+        }
+
         /// <summary>
         /// Method that updates the game
         /// </summary>
@@ -80,9 +95,7 @@ namespace MonoGear.Entities
                 willysSound.Volume = 1;
                 if (input.IsButtonPressed(Input.Button.Interact))
                 {
-                    on = false;
-                    player.Visible = true;
-                    player.Position = Position + new Vector2(0, -30);
+                    Exit();
                 }
                 else
                 {
@@ -116,21 +129,22 @@ namespace MonoGear.Entities
 
                     Position += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    Collider ignoreMe;
-                    bool meTooThx;
+                    Collider hitCollider;
+                    bool hitTilemap;
 
-                    if (Collider.CollidesAny(out ignoreMe, out meTooThx, player.Collider))
+                    if (Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
                     {
                         Position = prevPos;
                     }
                     prevPos = Position;
                     Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (Collider.CollidesAny(out ignoreMe, out meTooThx, player.Collider))
+                    if (Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
                     {
                         Position = prevPos;
                     }
 
                     player.Position = Position;
+                    Camera.main.Position = Position;
                 }
             }
             else
@@ -140,22 +154,12 @@ namespace MonoGear.Entities
                 {
                     if (input.IsButtonPressed(Input.Button.Interact))
                     {
-                        on = true;
-                        player.Visible = false;
+                        Enter();
                     }
                 }
             }
 
             willysSound.Position = Position;
-        }
-
-        public void Explode()
-        {
-            MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
-            Enabled = false;
-            player.Visible = true;
-            player.Health -= 100;
-            destroyed = true;
         }
     }
 }

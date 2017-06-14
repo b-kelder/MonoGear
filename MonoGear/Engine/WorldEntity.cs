@@ -30,6 +30,14 @@ namespace MonoGear.Engine
             }
         }
 
+        public Vector2 Right
+        {
+            get
+            {
+                return MathExtensions.AngleToVector(Rotation + MathHelper.PiOver2);
+            }
+        }
+
         public float Rotation { get; set; }
 
         public Collider Collider { get; set; }
