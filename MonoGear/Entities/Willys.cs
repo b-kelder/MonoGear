@@ -113,12 +113,20 @@ namespace MonoGear.Entities
                     if (Collider.CollidesAny(out ignoreMe, out meTooThx, player.Collider))
                     {
                         Position = prevPos;
+                        MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
+                        Enabled = false;
+                        player.Visible = true;
+                        player.Health -= 100;
                     }
                     prevPos = Position;
                     Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (Collider.CollidesAny(out ignoreMe, out meTooThx, player.Collider))
                     {
                         Position = prevPos;
+                        MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
+                        Enabled = false;
+                        player.Visible = true;
+                        player.Health -= 100;
                     }
 
                     player.Position = Position;
