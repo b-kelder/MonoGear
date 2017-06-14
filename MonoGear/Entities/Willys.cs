@@ -26,6 +26,13 @@ namespace MonoGear.Entities
         private Texture2D playerSprite;
         private Texture2D destroyedSprite;
 
+        private float forwardSpeed;
+
+        public float Acceleration { get; set; }
+        public float Braking { get; set; }
+        public float Steering { get; set; }
+        bool stationaryLock;
+
         public Willys()
         {
             TextureAssetName = "Sprites/Willys";
@@ -33,10 +40,15 @@ namespace MonoGear.Entities
             Speed = 230;
             on = false;
             destroyed = false;
+            stationaryLock = false;
 
             Z = 1;
 
-            Collider = new BoxCollider(this, new Vector2(32,48));
+            Acceleration = 80;
+            Braking = 200;
+            Steering = 180;
+
+            Collider = new BoxCollider(this, new Vector2(24,24));
 
             LoadContent();
         }
@@ -75,6 +87,7 @@ namespace MonoGear.Entities
 
         public void Exit()
         {
+            stationaryLock = false;
             on = false;
             player.Visible = true;
             player.Enabled = true;
@@ -99,27 +112,108 @@ namespace MonoGear.Entities
                 }
                 else
                 {
-                    var dx = 0.0f;
-                    var dy = 0.0f;
-                    if (input.IsButtonDown(Input.Button.Left))
-                        dx -= Speed;
-                    if (input.IsButtonDown(Input.Button.Right))
-                        dx += Speed;
-                    if (input.IsButtonDown(Input.Button.Up))
-                        dy -= Speed;
-                    if (input.IsButtonDown(Input.Button.Down))
-                        dy += Speed;
 
-                    var delta = new Vector2(dx, dy);
+                    if(!stationaryLock)
+                    {
+                        if(forwardSpeed != 0)
+                        {
+                            if(input.IsButtonDown(Input.Button.Left))
+                            {
+                                Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(forwardSpeed / Speed);
+                            }
+                            if(input.IsButtonDown(Input.Button.Right))
+                            {
+                                Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(forwardSpeed / Speed);
+                            }
+                        }
+
+                        if(forwardSpeed > 0)
+                        {
+                            var sd = 0.0f;
+                            if(input.IsButtonDown(Input.Button.Up))
+                            {
+                                sd += Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            }
+                            if(input.IsButtonDown(Input.Button.Down))
+                            {
+                                sd -= Braking * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            }
+
+
+                            if(forwardSpeed + sd < 0)
+                            {
+                                stationaryLock = true;
+                                forwardSpeed = 0;
+                            }
+                            else
+                            {
+                                forwardSpeed += sd;
+                            }
+
+                            // Clamp speed
+                            if(forwardSpeed > Speed)
+                            {
+                                forwardSpeed = Speed;
+                            }
+                        }
+                        else if(forwardSpeed < 0)
+                        {
+                            // Reversing
+                            var sd = 0.0f;
+                            if(input.IsButtonDown(Input.Button.Up))
+                            {
+                                sd += Braking * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            }
+                            if(input.IsButtonDown(Input.Button.Down))
+                            {
+                                sd -= Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            }
+
+                            if(forwardSpeed + sd > 0)
+                            {
+                                stationaryLock = true;
+                                forwardSpeed = 0;
+                            }
+                            else
+                            {
+                                forwardSpeed += sd;
+                            }
+
+                            // Clamp speed
+                            if(forwardSpeed < -Speed)
+                            {
+                                forwardSpeed = -Speed;
+                            }
+                        }
+                        else
+                        {
+                            // Standing still
+                            var sd = 0.0f;
+                            if(input.IsButtonDown(Input.Button.Up))
+                            {
+                                sd += Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            }
+                            if(input.IsButtonDown(Input.Button.Down))
+                            {
+                                sd -= Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            }
+
+                            forwardSpeed += sd;
+                        }
+                    }
+                    else
+                    {
+                        if(input.IsButtonReleased(Input.Button.Up) || input.IsButtonReleased(Input.Button.Down))
+                        {
+                            stationaryLock = false;
+                        }
+                    }
+
+                    var delta = Forward * forwardSpeed;
                     if (delta.LengthSquared() > Speed * Speed)
                     {
                         delta.Normalize();
                         delta *= Speed;
-                    }
-
-                    if (delta.LengthSquared() > 0)
-                    {
-                        Rotation = MathExtensions.VectorToAngle(delta);
                     }
 
 
@@ -135,12 +229,14 @@ namespace MonoGear.Entities
                     if (Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
                     {
                         Position = prevPos;
+                        forwardSpeed = 0;
                     }
                     prevPos = Position;
                     Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
                     {
                         Position = prevPos;
+                        forwardSpeed = 0;
                     }
 
                     player.Position = Position;
