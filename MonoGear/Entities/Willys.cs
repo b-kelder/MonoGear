@@ -17,30 +17,20 @@ namespace MonoGear.Entities
     /// Willys jeep, player controlled vehicle
     /// </summary>
     ///
-    class Willys : WorldEntity
+    class Willys : DrivableVehicle
     {
         private PositionalAudio willysSound;
-        public float Speed { get; set; }
-        private bool on;
         private bool destroyed;
-        private Player player;
         private Texture2D playerSprite;
         private Texture2D destroyedSprite;
 
-        private float forwardSpeed;
-
-        public float Acceleration { get; set; }
-        public float Braking { get; set; }
-        public float Steering { get; set; }
-        public float Drag { get; set; }
-        bool stationaryLock;
 
         public Willys()
         {
             TextureAssetName = "Sprites/Willys";
             Tag = "Willys jeep";
             Speed = 230;
-            on = false;
+            entered = false;
             destroyed = false;
             stationaryLock = false;
 
@@ -62,7 +52,6 @@ namespace MonoGear.Entities
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
-            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
             willysSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 0, 300, Position, true);
             playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer");
             destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
@@ -71,7 +60,7 @@ namespace MonoGear.Entities
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            if (on)
+            if (entered)
             {
                 spriteBatch.Draw(playerSprite, Position, playerSprite.Bounds, Color.White, Rotation, new Vector2(playerSprite.Bounds.Size.X, playerSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
@@ -79,22 +68,6 @@ namespace MonoGear.Entities
             {
                 spriteBatch.Draw(destroyedSprite, Position, destroyedSprite.Bounds, Color.White, Rotation, new Vector2(destroyedSprite.Bounds.Size.X, destroyedSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
-        }
-
-        public void Enter()
-        {
-            on = true;
-            player.Visible = false;
-            player.Enabled = false;
-        }
-
-        public void Exit()
-        {
-            stationaryLock = false;
-            on = false;
-            player.Visible = true;
-            player.Enabled = true;
-            player.Position = Position + Right * -30;
         }
 
         /// <summary>
@@ -106,165 +79,13 @@ namespace MonoGear.Entities
         {
             base.Update(input, gameTime);
 
-            if (on)
+            if(entered)
             {
                 willysSound.Volume = 1;
-                if (input.IsButtonPressed(Input.Button.Interact))
-                {
-                    Exit();
-                }
-                else
-                {
-
-                    if(!stationaryLock)
-                    {
-                        if(forwardSpeed != 0)
-                        {
-                            if(input.IsButtonDown(Input.Button.Left))
-                            {
-                                Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
-                            }
-                            if(input.IsButtonDown(Input.Button.Right))
-                            {
-                                Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
-                            }
-                        }
-
-                        if(forwardSpeed > 0)
-                        {
-                            var sd = 0.0f;
-                            if(input.IsButtonDown(Input.Button.Up))
-                            {
-                                sd += Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            }
-                            if(input.IsButtonDown(Input.Button.Down))
-                            {
-                                sd -= Braking * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            }
-
-                            if(sd == 0)
-                            {
-                                sd -= Drag * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            }
-
-                            if(forwardSpeed + sd < 0)
-                            {
-                                stationaryLock = true;
-                                forwardSpeed = 0;
-                            }
-                            else
-                            {
-                                forwardSpeed += sd;
-                            }
-
-                            // Clamp speed
-                            if(forwardSpeed > Speed)
-                            {
-                                forwardSpeed = Speed;
-                            }
-                        }
-                        else if(forwardSpeed < 0)
-                        {
-                            // Reversing
-                            var sd = 0.0f;
-                            if(input.IsButtonDown(Input.Button.Up))
-                            {
-                                sd += Braking * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            }
-                            if(input.IsButtonDown(Input.Button.Down))
-                            {
-                                sd -= Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            }
-
-                            if(sd == 0)
-                            {
-                                sd += Drag * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            }
-
-                            if(forwardSpeed + sd > 0)
-                            {
-                                stationaryLock = true;
-                                forwardSpeed = 0;
-                            }
-                            else
-                            {
-                                forwardSpeed += sd;
-                            }
-
-                            // Clamp speed
-                            if(forwardSpeed < -Speed)
-                            {
-                                forwardSpeed = -Speed;
-                            }
-                        }
-                        else
-                        {
-                            // Standing still
-                            var sd = 0.0f;
-                            if(input.IsButtonDown(Input.Button.Up))
-                            {
-                                sd += Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            }
-                            if(input.IsButtonDown(Input.Button.Down))
-                            {
-                                sd -= Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            }
-
-                            forwardSpeed += sd;
-                        }
-                    }
-                    else
-                    {
-                        if(input.IsButtonUp(Input.Button.Up) && input.IsButtonUp(Input.Button.Down))
-                        {
-                            stationaryLock = false;
-                        }
-                    }
-
-                    var delta = Forward * forwardSpeed;
-                    if (delta.LengthSquared() > Speed * Speed)
-                    {
-                        delta.Normalize();
-                        delta *= Speed;
-                    }
-
-
-                    var prevPos = Position;
-                    var deltaX = new Vector2(delta.X, 0);
-                    var deltaY = new Vector2(0, delta.Y);
-
-                    Position += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                    Collider hitCollider;
-                    bool hitTilemap;
-
-                    if (Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
-                    {
-                        Position = prevPos;
-                        forwardSpeed = 0;
-                    }
-                    prevPos = Position;
-                    Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
-                    {
-                        Position = prevPos;
-                        forwardSpeed = 0;
-                    }
-
-                    player.Position = Position;
-                    Camera.main.Position = Position;
-                }
             }
             else
             {
                 willysSound.Volume = 0;
-                if (Vector2.Distance(player.Position, Position) < 40)
-                {
-                    if (input.IsButtonPressed(Input.Button.Interact))
-                    {
-                        Enter();
-                    }
-                }
             }
 
             willysSound.Position = Position;

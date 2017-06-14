@@ -16,7 +16,7 @@ namespace MonoGear.Entities
     /// ApacheRoflCopter
     /// </summary>
     ///
-    class ApacheRoflCopter : WorldEntity
+    class ApacheRoflCopter : DrivableVehicle
     {
         private Texture2D props;
         private int rot = 0;
@@ -34,6 +34,15 @@ namespace MonoGear.Entities
 
             delay = 0;
             barrelNr = 0;
+
+            Speed = 400;
+            entered = false;
+            stationaryLock = false;
+
+            Acceleration = 200;
+            Braking = 220;
+            Steering = 180;
+            Drag = 50;
 
             Rotation = MathHelper.ToRadians(90);
 
