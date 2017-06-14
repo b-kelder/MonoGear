@@ -82,6 +82,9 @@ namespace MonoGear.Entities
                 sleepDart.Position = Position;
                 sleepDart.Rotation = Rotation;
                 MonoGearGame.SpawnLevelEntity(sleepDart);
+                var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter_missile").CreateInstance();
+                sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                sound.Play();
             }
         }
     }
