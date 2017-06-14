@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework.Graphics;
 using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
@@ -23,6 +19,12 @@ namespace MonoGear.Entities
         public bool LoopPath { get; set; }
         private PositionalAudio carSound;
 
+        /// <summary>
+        /// Constructor of the car class. Creates an instance of a car at a given position
+        /// </summary>
+        /// <param name="position">The position of the car</param>
+        /// <param name="currentPath">The path the car should follow</param>
+        /// <param name="textureAssetName">The texture of the car</param>
         public Car(Vector2 position, List<Vector2> currentPath, string textureAssetName)
         {
             Position = position;
@@ -55,30 +57,47 @@ namespace MonoGear.Entities
             });
         }
 
-
+        /// <summary>
+        /// Method that executes when the level is loaded.
+        /// </summary>
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
+            // Add a sound effect to the car
             carSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 1, 500, Position, true);
         }
 
+        /// <summary>
+        /// Method that executes when the level is loaded.
+        /// </summary>
         public override void OnLevelUnloaded()
         {
             base.OnLevelUnloaded();
         }
 
+        /// <summary>
+        /// Method that sets the path of the car
+        /// </summary>
+        /// <param name="path">The path</param>
         public void SetPath(List<Vector2> path)
         {
             currentPath = path;
             currentPathIndex = 0;
         }
 
+        /// <summary>
+        /// Method that updates the game
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
 
+            // Check if the car has a path
             if(currentPath != null && currentPathIndex >= 0)
             {
+                // Check if the car hasn't finished its path yet
                 if(currentPathIndex < currentPath.Count)
                 {
                     var target = currentPath[currentPathIndex];
@@ -103,7 +122,7 @@ namespace MonoGear.Entities
                     currentPathIndex = -1;
                 }
             }
-
+            // Set the sound of the car to the position of the car
             carSound.Position = Position;
         }
     }
