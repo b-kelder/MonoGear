@@ -13,7 +13,7 @@ using MonoGear.Engine.Audio;
 namespace MonoGear.Entities
 {
     /// <summary>
-    /// ApacheRoflCopter
+    /// Willys jeep, player controlled vehicle
     /// </summary>
     ///
     class Willys : WorldEntity
@@ -129,10 +129,10 @@ namespace MonoGear.Entities
 
                     Position += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                    Collider ignoreMe;
-                    bool meTooThx;
+                    Collider hitCollider;
+                    bool hitTilemap;
 
-                    if (Collider.CollidesAny(out ignoreMe, out meTooThx, player.Collider))
+                    if (Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
                     {
                         Position = prevPos;
                         MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
@@ -143,7 +143,7 @@ namespace MonoGear.Entities
                     }
                     prevPos = Position;
                     Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (Collider.CollidesAny(out ignoreMe, out meTooThx, player.Collider))
+                    if (Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
                     {
                         Position = prevPos;
                         MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
