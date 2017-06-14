@@ -103,6 +103,10 @@ namespace MonoGear.Entities
             {
                 barrelNr = 0;
             }
+			
+			var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter_missile").CreateInstance();
+			sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+			sound.Play();
         }
     }
 }

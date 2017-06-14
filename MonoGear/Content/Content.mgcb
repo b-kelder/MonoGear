@@ -597,6 +597,12 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Explosion.wav
 
+#begin Audio/AudioFX/Helicopter_missile.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Helicopter_missile.wav
+
 #begin Sprites/BrokenWillys.png
 /importer:TextureImporter
 /processor:TextureProcessor
