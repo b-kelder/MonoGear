@@ -68,7 +68,7 @@ namespace MonoGear.Engine
         public bool IsButtonUp(Button button)
         {
             var keys = buttonsToKeys[button];
-            return IsKeyUp(keys.Item1) || IsKeyUp(keys.Item2);
+            return IsKeyUp(keys.Item1) && IsKeyUp(keys.Item2);
         }
 
         public bool IsKeyDown(Keys key)

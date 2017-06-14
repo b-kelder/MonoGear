@@ -32,6 +32,7 @@ namespace MonoGear.Entities
         public float Acceleration { get; set; }
         public float Braking { get; set; }
         public float Steering { get; set; }
+        public float Drag { get; set; }
         bool stationaryLock;
 
         public Willys()
@@ -48,6 +49,7 @@ namespace MonoGear.Entities
             Acceleration = 80;
             Braking = 200;
             Steering = 180;
+            Drag = 50;
 
             Collider = new BoxCollider(this, new Vector2(24,24));
 
@@ -140,6 +142,10 @@ namespace MonoGear.Entities
                                 sd -= Braking * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             }
 
+                            if(sd == 0)
+                            {
+                                sd -= Drag * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            }
 
                             if(forwardSpeed + sd < 0)
                             {
@@ -168,6 +174,11 @@ namespace MonoGear.Entities
                             if(input.IsButtonDown(Input.Button.Down))
                             {
                                 sd -= Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            }
+
+                            if(sd == 0)
+                            {
+                                sd += Drag * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             }
 
                             if(forwardSpeed + sd > 0)
@@ -204,7 +215,7 @@ namespace MonoGear.Entities
                     }
                     else
                     {
-                        if(input.IsButtonReleased(Input.Button.Up) || input.IsButtonReleased(Input.Button.Down))
+                        if(input.IsButtonUp(Input.Button.Up) && input.IsButtonUp(Input.Button.Down))
                         {
                             stationaryLock = false;
                         }
