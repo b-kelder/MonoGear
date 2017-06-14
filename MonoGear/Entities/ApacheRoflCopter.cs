@@ -75,6 +75,14 @@ namespace MonoGear.Entities
             base.Update(input, gameTime);
 
             heliSound.Position = Position;
+
+            if (input.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
+            {
+                var sleepDart = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
+                sleepDart.Position = Position;
+                sleepDart.Rotation = Rotation;
+                MonoGearGame.SpawnLevelEntity(sleepDart);
+            }
         }
     }
 }

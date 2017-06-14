@@ -122,22 +122,12 @@ namespace MonoGear.Entities
                     if (Collider.CollidesAny(out ignoreMe, out meTooThx, player.Collider))
                     {
                         Position = prevPos;
-                        MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
-                        Enabled = false;
-                        player.Visible = true;
-                        player.Health -= 100;
-                        destroyed = true;
                     }
                     prevPos = Position;
                     Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (Collider.CollidesAny(out ignoreMe, out meTooThx, player.Collider))
                     {
                         Position = prevPos;
-                        MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
-                        Enabled = false;
-                        player.Visible = true;
-                        player.Health -= 100;
-                        destroyed = true;
                     }
 
                     player.Position = Position;
@@ -157,6 +147,15 @@ namespace MonoGear.Entities
             }
 
             willysSound.Position = Position;
+        }
+
+        public void Explode()
+        {
+            MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
+            Enabled = false;
+            player.Visible = true;
+            player.Health -= 100;
+            destroyed = true;
         }
     }
 }
