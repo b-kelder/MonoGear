@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Input;
 using System;
 using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
@@ -9,7 +7,7 @@ namespace MonoGear.Entities
 {
     class Bullet : WorldEntity
     {
-        float speed { get; set; }
+        float Speed { get; set; }
         Collider originCollider;
 
 
@@ -20,7 +18,7 @@ namespace MonoGear.Entities
 
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Random rand = new Random();
-            speed = 350f;
+            Speed = 350f;
             TextureAssetName = "Sprites/Bullet";
             Tag = ".50 HEIAP";
             LoadContent();
@@ -28,35 +26,48 @@ namespace MonoGear.Entities
             this.originCollider = originCollider;
         }
 
+        /// <summary>
+        /// Method that updates the game
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
 
             Collider collider;
             var pos = Position;
-            var delta = Forward * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            var delta = Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Move(delta);
 
             bool hitTilemap;
 
+            // Check if the bullet collides with anything
             if(Collider.CollidesAny(out collider, out hitTilemap, originCollider))
             {
                 Position = pos;
-                speed = 0.0f;
+                // Set the speed to 0
+                Speed = 0.0f;
 
+                // Check if the bullet collides with a player
                 if(!hitTilemap && collider.Entity.Tag == "Player")
                 {
                     var player = collider.Entity as Player;
+                    // Decrease the player's health by 1
                     player.Health -= 1.0f;
                 }
-
+                // Disable the bullet
                 Enabled = false;
             }
 
-            if(speed > 0)
-                speed -= 1;
+            if (Speed > 0)
+            {
+                Speed -= 1;
+            }
             else
-                speed = 0;
+            {
+                Speed = 0;
+            }
         }
     }
 }
