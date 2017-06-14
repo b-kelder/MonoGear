@@ -45,7 +45,7 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
-            willysSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter Sound Effect"), 1, 300, Position, true);
+            willysSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter Sound Effect"), 0, 300, Position, true);
             playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer");
         }
 
@@ -69,6 +69,7 @@ namespace MonoGear.Entities
 
             if (on)
             {
+                willysSound.Volume = 1;
                 if (input.IsButtonPressed(Input.Button.Interact))
                 {
                     on = false;
@@ -134,6 +135,7 @@ namespace MonoGear.Entities
             }
             else
             {
+                willysSound.Volume = 0;
                 if (Vector2.Distance(player.Position, Position) < 40)
                 {
                     if (input.IsButtonPressed(Input.Button.Interact))

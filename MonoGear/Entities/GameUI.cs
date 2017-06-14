@@ -29,6 +29,7 @@ namespace MonoGear.Entities
             base.OnLevelLoaded();
 
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
+            objectives.Clear();
             objectives.AddRange(MonoGearGame.FindEntitiesOfType<Objective>());
             objectives.Sort((a, b) => a.index.CompareTo(b.index));
         }
