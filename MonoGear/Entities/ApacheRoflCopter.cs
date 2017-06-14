@@ -74,8 +74,6 @@ namespace MonoGear.Entities
         {
             base.Update(input, gameTime);
 
-            Position += Forward * 1;
-
             heliSound.Position = Position;
         }
     }

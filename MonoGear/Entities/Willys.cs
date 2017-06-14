@@ -67,14 +67,11 @@ namespace MonoGear.Entities
         {
             base.Update(input, gameTime);
 
-            willysSound.Position = Position;
-
             if (on)
             {
                 if (input.IsButtonPressed(Input.Button.Interact))
                 {
                     on = false;
-                    player.Enabled = true;
                     player.Visible = true;
                     player.Position = Position + new Vector2(0, -30);
                 }
@@ -99,25 +96,32 @@ namespace MonoGear.Entities
                     }
 
                     if (delta.LengthSquared() > 0)
+                    {
                         Rotation = MathExtensions.VectorToAngle(delta);
+                    }
+
 
                     var prevPos = Position;
                     var deltaX = new Vector2(delta.X, 0);
                     var deltaY = new Vector2(0, delta.Y);
 
                     Position += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (Collider.CollidesAny())
+
+                    Collider ignoreMe;
+                    bool meTooThx;
+
+                    if (Collider.CollidesAny(out ignoreMe, out meTooThx, player.Collider))
                     {
                         Position = prevPos;
                     }
                     prevPos = Position;
                     Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (Collider.CollidesAny())
+                    if (Collider.CollidesAny(out ignoreMe, out meTooThx, player.Collider))
                     {
                         Position = prevPos;
                     }
 
-                    Camera.main.Position = new Vector2(Position.X, Position.Y);
+                    player.Position = Position;
                 }
             }
             else
@@ -127,11 +131,12 @@ namespace MonoGear.Entities
                     if (input.IsButtonPressed(Input.Button.Interact))
                     {
                         on = true;
-                        player.Enabled = false;
                         player.Visible = false;
                     }
                 }
             }
+
+            willysSound.Position = Position;
         }
     }
 }

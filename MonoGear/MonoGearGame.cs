@@ -129,7 +129,7 @@ namespace MonoGear
             if (dif.Equals(DifficultyLevels.Intern))
             {
                 player.DartCount = 5;
-                player.Health = 6;
+                player.Health = 5;
             }
             else if(dif.Equals(DifficultyLevels.Professional))
             {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="72">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="73">
  <tileset firstgid="1" name="Tiles" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="tilesets/WhiteHouse.png" width="272" height="272"/>
   <tile id="0">
@@ -4931,6 +4931,7 @@
     <property name="index" value="3"/>
    </properties>
   </object>
-  <object id="71" name="Roflcopter" type="roflcopter" x="2347.5" y="2099.83" width="8.66663" height="7.667"/>
+  <object id="71" name="jeep" type="willy" x="2459" y="2119.83" width="8.66663" height="7.667"/>
+  <object id="72" name="Roflcopter" type="roflcopter" x="1861.67" y="2076.67" width="8.66663" height="7.667"/>
  </objectgroup>
 </map>

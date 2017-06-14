@@ -314,7 +314,7 @@ namespace MonoGear.Engine
                             entity = new ApacheRoflCopter();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
                         }
-                        else if (obj.Type == "willys")
+                        else if (obj.Type == "willy")
                         {
                             entity = new Willys();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
