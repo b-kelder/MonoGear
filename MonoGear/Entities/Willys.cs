@@ -66,6 +66,21 @@ namespace MonoGear.Entities
             }
         }
 
+        public void Enter()
+        {
+            on = true;
+            player.Visible = false;
+            player.Enabled = false;
+        }
+
+        public void Exit()
+        {
+            on = false;
+            player.Visible = true;
+            player.Enabled = true;
+            player.Position = Position + Right * -30;
+        }
+
         /// <summary>
         /// Method that updates the game
         /// </summary>
@@ -80,9 +95,7 @@ namespace MonoGear.Entities
                 willysSound.Volume = 1;
                 if (input.IsButtonPressed(Input.Button.Interact))
                 {
-                    on = false;
-                    player.Visible = true;
-                    player.Position = Position + Right * -30;
+                    Exit();
                 }
                 else
                 {
@@ -124,7 +137,7 @@ namespace MonoGear.Entities
                         Position = prevPos;
                         MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
                         Enabled = false;
-                        player.Visible = true;
+                        Exit();
                         player.Health -= 100;
                         destroyed = true;
                     }
@@ -135,12 +148,13 @@ namespace MonoGear.Entities
                         Position = prevPos;
                         MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
                         Enabled = false;
-                        player.Visible = true;
+                        Exit();
                         player.Health -= 100;
                         destroyed = true;
                     }
 
                     player.Position = Position;
+                    Camera.main.Position = Position;
                 }
             }
             else
@@ -150,8 +164,7 @@ namespace MonoGear.Entities
                 {
                     if (input.IsButtonPressed(Input.Button.Interact))
                     {
-                        on = true;
-                        player.Visible = false;
+                        Enter();
                     }
                 }
             }
