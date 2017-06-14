@@ -4,18 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
 using Windows.UI.Xaml.Controls;
 using System.Xml.Serialization;
 using System.IO;
-using System.Diagnostics;
 using Windows.Storage;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.UI.ViewManagement;
 using Windows.Graphics.Display;
-using Windows.Foundation;
 
 using MonoGear.Engine;
 using MonoGear.Engine.Audio;
@@ -28,6 +24,9 @@ namespace MonoGear
     /// </summary>
     public class MonoGearGame : Game
     {
+        /// <summary>
+        /// Game instance
+        /// </summary>
         static MonoGearGame instance;
         /// <summary>
         /// GDM
@@ -80,6 +79,7 @@ namespace MonoGear
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
+            // Event that triggers when the client size is changed
             Window.ClientSizeChanged += (s, e) =>
             {
                 if (activeCamera != null)
@@ -89,20 +89,30 @@ namespace MonoGear
             };
         }
 
+        /// <summary>
+        /// Method that restarts the level.
+        /// </summary>
         public static void Restart()
         {
+            // Check if the instance is not null
             if(instance != null)
             {
                 LoadLevel(instance.activeLevel.Name);
             }
         }
 
+        /// <summary>
+        /// Method that starts the next level.
+        /// </summary>
         public static void NextLevel()
         {
+            // Check if the instance is not null
             if(instance != null)
             {
+                // Check if the current level is not the last level
                 if(instance.levelList.LastLevel() != instance.activeLevel.Name)
                 {
+                    // Load the next level
                     LoadLevel(instance.levelList.NextLevel());
                 }
                 else
@@ -119,6 +129,9 @@ namespace MonoGear
             }
         }
 
+        /// <summary>
+        /// Method that updates the game's difficulty
+        /// </summary>
         private void UpdateDifficulty()
         {
             var sightRange = 295f;
@@ -156,6 +169,7 @@ namespace MonoGear
             }
 
             var guards = FindEntitiesWithTag("Guard");
+            // Set the stats for each guard based on the selected difficulty
             foreach (var guard in guards)
             {
                 var g = guard as Guard;
@@ -404,13 +418,21 @@ namespace MonoGear
             return list;
         }
 
+        /// <summary>
+        /// Method that returns the current level.
+        /// </summary>
+        /// <returns>The current level</returns>
         public static Level GetCurrentLevel()
         {
             return instance.activeLevel;
         }
 
+        /// <summary>
+        /// Method that loads a level
+        /// </summary>
         private void LoadLevel()
         {
+            // Check if the next level is not null
             if(nextLevel != null)
             {
                 activeLevel = nextLevel;
