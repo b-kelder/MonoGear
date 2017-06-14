@@ -319,6 +319,11 @@ namespace MonoGear.Engine
                             entity = new Willys();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
                         }
+                        else if(obj.Type == "abrams")
+                        {
+                            entity = new Abrams();
+                            entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                        }
                         else if (obj.Type == "objective")
                         {
                             string description;

@@ -79,13 +79,15 @@ namespace MonoGear.Entities
         {
             base.Update(input, gameTime);
 
+            float minVolume = 0.75f;
             if(entered)
             {
-                willysSound.Volume = 1;
+                willysSound.Position = Position;
+                willysSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
             }
             else
             {
-                willysSound.Volume = 0;
+                willysSound.Volume = minVolume;
             }
 
             willysSound.Position = Position;

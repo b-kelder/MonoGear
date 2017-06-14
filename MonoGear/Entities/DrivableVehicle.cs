@@ -23,6 +23,7 @@ namespace MonoGear.Entities
         public float Steering { get; set; }
         public float Drag { get; set; }
         protected bool stationaryLock;
+        public bool ConstantSteering { get; set; }
 
         /// <summary>
         /// Method that executes when the level is loaded.
@@ -64,18 +65,34 @@ namespace MonoGear.Entities
                 {
                     if(!stationaryLock)
                     {
-                        if(forwardSpeed != 0)
+                        if(ConstantSteering)
                         {
-                            // Rotate if we're not standing still
                             if(input.IsButtonDown(Input.Button.Left))
                             {
-                                Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
                             }
                             if(input.IsButtonDown(Input.Button.Right))
                             {
-                                Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
                             }
                         }
+                        else
+                        {
+                            // Speed based steering for consistent turning circle
+                            if(forwardSpeed != 0)
+                            {
+                                // Rotate if we're not standing still
+                                if(input.IsButtonDown(Input.Button.Left))
+                                {
+                                    Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                }
+                                if(input.IsButtonDown(Input.Button.Right))
+                                {
+                                    Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                }
+                            }
+                        }
+
 
                         if(forwardSpeed > 0)
                         {

@@ -35,16 +35,15 @@ namespace MonoGear.Entities
             delay = 0;
             barrelNr = 0;
 
-            Speed = 400;
+            Speed = 300;
             entered = false;
             stationaryLock = false;
 
+            ConstantSteering = true;
             Acceleration = 200;
             Braking = 220;
-            Steering = 180;
+            Steering = 120;
             Drag = 50;
-
-            Rotation = MathHelper.ToRadians(90);
 
             LoadContent();
         }

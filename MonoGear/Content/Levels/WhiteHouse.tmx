@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="73">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="74">
  <tileset firstgid="1" name="Tiles" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="tilesets/WhiteHouse.png" width="272" height="272"/>
   <tile id="0">
@@ -4874,6 +4874,17 @@
     <property name="patrolpath" value="Backyard Half Left"/>
    </properties>
   </object>
+  <object id="73" name="jeep" type="willy" x="2466.67" y="2127.17" width="8.66663" height="7.667"/>
+  <object id="72" name="Roflcopter" type="roflcopter" x="1861.67" y="2076.67" width="8.66663" height="7.667">
+   <properties>
+    <property name="rotation" type="float" value="90"/>
+   </properties>
+  </object>
+  <object id="71" name="abrams" type="abrams" x="2660" y="2108.83" width="8.66663" height="7.667">
+   <properties>
+    <property name="rotation" type="float" value="-80"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Paths">
   <object id="4" name="Patrol Path A" type="path" x="770" y="837">
@@ -4931,7 +4942,5 @@
     <property name="index" value="3"/>
    </properties>
   </object>
-  <object id="71" name="jeep" type="willy" x="2459" y="2119.83" width="8.66663" height="7.667"/>
-  <object id="72" name="Roflcopter" type="roflcopter" x="1861.67" y="2076.67" width="8.66663" height="7.667"/>
  </objectgroup>
 </map>

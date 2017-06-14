@@ -60,11 +60,15 @@ namespace MonoGear.Entities
             // Check if the animation is at its last frame
             if (AnimationCurrentFrame == 14)
             {
-                var dis = Vector2.Distance(player.Position, Position);
-                if (dis < blastRadius)
+                if(player.Enabled)
                 {
-                    player.Health -= maxDamage * (dis / blastRadius * 100);
+                    var dis = Vector2.Distance(player.Position, Position);
+                    if(dis < blastRadius)
+                    {
+                        player.Health -= maxDamage * (dis / blastRadius * 100);
+                    }
                 }
+                
                 MonoGearGame.DestroyEntity(this);
             }
         }

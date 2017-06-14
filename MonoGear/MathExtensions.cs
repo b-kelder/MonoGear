@@ -16,6 +16,20 @@ namespace MonoGear
         }
 
         /// <summary>
+        /// Returns the sign of the number. Will return 1 for 0.
+        /// </summary>
+        /// <param name="val">Value to check the sign of</param>
+        /// <returns>1 or -1</returns>
+        public static int Sign(float val)
+        {
+            if(val >= 0)
+            {
+                return 1;
+            }
+            return -1;
+        }
+
+        /// <summary>
         /// Method that converts an angle to a vector.
         /// </summary>
         /// <param name="angle">The angle that need to be converted</param>
