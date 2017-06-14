@@ -81,32 +81,40 @@ namespace MonoGear.Entities
 
             heliSound.Position = Position;
 
-            var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
-            missile.Rotation = Rotation;
+            if (delay > 0)
+                delay -= 1;
 
-            Vector2 vec = new Vector2(18, 0);
-            if (barrelNr == 0)
-                vec.Y = 24;
-            if (barrelNr == 1)
-                vec.Y = -24;
-            if (barrelNr == 2)
-                vec.Y = 18;
-            if (barrelNr == 3)
-                vec.Y = -18;
-
-            missile.Position = Position + vec;
-
-            MonoGearGame.SpawnLevelEntity(missile);
-
-            barrelNr++;
-            if (barrelNr > 3)
+            if (delay <=0)
             {
-                barrelNr = 0;
+                var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
+                missile.Rotation = Rotation;
+
+                Vector2 vec = new Vector2(18, 0);
+                if (barrelNr == 0)
+                    vec.Y = 24;
+                if (barrelNr == 1)
+                    vec.Y = -24;
+                if (barrelNr == 2)
+                    vec.Y = 18;
+                if (barrelNr == 3)
+                    vec.Y = -18;
+
+                missile.Position = Position + vec;
+
+                MonoGearGame.SpawnLevelEntity(missile);
+
+                barrelNr++;
+                if (barrelNr > 3)
+                {
+                    barrelNr = 0;
+                }
+
+                var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter_missile").CreateInstance();
+                sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                sound.Play();
+
+                delay = 10;
             }
-			
-			var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter_missile").CreateInstance();
-			sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
-			sound.Play();
         }
     }
 }
