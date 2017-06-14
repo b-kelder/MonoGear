@@ -16,7 +16,7 @@ using MonoGear.Entities;
 
 namespace MonoGear.Engine
 {
-    public class Level
+    public class Level 
     {
         public string Name { get; private set; }
         /// <summary>
