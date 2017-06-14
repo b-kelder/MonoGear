@@ -22,7 +22,7 @@ namespace MonoGear.Entities
             CircleCollider collider = new CircleCollider(this, 2);
             collider.Trigger = true;
 
-            speed = 400f;
+            speed = 800f;
             TextureAssetName = "Sprites/SleepDart";
             Tag = "Missile";
             LoadContent();

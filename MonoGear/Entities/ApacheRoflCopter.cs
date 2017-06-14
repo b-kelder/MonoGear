@@ -93,7 +93,7 @@ namespace MonoGear.Entities
             if (delay > 0)
                 delay -= 1;
 
-            if (delay <=0 && input.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Q))
+            if (delay <=0 && input.IsButtonDown(Input.Button.Shoot) && entered)
             {
                 var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
                 missile.Rotation = Rotation;
@@ -108,7 +108,7 @@ namespace MonoGear.Entities
                 if (barrelNr == 3)
                     vec.Y = -18;
 
-                missile.Position = Position + vec;
+                missile.Position = Position + Forward * vec.X + Right * vec.Y;
 
                 MonoGearGame.SpawnLevelEntity(missile);
 
