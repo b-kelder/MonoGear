@@ -9,6 +9,7 @@ namespace MonoGear.Entities
     {
         float Speed { get; set; }
         Collider originCollider;
+        private float maxDamage;
 
         /// <summary>
         /// Constructor of the bullet class. Creates an instance of a bullet.
@@ -27,6 +28,8 @@ namespace MonoGear.Entities
             TextureAssetName = "Sprites/Bullet";
             Tag = ".50 HEIAP";
             LoadContent();
+
+            maxDamage = 3;
 
             this.originCollider = originCollider;
         }
@@ -61,6 +64,18 @@ namespace MonoGear.Entities
                     // Decrease the player's health by 1
                     player.Health -= 1.0f;
                 }
+                
+
+                var things = MonoGearGame.FindEntitiesOfType<IDestroyable>();
+                foreach (var thing in things)
+                {
+                    var dis = thing as WorldEntity;
+                    if (!hitTilemap && collider.Entity == dis)
+                    {
+                        thing.Damage(maxDamage);
+                    }
+                }
+
                 MonoGearGame.DestroyEntity(this);
             }
 
@@ -73,6 +88,7 @@ namespace MonoGear.Entities
                 Speed = 0;
                 MonoGearGame.DestroyEntity(this);
             }
+
         }
     }
 }
