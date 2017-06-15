@@ -14,6 +14,7 @@ namespace MonoGear.Entities
         private float blastRadius;
         private float maxDamage;
         private PositionalAudio sound;
+        private bool exploded;
 
         /// <summary>
         /// Constructor of the explosion class. Creates an instance of an explosion.
@@ -61,7 +62,7 @@ namespace MonoGear.Entities
             
 
             // Check if the animation is at its first frame
-            if (AnimationCurrentFrame == 1)
+            if (AnimationCurrentFrame == 1 && !exploded)
             {
                 if(player.Enabled)
                 {
@@ -81,8 +82,8 @@ namespace MonoGear.Entities
                         thing.Damage(maxDamage * (dis / blastRadius));
                     } 
                 }
-                
-                
+
+                exploded = true;
             }
             else if (AnimationCurrentFrame == 14)
             {
