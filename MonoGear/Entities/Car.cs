@@ -6,6 +6,7 @@ using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
 using System;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear.Entities
 {
@@ -42,7 +43,7 @@ namespace MonoGear.Entities
             LoopPath = true;
 
             Z = 100;
-            Health = 100;
+            Health = 15;
 
             LoadContent();
 
@@ -131,6 +132,12 @@ namespace MonoGear.Entities
             carSound.Position = Position;
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
+        }
+
         public void Damage(float damage)
         {
             Health -= damage;
@@ -143,12 +150,8 @@ namespace MonoGear.Entities
 
         public void Destroy()
         {
+            AudioManager.StopPositional(carSound);
             MonoGearGame.DestroyEntity(this);
-        }
-
-        public WorldEntity GetEntity()
-        {
-            return this;
         }
     }
 }

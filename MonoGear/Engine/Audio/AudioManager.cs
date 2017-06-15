@@ -27,6 +27,15 @@ namespace MonoGear.Engine.Audio
             instance.Stop();
         }
 
+        public static void StopPositional(PositionalAudio sound)
+        {
+            if(positionalAudio.Contains(sound))
+            {
+                positionalAudio.Remove(sound);
+            }
+            sound.SoundEffect.Stop();
+        }
+
         public static void PlayGlobalOnce(SoundEffectInstance instance)
         {
             instance.IsLooped = false;

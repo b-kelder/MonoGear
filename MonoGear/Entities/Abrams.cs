@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MonoGear.Engine;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear.Entities
 {
@@ -30,7 +31,7 @@ namespace MonoGear.Entities
 
             GunCycleTime = 0.8f;
 
-            Health = 500;
+            Health = 100;
 
             Acceleration = 70;
             Braking = 140;
@@ -84,6 +85,13 @@ namespace MonoGear.Entities
             }
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+
+            spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
+        }
+
         public void Damage(float damage)
         {
             Health -= damage;
@@ -96,12 +104,12 @@ namespace MonoGear.Entities
 
         public void Destroy()
         {
+            if(entered)
+            {
+                Exit();
+            }
+            AudioManager.StopPositional(sound);
             MonoGearGame.DestroyEntity(this);
-        }
-
-        public WorldEntity GetEntity()
-        {
-            return this;
         }
     }
 }

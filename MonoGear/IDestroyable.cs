@@ -11,7 +11,5 @@ namespace MonoGear
         void Damage(float damage);
 
         void Destroy();
-
-        Engine.WorldEntity GetEntity();
     }
 }

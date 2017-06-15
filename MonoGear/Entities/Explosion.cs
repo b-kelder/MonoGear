@@ -33,8 +33,8 @@ namespace MonoGear.Entities
 
             Tag = "BOEM!";
 
-            blastRadius = 50;
-            maxDamage = 10;
+            blastRadius = 80;
+            maxDamage = 15;
 
             Z = 100;
 
@@ -60,25 +60,25 @@ namespace MonoGear.Entities
             base.Update(input, gameTime);
             
 
-            // Check if the animation is at its last frame
+            // Check if the animation is at its first frame
             if (AnimationCurrentFrame == 1)
             {
-                /*if(player.Enabled)
+                if(player.Enabled)
                 {
-                    
+                    var dis = Vector2.Distance(player.Position, Position);
                     if(dis < blastRadius)
                     {
-                        player.Health -= maxDamage * (dis / blastRadius * 100);
+                        player.Health -= maxDamage * (dis / blastRadius);
                     }
-                }*/
+                }
 
                 var things = MonoGearGame.FindEntitiesOfType<IDestroyable>();
                 foreach (var thing in things)
                 {
-                    var dis = Vector2.Distance(thing.GetEntity().Position, Position);
+                    var dis = Vector2.Distance((thing as WorldEntity).Position, Position);
                     if (dis < blastRadius)
                     {
-                        thing.Damage(maxDamage * (dis / blastRadius * 100));
+                        thing.Damage(maxDamage * (dis / blastRadius));
                     } 
                 }
                 

@@ -103,6 +103,8 @@ namespace MonoGear.Entities
 
             Tag = "Guard";
 
+            Health = 5;
+
             Z = 100;
 
             LoadContent();
@@ -539,11 +541,6 @@ namespace MonoGear.Entities
         public void Destroy()
         {
             MonoGearGame.DestroyEntity(this);
-        }
-
-        public WorldEntity GetEntity()
-        {
-            return this;
         }
     }
 }

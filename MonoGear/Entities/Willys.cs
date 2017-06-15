@@ -37,7 +37,7 @@ namespace MonoGear.Entities
 
             Z = 1;
 
-            Health = 100;
+            Health = 20;
 
             Acceleration = 80;
             Braking = 200;
@@ -71,6 +71,8 @@ namespace MonoGear.Entities
             {
                 spriteBatch.Draw(destroyedSprite, Position, destroyedSprite.Bounds, Color.White, Rotation, new Vector2(destroyedSprite.Bounds.Size.X, destroyedSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
+
+            spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
         }
 
         /// <summary>
@@ -108,12 +110,13 @@ namespace MonoGear.Entities
 
         public void Destroy()
         {
-            MonoGearGame.DestroyEntity(this);
-        }
+            if(entered)
+            {
+                Exit();
+            }
 
-        public WorldEntity GetEntity()
-        {
-            return this;
+            AudioManager.StopPositional(willysSound);
+            MonoGearGame.DestroyEntity(this);
         }
     }
 }

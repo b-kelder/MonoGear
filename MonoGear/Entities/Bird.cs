@@ -94,11 +94,6 @@ namespace MonoGear.Entities
         {
             MonoGearGame.DestroyEntity(this);
         }
-
-        public WorldEntity GetEntity()
-        {
-            return this;
-        }
     }
 }
 
