@@ -29,7 +29,7 @@ namespace MonoGear.Entities
         public Willys()
         {
             TextureAssetName = "Sprites/Willys";
-            Tag = "Willys jeep";
+            Tag = "Willys";
             Speed = 230;
             entered = false;
             destroyed = false;
@@ -72,7 +72,10 @@ namespace MonoGear.Entities
                 spriteBatch.Draw(destroyedSprite, Position, destroyedSprite.Bounds, Color.White, Rotation, new Vector2(destroyedSprite.Bounds.Size.X, destroyedSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
             }
 
-            spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
+            if (!destroyed)
+            {
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
+            }
         }
 
         /// <summary>
@@ -112,11 +115,13 @@ namespace MonoGear.Entities
         {
             if(entered)
             {
-                Exit();
+                Exit();   
             }
 
+            destroyed = true;
+            Enabled = false;
+
             AudioManager.StopPositional(willysSound);
-            MonoGearGame.DestroyEntity(this);
         }
     }
 }

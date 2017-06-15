@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGear.Engine;
 using MonoGear.Engine.Audio;
 
@@ -17,6 +18,8 @@ namespace MonoGear.Entities
         public float Health { get; private set; }
 
         PositionalAudio birdSound;
+        private Texture2D destroyedSprite;
+        private bool destroyed;
 
         /// <summary>
         /// Constructor of the bird class. Creates an instance of a bird.
@@ -34,6 +37,8 @@ namespace MonoGear.Entities
             AnimationPingPong = true;
             AnimationRunning = true;
 
+            destroyed = false;
+
             Tag = "ObeseHummingbird";
             Health = 1;
 
@@ -50,6 +55,8 @@ namespace MonoGear.Entities
             base.OnLevelLoaded();
             birdSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Bird_sounds"), 1, 210, Position,true);
             birdSound.Volume = 0.2f;
+
+            destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/DeadBird");
         }
 
         /// <summary>
@@ -58,6 +65,20 @@ namespace MonoGear.Entities
         public override void OnLevelUnloaded()
         {
             base.OnLevelUnloaded();
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (destroyed)
+            {
+                spriteBatch.Draw(destroyedSprite, Position, destroyedSprite.Bounds, Color.White, Rotation, new Vector2(destroyedSprite.Bounds.Size.X, destroyedSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+            }
+
+            if (!destroyed)
+            {
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
+            }
         }
 
         /// <summary>
@@ -92,7 +113,8 @@ namespace MonoGear.Entities
 
         public void Destroy()
         {
-            MonoGearGame.DestroyEntity(this);
+            destroyed = true;
+            Enabled = false;
         }
     }
 }

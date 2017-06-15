@@ -22,6 +22,8 @@ namespace MonoGear.Entities
         public float Health { get; private set; }
 
         private PositionalAudio carSound;
+        private bool destroyed;
+        private Texture2D destroyedSprite;
 
         /// <summary>
         /// Constructor of the car class. Creates an instance of a car at a given position.
@@ -41,6 +43,8 @@ namespace MonoGear.Entities
 
             this.currentPath = currentPath;
             LoopPath = true;
+
+            destroyed = false;
 
             Z = 100;
             Health = 15;
@@ -69,8 +73,9 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
             // Add a sound effect to the car
-            carSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 1, 500, Position, true);
-            carSound.Volume = 0.3f;
+            carSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 0.3f, 500, Position, true);
+
+            destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenCar");
         }
 
         /// <summary>
@@ -135,7 +140,15 @@ namespace MonoGear.Entities
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
+            if (destroyed)
+            {
+                spriteBatch.Draw(destroyedSprite, Position, destroyedSprite.Bounds, Color.White, Rotation, new Vector2(destroyedSprite.Bounds.Size.X, destroyedSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+            }
+
+            if (!destroyed)
+            {
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
+            }
         }
 
         public void Damage(float damage)
@@ -151,7 +164,8 @@ namespace MonoGear.Entities
         public void Destroy()
         {
             AudioManager.StopPositional(carSound);
-            MonoGearGame.DestroyEntity(this);
+            destroyed = true;
+            Enabled = false;
         }
     }
 }
