@@ -36,5 +36,10 @@ namespace MonoGear.Engine
         {
             return Levels[Levels.Count - 1];
         }
+
+        public void Reset()
+        {
+            index = 0;
+        }
     }
 }

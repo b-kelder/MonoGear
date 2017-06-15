@@ -86,10 +86,6 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
 
-            // Give health and items
-            Health = 5.0f;
-            DartCount = 100;
-
             var ents = MonoGearGame.FindEntitiesWithTag("PlayerSpawnPoint");
             if(ents.Count > 0)
             {

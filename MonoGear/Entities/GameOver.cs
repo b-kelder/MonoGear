@@ -10,7 +10,7 @@ namespace MonoGear.Entities
 {
     class GameOver : WorldEntity
     {
-        private bool gameOver;
+        public bool gameOver;
         private Player player;
         private Texture2D gameOverSprite;
 
@@ -21,7 +21,7 @@ namespace MonoGear.Entities
         {
             TextureAssetName = "Sprites/blank";
             Tag = "GameOverScreen";
-            gameOver = false;
+            gameOver = true;
             Visible = false;
 
             Z = 999;
@@ -96,7 +96,6 @@ namespace MonoGear.Entities
                 {
                     // Restart the game
                     MonoGearGame.Restart();
-                    DisableGameOver();
                 }
             }
         }

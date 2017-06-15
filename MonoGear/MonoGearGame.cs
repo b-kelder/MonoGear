@@ -99,7 +99,7 @@ namespace MonoGear
             // Check if the instance is not null
             if(instance != null)
             {
-                LoadLevel(instance.activeLevel.Name);
+                LoadLevel(instance.levelList.Start());
             }
         }
 
@@ -165,6 +165,7 @@ namespace MonoGear
             else if(dif.Equals(DifficultyLevels.JamesBond))
             {
                 player.DartCount = 0;
+                player.Health = 1;
                 sightRange += 30;
                 runSpeed += 30;
                 walkSpeed += 30;
@@ -457,6 +458,10 @@ namespace MonoGear
                 activeLevel = nextLevel;
                 nextLevel = null;
 
+                var gameOver = MonoGearGame.FindEntitiesWithTag("GameOverScreen")[0] as GameOver;
+                var hp = player.Health;
+                var darts = player.DartCount;
+
                 // Tell entities that they should stop
                 foreach(var e in levelEntities)
                 {
@@ -483,9 +488,19 @@ namespace MonoGear
                 }
 
                 spawnQueueLocal.Clear();            // Clear local spawn queue to prevent them from appearing in the new level
-                
+
                 UpdateDifficulty();
 
+                if (!gameOver.gameOver)
+                {
+                    player.Health = hp;
+                    player.DartCount = darts;
+                }
+                else
+                {
+                    gameOver.DisableGameOver();
+                }
+                
                 // Force GC
                 GC.Collect();
             }
