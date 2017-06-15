@@ -23,7 +23,7 @@ namespace MonoGear.Entities
             collider.Trigger = true;
 
             speed = 800f;
-            TextureAssetName = "Sprites/SleepDart";
+            TextureAssetName = "Sprites/Missile";
             Tag = "Missile";
             LoadContent();
 

@@ -639,3 +639,21 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Tank_shot.wav
 
+#begin Sprites/Missile.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Missile.png
+
+#begin Audio/AudioFX/Tank_gatling.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Tank_gatling.wav
+

@@ -74,9 +74,25 @@ namespace MonoGear.Entities
                     lastShootTime = (float)gameTime.TotalGameTime.TotalSeconds;
 
                     var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Tank_shot").CreateInstance();
-                    sound.Volume = 0.3f * SettingsPage.Volume * SettingsPage.EffectVolume;
+                    sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
                     sound.Play();
-                }                   
+                }
+
+                if (input.IsButtonPressed(Input.Button.Throw))
+                {
+                    var bullet = new Bullet(Collider);
+                    bullet.Rotation = Rotation;
+
+                    bullet.Position = Position + Forward * 18 + Right * 10;
+
+                    MonoGearGame.SpawnLevelEntity(bullet);
+
+                    lastShootTime = (float)gameTime.TotalGameTime.TotalSeconds;
+
+                    var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Tank_gatling").CreateInstance();
+                    sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
+                    sound.Play();
+                }
 
             }
             else

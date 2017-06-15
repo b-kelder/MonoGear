@@ -19,6 +19,8 @@ namespace MonoGear.Entities
             CircleCollider collider = new CircleCollider(this, 1);
             collider.Trigger = true;
 
+            Z = 99999;
+
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Random rand = new Random();
             Speed = 350f;
