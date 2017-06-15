@@ -16,7 +16,7 @@ namespace MonoGear.Entities
     /// ApacheRoflCopter
     /// </summary>
     ///
-    class ApacheRoflCopter : DrivableVehicle
+    class ApacheRoflCopter : DrivableVehicle, IDestroyable
     {
         private Texture2D props;
         private int rot = 0;
@@ -28,7 +28,7 @@ namespace MonoGear.Entities
         {
             TextureAssetName = "Sprites/MyRoflcopter";
 
-            Tag = "I SEXUALY IDENTIFY AS AN APACHE HELICOPTER";
+            Tag = "Roflcopter";
 
             Z = 100;
 
@@ -123,6 +123,16 @@ namespace MonoGear.Entities
 
                 delay = 10;
             }
+        }
+
+        public void Damage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Destroy()
+        {
+            throw new NotImplementedException();
         }
     }
 }

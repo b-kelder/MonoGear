@@ -11,7 +11,7 @@ using MonoGear.Engine;
 
 namespace MonoGear.Entities
 {
-    class Abrams : DrivableVehicle
+    class Abrams : DrivableVehicle, IDestroyable
     {
         private PositionalAudio sound;
         private float lastShootTime;
@@ -75,6 +75,16 @@ namespace MonoGear.Entities
             {
                 sound.Volume = minVolume;
             }
+        }
+
+        public void Damage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Destroy()
+        {
+            throw new NotImplementedException();
         }
     }
 }

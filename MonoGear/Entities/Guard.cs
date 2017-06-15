@@ -14,7 +14,7 @@ using MonoGear.Engine.Audio;
 
 namespace MonoGear.Entities
 {
-    class Guard : WorldEntityAnimated
+    class Guard : WorldEntityAnimated, IDestroyable
     {
         private static Texture2D fovSprite;
         private static Color fovColor = new Color(100, 0, 0, 10);
@@ -518,6 +518,16 @@ namespace MonoGear.Entities
 
             entityPos = player.Position;
             return false;
+        }
+
+        public void Damage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Destroy()
+        {
+            throw new NotImplementedException();
         }
     }
 }

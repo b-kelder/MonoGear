@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using MonoGear.Engine;
 using MonoGear.Engine.Audio;
@@ -8,7 +9,7 @@ namespace MonoGear.Entities
     /// <summary>
     /// Bird that flies towards the top of the screen.
     /// </summary>
-    class Bird : WorldEntityAnimated
+    class Bird : WorldEntityAnimated, IDestroyable
     {
         float speed;
 
@@ -73,6 +74,16 @@ namespace MonoGear.Entities
             Move(new Vector2(0, -speed * (float)gameTime.ElapsedGameTime.TotalSeconds));
             // Set the bird's position to the new position
             birdSound.Position = Position;
+        }
+
+        public void Damage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Destroy()
+        {
+            throw new NotImplementedException();
         }
     }
 }

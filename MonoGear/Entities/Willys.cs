@@ -17,7 +17,7 @@ namespace MonoGear.Entities
     /// Willys jeep, player controlled vehicle
     /// </summary>
     ///
-    class Willys : DrivableVehicle
+    class Willys : DrivableVehicle, IDestroyable
     {
         private PositionalAudio willysSound;
         private bool destroyed;
@@ -91,6 +91,16 @@ namespace MonoGear.Entities
             }
 
             willysSound.Position = Position;
+        }
+
+        public void Damage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Destroy()
+        {
+            throw new NotImplementedException();
         }
     }
 }

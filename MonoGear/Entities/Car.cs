@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
+using System;
 
 namespace MonoGear.Entities
 {
     /// <summary>
     /// Car
     /// </summary>
-    class Car : WorldEntity
+    class Car : WorldEntity, IDestroyable
     {
         float speed;
         private List<Vector2> currentPath;
@@ -124,6 +125,16 @@ namespace MonoGear.Entities
             }
             // Set the sound of the car to the position of the car
             carSound.Position = Position;
+        }
+
+        public void Damage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Destroy()
+        {
+            throw new NotImplementedException();
         }
     }
 }
