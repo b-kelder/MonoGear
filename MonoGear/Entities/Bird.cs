@@ -67,20 +67,6 @@ namespace MonoGear.Entities
             base.OnLevelUnloaded();
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
-            if (destroyed)
-            {
-                spriteBatch.Draw(destroyedSprite, Position, destroyedSprite.Bounds, Color.White, Rotation, new Vector2(destroyedSprite.Bounds.Size.X, destroyedSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
-            }
-
-            if (!destroyed)
-            {
-                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
-            }
-        }
-
         /// <summary>
         /// Method that updates the game
         /// </summary>
@@ -113,6 +99,10 @@ namespace MonoGear.Entities
 
         public void Destroy()
         {
+            instanceTexture = destroyedSprite;
+
+            AnimationRunning = false;
+
             destroyed = true;
             Enabled = false;
         }

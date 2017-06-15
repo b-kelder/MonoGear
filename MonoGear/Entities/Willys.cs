@@ -60,24 +60,6 @@ namespace MonoGear.Entities
             destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
-            if (entered)
-            {
-                spriteBatch.Draw(playerSprite, Position, playerSprite.Bounds, Color.White, Rotation, new Vector2(playerSprite.Bounds.Size.X, playerSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
-            }
-            if(destroyed)
-            {
-                spriteBatch.Draw(destroyedSprite, Position, destroyedSprite.Bounds, Color.White, Rotation, new Vector2(destroyedSprite.Bounds.Size.X, destroyedSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
-            }
-
-            if (!destroyed)
-            {
-                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
-            }
-        }
-
         /// <summary>
         /// Method that updates the game
         /// </summary>
@@ -90,6 +72,10 @@ namespace MonoGear.Entities
             float minVolume = 0.75f;
             if(entered)
             {
+                if (instanceTexture != playerSprite)
+                {
+                    instanceTexture = playerSprite;
+                }
                 willysSound.Position = Position;
                 willysSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
             }
@@ -117,6 +103,8 @@ namespace MonoGear.Entities
             {
                 Exit();   
             }
+
+            instanceTexture = destroyedSprite;
 
             destroyed = true;
             Enabled = false;
