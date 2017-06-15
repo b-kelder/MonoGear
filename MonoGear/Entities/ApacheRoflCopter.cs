@@ -64,6 +64,7 @@ namespace MonoGear.Entities
                 props = MonoGearGame.GetResource<Texture2D>("Sprites/Soisoisoisoisoisoisoisoisoisoisoisoisoisoisoisois");
             }
             heliSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter Sound Effect"), 1, 300, Position, true);
+            heliSound.Volume = 0.3f;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -122,7 +123,7 @@ namespace MonoGear.Entities
                 }
 
                 var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter_missile").CreateInstance();
-                sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
                 sound.Play();
 
                 delay = 10;

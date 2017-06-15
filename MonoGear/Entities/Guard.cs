@@ -47,6 +47,7 @@ namespace MonoGear.Entities
         private float sightFov;
         private Player player;
         private Vector2 playerPos;
+        private PositionalAudio sound;
 
         public List<Vector2> PatrolPath
         {
@@ -270,7 +271,7 @@ namespace MonoGear.Entities
                             bullet.Rotation = MathExtensions.VectorToAngle(playerPos - Position);
                             MonoGearGame.SpawnLevelEntity(bullet);
                             var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Gunshot").CreateInstance();
-                            sound.Volume = 1 *SettingsPage.Volume * SettingsPage.EffectVolume;
+                            sound.Volume = 0.4f *SettingsPage.Volume * SettingsPage.EffectVolume;
                             sound.Play();
                             shootStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
                         }
@@ -342,7 +343,8 @@ namespace MonoGear.Entities
                 AnimationRunning = false;
                 AnimationCurrentFrame = 1;
                 state = State.Sleeping;
-                AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/snoreWhistle"), 1, 150, Position, true);
+                sound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/snoreWhistle"), 1, 150, Position, true);
+                sound.Volume = 0.2f;
             }
         }
 
@@ -384,7 +386,7 @@ namespace MonoGear.Entities
             if(state != State.Alerted)
             {
                 var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound").CreateInstance();
-                sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                sound.Volume = 0.4f * SettingsPage.Volume * SettingsPage.EffectVolume;
                 sound.Play();
             }
 
@@ -404,7 +406,7 @@ namespace MonoGear.Entities
                     if (number == 0)
                     {
                         var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Get_over_here").CreateInstance();
-                        sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                        sound.Volume = 0.2f * SettingsPage.Volume * SettingsPage.EffectVolume;
                         sound.Play();
                     }
                 });
@@ -436,7 +438,7 @@ namespace MonoGear.Entities
             if(state != State.Interested)
             {
                 var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Guard_Alert_Sound").CreateInstance();
-                sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                sound.Volume = 0.4f * SettingsPage.Volume * SettingsPage.EffectVolume;
                 sound.Play();
             }
 

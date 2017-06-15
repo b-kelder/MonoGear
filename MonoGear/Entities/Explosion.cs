@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using MonoGear.Engine.Audio;
 using MonoGear.Engine;
 using System.Collections.Generic;
 
@@ -12,6 +13,7 @@ namespace MonoGear.Entities
     {
         private float blastRadius;
         private float maxDamage;
+        private PositionalAudio sound;
 
         /// <summary>
         /// Constructor of the explosion class. Creates an instance of an explosion.
@@ -35,9 +37,6 @@ namespace MonoGear.Entities
             maxDamage = 10;
 
             Z = 100;
-            var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Explosion").CreateInstance();
-            sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
-            sound.Play();
 
             LoadContent();
         }
@@ -45,8 +44,10 @@ namespace MonoGear.Entities
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
-
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
+            sound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Explosion"), 1, 1200, Position, false);
+            sound.Position = Position;
+            sound.Volume = 0.8f;
         }
 
         /// <summary>
@@ -57,6 +58,7 @@ namespace MonoGear.Entities
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
+            
 
             // Check if the animation is at its last frame
             if (AnimationCurrentFrame == 1)

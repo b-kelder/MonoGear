@@ -66,7 +66,7 @@ namespace MonoGear.Entities
             Visible = true;
             player.Enabled = false;
             var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound").CreateInstance();
-            sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+            sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
             sound.Play();
         }
 

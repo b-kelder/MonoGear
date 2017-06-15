@@ -49,6 +49,7 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
             birdSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Bird_sounds"), 1, 210, Position,true);
+            birdSound.Volume = 0.2f;
         }
 
         /// <summary>

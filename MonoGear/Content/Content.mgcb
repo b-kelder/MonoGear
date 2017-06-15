@@ -633,3 +633,9 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Tank Movement.wav
 
+#begin Audio/AudioFX/Tank_shot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Tank_shot.wav
+

@@ -42,6 +42,8 @@ namespace MonoGear.Engine.Audio
             posAudio.Position = position;
             posAudio.SoundEffect.IsLooped = loop;
 
+            posAudio.SoundEffect.Play();
+
             positionalAudio.Add(posAudio);
             return posAudio;
         }
@@ -53,19 +55,11 @@ namespace MonoGear.Engine.Audio
                 float distance = Vector2.Distance(audio.Position, player.Position);
                 if (distance > audio.Range)
                 {
-                    //Stop playing the audio.
-                    if (audio.SoundEffect.State != SoundState.Stopped)
-                    {
-                        audio.SoundEffect.Stop();
-                    }
+                    audio.SoundEffect.Volume = 0;
+                    
                 }
                 else
                 {
-                    //Start playing the audio if it's not playing already.
-                    if (audio.SoundEffect.State != SoundState.Playing)
-                    {
-                        audio.SoundEffect.Play();
-                    }
                     //Calculate the volume based on distance.
                     audio.SoundEffect.Volume = audio.Volume * (1 - (distance / audio.Range));
                 }

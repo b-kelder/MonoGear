@@ -47,18 +47,18 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
 
-            sound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Tank Movement"), 0, 300, Position, true);
+            sound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Tank Movement"), 0, 250, Position, true);
         }
 
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
 
-            float minVolume = 0.3f;
+            float minVolume = 0.1f;
             if(entered)
             {
                 sound.Position = Position;
-                sound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
+                sound.Volume = minVolume + (0.2f - minVolume) * Math.Abs(forwardSpeed) / Speed;
 
 
                 if(input.IsButtonPressed(Input.Button.Shoot) && lastShootTime + GunCycleTime <= (float)gameTime.TotalGameTime.TotalSeconds)
@@ -71,6 +71,10 @@ namespace MonoGear.Entities
                     MonoGearGame.SpawnLevelEntity(missile);
 
                     lastShootTime = (float)gameTime.TotalGameTime.TotalSeconds;
+
+                    var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Tank_shot").CreateInstance();
+                    sound.Volume = 0.3f * SettingsPage.Volume * SettingsPage.EffectVolume;
+                    sound.Play();
                 }                   
 
             }

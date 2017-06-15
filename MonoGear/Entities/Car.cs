@@ -69,6 +69,7 @@ namespace MonoGear.Entities
             base.OnLevelLoaded();
             // Add a sound effect to the car
             carSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Deja Vu"), 1, 500, Position, true);
+            carSound.Volume = 0.3f;
         }
 
         /// <summary>
