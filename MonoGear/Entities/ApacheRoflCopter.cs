@@ -23,6 +23,8 @@ namespace MonoGear.Entities
         private PositionalAudio heliSound;
         private float delay;
         private int barrelNr;
+        private bool destroyed;
+        private Texture2D destoyedSprite;
 
         public float Health { get; private set; }
 
@@ -65,14 +67,18 @@ namespace MonoGear.Entities
             }
             heliSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter Sound Effect"), 1, 300, Position, true);
             heliSound.Volume = 0.3f;
+            destoyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenRoflcopter");
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-
-            spriteBatch.Draw(props, Position + (Forward * 16), props.Bounds, Color.White, rot, new Vector2(props.Bounds.Size.X, props.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
-            rot += 1;
+            if (!destroyed)
+            {
+                spriteBatch.Draw(props, Position + (Forward * 16), props.Bounds, Color.White, rot, new Vector2(props.Bounds.Size.X, props.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+                rot += 1;
+            }
+            
 
             spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
         }
@@ -148,8 +154,14 @@ namespace MonoGear.Entities
             {
                 Exit();
             }
+
+
+            instanceTexture = destoyedSprite;
+
+            destroyed = true;
+            Enabled = false;
+
             AudioManager.StopPositional(heliSound);
-            MonoGearGame.DestroyEntity(this);
         }
     }
 }
