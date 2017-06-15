@@ -134,6 +134,7 @@
     </Compile>
     <Compile Include="Engine\Input.cs" />
     <Compile Include="Engine\Level.cs" />
+    <Compile Include="IDestroyable.cs" />
     <Compile Include="MathExtensions.cs" />
     <Compile Include="MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>

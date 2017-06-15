@@ -8,7 +8,10 @@ namespace MonoGear
 {
     interface IDestroyable
     {
-        void Damage();
+        void Damage(float damage);
+
         void Destroy();
+
+        Engine.WorldEntity GetEntity();
     }
 }

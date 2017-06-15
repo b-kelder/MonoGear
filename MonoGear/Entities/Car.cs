@@ -18,6 +18,8 @@ namespace MonoGear.Entities
         private List<Vector2> currentPath;
         private int currentPathIndex;
         public bool LoopPath { get; set; }
+        public float Health { get; private set; }
+
         private PositionalAudio carSound;
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace MonoGear.Entities
             LoopPath = true;
 
             Z = 100;
+            Health = 100;
 
             LoadContent();
 
@@ -127,15 +130,26 @@ namespace MonoGear.Entities
             carSound.Position = Position;
         }
 
-        public void Damage()
+        public void Damage(float damage)
         {
-            throw new NotImplementedException();
+            Health -= damage;
+
+            if (Health <= 0)
+            {
+                Destroy();
+            }
         }
 
         public void Destroy()
         {
-            throw new NotImplementedException();
+            MonoGearGame.DestroyEntity(this);
+        }
+
+        public WorldEntity GetEntity()
+        {
+            return this;
         }
     }
 }
+
 

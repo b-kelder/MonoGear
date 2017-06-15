@@ -24,6 +24,8 @@ namespace MonoGear.Entities
         private float delay;
         private int barrelNr;
 
+        public float Health { get; private set; }
+
         public ApacheRoflCopter()
         {
             TextureAssetName = "Sprites/MyRoflcopter";
@@ -38,6 +40,8 @@ namespace MonoGear.Entities
             Speed = 300;
             entered = false;
             stationaryLock = false;
+
+            Health = 100;
 
             ConstantSteering = true;
             Acceleration = 200;
@@ -125,14 +129,24 @@ namespace MonoGear.Entities
             }
         }
 
-        public void Damage()
+        public void Damage(float damage)
         {
-            throw new NotImplementedException();
+            Health -= damage;
+
+            if (Health <= 0)
+            {
+                Destroy();
+            }
         }
 
         public void Destroy()
         {
-            throw new NotImplementedException();
+            MonoGearGame.DestroyEntity(this);
+        }
+
+        public WorldEntity GetEntity()
+        {
+            return this;
         }
     }
 }

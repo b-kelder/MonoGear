@@ -24,6 +24,7 @@ namespace MonoGear.Entities
         private Texture2D playerSprite;
         private Texture2D destroyedSprite;
 
+        public float Health { get; private set; }
 
         public Willys()
         {
@@ -35,6 +36,8 @@ namespace MonoGear.Entities
             stationaryLock = false;
 
             Z = 1;
+
+            Health = 100;
 
             Acceleration = 80;
             Braking = 200;
@@ -93,14 +96,24 @@ namespace MonoGear.Entities
             willysSound.Position = Position;
         }
 
-        public void Damage()
+        public void Damage(float damage)
         {
-            throw new NotImplementedException();
+            Health -= damage;
+
+            if (Health <= 0)
+            {
+                Destroy();
+            }
         }
 
         public void Destroy()
         {
-            throw new NotImplementedException();
+            MonoGearGame.DestroyEntity(this);
+        }
+
+        public WorldEntity GetEntity()
+        {
+            return this;
         }
     }
 }

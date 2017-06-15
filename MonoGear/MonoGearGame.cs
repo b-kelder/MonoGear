@@ -420,7 +420,7 @@ namespace MonoGear
         /// </summary>
         /// <typeparam name="T">Type of entity.</typeparam>
         /// <returns>List</returns>
-        public static List<T> FindEntitiesOfType<T>() where T : WorldEntity
+        public static List<T> FindEntitiesOfType<T>()// where T : WorldEntity
         {
             var list = new List<T>();
             list.AddRange(instance.levelEntities.Where(

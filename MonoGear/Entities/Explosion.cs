@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using MonoGear.Engine;
+using System.Collections.Generic;
 
 namespace MonoGear.Entities
 {
@@ -30,7 +31,7 @@ namespace MonoGear.Entities
 
             Tag = "BOEM!";
 
-            blastRadius = 100;
+            blastRadius = 50;
             maxDamage = 10;
 
             Z = 100;
@@ -58,17 +59,31 @@ namespace MonoGear.Entities
             base.Update(input, gameTime);
 
             // Check if the animation is at its last frame
-            if (AnimationCurrentFrame == 14)
+            if (AnimationCurrentFrame == 1)
             {
-                if(player.Enabled)
+                /*if(player.Enabled)
                 {
-                    var dis = Vector2.Distance(player.Position, Position);
+                    
                     if(dis < blastRadius)
                     {
                         player.Health -= maxDamage * (dis / blastRadius * 100);
                     }
+                }*/
+
+                var things = MonoGearGame.FindEntitiesOfType<IDestroyable>();
+                foreach (var thing in things)
+                {
+                    var dis = Vector2.Distance(thing.GetEntity().Position, Position);
+                    if (dis < blastRadius)
+                    {
+                        thing.Damage(maxDamage * (dis / blastRadius * 100));
+                    } 
                 }
                 
+                
+            }
+            else if (AnimationCurrentFrame == 14)
+            {
                 MonoGearGame.DestroyEntity(this);
             }
         }

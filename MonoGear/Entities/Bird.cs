@@ -14,6 +14,8 @@ namespace MonoGear.Entities
         float speed;
 
         public float YResetValue { get; set; }
+        public float Health { get; private set; }
+
         PositionalAudio birdSound;
 
         /// <summary>
@@ -33,6 +35,7 @@ namespace MonoGear.Entities
             AnimationRunning = true;
 
             Tag = "ObeseHummingbird";
+            Health = 1;
 
             Z = 100;
 
@@ -76,14 +79,25 @@ namespace MonoGear.Entities
             birdSound.Position = Position;
         }
 
-        public void Damage()
+        public void Damage(float damage)
         {
-            throw new NotImplementedException();
+            Health -= damage;
+
+            if (Health <= 0)
+            {
+                Destroy();
+            }
         }
 
         public void Destroy()
         {
-            throw new NotImplementedException();
+            MonoGearGame.DestroyEntity(this);
+        }
+
+        public WorldEntity GetEntity()
+        {
+            return this;
         }
     }
 }
+

@@ -23,6 +23,8 @@ namespace MonoGear.Entities
         private static Texture2D searchSprite;
         private static Texture2D sleepSprite;
 
+        public float Health { get; set; }
+
         public enum State
         {
             Idle,
@@ -138,6 +140,8 @@ namespace MonoGear.Entities
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
+
+            
 
             //Debug.WriteLine("Guard is " + state);
 
@@ -520,14 +524,24 @@ namespace MonoGear.Entities
             return false;
         }
 
-        public void Damage()
+        public void Damage(float damage)
         {
-            throw new NotImplementedException();
+            Health -= damage;
+
+            if (Health <= 0)
+            {
+                Destroy();
+            }
         }
 
         public void Destroy()
         {
-            throw new NotImplementedException();
+            MonoGearGame.DestroyEntity(this);
+        }
+
+        public WorldEntity GetEntity()
+        {
+            return this;
         }
     }
 }

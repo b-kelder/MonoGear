@@ -16,6 +16,7 @@ namespace MonoGear.Entities
         private PositionalAudio sound;
         private float lastShootTime;
         public float GunCycleTime { get; set; }
+        public float Health { get; private set; }
 
         public Abrams()
         {
@@ -28,6 +29,8 @@ namespace MonoGear.Entities
             Z = 1;
 
             GunCycleTime = 0.8f;
+
+            Health = 500;
 
             Acceleration = 70;
             Braking = 140;
@@ -77,14 +80,25 @@ namespace MonoGear.Entities
             }
         }
 
-        public void Damage()
+        public void Damage(float damage)
         {
-            throw new NotImplementedException();
+            Health -= damage;
+
+            if (Health <= 0)
+            {
+                Destroy();
+            }
         }
 
         public void Destroy()
         {
-            throw new NotImplementedException();
+            MonoGearGame.DestroyEntity(this);
+        }
+
+        public WorldEntity GetEntity()
+        {
+            return this;
         }
     }
 }
+
