@@ -24,6 +24,7 @@ namespace MonoGear.Entities
         public float Drag { get; set; }
         protected bool stationaryLock;
         public bool ConstantSteering { get; set; }
+        public Objective objective { get; set; }
 
         /// <summary>
         /// Method that executes when the level is loaded.
@@ -39,6 +40,10 @@ namespace MonoGear.Entities
             entered = true;
             player.Visible = false;
             player.Enabled = false;
+            if (objective != null)
+            {
+                GameUI.CompleteObjective(objective);
+            }
         }
 
         public void Exit()

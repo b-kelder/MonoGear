@@ -269,6 +269,8 @@ namespace MonoGear.Engine
                 var cameraConsole = new Dictionary<CCTV, string>();
                 var objectives = new Dictionary<string, Objective>();       // Remains during gameplay due to some triggers needing it
                 var pcWithObjective = new Dictionary<PC, string>();
+                var driveObjective = new Dictionary<DrivableVehicle, string>();
+
 
 
                 foreach (var objectGroup in groups)
@@ -313,16 +315,32 @@ namespace MonoGear.Engine
                         {
                             entity = new ApacheRoflCopter();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+
+                            string objective;
+                            if (obj.Properties.TryGetValue("objective", out objective))
+                            {
+                                driveObjective.Add(entity as DrivableVehicle, objective);
+                            }
                         }
                         else if (obj.Type == "willy")
                         {
                             entity = new Willys();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            string objective;
+                            if (obj.Properties.TryGetValue("objective", out objective))
+                            {
+                                driveObjective.Add(entity as DrivableVehicle, objective);
+                            }
                         }
                         else if(obj.Type == "abrams")
                         {
                             entity = new Abrams();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            string objective;
+                            if (obj.Properties.TryGetValue("objective", out objective))
+                            {
+                                driveObjective.Add(entity as DrivableVehicle, objective);
+                            }
                         }
                         else if (obj.Type == "objective")
                         {
@@ -615,6 +633,20 @@ namespace MonoGear.Engine
                     else
                     {
                         Debug.WriteLine("PC could not find objective: " + pc.Value);
+                    }
+                }
+
+                // Assing drive/Objective
+                foreach (var drive in driveObjective)
+                {
+                    Objective ob;
+                    if (objectives.TryGetValue(drive.Value, out ob))
+                    {
+                        drive.Key.objective = ob;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("PC could not find objective: " + drive.Value);
                     }
                 }
 
