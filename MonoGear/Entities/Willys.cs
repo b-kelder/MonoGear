@@ -22,7 +22,8 @@ namespace MonoGear.Entities
         private PositionalAudio willysSound;
         private bool destroyed;
         private Texture2D playerSprite;
-        private Texture2D destroyedSprite;
+        private Texture2D willysSprite;
+        private Texture2D destoyedSprite;
 
         public float Health { get; private set; }
 
@@ -56,8 +57,10 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
             willysSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 0, 300, Position, true);
-            playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer");
-            destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
+            playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer"); 
+            destoyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
+            willysSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Willys");
+
         }
 
         /// <summary>
@@ -81,6 +84,10 @@ namespace MonoGear.Entities
             }
             else
             {
+                if (instanceTexture != willysSprite)
+                {
+                    instanceTexture = willysSprite;
+                }
                 willysSound.Volume = minVolume;
             }
 
@@ -104,7 +111,7 @@ namespace MonoGear.Entities
                 Exit();   
             }
 
-            instanceTexture = destroyedSprite;
+            instanceTexture = destoyedSprite;
 
             destroyed = true;
             Enabled = false;

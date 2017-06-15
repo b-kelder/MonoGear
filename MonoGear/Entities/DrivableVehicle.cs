@@ -201,11 +201,7 @@ namespace MonoGear.Entities
                     var prevPos = Position;
                     var deltaX = new Vector2(delta.X, 0);
                     var deltaY = new Vector2(0, delta.Y);
-
                     
-
-                    
-
                     if(Collider != null)
                     {
                         Collider hitCollider;
