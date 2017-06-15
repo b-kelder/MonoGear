@@ -16,6 +16,9 @@ namespace MonoGear.Entities
     {
         private PositionalAudio sound;
         private float lastShootTime;
+        private bool destroyed;
+        private Texture2D destroyedSprite;
+
         public float GunCycleTime { get; set; }
         public float Health { get; private set; }
 
@@ -30,6 +33,8 @@ namespace MonoGear.Entities
             Z = 1;
 
             GunCycleTime = 0.8f;
+
+            destroyed = false;
 
             Health = 100;
 
@@ -49,6 +54,7 @@ namespace MonoGear.Entities
             base.OnLevelLoaded();
 
             sound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Tank Movement"), 0, 250, Position, true);
+            destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenAbrams");
         }
 
         public override void Update(Input input, GameTime gameTime)
@@ -105,7 +111,15 @@ namespace MonoGear.Entities
         {
             base.Draw(spriteBatch);
 
-            spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
+            if (destroyed)
+            {
+                spriteBatch.Draw(destroyedSprite, Position, destroyedSprite.Bounds, Color.White, Rotation, new Vector2(destroyedSprite.Bounds.Size.X, destroyedSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
+            }
+
+            if (!destroyed)
+            {
+                spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
+            }
         }
 
         public void Damage(float damage)
@@ -124,8 +138,11 @@ namespace MonoGear.Entities
             {
                 Exit();
             }
+
+            destroyed = true;
+            Enabled = false;
+
             AudioManager.StopPositional(sound);
-            MonoGearGame.DestroyEntity(this);
         }
     }
 }
