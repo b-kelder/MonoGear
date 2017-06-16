@@ -56,7 +56,7 @@ namespace MonoGear.Engine
         {
             foreach (var item in currentTouchState)
             {
-                if (item.State == TouchLocationState.Pressed && item.Position.X == pos.X && item.Position.Y == pos.Y)
+                if (item.State == TouchLocationState.Pressed )//&& item.Position.X == pos.X && item.Position.Y == pos.Y)
                 {
                     return true;
                 }
