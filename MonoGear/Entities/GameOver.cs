@@ -3,8 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using MonoGear.Engine;
-
-
+using System;
 
 namespace MonoGear.Entities
 {
@@ -24,7 +23,7 @@ namespace MonoGear.Entities
             gameOver = true;
             Visible = false;
 
-            Z = 999;
+            Z = Int32.MaxValue;
 
             LoadContent();
         }

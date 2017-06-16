@@ -23,6 +23,8 @@ namespace MonoGear.Entities
             speed = 200f + rand.Next(-20, 20);
             TextureAssetName = "Sprites/Rock";
             Tag = "TheRock";
+
+            Z = 5;
             LoadContent();
 
             this.originCollider = originCollider;

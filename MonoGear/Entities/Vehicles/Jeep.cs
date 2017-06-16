@@ -11,13 +11,13 @@ using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
 using System.Diagnostics;
 
-namespace MonoGear.Entities
+namespace MonoGear.Entities.Vehicles
 {
     /// <summary>
     /// Willys jeep, player controlled vehicle
     /// </summary>
     ///
-    class Willys : DrivableVehicle, IDestroyable
+    class Jeep : DrivableVehicle, IDestroyable
     {
         private PositionalAudio willysSound;
         private bool destroyed;
@@ -27,7 +27,7 @@ namespace MonoGear.Entities
 
         public float Health { get; private set; }
 
-        public Willys()
+        public Jeep()
         {
             TextureAssetName = "Sprites/Willys";
             Tag = "Willys";

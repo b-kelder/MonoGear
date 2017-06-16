@@ -26,6 +26,8 @@ namespace MonoGear.Entities
             speed = 250f;
             TextureAssetName = "Sprites/SleepDart";
             Tag = "SleepDart";
+
+            Z = 5;
             LoadContent();
 
             this.originCollider = originCollider;

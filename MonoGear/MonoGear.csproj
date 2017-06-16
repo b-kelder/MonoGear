@@ -104,12 +104,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Engine\Audio\AudioManager.cs" />
-    <Compile Include="Entities\Abrams.cs" />
+    <Compile Include="Entities\Vehicles\Jet.cs" />
+    <Compile Include="Entities\Vehicles\Tank.cs" />
     <Compile Include="Entities\DrivableVehicle.cs" />
     <Compile Include="Entities\Explosion.cs" />
     <Compile Include="Entities\Missile.cs" />
-    <Compile Include="Entities\Willys.cs" />
-    <Compile Include="Entities\ApacheRoflCopter.cs" />
+    <Compile Include="Entities\Vehicles\Boat.cs" />
+    <Compile Include="Entities\Vehicles\Jeep.cs" />
+    <Compile Include="Entities\Vehicles\Helicopter.cs" />
     <Compile Include="Entities\Objective.cs" />
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Entities\Car.cs" />

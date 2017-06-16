@@ -46,7 +46,7 @@ namespace MonoGear.Entities
 
             destroyed = false;
 
-            Z = 100;
+            Z = 1;
             Health = 15;
 
             LoadContent();

@@ -19,7 +19,6 @@ namespace MonoGear.Entities
 
         PositionalAudio birdSound;
         private Texture2D destroyedSprite;
-        private bool destroyed;
 
         /// <summary>
         /// Constructor of the bird class. Creates an instance of a bird.
@@ -37,12 +36,10 @@ namespace MonoGear.Entities
             AnimationPingPong = true;
             AnimationRunning = true;
 
-            destroyed = false;
-
             Tag = "ObeseHummingbird";
             Health = 1;
 
-            Z = 100;
+            Z = 11;
 
             LoadContent();
         }
@@ -102,8 +99,6 @@ namespace MonoGear.Entities
             instanceTexture = destroyedSprite;
 
             AnimationRunning = false;
-
-            destroyed = true;
             Enabled = false;
         }
     }

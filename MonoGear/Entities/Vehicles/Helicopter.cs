@@ -10,13 +10,13 @@ using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
 
-namespace MonoGear.Entities
+namespace MonoGear.Entities.Vehicles
 {
     /// <summary>
     /// ApacheRoflCopter
     /// </summary>
     ///
-    class ApacheRoflCopter : DrivableVehicle, IDestroyable
+    class Helicopter : DrivableVehicle, IDestroyable
     {
         private Texture2D props;
         private int rot = 0;
@@ -28,13 +28,13 @@ namespace MonoGear.Entities
 
         public float Health { get; private set; }
 
-        public ApacheRoflCopter()
+        public Helicopter()
         {
             TextureAssetName = "Sprites/MyRoflcopter";
 
-            Tag = "Roflcopter";
+            Tag = "Helicopter";
 
-            Z = 100;
+            Z = 10;
 
             delay = 0;
             barrelNr = 0;

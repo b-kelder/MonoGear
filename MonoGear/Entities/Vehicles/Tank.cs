@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 using MonoGear.Engine;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGear.Entities
+namespace MonoGear.Entities.Vehicles
 {
-    class Abrams : DrivableVehicle, IDestroyable
+    class Tank : DrivableVehicle, IDestroyable
     {
         private PositionalAudio sound;
         private float lastShootTime;
@@ -22,15 +22,15 @@ namespace MonoGear.Entities
         public float GunCycleTime { get; set; }
         public float Health { get; private set; }
 
-        public Abrams()
+        public Tank()
         {
             TextureAssetName = "Sprites/Abrams";
-            Tag = "Abrams M1";
+            Tag = "Tank";
             Speed = 135;
             entered = false;
             stationaryLock = false;
 
-            Z = 1;
+            Z = 2;
 
             GunCycleTime = 0.8f;
 

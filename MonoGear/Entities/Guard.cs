@@ -105,7 +105,7 @@ namespace MonoGear.Entities
 
             Health = 5;
 
-            Z = 100;
+            Z = 1;
 
             LoadContent();
 

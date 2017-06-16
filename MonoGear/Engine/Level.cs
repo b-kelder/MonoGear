@@ -13,6 +13,7 @@ using TiledSharp;
 using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
 using MonoGear.Entities;
+using MonoGear.Entities.Vehicles;
 
 namespace MonoGear.Engine
 {
@@ -311,9 +312,9 @@ namespace MonoGear.Engine
                             entity = new Bird() { YResetValue = level.Height * level.TileHeight + 200 };
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
                         }
-                        else if (obj.Type == "roflcopter")
+                        else if (obj.Type == "helicopter")
                         {
-                            entity = new ApacheRoflCopter();
+                            entity = new Helicopter();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
 
                             string objective;
@@ -322,9 +323,9 @@ namespace MonoGear.Engine
                                 driveObjective.Add(entity as DrivableVehicle, objective);
                             }
                         }
-                        else if (obj.Type == "willy")
+                        else if (obj.Type == "jeep")
                         {
-                            entity = new Willys();
+                            entity = new Jeep();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
                             string objective;
                             if (obj.Properties.TryGetValue("objective", out objective))
@@ -332,9 +333,29 @@ namespace MonoGear.Engine
                                 driveObjective.Add(entity as DrivableVehicle, objective);
                             }
                         }
-                        else if(obj.Type == "abrams")
+                        else if(obj.Type == "tank")
                         {
-                            entity = new Abrams();
+                            entity = new Tank();
+                            entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            string objective;
+                            if (obj.Properties.TryGetValue("objective", out objective))
+                            {
+                                driveObjective.Add(entity as DrivableVehicle, objective);
+                            }
+                        }
+                        else if (obj.Type == "boat")
+                        {
+                            entity = new Boat();
+                            entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            string objective;
+                            if (obj.Properties.TryGetValue("objective", out objective))
+                            {
+                                driveObjective.Add(entity as DrivableVehicle, objective);
+                            }
+                        }
+                        else if (obj.Type == "jet")
+                        {
+                            entity = new Jet();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
                             string objective;
                             if (obj.Properties.TryGetValue("objective", out objective))

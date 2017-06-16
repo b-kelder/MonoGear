@@ -25,6 +25,8 @@ namespace MonoGear.Entities
             speed = 800f;
             TextureAssetName = "Sprites/Missile";
             Tag = "Missile";
+            Z = 5;
+
             LoadContent();
 
             this.originCollider = originCollider;

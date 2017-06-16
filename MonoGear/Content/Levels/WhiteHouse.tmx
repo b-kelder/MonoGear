@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="90">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="98">
  <tileset firstgid="1" name="Tiles" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="tilesets/WhiteHouse.png" width="272" height="272"/>
   <tile id="0">
@@ -4808,7 +4808,7 @@
     <property name="tag" value="PlayerSpawnPoint"/>
    </properties>
   </object>
-  <object id="2" name="guard 1" type="guard" gid="26" x="2997.83" y="927.167" width="16" height="16">
+  <object id="2" name="guard 1" type="guard" gid="26" x="3054.83" y="848.167" width="16" height="16">
    <properties>
     <property name="patrolpath" value="Patrol Path A"/>
    </properties>
@@ -4851,7 +4851,27 @@
     <property name="patrolpath" value="Backyard Half Left"/>
    </properties>
   </object>
-  <object id="73" name="jeep" type="willy" x="3602.67" y="1973.84" width="8.66663" height="7.667"/>
+  <object id="73" name="jeep" type="jeep" x="3602.67" y="1973.84" width="8.66663" height="7.667"/>
+  <object id="92" name="guard 6" type="guard" gid="26" x="1606" y="1816" width="16" height="16">
+   <properties>
+    <property name="patrolpath" value="Patrol Path F"/>
+   </properties>
+  </object>
+  <object id="93" name="guard 7" type="guard" gid="26" x="3049" y="1783" width="16" height="16">
+   <properties>
+    <property name="patrolpath" value="Patrol Path E"/>
+   </properties>
+  </object>
+  <object id="94" name="guard 8" type="guard" gid="26" x="1958" y="1288" width="16" height="16">
+   <properties>
+    <property name="patrolpath" value="Patrol Path B"/>
+   </properties>
+  </object>
+  <object id="95" name="guard 9" type="guard" gid="26" x="2735" y="1293" width="16" height="16">
+   <properties>
+    <property name="patrolpath" value="Patrol Path A"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Objectives">
   <object id="84" name="Objective1" type="objective" x="522.835" y="1708.16" width="35.33" height="32.67">
@@ -4892,9 +4912,15 @@
   <object id="89" name="Patrol Path D" type="path" x="2959.33" y="1588.67">
    <polyline points="0,0 -28.6667,82 -90.6667,166.667 -190,228.667 -296.667,257.333 -412,283.333 -292,257.333 -196.667,229.333 -94.6667,169.333 -30.6667,82.6667 -1.33333,-0.666667 -6.66667,-67.3333 -40.6667,-133.333 -109.333,-206 -156,-230 -114,-208.667 -42,-134 -8,-64.6667"/>
   </object>
+  <object id="90" name="Patrol Path E" type="path" x="3025" y="1750">
+   <polyline points="0,0 92,1 91,179 -96,179 -205,208 -207,185 -99,155 -19,83 5,63 2,3"/>
+  </object>
+  <object id="91" name="Patrol Path F" type="path" x="1584" y="1748">
+   <polyline points="0,0 63,-1 68,57 182,153 246,159 308,198 297,216 185,186 -3,187 -1,10"/>
+  </object>
  </objectgroup>
  <objectgroup name="Triggers">
-  <object id="55" name="Objective1Trigger" type="trigger" x="1503.17" y="735" width="1696.8" height="1280.92">
+  <object id="55" name="Objective1Trigger" type="trigger" x="1503.98" y="736" width="1695.99" height="1279.77">
    <properties>
     <property name="action" value="objective"/>
     <property name="objective" value="Objective1"/>
@@ -4905,5 +4931,6 @@
     <property name="action" value="nextlevel"/>
    </properties>
   </object>
+  <object id="96" name="abrams" type="jet" x="2313" y="2991" width="83" height="40"/>
  </objectgroup>
 </map>
