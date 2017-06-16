@@ -52,13 +52,16 @@ namespace MonoGear.Engine
             currentTouchState = TouchPanel.GetState();
         }
 
-        public bool IsScreenTouched()
+        public bool IsScreenTouched(Rectangle rect)
         {
             foreach (var item in currentTouchState)
             {
                 if (item.State == TouchLocationState.Pressed || item.State == TouchLocationState.Moved)
                 {
-                    return true;
+                    if (rect.Contains(item.Position))
+                    {
+                        return true;
+                    }      
                 }
             }
 
