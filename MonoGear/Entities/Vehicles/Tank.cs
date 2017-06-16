@@ -14,7 +14,7 @@ namespace MonoGear.Entities.Vehicles
 {
     class Tank : DrivableVehicle, IDestroyable
     {
-        private PositionalAudio sound;
+        private PositionalAudio tankSound;
         private float lastShootTime;
         private bool destroyed;
         private Texture2D destroyedSprite;
@@ -53,7 +53,7 @@ namespace MonoGear.Entities.Vehicles
         {
             base.OnLevelLoaded();
 
-            sound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Tank Movement"), 0, 250, Position, true);
+            tankSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Tank Movement"), 0, 250, Position, true);
             destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenAbrams");
         }
 
@@ -64,8 +64,8 @@ namespace MonoGear.Entities.Vehicles
             float minVolume = 0.1f;
             if(entered)
             {
-                sound.Position = Position;
-                sound.Volume = minVolume + (0.2f - minVolume) * Math.Abs(forwardSpeed) / Speed;
+                tankSound.Position = Position;
+                tankSound.Volume = minVolume + (0.2f - minVolume) * Math.Abs(forwardSpeed) / Speed;
 
 
                 if(input.IsButtonPressed(Input.Button.Shoot) && lastShootTime + GunCycleTime <= (float)gameTime.TotalGameTime.TotalSeconds)
@@ -103,7 +103,7 @@ namespace MonoGear.Entities.Vehicles
             }
             else
             {
-                sound.Volume = minVolume;
+                tankSound.Volume = minVolume;
             }
         }
 
@@ -128,7 +128,7 @@ namespace MonoGear.Entities.Vehicles
             Enabled = false;
             instanceTexture = destroyedSprite;
 
-            AudioManager.StopPositional(sound);
+            AudioManager.StopPositional(tankSound);
         }
     }
 }

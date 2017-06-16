@@ -19,10 +19,10 @@ namespace MonoGear.Entities.Vehicles
     ///
     class Jeep : DrivableVehicle, IDestroyable
     {
-        private PositionalAudio willysSound;
+        private PositionalAudio jeepSound;
         private bool destroyed;
         private Texture2D playerSprite;
-        private Texture2D willysSprite;
+        private Texture2D jeepSprite;
         private Texture2D destoyedSprite;
 
         public float Health { get; private set; }
@@ -56,10 +56,10 @@ namespace MonoGear.Entities.Vehicles
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
-            willysSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 0, 300, Position, true);
+            jeepSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 0, 300, Position, true);
             playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer"); 
             destoyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
-            willysSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Willys");
+            jeepSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Willys");
 
         }
 
@@ -79,19 +79,19 @@ namespace MonoGear.Entities.Vehicles
                 {
                     instanceTexture = playerSprite;
                 }
-                willysSound.Position = Position;
-                willysSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
+                jeepSound.Position = Position;
+                jeepSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
             }
             else
             {
-                if (instanceTexture != willysSprite)
+                if (instanceTexture != jeepSprite)
                 {
-                    instanceTexture = willysSprite;
+                    instanceTexture = jeepSprite;
                 }
-                willysSound.Volume = minVolume;
+                jeepSound.Volume = minVolume;
             }
 
-            willysSound.Position = Position;
+            jeepSound.Position = Position;
         }
 
         public void Damage(float damage)
@@ -116,7 +116,7 @@ namespace MonoGear.Entities.Vehicles
             destroyed = true;
             Enabled = false;
 
-            AudioManager.StopPositional(willysSound);
+            AudioManager.StopPositional(jeepSound);
         }
     }
 }

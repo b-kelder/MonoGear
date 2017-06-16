@@ -37,7 +37,7 @@ namespace MonoGear.Entities.Vehicles
             Health = 20;
 
             Acceleration = 150;
-            Braking = 0;
+            Braking = 150;
             Steering = 100;
             Drag = 60;
 

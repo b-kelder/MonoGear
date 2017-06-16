@@ -19,9 +19,7 @@ namespace MonoGear.Entities.Vehicles
     ///
     class Boat : DrivableVehicle, IDestroyable
     {
-        private PositionalAudio willysSound;
-        private Texture2D playerSprite;
-        private Texture2D willysSprite;
+        private PositionalAudio boatSound;
         private Texture2D destoyedSprite;
 
         public float Health { get; private set; }
@@ -54,7 +52,7 @@ namespace MonoGear.Entities.Vehicles
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
-            willysSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 0, 300, Position, true);
+            boatSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 0, 300, Position, true);
             destoyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
         }
 
@@ -70,15 +68,15 @@ namespace MonoGear.Entities.Vehicles
             float minVolume = 0.75f;
             if(entered)
             {
-                willysSound.Position = Position;
-                willysSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
+                boatSound.Position = Position;
+                boatSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
             }
             else
             {
-                willysSound.Volume = minVolume;
+                boatSound.Volume = minVolume;
             }
 
-            willysSound.Position = Position;
+            boatSound.Position = Position;
         }
 
         public void Damage(float damage)
@@ -101,7 +99,7 @@ namespace MonoGear.Entities.Vehicles
             instanceTexture = destoyedSprite;
             Enabled = false;
 
-            AudioManager.StopPositional(willysSound);
+            AudioManager.StopPositional(boatSound);
         }
     }
 }

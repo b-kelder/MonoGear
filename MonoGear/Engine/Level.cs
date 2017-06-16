@@ -285,11 +285,13 @@ namespace MonoGear.Engine
                         if (obj.Type == "spawnpoint")
                         {
                             entity = new SpawnPoint(new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset);
+                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
                         }
                         else if (obj.Type == "guard")
                         {
                             entity = new Guard();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
 
                             string path;
                             if (obj.Properties.TryGetValue("patrolpath", out path))
@@ -300,6 +302,7 @@ namespace MonoGear.Engine
                         else if (obj.Type == "car")
                         {
                             entity = new Car(new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset, null, "Sprites/Car");
+                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
 
                             string path;
                             if (obj.Properties.TryGetValue("path", out path))
@@ -311,11 +314,13 @@ namespace MonoGear.Engine
                         {
                             entity = new Bird() { YResetValue = level.Height * level.TileHeight + 200 };
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
                         }
                         else if (obj.Type == "helicopter")
                         {
                             entity = new Helicopter();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
 
                             string objective;
                             if (obj.Properties.TryGetValue("objective", out objective))
@@ -327,6 +332,8 @@ namespace MonoGear.Engine
                         {
                             entity = new Jeep();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
+
                             string objective;
                             if (obj.Properties.TryGetValue("objective", out objective))
                             {
@@ -337,6 +344,8 @@ namespace MonoGear.Engine
                         {
                             entity = new Tank();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
+
                             string objective;
                             if (obj.Properties.TryGetValue("objective", out objective))
                             {
@@ -347,6 +356,8 @@ namespace MonoGear.Engine
                         {
                             entity = new Boat();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
+
                             string objective;
                             if (obj.Properties.TryGetValue("objective", out objective))
                             {
@@ -357,6 +368,8 @@ namespace MonoGear.Engine
                         {
                             entity = new Jet();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
+
                             string objective;
                             if (obj.Properties.TryGetValue("objective", out objective))
                             {
@@ -395,6 +408,7 @@ namespace MonoGear.Engine
                         {
                             entity = new CCTV();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
+                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
 
                             string console;
                             if (obj.Properties.TryGetValue("pc", out console))
@@ -406,6 +420,7 @@ namespace MonoGear.Engine
                         {
                             entity = new PC();
                             entity.Position = new Vector2((float)obj.X, (float)obj.Y);
+                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
 
                             string objective;
                             if (obj.Properties.TryGetValue("objective", out objective))
@@ -578,28 +593,11 @@ namespace MonoGear.Engine
                                 entity.Tag = tag;
                             }
 
-                            // Set rotation (read in degrees)
-                            string rotation;
-                            if (obj.Properties.TryGetValue("rotation", out rotation))
-                            {
-                                float rot;
-                                if (float.TryParse(rotation, out rot))
-                                {
-                                    entity.Rotation = MathHelper.ToRadians(rot);
-                                    //Debug.WriteLine("Loaded rotation " + entity.Rotation + "rad");
-                                }
-                                else
-                                {
-                                    Debug.WriteLine("Failed to parse rotation " + rotation);
-                                }
-                            }
-
                             level.AddEntity(entity);
                             //Debug.WriteLine("Added entity");
                         }
                     }
                 }
-
 
                 // Assing guard patrol paths
                 foreach (var guardPath in guardPaths)
