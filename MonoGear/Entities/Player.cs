@@ -99,13 +99,14 @@ namespace MonoGear.Entities
 
             var dx = 0.0f;
             var dy = 0.0f;
-            if(input.IsButtonDown(Input.Button.Left))
+            var clip = Camera.main.GetClippingRect();
+            if (input.IsButtonDown(Input.Button.Left) || input.IsScreenTouched(new Vector2(0, clip.Y / 2)))
                 dx -= Speed;
-            if(input.IsButtonDown(Input.Button.Right))
+            if(input.IsButtonDown(Input.Button.Right) || input.IsScreenTouched(new Vector2(clip.X, clip.Y / 2)))
                 dx += Speed;
-            if(input.IsButtonDown(Input.Button.Up))
+            if(input.IsButtonDown(Input.Button.Up) || input.IsScreenTouched(new Vector2(clip.X / 2, 0)))
                 dy -= Speed;
-            if(input.IsButtonDown(Input.Button.Down))
+            if(input.IsButtonDown(Input.Button.Down) || input.IsScreenTouched(new Vector2(clip.X / 2, clip.Y)))
                 dy += Speed;
 
             if (input.IsKeyDown(Keys.LeftShift))

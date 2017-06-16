@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,7 @@ namespace MonoGear.Engine
 
         KeyboardState currentState;
         KeyboardState previousState;
+        TouchCollection currentTouchState;
 
         Dictionary<Button, Tuple<Keys, Keys>> buttonsToKeys;
 
@@ -45,6 +48,21 @@ namespace MonoGear.Engine
         {
             previousState = currentState;
             currentState = Keyboard.GetState();
+
+            currentTouchState = TouchPanel.GetState();
+        }
+
+        public bool IsScreenTouched(Vector2 pos)
+        {
+            foreach (var item in currentTouchState)
+            {
+                if (item.State == TouchLocationState.Pressed && item.Position.X == pos.X && item.Position.Y == pos.Y)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool IsButtonPressed(Button button)
