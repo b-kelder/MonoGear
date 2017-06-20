@@ -19,8 +19,8 @@ namespace MonoGear.Entities.Vehicles
     ///
     class Jeep : DrivableVehicle, IDestroyable
     {
+        public bool autoenter;
         private PositionalAudio jeepSound;
-        private bool destroyed;
         private Texture2D playerSprite;
         private Texture2D jeepSprite;
         private Texture2D destoyedSprite;
@@ -33,7 +33,6 @@ namespace MonoGear.Entities.Vehicles
             Tag = "Willys";
             Speed = 230;
             entered = false;
-            destroyed = false;
             stationaryLock = false;
 
             Z = 1;
@@ -61,6 +60,11 @@ namespace MonoGear.Entities.Vehicles
             destoyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
             jeepSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Willys");
 
+            if (autoenter)
+            {
+                Enter();
+            }
+
         }
 
         /// <summary>
@@ -79,7 +83,6 @@ namespace MonoGear.Entities.Vehicles
                 {
                     instanceTexture = playerSprite;
                 }
-                jeepSound.Position = Position;
                 jeepSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
             }
             else
@@ -112,8 +115,6 @@ namespace MonoGear.Entities.Vehicles
             }
 
             instanceTexture = destoyedSprite;
-
-            destroyed = true;
             Enabled = false;
 
             AudioManager.StopPositional(jeepSound);

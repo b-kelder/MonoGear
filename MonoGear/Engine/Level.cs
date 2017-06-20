@@ -339,6 +339,11 @@ namespace MonoGear.Engine
                             {
                                 driveObjective.Add(entity as DrivableVehicle, objective);
                             }
+                            string autoEnter;
+                            if (obj.Properties.TryGetValue("autoenter", out autoEnter))
+                            {
+                                (entity as Jeep).autoenter = true;
+                            }
                         }
                         else if(obj.Type == "tank")
                         {

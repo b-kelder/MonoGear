@@ -16,7 +16,7 @@ namespace MonoGear.Entities.Vehicles
     /// ApacheRoflCopter
     /// </summary>
     ///
-    class Helicopter : DrivableVehicle, IDestroyable
+    class Helicopter : WorldEntity, IDestroyable
     {
         private Texture2D props;
         private int rot = 0;
@@ -25,6 +25,7 @@ namespace MonoGear.Entities.Vehicles
         private int barrelNr;
         private bool destroyed;
         private Texture2D destoyedSprite;
+        private Player player;
 
         public float Health { get; private set; }
 
@@ -39,17 +40,7 @@ namespace MonoGear.Entities.Vehicles
             delay = 0;
             barrelNr = 0;
 
-            Speed = 300;
-            entered = false;
-            stationaryLock = false;
-
             Health = 50;
-
-            ConstantSteering = true;
-            Acceleration = 200;
-            Braking = 220;
-            Steering = 120;
-            Drag = 50;
 
             LoadContent();
         }
@@ -60,6 +51,8 @@ namespace MonoGear.Entities.Vehicles
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
+
+            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
 
             if (props == null)
             {
@@ -78,9 +71,6 @@ namespace MonoGear.Entities.Vehicles
                 spriteBatch.Draw(props, Position + (Forward * 16), props.Bounds, Color.White, rot, new Vector2(props.Bounds.Size.X, props.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
                 rot += 1;
             }
-            
-
-            spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "HP: " + Health, Position - Vector2.One * 16, Color.Red);
         }
 
         /// <summary>
@@ -100,12 +90,14 @@ namespace MonoGear.Entities.Vehicles
         {
             base.Update(input, gameTime);
 
+            Position = player.Position - new Vector2(300, 0);
+
             heliSound.Position = Position;
 
             if (delay > 0)
-                delay -= 1;
+                delay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (delay <=0 && input.IsButtonDown(Input.Button.Shoot) && entered)
+            if (delay <=0)
             {
                 var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
                 missile.Rotation = Rotation;
@@ -134,7 +126,7 @@ namespace MonoGear.Entities.Vehicles
                 sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
                 sound.Play();
 
-                delay = 10;
+                delay = 1;
             }
         }
 
@@ -150,12 +142,6 @@ namespace MonoGear.Entities.Vehicles
 
         public void Destroy()
         {
-            if(entered)
-            {
-                Exit();
-            }
-
-
             instanceTexture = destoyedSprite;
 
             destroyed = true;

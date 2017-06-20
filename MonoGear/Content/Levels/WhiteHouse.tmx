@@ -4931,6 +4931,5 @@
     <property name="action" value="nextlevel"/>
    </properties>
   </object>
-  <object id="96" name="jet" type="jet" x="2335" y="2984" width="11.3333" height="11.3333" rotation="90"/>
  </objectgroup>
 </map>

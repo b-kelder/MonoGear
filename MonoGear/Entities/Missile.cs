@@ -16,6 +16,7 @@ namespace MonoGear.Entities
     {
         float speed { get; set; }
         Collider originCollider;
+        private float boemInSec;
 
         public Missile(Collider originCollider)
         {
@@ -23,6 +24,7 @@ namespace MonoGear.Entities
             collider.Trigger = true;
 
             speed = 800f;
+            boemInSec = 1;
             TextureAssetName = "Sprites/Missile";
             Tag = "Missile";
             Z = 5;
@@ -40,7 +42,10 @@ namespace MonoGear.Entities
             var delta = Forward * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Move(delta);
 
-            if(Collider.CollidesAny())
+            if (boemInSec > 0)
+                boemInSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (Collider.CollidesAny() || boemInSec <= 0)
             {
                 Position = pos;
                 speed = 0.0f;
