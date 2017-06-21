@@ -54,8 +54,10 @@ namespace MonoGear.Entities.Vehicles
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
+
             jeepSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 0, 300, Position, true);
             jeepSound.Volume = 0.1f;
+
             playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer");
             destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
             jeepSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Willys");
