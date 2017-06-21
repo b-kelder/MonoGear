@@ -103,6 +103,7 @@ namespace MonoGear.Entities
             var dy = 0.0f;
             var clip = Camera.main.GetClippingRect();
 
+            // Use analog sticks or keyboard for movement depending on if we have a gamepad connected
             if(input.PadConnected())
             {
                 var sticks = input.GetGamepadState().ThumbSticks;
