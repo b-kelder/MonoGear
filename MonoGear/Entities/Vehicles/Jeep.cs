@@ -97,6 +97,8 @@ namespace MonoGear.Entities.Vehicles
             }
 
             jeepSound.Position = Position;
+
+            forwardSpeed = Speed;
         }
     }
 }
