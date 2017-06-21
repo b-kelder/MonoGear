@@ -72,10 +72,10 @@ namespace MonoGear.Entities
             spriteBatch.Draw(tom, new Vector2(14150, 722), Color.White);
             spriteBatch.Draw(danny, new Vector2(16000, 920), Color.White);
 
-            spriteBatch.Draw(music, new Vector2(20000, 722), Color.White);
-            spriteBatch.Draw(dejaVu, new Vector2(22000, 920), Color.White);
-            spriteBatch.Draw(america, new Vector2(24000, 722), Color.White);
-            spriteBatch.Draw(kevin, new Vector2(26000, 920), Color.White);
+            spriteBatch.Draw(music, new Vector2(18100, 722), Color.White);
+            spriteBatch.Draw(dejaVu, new Vector2(20000, 930), Color.White);
+            spriteBatch.Draw(america, new Vector2(22000, 722), Color.White);
+            spriteBatch.Draw(kevin, new Vector2(24200, 920), Color.White);
         }
     }
 }
