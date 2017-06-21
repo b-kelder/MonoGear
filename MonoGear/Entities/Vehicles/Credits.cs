@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Media;
 namespace MonoGear.Entities
 {
     /// <summary>
-    /// Bird that flies towards the top of the screen.
+    /// Shows credit sprites in the world
     /// </summary>
     class Credits : WorldEntity
     {
@@ -23,14 +23,9 @@ namespace MonoGear.Entities
         /// </summary>
         public Credits()
         {
-            // Bird texture
-            TextureAssetName = "Sprites/blank";
-
             Tag = "Credits";
 
-            Z = Int32.MaxValue;
-
-            LoadContent();
+            Z = int.MaxValue;
         }
 
         /// <summary>
@@ -40,12 +35,14 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
 
+            // Play credit music
             if (MediaPlayer.State != MediaState.Playing)
             {
                 MediaPlayer.Play(MonoGearGame.GetResource<Song>("Audio/Music/America Horse With No Name"));
                 MediaPlayer.Volume = 1 * SettingsPage.Volume * SettingsPage.MusicVolume;
             }
 
+            // Load all sprites
             wouter = MonoGearGame.GetResource<Texture2D>("Sprites/Credits/Wouter");
             manuel = MonoGearGame.GetResource<Texture2D>("Sprites/Credits/Manuel");
             bram = MonoGearGame.GetResource<Texture2D>("Sprites/Credits/Bram");
@@ -60,10 +57,13 @@ namespace MonoGear.Entities
             kevin = MonoGearGame.GetResource<Texture2D>("Sprites/Credits/Kevin");
         }
 
+        /// <summary>
+        /// Draw method, called when frame gets rendered.
+        /// </summary>
+        /// <param name="spriteBatch">Spritebatch to use</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
-
+            // Draw sprites at predetermined points in the world
             spriteBatch.Draw(madeby, new Vector2(4000, 920), Color.White);
             spriteBatch.Draw(wouter, new Vector2(5950, 722), Color.White);
             spriteBatch.Draw(manuel, new Vector2(8000, 920), Color.White);

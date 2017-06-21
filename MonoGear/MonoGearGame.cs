@@ -67,8 +67,6 @@ namespace MonoGear
         Player player;
         LevelListData levelList;
 
-        bool rollingCredits;
-
         Queue<WorldEntity> spawnQueueLocal;
         Queue<WorldEntity> spawnQueueGlobal;
 
@@ -87,6 +85,7 @@ namespace MonoGear
             {
                 if (activeCamera != null)
                 {
+                    // Update viewport size
                     activeCamera.UpdateViewport(graphics.GraphicsDevice.Viewport);
                 }
             };
@@ -117,17 +116,6 @@ namespace MonoGear
                 {
                     // Load the next level
                     LoadLevel(instance.levelList.NextLevel());
-                }
-                else
-                {
-                    // Roll Credits
-                    // Block update
-                    instance.rollingCredits = true;
-                    // Mute audio?
-
-                    // Roll credits
-                    var frame = Windows.UI.Xaml.Window.Current.Content as Frame;
-                    frame.Navigate(typeof(CreditsPage));
                 }
             }
         }
@@ -195,23 +183,19 @@ namespace MonoGear
         /// </summary>
         protected override void Initialize()
         {
+            // Create objects
             input = new Input();
-
             levelEntities = new HashSet<WorldEntity>();
             globalEntities = new HashSet<WorldEntity>();
-
             spawnQueueGlobal = new Queue<WorldEntity>();
             spawnQueueLocal = new Queue<WorldEntity>();
-
             destroyQueue= new Queue<WorldEntity>();
 
+            // Set up camera
             activeCamera = new Camera(graphics.GraphicsDevice.Viewport);
-
-            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
-            var scaleFactor = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
-
+            // Zoom based on screen size
             activeCamera.Zoom = graphics.GraphicsDevice.Viewport.Height / 320;
-            
+
             base.Initialize();
         }
 
@@ -226,6 +210,7 @@ namespace MonoGear
             {
                 var sf = await Package.Current.InstalledLocation.TryGetItemAsync(@"Content\Levels\LevelList.xml") as StorageFile;
 
+                // Parse xml, if it's malformed we can't do anything with the game anyway so we just crash
                 using(var stream = await sf.OpenStreamForReadAsync())
                 {
                     XmlSerializer xml = new XmlSerializer(typeof(LevelListData));
@@ -240,7 +225,7 @@ namespace MonoGear
             var gameOver = new GameOver();
             RegisterGlobalEntity(gameOver);
 
-            // Global Entities
+            // Create some global Entities
             player = new Player();
             RegisterGlobalEntity(player);
             var ui = new GameUI();
@@ -268,16 +253,13 @@ namespace MonoGear
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if(rollingCredits)
-            {
-                return;
-            }
-
+            // Load level if we must
             if(nextLevel != null)
             {
                 LoadLevel();
             }
 
+            // Update input state
             input.Update();
 
             // Destroy entities
@@ -301,7 +283,7 @@ namespace MonoGear
                 RegisterLevelEntity(spawnQueueLocal.Dequeue());
             }
 
-            // Globals go first
+            // Update entities, globals go first
             foreach(var entity in globalEntities)
             {
                 if(entity.Enabled)
@@ -317,6 +299,7 @@ namespace MonoGear
                 }
             }
 
+            // Update audio
             AudioManager.UpdatePositionalAudio(player);
 
             base.Update(gameTime);
@@ -328,11 +311,14 @@ namespace MonoGear
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            // Clear screen
             GraphicsDevice.Clear(Color.Black);
 
+            // Get camera translation matrix for zoom and offsets
             var matrix = activeCamera.GetViewMatrix();
             spriteBatch.Begin(transformMatrix: matrix, blendState:BlendState.AlphaBlend, samplerState:SamplerState.PointClamp);
 
+            // Draw tiles and background overlays
             activeLevel.DrawTiles(spriteBatch, activeCamera);
             activeLevel.DrawBackground(spriteBatch);
 
@@ -353,22 +339,36 @@ namespace MonoGear
                 }
             }
 
+            // Draw foreground overlays
             activeLevel.DrawForeground(spriteBatch);
             spriteBatch.End();
+
 
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Spawns a level entity.
+        /// </summary>
+        /// <param name="entity">Entity to spawn</param>
         public static void SpawnLevelEntity(WorldEntity entity)
         {
             instance.spawnQueueLocal.Enqueue(entity);
         }
 
+        /// <summary>
+        /// Spawns a global entity.
+        /// </summary>
+        /// <param name="entity">Entity to spawn</param>
         public static void SpawnGlobalEntity(WorldEntity entity)
         {
             instance.spawnQueueGlobal.Enqueue(entity);
         }
 
+        /// <summary>
+        /// Queues an entity for destruction next frame.
+        /// </summary>
+        /// <param name="entity">Entity to destroy</param>
         public static void DestroyEntity(WorldEntity entity)
         {
             instance.destroyQueue.Enqueue(entity);
@@ -422,7 +422,7 @@ namespace MonoGear
         /// </summary>
         /// <typeparam name="T">Type of entity.</typeparam>
         /// <returns>List</returns>
-        public static List<T> FindEntitiesOfType<T>()// where T : WorldEntity
+        public static List<T> FindEntitiesOfType<T>()
         {
             var list = new List<T>();
             list.AddRange(instance.levelEntities.Where(
@@ -456,10 +456,15 @@ namespace MonoGear
             // Check if the next level is not null
             if(nextLevel != null)
             {
+                // Clear audio
+                AudioManager.ClearPositionalAudio();
+                AudioManager.ClearGlobalAudio();
+                MediaPlayer.Stop();
+
                 activeLevel = nextLevel;
                 nextLevel = null;
 
-                var gameOver = MonoGearGame.FindEntitiesWithTag("GameOverScreen")[0] as GameOver;
+                var gameOver = FindEntitiesWithTag("GameOverScreen")[0] as GameOver;
                 var hp = player.Health;
                 var darts = player.DartCount;
 
@@ -488,10 +493,13 @@ namespace MonoGear
                     e.OnLevelLoaded();
                 }
 
-                spawnQueueLocal.Clear();            // Clear local spawn queue to prevent them from appearing in the new level
+                // Clear local spawn queue to prevent them from appearing in the new level
+                spawnQueueLocal.Clear();
 
+                // Update difficulty affected variables in entities
                 UpdateDifficulty();
 
+                // Check if this was a reset (gameOver true) or a transition
                 if (!gameOver.gameOver)
                 {
                     player.Health = hp;
@@ -502,21 +510,26 @@ namespace MonoGear
                     gameOver.DisableGameOver();
                 }
                 
-                // Force GC
+                // Force GC for performance reasons
                 GC.Collect();
             }
         }
 
-        // static level stuff
+        /// <summary>
+        /// Sets a level to be loaded
+        /// </summary>
+        /// <param name="levelName">Name of the level</param>
         public static void LoadLevel(string levelName)
         {
-            AudioManager.ClearPositionalAudio();
-            AudioManager.ClearGlobalAudio();
-            MediaPlayer.Stop();
-
             instance.nextLevel = Level.LoadLevel(levelName);
         }
 
+        /// <summary>
+        /// Returns a resource from the content manager.
+        /// </summary>
+        /// <typeparam name="T">Type of resource</typeparam>
+        /// <param name="name">Name of the resource</param>
+        /// <returns>Resource</returns>
         public static T GetResource<T>(string name)
         {
             return instance.Content.Load<T>(name);

@@ -20,10 +20,25 @@ namespace MonoGear.Entities.Vehicles
     ///
     class Jeep : DrivableVehicle
     {
+        /// <summary>
+        /// Indicates player should enter on level start
+        /// </summary>
         public bool autoenter;
+        /// <summary>
+        /// Engine sound
+        /// </summary>
         private PositionalAudio jeepSound;
+        /// <summary>
+        /// Sprite of jeep with player
+        /// </summary>
         private Texture2D playerSprite;
+        /// <summary>
+        /// Sprite of empty jeep
+        /// </summary>
         private Texture2D jeepSprite;
+        /// <summary>
+        /// Used to indicate that we are in credit mode (the credits scene)
+        /// </summary>
         public bool creditsMode;
 
         public Jeep()
@@ -45,6 +60,7 @@ namespace MonoGear.Entities.Vehicles
 
             Collider = new BoxCollider(this, new Vector2(24, 24));
 
+            // Must be called to ensure content is loaded
             LoadContent();
         }
 
@@ -59,15 +75,15 @@ namespace MonoGear.Entities.Vehicles
             destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
             jeepSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Willys");
 
-            if (autoenter)
+            // Enter on level load, for example heli chase scene
+            if(autoenter)
             {
                 Enter();
             }
-
         }
 
         /// <summary>
-        /// Method that updates the game
+        /// Method called every frame
         /// </summary>
         /// <param name="input">Input</param>
         /// <param name="gameTime">GameTime</param>
@@ -75,9 +91,10 @@ namespace MonoGear.Entities.Vehicles
         {
             if(creditsMode)
             {
-                //Disable game entities
+                //One time changes
                 if(MonoGearGame.FindEntitiesOfType<GameUI>()[0].Enabled)
                 {
+                    // Disable UI, spawn credits and set other things
                     MonoGearGame.FindEntitiesOfType<GameUI>()[0].Enabled = false;
                     MonoGearGame.FindEntitiesOfType<GameUI>()[0].Visible = false;
 
@@ -92,22 +109,13 @@ namespace MonoGear.Entities.Vehicles
                 Rotation = MathHelper.ToRadians(90);
                 forwardSpeed = Speed;
                 jeepSound.Volume = 0;
+                // Required for tank range detection
                 player.Position = Position;
 
                 // Camera tracking
-                float endXPos = 28000;
-                if(Position.X < endXPos)
+                if(Position.X < 28000)
                 {
                     Camera.main.Position = Position;
-                }
-
-                if(input.IsButtonPressed(Input.Button.Right))
-                {
-                    Speed *= 2;
-                }
-                if(input.IsButtonPressed(Input.Button.Left))
-                {
-                    Speed /= 2;
                 }
 
                 return;
@@ -116,11 +124,7 @@ namespace MonoGear.Entities.Vehicles
             // Handles driving and input
             base.Update(input, gameTime);
 
-            if(destroyed)
-            {
-                AudioManager.StopPositional(jeepSound);
-            }
-
+            // Speed based volume
             float minVolume = 0.75f;
             if(Entered)
             {
@@ -144,6 +148,7 @@ namespace MonoGear.Entities.Vehicles
 
         public override void Destroy()
         {
+            // Throw the player out
             if(Entered)
             {
                 Exit();
@@ -152,16 +157,17 @@ namespace MonoGear.Entities.Vehicles
             instanceTexture = destroyedSprite;
             Enabled = false;
             destroyed = true;
+            AudioManager.StopPositional(jeepSound);
 
             if(creditsMode)
             {
-                // Car is off-screen, restart
+                // Car has exploded, show restart screen
                 var go = new GameOver();
                 MonoGearGame.SpawnLevelEntity(go);
                 Exit();
                 go.EnableGameOver();
-                player.Enabled = false;
-                player.Visible = false;
+                player.Enabled = false;                 // Ensure camera doesn't snap to player next frame
+                player.Visible = false;                 // Ensure player remains invisible
             }
         }
     }

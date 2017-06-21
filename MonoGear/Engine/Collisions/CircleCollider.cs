@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace MonoGear.Engine.Collisions
 {
+    /// <summary>
+    /// Circle shaped collider.
+    /// </summary>
     public class CircleCollider : Collider
     {
         private float radius;
