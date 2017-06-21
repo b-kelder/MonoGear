@@ -67,12 +67,6 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Epic music for an epic moment.mp3
 
-#begin Audio/Music/Main menu theme.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Main menu theme.mp3
-
 #begin Audio/AudioFX/Guard_Alert_Sound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -896,4 +890,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Levels/Tilesets/Credits.png
+
+#begin Audio/Music/Main_menu_theme.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Main_menu_theme.mp3
 
