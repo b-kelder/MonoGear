@@ -16,6 +16,7 @@ using Windows.Graphics.Display;
 using MonoGear.Engine;
 using MonoGear.Engine.Audio;
 using MonoGear.Entities;
+using Microsoft.Xna.Framework.Media;
 
 namespace MonoGear
 {
@@ -511,6 +512,7 @@ namespace MonoGear
         {
             AudioManager.ClearPositionalAudio();
             AudioManager.ClearGlobalAudio();
+            MediaPlayer.Stop();
 
             instance.nextLevel = Level.LoadLevel(levelName);
         }

@@ -344,6 +344,11 @@ namespace MonoGear.Engine
                             {
                                 (entity as Jeep).autoenter = true;
                             }
+                            string creditmode;
+                            if(obj.Properties.TryGetValue("creditmode", out creditmode))
+                            {
+                                (entity as Jeep).creditsMode = true;
+                            }
                         }
                         else if(obj.Type == "tank")
                         {
