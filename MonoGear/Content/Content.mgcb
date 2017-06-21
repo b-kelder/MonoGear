@@ -717,3 +717,9 @@
 /processorParam:TextureFormat=Color
 /build:Levels/Tilesets/Dessert.png
 
+#begin Audio/Music/America Horse With No Name.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/America Horse With No Name.mp3
+
