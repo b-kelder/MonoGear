@@ -111,20 +111,7 @@ namespace MonoGear.Entities
 
             if (player.CurrentVehicle != null)
             {
-                Texture2D texture;
-                if ((player.CurrentVehicle as Jeep) != null)
-                {
-                    texture = MonoGearGame.GetResource<Texture2D>("Sprites/SleepDart");
-                }
-                else if((player.CurrentVehicle as Tank) != null)
-                {
-                    texture = MonoGearGame.GetResource<Texture2D>("Sprites/SleepDart");
-                }
-                else
-                {
-                    texture = MonoGearGame.GetResource<Texture2D>("Sprites/SleepDart");
-                }
-
+                Texture2D texture = MonoGearGame.GetResource<Texture2D>("Sprites/Wrench");
                 var test = player.CurrentVehicle.Health / 5;
                 pos = rect.Right - 100;
                 for (int i = 0; i < test; i++)
