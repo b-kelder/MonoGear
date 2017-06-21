@@ -723,3 +723,9 @@
 /processorParam:Quality=Best
 /build:Audio/Music/America Horse With No Name.mp3
 
+#begin Audio/Music/White house inside.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/White house inside.mp3
+
