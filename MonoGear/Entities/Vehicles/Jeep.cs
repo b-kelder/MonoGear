@@ -55,7 +55,7 @@ namespace MonoGear.Entities.Vehicles
         {
             base.OnLevelLoaded();
 
-            jeepSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 0, 300, Position, true);
+            jeepSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car"), 0, 300, Position, true);
             jeepSound.Volume = 0.1f;
 
             playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer");
