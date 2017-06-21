@@ -75,7 +75,6 @@ namespace MonoGear.Entities.Vehicles
         {
             if(creditsMode)
             {
-                Health = 100;
                 //Disable game entities
                 if(MonoGearGame.FindEntitiesOfType<GameUI>()[0].Enabled)
                 {
@@ -85,6 +84,7 @@ namespace MonoGear.Entities.Vehicles
                     MonoGearGame.SpawnLevelEntity(new Credits());
 
                     instanceTexture = playerSprite;
+                    Health = 1;
                 }
 
                 // Move right on the screen
@@ -92,6 +92,7 @@ namespace MonoGear.Entities.Vehicles
                 Rotation = MathHelper.ToRadians(90);
                 forwardSpeed = Speed;
                 jeepSound.Volume = 0;
+                player.Position = Position;
 
                 // Camera tracking
                 float endXPos = 28000;
@@ -99,20 +100,14 @@ namespace MonoGear.Entities.Vehicles
                 {
                     Camera.main.Position = Position;
                 }
-                else if(Position.X >= endXPos + 1000)
-                {
-                    // Car is off-screen, restart
-                    var go = new GameOver();
-                    MonoGearGame.SpawnLevelEntity(go);
-                    go.EnableGameOver();
-                    Exit();
-                    player.Enabled = false;
-                    MonoGearGame.DestroyEntity(this);
-                }
 
                 if(input.IsButtonPressed(Input.Button.Right))
                 {
                     Speed *= 2;
+                }
+                if(input.IsButtonPressed(Input.Button.Left))
+                {
+                    Speed /= 2;
                 }
 
                 return;
@@ -134,7 +129,6 @@ namespace MonoGear.Entities.Vehicles
                     instanceTexture = playerSprite;
                 }
                 jeepSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
-                creditsMode = true;
             }
             else
             {
@@ -146,6 +140,29 @@ namespace MonoGear.Entities.Vehicles
             }
 
             jeepSound.Position = Position;
+        }
+
+        public override void Destroy()
+        {
+            if(Entered)
+            {
+                Exit();
+            }
+
+            instanceTexture = destroyedSprite;
+            Enabled = false;
+            destroyed = true;
+
+            if(creditsMode)
+            {
+                // Car is off-screen, restart
+                var go = new GameOver();
+                MonoGearGame.SpawnLevelEntity(go);
+                Exit();
+                go.EnableGameOver();
+                player.Enabled = false;
+                player.Visible = false;
+            }
         }
     }
 }

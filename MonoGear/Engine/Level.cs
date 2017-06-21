@@ -361,6 +361,11 @@ namespace MonoGear.Engine
                             {
                                 driveObjective.Add(entity as DrivableVehicle, objective);
                             }
+                            string creditmode;
+                            if(obj.Properties.TryGetValue("creditmode", out creditmode))
+                            {
+                                (entity as Tank).creditsMode = true;
+                            }
                         }
                         else if (obj.Type == "objective")
                         {

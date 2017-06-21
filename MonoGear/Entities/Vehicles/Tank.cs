@@ -16,6 +16,8 @@ namespace MonoGear.Entities.Vehicles
         private PositionalAudio tankSound;
         private float lastShootTime;
 
+        public bool creditsMode;
+
         public float GunCycleTime { get; set; }
 
         public Tank()
@@ -60,6 +62,16 @@ namespace MonoGear.Entities.Vehicles
         /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
+            if(creditsMode)
+            {
+                if(Vector2.Distance(player.Position, Position) < 250)
+                {
+                    FireCannon();
+                    creditsMode = false;
+                }
+            }
+
+
             base.Update(input, gameTime);
 
             if (destroyed)
@@ -76,18 +88,8 @@ namespace MonoGear.Entities.Vehicles
 
                 if(input.IsButtonPressed(Input.Button.Shoot) && lastShootTime + GunCycleTime <= (float)gameTime.TotalGameTime.TotalSeconds)
                 {
-                    var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
-                    missile.Rotation = Rotation;
-
-                    missile.Position = Position + Forward * 88;
-
-                    MonoGearGame.SpawnLevelEntity(missile);
-
                     lastShootTime = (float)gameTime.TotalGameTime.TotalSeconds;
-
-                    var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Tank_shot").CreateInstance();
-                    sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
-                    sound.Play();
+                    FireCannon();
                 }
 
                 if (input.IsButtonPressed(Input.Button.Throw))
@@ -111,6 +113,20 @@ namespace MonoGear.Entities.Vehicles
             {
                 tankSound.Volume = minVolume;
             }
+        }
+
+        public void FireCannon()
+        {
+            var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
+            missile.Rotation = Rotation;
+
+            missile.Position = Position + Forward * 88;
+
+            MonoGearGame.SpawnLevelEntity(missile);
+
+            var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Tank_shot").CreateInstance();
+            sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
+            sound.Play();
         }
     }
 }
