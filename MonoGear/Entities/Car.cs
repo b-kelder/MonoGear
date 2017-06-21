@@ -21,7 +21,6 @@ namespace MonoGear.Entities
         public float Health { get; private set; }
 
         private PositionalAudio carSound;
-        private bool destroyed;
         private Texture2D destroyedSprite;
 
         /// <summary>
@@ -42,8 +41,6 @@ namespace MonoGear.Entities
 
             this.currentPath = currentPath;
             LoopPath = true;
-
-            destroyed = false;
 
             Z = 1;
             Health = 15;
@@ -138,7 +135,6 @@ namespace MonoGear.Entities
         {
             AudioManager.StopPositional(carSound);
             instanceTexture = destroyedSprite;
-            destroyed = true;
             Enabled = false;
         }
     }
