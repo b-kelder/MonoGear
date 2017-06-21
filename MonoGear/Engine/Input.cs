@@ -51,8 +51,8 @@ namespace MonoGear.Engine
             buttonsToPad = new Dictionary<Button, Buttons> {
                 { Button.Left,      Buttons.DPadLeft},
                 { Button.Right,     Buttons.DPadRight},
-                { Button.Up,        Buttons.DPadUp},
-                { Button.Down,      Buttons.DPadDown},
+                { Button.Up,        Buttons.RightTrigger},
+                { Button.Down,      Buttons.LeftTrigger},
 
                 { Button.Throw,     Buttons.Y},
                 { Button.Shoot,     Buttons.X},

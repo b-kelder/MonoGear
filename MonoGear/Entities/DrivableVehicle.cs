@@ -78,13 +78,22 @@ namespace MonoGear.Entities
                     {
                         if(ConstantSteering)
                         {
-                            if(input.IsButtonDown(Input.Button.Left))
+                            if(input.PadConnected())
                             {
-                                Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
+                                var sticks = input.GetGamepadState().ThumbSticks;
+
+                                Rotation += sticks.Left.X * MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
                             }
-                            if(input.IsButtonDown(Input.Button.Right))
+                            else
                             {
-                                Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
+                                if(input.IsButtonDown(Input.Button.Left))
+                                {
+                                    Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
+                                }
+                                if(input.IsButtonDown(Input.Button.Right))
+                                {
+                                    Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
+                                }
                             }
                         }
                         else
@@ -92,14 +101,23 @@ namespace MonoGear.Entities
                             // Speed based steering for consistent turning circle
                             if(forwardSpeed != 0)
                             {
-                                // Rotate if we're not standing still
-                                if(input.IsButtonDown(Input.Button.Left))
+                                if(input.PadConnected())
                                 {
-                                    Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                    var sticks = input.GetGamepadState().ThumbSticks;
+
+                                    Rotation += sticks.Left.X * MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
                                 }
-                                if(input.IsButtonDown(Input.Button.Right))
+                                else
                                 {
-                                    Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                    // Rotate if we're not standing still
+                                    if(input.IsButtonDown(Input.Button.Left))
+                                    {
+                                        Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                    }
+                                    if(input.IsButtonDown(Input.Button.Right))
+                                    {
+                                        Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                    }
                                 }
                             }
                         }
