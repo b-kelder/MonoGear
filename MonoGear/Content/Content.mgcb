@@ -67,12 +67,6 @@
 /processorParam:Quality=Best
 /build:Audio/Music/Epic music for an epic moment.mp3
 
-#begin Audio/Music/Main menu theme.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Main menu theme.mp3
-
 #begin Audio/AudioFX/Guard_Alert_Sound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -102,12 +96,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Rock.png
-
-#begin Audio/AudioFX/Car_sound.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/AudioFX/Car_sound.wav
 
 #begin Audio/AudioFX/Crickets_sound.wav
 /importer:WavImporter
@@ -896,4 +884,17 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Levels/Tilesets/Credits.png
+
+#begin Audio/AudioFX/Car.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/AudioFX/Car.wav
+
+#begin Audio/Music/Main_menu_theme.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Main_menu_theme.mp3
+
 
