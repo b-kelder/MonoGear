@@ -14,17 +14,33 @@ using MonoGear.Engine.Audio;
 
 namespace MonoGear.Entities
 {
+    /// <summary>
+    /// Guard that can patrol, pursuit and shoot the player
+    /// </summary>
     class Guard : WorldEntityAnimated, IDestroyable
     {
+        /// <summary>
+        /// Sprite used for displaying 90deg FOV
+        /// </summary>
         private static Texture2D fovSprite;
+        /// <summary>
+        /// Default color for fov sprite
+        /// </summary>
         private static Color fovColor = new Color(100, 0, 0, 10);
 
+        // Sprites for icons
         private static Texture2D alertSprite;
         private static Texture2D searchSprite;
         private static Texture2D sleepSprite;
 
+        /// <summary>
+        /// Guard health
+        /// </summary>
         public float Health { get; set; }
 
+        /// <summary>
+        /// Guard AI state
+        /// </summary>
         public enum State
         {
             Idle,
@@ -39,16 +55,36 @@ namespace MonoGear.Entities
             Sleeping,           // Sleeping
         }
 
+        /// <summary>
+        /// Speed when walking
+        /// </summary>
         public float WalkSpeed { get; set; }
+        /// <summary>
+        /// Speed when running
+        /// </summary>
         public float RunSpeed { get; set; }
-
+        /// <summary>
+        /// Range of hearing
+        /// </summary>
         private float hearingRange;
+        /// <summary>
+        /// Range of sight
+        /// </summary>
         public float SightRange { get; set; }
+        // fov
         private float sightFov;
+
+        // Cached player and position
         private Player player;
         private Vector2 playerPos;
+        /// <summary>
+        /// Sound
+        /// </summary>
         private PositionalAudio sound;
 
+        /// <summary>
+        /// Guard patrol path
+        /// </summary>
         public List<Vector2> PatrolPath
         {
             get
@@ -66,18 +102,23 @@ namespace MonoGear.Entities
                 }
             }
         }
+        // Point at patrol path
         private int patrolPathIndex;
 
+        // Path data
         private List<Vector2> patrolPath;
         private List<Vector2> currentPath;
         private int currentPathIndex;
 
+        // Time spend waiting after losing the player
         private float searchTime;
         private float searchStartTime;
 
+        // Time between shots
         private float shootTime;
         private float shootStartTime;
 
+        // AI state
         State state;
 
         public Guard()
@@ -112,16 +153,23 @@ namespace MonoGear.Entities
             Collider = new BoxCollider(this, new Vector2(8));
         }
 
+        /// <summary>
+        /// Called when level gets loaded
+        /// </summary>
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
         }
 
+        /// <summary>
+        /// Called to load content
+        /// </summary>
         protected override void LoadContent()
         {
             base.LoadContent();
 
+            // Load sprites
             if (alertSprite == null)
             {
                 alertSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Alert");
@@ -140,13 +188,14 @@ namespace MonoGear.Entities
             }
         }
 
+        /// <summary>
+        /// Called once per frame
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="gameTime"></param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
-
-            
-
-            //Debug.WriteLine("Guard is " + state);
 
             if(state == State.Sleeping)
             {
@@ -332,8 +381,8 @@ namespace MonoGear.Entities
         {
             spriteBatch.Draw(fovSprite, pos, fovSprite.Bounds, color, rot, new Vector2(fovSprite.Bounds.Size.X, fovSprite.Bounds.Size.Y) / 2, range / 50, SpriteEffects.None, 0);
 
-            var dis = Vector2.Distance(pos, playerPos);
-            spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), dis.ToString(), pos + new Vector2(-8, 16), Color.Red);
+            //var dis = Vector2.Distance(pos, playerPos);
+            //spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), dis.ToString(), pos + new Vector2(-8, 16), Color.Red);
         }
 
         public void Sleep()
