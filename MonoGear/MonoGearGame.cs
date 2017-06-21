@@ -242,8 +242,8 @@ namespace MonoGear
             // Global Entities
             player = new Player();
             RegisterGlobalEntity(player);
-            var ui = new GameUI();
-            RegisterGlobalEntity(ui);
+            //var ui = new GameUI();
+            //RegisterGlobalEntity(ui);
             var pf = new Pathfinding();
             RegisterGlobalEntity(pf);
 			
