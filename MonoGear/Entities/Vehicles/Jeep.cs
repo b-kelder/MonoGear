@@ -24,7 +24,7 @@ namespace MonoGear.Entities.Vehicles
         private PositionalAudio jeepSound;
         private Texture2D playerSprite;
         private Texture2D jeepSprite;
-        private bool creditsMode;
+        public bool creditsMode;
 
         public Jeep()
         {
@@ -73,51 +73,95 @@ namespace MonoGear.Entities.Vehicles
         /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
-            base.Update(input, gameTime);
-
-            if (creditsMode)
+            if(creditsMode)
             {
-                Health = 100;
-                //Disable game entity's
-                if (MonoGearGame.FindEntitiesOfType<GameUI>()[0].Enabled)
+                //Disable game entities
+                if(MonoGearGame.FindEntitiesOfType<GameUI>()[0].Enabled)
                 {
                     MonoGearGame.FindEntitiesOfType<GameUI>()[0].Enabled = false;
                     MonoGearGame.FindEntitiesOfType<GameUI>()[0].Visible = false;
 
                     MonoGearGame.SpawnLevelEntity(new Credits());
+
+                    instanceTexture = playerSprite;
+                    Health = 1;
                 }
 
+                // Move right on the screen
+                Position += Speed * new Vector2(1, 0) * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 Rotation = MathHelper.ToRadians(90);
                 forwardSpeed = Speed;
                 jeepSound.Volume = 0;
+                player.Position = Position;
+
+                // Camera tracking
+                float endXPos = 28000;
+                if(Position.X < endXPos)
+                {
+                    Camera.main.Position = Position;
+                }
+
+                if(input.IsButtonPressed(Input.Button.Right))
+                {
+                    Speed *= 2;
+                }
+                if(input.IsButtonPressed(Input.Button.Left))
+                {
+                    Speed /= 2;
+                }
+
+                return;
+            }
+
+            // Handles driving and input
+            base.Update(input, gameTime);
+
+            if(destroyed)
+            {
+                AudioManager.StopPositional(jeepSound);
+            }
+
+            float minVolume = 0.75f;
+            if(Entered)
+            {
+                if(instanceTexture != playerSprite)
+                {
+                    instanceTexture = playerSprite;
+                }
+                jeepSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
             }
             else
             {
-                if (destroyed)
+                if(instanceTexture != jeepSprite)
                 {
-                    AudioManager.StopPositional(jeepSound);
+                    instanceTexture = jeepSprite;
                 }
+                jeepSound.Volume = minVolume;
+            }
 
-                float minVolume = 0.75f;
-                if (Entered)
-                {
-                    if (instanceTexture != playerSprite)
-                    {
-                        instanceTexture = playerSprite;
-                    }
-                    jeepSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
-                    creditsMode = true;
-                }
-                else
-                {
-                    if (instanceTexture != jeepSprite)
-                    {
-                        instanceTexture = jeepSprite;
-                    }
-                    jeepSound.Volume = minVolume;
-                }
+            jeepSound.Position = Position;
+        }
 
-                jeepSound.Position = Position;
+        public override void Destroy()
+        {
+            if(Entered)
+            {
+                Exit();
+            }
+
+            instanceTexture = destroyedSprite;
+            Enabled = false;
+            destroyed = true;
+
+            if(creditsMode)
+            {
+                // Car is off-screen, restart
+                var go = new GameOver();
+                MonoGearGame.SpawnLevelEntity(go);
+                Exit();
+                go.EnableGameOver();
+                player.Enabled = false;
+                player.Visible = false;
             }
         }
     }

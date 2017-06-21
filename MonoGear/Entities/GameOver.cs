@@ -75,7 +75,9 @@ namespace MonoGear.Entities
             gameOver = false;
             Visible = false;
             player.Enabled = true;
-
+            player.Visible = true;
+            MonoGearGame.FindEntitiesOfType<GameUI>()[0].Enabled = true;
+            MonoGearGame.FindEntitiesOfType<GameUI>()[0].Visible = true;
         }
 
         /// <summary>
