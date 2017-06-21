@@ -10,8 +10,14 @@ using System.Threading.Tasks;
 
 namespace MonoGear.Engine
 {
+    /// <summary>
+    /// Pathfinding class
+    /// </summary>
     public class Pathfinding : WorldEntity
     {
+        /// <summary>
+        /// Stores a request
+        /// </summary>
         struct PathRequest
         {
             public Vector2 from;
@@ -19,24 +25,44 @@ namespace MonoGear.Engine
             public Action<List<Vector2>> callback;
         }
 
+        /// <summary>
+        /// Instance used by static methods
+        /// </summary>
         static Pathfinding instance;
+        /// <summary>
+        /// List of unreachable targets in case a lot of people want to go to the same unreachable place
+        /// </summary>
         static HashSet<Point> unreachableTargets = new HashSet<Point>();
 
+        /// <summary>
+        /// Map data
+        /// </summary>
         static Tile[] map;
+        /// <summary>
+        /// Nodes used in A*
+        /// </summary>
         static Node[] nodes;
+        /// <summary>
+        /// Multithreaded queue
+        /// </summary>
         static ConcurrentQueue<PathRequest> requests = new ConcurrentQueue<PathRequest>();
 
+        /// <summary>
+        /// Task that runs the actual pathfinding
+        /// </summary>
         Task pathFindingTask;
         bool allowDequeue;
 
         public Pathfinding()
         {
+            // Check for duplicates
             if(instance != null)
             {
                 throw new Exception("Duplicate Pathfinding instances!");
             }
             instance = this;
 
+            // Start request handler
             pathFindingTask = Task.Run(() =>
             {
                 while(true)
@@ -48,6 +74,9 @@ namespace MonoGear.Engine
             Tag = "Pathfinding";
         }
 
+        /// <summary>
+        /// Called on level load
+        /// </summary>
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
@@ -56,6 +85,9 @@ namespace MonoGear.Engine
             allowDequeue = true;
         }
 
+        /// <summary>
+        /// Called on level unload
+        /// </summary>
         public override void OnLevelUnloaded()
         {
             base.OnLevelUnloaded();
@@ -68,18 +100,13 @@ namespace MonoGear.Engine
                 // empty the queue
             }
 
+            // Reset blacklist for new level
             unreachableTargets.Clear();
         }
 
-        public static void OnReturnToMenu()
-        {
-            if(instance != null)
-            {
-                instance.OnLevelUnloaded();         // Stops pathfinding queue
-                instance = null;
-            }
-        }
-
+        /// <summary>
+        /// Updates the internal tilemap and nodes based on the active level
+        /// </summary>
         private void UpdateInternalMap()
         {
             var level = MonoGearGame.GetCurrentLevel();
@@ -89,6 +116,7 @@ namespace MonoGear.Engine
 
                 nodes = new Node[map.Length];
 
+                // New nodes
                 for(int y = 0; y < level.Height; y++)
                 {
                     for(int x = 0; x < level.Width; x++)
@@ -102,6 +130,9 @@ namespace MonoGear.Engine
 
         }
 
+        /// <summary>
+        /// Handles a pathfinding request
+        /// </summary>
         private void DoNextRequest()
         {
             PathRequest currentRequest;
@@ -109,15 +140,23 @@ namespace MonoGear.Engine
             {
                 try
                 {
+                    // Try pathfinding and callback
                     currentRequest.callback(FindPathImpl(currentRequest.from, currentRequest.to));
                 }
                 catch(Exception e)
                 {
+                    // Log and continue
                     Debug.WriteLine(e.Message + "\r\n" + e.StackTrace);
                 }
             }
         }
 
+        /// <summary>
+        /// Creates a path request with the given parameters.
+        /// </summary>
+        /// <param name="from">Start point</param>
+        /// <param name="to">End point</param>
+        /// <param name="callback">Callback when done</param>
         public static void FindPath(Vector2 from, Vector2 to, Action<List<Vector2>> callback)
         {
             var request = new PathRequest
@@ -129,13 +168,21 @@ namespace MonoGear.Engine
             requests.Enqueue(request);
         }
 
+        /// <summary>
+        /// Does actual A* pathfinding.
+        /// </summary>
+        /// <param name="from">Start point</param>
+        /// <param name="to">End point</param>
+        /// <returns>List of Vector2 or null if no path can be found</returns>
         private static List<Vector2> FindPathImpl(Vector2 from, Vector2 to)
         {
+            // Set up start and end nodes
             Node current = null;
             var level = MonoGearGame.GetCurrentLevel();
             var start = nodes[(int)(from.X / level.TileWidth) + (int)(from.Y / level.TileHeight) * level.Width];
             var target = nodes[(int)(to.X / level.TileWidth) +  (int)(to.Y / level.TileHeight)   * level.Width];
 
+            // Check for unreachable targets
             if(!unreachableTargets.Contains(target.Location))
             {
                 foreach(var node in nodes)
@@ -213,26 +260,36 @@ namespace MonoGear.Engine
                 {
                     List<Vector2> path = new List<Vector2>();
 
+                    // Build path by backtracing
                     while(current != null)
                     {
                         path.Add(new Vector2(current.Location.X, current.Location.Y) * level.TileHeight + Vector2.One * level.TileHeight / 2);
                         current = current.Parent;
                     }
 
+                    // Reverse it for the correct order
                     path.Reverse();
-
 
                     return path;
                 }
                 else
                 {
+                    // Assume point is not reachable for anyone since the playable area should always be one zone
                     unreachableTargets.Add(target.Location);
                 }
             }
 
+            // Couldn't find anything
             return null;
         }
 
+        /// <summary>
+        /// Adds a node to the list if it's walkable.
+        /// </summary>
+        /// <param name="x">Tile x</param>
+        /// <param name="y">Tile y</param>
+        /// <param name="map">map of tiles</param>
+        /// <param name="list">list to add to</param>
         static void GetNodeIfWalkable(int x, int y, Tile[] map, List<Node> list)
         {
             var level = MonoGearGame.GetCurrentLevel();
@@ -242,6 +299,12 @@ namespace MonoGear.Engine
             }
         }
 
+        /// <summary>
+        /// Returns a list of walkable adjacent tiles given the location and map.
+        /// </summary>
+        /// <param name="location">Tile location to get neighbours from</param>
+        /// <param name="map">Map to get tiles from</param>
+        /// <returns>List of walkable neighbours</returns>
         static List<Node> GetWalkableAdjacentTiles(Point location, Tile[] map)
         {
             int x = location.X;
@@ -251,6 +314,7 @@ namespace MonoGear.Engine
 
             GetNodeIfWalkable(x, y - 1, map, proposedLocations);
             GetNodeIfWalkable(x, y + 1, map, proposedLocations);
+            // No diagonals for now
             //GetNodeIfWalkable(x - 1, y - 1, map, proposedLocations);
             //GetNodeIfWalkable(x + 1, y + 1, map, proposedLocations);
             //GetNodeIfWalkable(x + 1, y - 1, map, proposedLocations);
@@ -261,6 +325,12 @@ namespace MonoGear.Engine
             return proposedLocations;
         }
 
+        /// <summary>
+        /// Computes heuristic score
+        /// </summary>
+        /// <param name="loc">Tile location</param>
+        /// <param name="targetLoc">Target tile location</param>
+        /// <returns>H score</returns>
         static int ComputeHScore(Point loc, Point targetLoc)
         {
             int x = loc.X;
@@ -271,6 +341,9 @@ namespace MonoGear.Engine
         }
     }
 
+    /// <summary>
+    /// Used to store pathfinding node data
+    /// </summary>
     class Node
     {
         public Point Location;
