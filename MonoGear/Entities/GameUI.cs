@@ -67,26 +67,13 @@ namespace MonoGear.Entities
             var rect = Camera.main.GetClippingRect();
 
             #region Draw Health and darts
+
             var pos = rect.Right - 100;
-            var rows = Math.Ceiling(player.Health / 5);
-            var healthToDraw = player.Health;
-            var h = 5.0f;
-
-            for (int j = 0; j < rows; j++)
+            for (int i = 0; i < player.Health; i++)
             {
-                if (healthToDraw < 5)
-                {
-                    h = healthToDraw;
-                }
-
-                for (int i = 0; i < h; i++)
-                {
-                    // Draw a heart
-                    spriteBatch.Draw(MonoGearGame.GetResource<Texture2D>("Sprites/Heart"), new Vector2(pos, rect.Bottom - (50 + (j * 18))), Color.White);
-                    pos += 15;
-                }
-                pos = rect.Right - 100;
-                healthToDraw -= 5;
+                // Draw a hart
+                spriteBatch.Draw(MonoGearGame.GetResource<Texture2D>("Sprites/Heart"), new Vector2(pos, rect.Bottom - 50), Color.White);
+                pos += 15;
             }
 
             // Check if the player has six or less darts.
@@ -104,6 +91,35 @@ namespace MonoGear.Entities
             {
                 spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Darts: " + player.DartCount, new Vector2(rect.Right - 100, rect.Bottom - 32), Color.Red);
             }
+            #endregion
+
+            #region Draw Vehicle Health
+
+            if (player.CurrentVehicle != null)
+            {
+                pos = rect.Right - 100;
+                var rows = Math.Ceiling(player.CurrentVehicle.Health / 25);
+                var healthToDraw = player.CurrentVehicle.Health / 5;
+                var h = 5.0f;
+
+                for (int j = 0; j < rows; j++)
+                {
+                    if (healthToDraw < 5)
+                    {
+                        h = healthToDraw;
+                    }
+
+                    for (int i = 0; i < h; i++)
+                    {
+                        // Draw a heart
+                        spriteBatch.Draw(MonoGearGame.GetResource<Texture2D>("Sprites/Wrench"), new Vector2(pos, rect.Bottom - (70 + (j * 18))), Color.White);
+                        pos += 15;
+                    }
+                    pos = rect.Right - 100;
+                    healthToDraw -= 5;
+                }
+            }
+
             #endregion
 
             #region Draw Objective

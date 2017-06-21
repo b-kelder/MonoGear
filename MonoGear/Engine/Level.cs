@@ -357,30 +357,6 @@ namespace MonoGear.Engine
                                 driveObjective.Add(entity as DrivableVehicle, objective);
                             }
                         }
-                        else if (obj.Type == "boat")
-                        {
-                            entity = new Boat();
-                            entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
-                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
-
-                            string objective;
-                            if (obj.Properties.TryGetValue("objective", out objective))
-                            {
-                                driveObjective.Add(entity as DrivableVehicle, objective);
-                            }
-                        }
-                        else if (obj.Type == "jet")
-                        {
-                            entity = new Jet();
-                            entity.Position = new Vector2((float)obj.X, (float)obj.Y) + halfTileOffset;
-                            entity.Rotation = MathHelper.ToRadians((float)obj.Rotation);
-
-                            string objective;
-                            if (obj.Properties.TryGetValue("objective", out objective))
-                            {
-                                driveObjective.Add(entity as DrivableVehicle, objective);
-                            }
-                        }
                         else if (obj.Type == "objective")
                         {
                             string description;
@@ -504,10 +480,16 @@ namespace MonoGear.Engine
                                     {
                                         foreach (var col in current)
                                         {
-                                            if (col.Entity.Tag == "Player")
+                                            var vehicle = col.Entity as DrivableVehicle;
+                                            if (col.Entity.Tag == "Player" || (vehicle != null && vehicle.Entered))
                                             {
+                                                if(vehicle != null && vehicle.Entered)
+                                                {
+                                                    vehicle.Exit();
+                                                }
                                                 MonoGearGame.NextLevel();
                                             }
+                                            
                                         }
                                     };
                                 }
@@ -517,7 +499,8 @@ namespace MonoGear.Engine
                                     {
                                         foreach (var col in current)
                                         {
-                                            if (col.Entity.Tag == "Player" && !previous.Contains(col))
+                                            var vehicle = col.Entity as DrivableVehicle;
+                                            if((col.Entity.Tag == "Player" || (vehicle != null && vehicle.Entered)) && !previous.Contains(col))
                                             {
                                                 var guards = MonoGearGame.FindEntitiesOfType<Guard>();
                                                 foreach (var guard in guards)
@@ -537,7 +520,8 @@ namespace MonoGear.Engine
                                         {
                                             foreach (var col in current)
                                             {
-                                                if (col.Entity.Tag == "Player")
+                                                var vehicle = col.Entity as DrivableVehicle;
+                                                if(col.Entity.Tag == "Player" || (vehicle != null && vehicle.Entered))
                                                 {
                                                     Objective ob;
                                                     if (objectives.TryGetValue(objective, out ob))

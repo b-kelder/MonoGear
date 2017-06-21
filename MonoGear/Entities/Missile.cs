@@ -24,7 +24,7 @@ namespace MonoGear.Entities
             collider.Trigger = true;
 
             speed = 800f;
-            boemInSec = 1;
+            boemInSec = 1f;
             TextureAssetName = "Sprites/Missile";
             Tag = "Missile";
             Z = 5;

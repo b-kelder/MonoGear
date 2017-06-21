@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
-using System;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear.Entities
@@ -22,7 +21,6 @@ namespace MonoGear.Entities
         public float Health { get; private set; }
 
         private PositionalAudio carSound;
-        private bool destroyed;
         private Texture2D destroyedSprite;
 
         /// <summary>
@@ -44,26 +42,12 @@ namespace MonoGear.Entities
             this.currentPath = currentPath;
             LoopPath = true;
 
-            destroyed = false;
-
             Z = 1;
             Health = 15;
 
             LoadContent();
 
             Collider = new BoxCollider(this, Size);
-        }
-
-        public async void GoTo(Vector2 origin)
-        {
-            Task.Run(() =>
-            {
-                Pathfinding.FindPath(Position, origin, (path) =>
-                {
-                    currentPath = path;
-                    currentPathIndex = 0;
-                });
-            });
         }
 
         /// <summary>
@@ -151,7 +135,6 @@ namespace MonoGear.Entities
         {
             AudioManager.StopPositional(carSound);
             instanceTexture = destroyedSprite;
-            destroyed = true;
             Enabled = false;
         }
     }

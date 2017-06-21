@@ -6,28 +6,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using MonoGear.Engine;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear.Entities.Vehicles
 {
-    class Tank : DrivableVehicle, IDestroyable
+    class Tank : DrivableVehicle
     {
         private PositionalAudio tankSound;
         private float lastShootTime;
-        private bool destroyed;
-        private Texture2D destroyedSprite;
 
         public float GunCycleTime { get; set; }
-        public float Health { get; private set; }
 
         public Tank()
         {
             TextureAssetName = "Sprites/Abrams";
             Tag = "Tank";
             Speed = 135;
-            entered = false;
+            Entered = false;
             stationaryLock = false;
 
             Z = 2;
@@ -57,12 +53,22 @@ namespace MonoGear.Entities.Vehicles
             destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenAbrams");
         }
 
+        /// <summary>
+        /// Method that updates the game.
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
 
+            if (destroyed)
+            {
+                AudioManager.StopPositional(tankSound);
+            }
+
             float minVolume = 0.1f;
-            if(entered)
+            if(Entered)
             {
                 tankSound.Position = Position;
                 tankSound.Volume = minVolume + (0.2f - minVolume) * Math.Abs(forwardSpeed) / Speed;
@@ -105,30 +111,6 @@ namespace MonoGear.Entities.Vehicles
             {
                 tankSound.Volume = minVolume;
             }
-        }
-
-        public void Damage(float damage)
-        {
-            Health -= damage;
-
-            if (Health <= 0)
-            {
-                Destroy();
-            }
-        }
-
-        public void Destroy()
-        {
-            if (entered)
-            {
-                Exit();
-            }
-
-            destroyed = true;
-            Enabled = false;
-            instanceTexture = destroyedSprite;
-
-            AudioManager.StopPositional(tankSound);
         }
     }
 }

@@ -1,30 +1,50 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using MonoGear.Engine;
+﻿using MonoGear.Engine;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using MonoGear.Engine.Collisions;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear.Entities
 {
-    public class DrivableVehicle : WorldEntity
+    public class DrivableVehicle : WorldEntity, IDestroyable
     {
-        protected bool entered;
+        public bool Entered { get; protected set; }
         protected Player player;
 
         protected float forwardSpeed;
 
+        /// <summary>
+        /// Property for the speed of the vehicle.
+        /// </summary>
         public float Speed { get; set; }
+        /// <summary>
+        /// Property for the acceleration of the vehicle.
+        /// </summary>
         public float Acceleration { get; set; }
+        /// <summary>
+        /// Property for the braking of the vehicle.
+        /// </summary>
         public float Braking { get; set; }
+        /// <summary>
+        /// Property for the steering of the vehicle.
+        /// </summary>
         public float Steering { get; set; }
+        /// <summary>
+        /// Property for the drag of the vehicle.
+        /// </summary>
         public float Drag { get; set; }
         protected bool stationaryLock;
+        /// <summary>
+        /// Property that indicates wether or not the vehicle has constant steering.
+        /// </summary>
         public bool ConstantSteering { get; set; }
+        /// <summary>
+        /// Property that indicates the objective.
+        /// </summary>
         public Objective objective { get; set; }
+        public float Health { get; protected set; }
+        protected Texture2D destroyedSprite;
+        protected bool destroyed;
 
         /// <summary>
         /// Method that executes when the level is loaded.
@@ -33,12 +53,19 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
+            destroyed = false;
         }
 
+        /// <summary>
+        /// Method that executes when the player enters the vehicle.
+        /// </summary>
         public void Enter()
         {
-            entered = true;
+            Entered = true;
+            // Make the player invisible
+            player.CurrentVehicle = this;
             player.Visible = false;
+            // Disable the player
             player.Enabled = false;
             if (objective != null)
             {
@@ -46,21 +73,32 @@ namespace MonoGear.Entities
             }
         }
 
+        /// <summary>
+        /// Method that executes when the player exits the vehicle.
+        /// </summary>
         public void Exit()
         {
             stationaryLock = false;
-            entered = false;
+            Entered = false;
             forwardSpeed = 0;
+            // Make the player visible
+            player.CurrentVehicle = null;
             player.Visible = true;
+            // Re-enable the player
             player.Enabled = true;
             player.Position = Position + Right * -30;
         }
 
+        /// <summary>
+        /// Method that updates the game.
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
 
-            if(entered)
+            if(Entered)
             {
                 if(input.IsButtonPressed(Input.Button.Interact))
                 {
@@ -72,13 +110,22 @@ namespace MonoGear.Entities
                     {
                         if(ConstantSteering)
                         {
-                            if(input.IsButtonDown(Input.Button.Left))
+                            if(input.PadConnected())
                             {
-                                Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
+                                var sticks = input.GetGamepadState().ThumbSticks;
+
+                                Rotation += sticks.Left.X * MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
                             }
-                            if(input.IsButtonDown(Input.Button.Right))
+                            else
                             {
-                                Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
+                                if(input.IsButtonDown(Input.Button.Left))
+                                {
+                                    Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
+                                }
+                                if(input.IsButtonDown(Input.Button.Right))
+                                {
+                                    Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
+                                }
                             }
                         }
                         else
@@ -86,14 +133,23 @@ namespace MonoGear.Entities
                             // Speed based steering for consistent turning circle
                             if(forwardSpeed != 0)
                             {
-                                // Rotate if we're not standing still
-                                if(input.IsButtonDown(Input.Button.Left))
+                                if(input.PadConnected())
                                 {
-                                    Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                    var sticks = input.GetGamepadState().ThumbSticks;
+
+                                    Rotation += sticks.Left.X * MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
                                 }
-                                if(input.IsButtonDown(Input.Button.Right))
+                                else
                                 {
-                                    Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                    // Rotate if we're not standing still
+                                    if(input.IsButtonDown(Input.Button.Left))
+                                    {
+                                        Rotation -= MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                    }
+                                    if(input.IsButtonDown(Input.Button.Right))
+                                    {
+                                        Rotation += MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * (float)Math.Sqrt(Math.Abs(forwardSpeed) / Speed) * Math.Sign(forwardSpeed);
+                                    }
                                 }
                             }
                         }
@@ -206,7 +262,7 @@ namespace MonoGear.Entities
                     var prevPos = Position;
                     var deltaX = new Vector2(delta.X, 0);
                     var deltaY = new Vector2(0, delta.Y);
-                    
+
                     if(Collider != null)
                     {
                         Collider hitCollider;
@@ -230,7 +286,7 @@ namespace MonoGear.Entities
                     {
                         Position += delta * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     }
-                    
+
 
                     player.Position = Position;
                     Camera.main.Position = Position;
@@ -246,6 +302,27 @@ namespace MonoGear.Entities
                     }
                 }
             }
+        }
+
+        public void Damage(float damage)
+        {
+            Health -= damage;
+
+            if (Health <= 0)
+            {
+                Destroy();
+            }
+        }
+
+        public void Destroy()
+        {
+            if (Entered)
+            {
+                Exit();
+            }
+
+            instanceTexture = destroyedSprite;
+            Enabled = false;
         }
     }
 }

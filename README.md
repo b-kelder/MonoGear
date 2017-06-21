@@ -4,7 +4,7 @@ A stealth game made for C# 2
 The protagonist, named Solid Jake, is a special agent send to break into the whitehouse to steal Donald Trumps nuclear missile launch codes.
 In order to get inside this highly protected building Jake needs to go stealth and out smart the guards in the brand new game MonoGear: Whitehouse.
 
-## Avalible summer 2017
+## Available summer 2017
 <div align="center"><img src ="http://www.unitedtaxi.org/H2_preorder_button.png" /></div>
 
 ## MonoGear: Whitehouse Gold Edition, Per-order Now!

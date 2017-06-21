@@ -5,6 +5,8 @@ namespace MonoGear
 {
     public static class MathExtensions
     {
+        public static Random Random = new Random();
+
         /// <summary>
         /// Method that calculates the square of a value.
         /// </summary>

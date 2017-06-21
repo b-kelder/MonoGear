@@ -17,27 +17,24 @@ namespace MonoGear.Entities.Vehicles
     /// Willys jeep, player controlled vehicle
     /// </summary>
     ///
-    class Jeep : DrivableVehicle, IDestroyable
+    class Jeep : DrivableVehicle
     {
         public bool autoenter;
         private PositionalAudio jeepSound;
         private Texture2D playerSprite;
-        private Texture2D jeepSprite;
-        private Texture2D destoyedSprite;
-
-        public float Health { get; private set; }
+        private Texture2D jeepSprite;    
 
         public Jeep()
         {
             TextureAssetName = "Sprites/Willys";
             Tag = "Willys";
-            Speed = 230;
-            entered = false;
+            Speed = 260;
+            Entered = false;
             stationaryLock = false;
 
             Z = 1;
 
-            Health = 20;
+            Health = 30;
 
             Acceleration = 80;
             Braking = 200;
@@ -56,13 +53,14 @@ namespace MonoGear.Entities.Vehicles
         {
             base.OnLevelLoaded();
             jeepSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 0, 300, Position, true);
-            playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer"); 
-            destoyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
+            playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer");
+            destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
             jeepSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Willys");
 
             if (autoenter)
             {
                 Enter();
+                forwardSpeed = Speed;
             }
 
         }
@@ -76,8 +74,13 @@ namespace MonoGear.Entities.Vehicles
         {
             base.Update(input, gameTime);
 
+            if(destroyed)
+            {
+                AudioManager.StopPositional(jeepSound);
+            }
+
             float minVolume = 0.75f;
-            if(entered)
+            if(Entered)
             {
                 if (instanceTexture != playerSprite)
                 {
@@ -95,29 +98,6 @@ namespace MonoGear.Entities.Vehicles
             }
 
             jeepSound.Position = Position;
-        }
-
-        public void Damage(float damage)
-        {
-            Health -= damage;
-
-            if (Health <= 0)
-            {
-                Destroy();
-            }
-        }
-
-        public void Destroy()
-        {
-            if(entered)
-            {
-                Exit();   
-            }
-
-            instanceTexture = destoyedSprite;
-            Enabled = false;
-
-            AudioManager.StopPositional(jeepSound);
         }
     }
 }
