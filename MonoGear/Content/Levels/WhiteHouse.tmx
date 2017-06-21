@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="99">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="300" height="200" tilewidth="16" tileheight="16" nextobjectid="101">
  <tileset firstgid="1" name="Tiles" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="tilesets/WhiteHouse.png" width="272" height="272"/>
   <tile id="0">
@@ -1115,9 +1115,9 @@
     <property name="volume" type="float" value="0.3"/>
    </properties>
   </object>
-  <object id="63" name="Owl_sound" type="audio" gid="141" x="743" y="617" width="16" height="16">
+  <object id="63" name="Bird_sound" type="audio" gid="141" x="743" y="617" width="16" height="16">
    <properties>
-    <property name="source" value="Audio/AudioFX/Owl_sound"/>
+    <property name="source" value="Audio/AudioFX/Bird_sounds"/>
     <property name="volume" type="float" value="0.1"/>
    </properties>
   </object>

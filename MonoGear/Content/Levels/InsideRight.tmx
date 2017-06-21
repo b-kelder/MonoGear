@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="8">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="16">
  <tileset firstgid="1" name="Inside" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="Tilesets/Inside.png" width="272" height="272"/>
   <tile id="1">
@@ -1384,6 +1384,13 @@
   </object>
   <object id="6" name="Path 2" type="path" x="487.5" y="759">
    <polyline points="0,0 -0.125,32.75 -15.375,32.75 -15.375,82 256.875,80.875 258.5,-47.6667 415.167,-47.6667 415.188,-48.1875 415.188,-47 415.188,-47.5625 415.625,-47.5625 258.75,-47.75 257.25,81 -15.25,82.5 -15.5,33 0,32.75 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Audio">
+  <object id="15" name="background music" type="backgroundmusic" x="680.909" y="648.727" width="9.81818" height="20.9091">
+   <properties>
+    <property name="source" value="Audio/Music/White house inside"/>
+   </properties>
   </object>
  </objectgroup>
  <objectgroup name="Triggers">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="210" tilewidth="16" tileheight="16" nextobjectid="100">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="300" height="210" tilewidth="16" tileheight="16" nextobjectid="101">
  <tileset firstgid="1" name="WhiteHouse" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="tilesets/WhiteHouse.png" width="272" height="272"/>
   <tile id="0">
@@ -1137,6 +1137,11 @@
    <properties>
     <property name="source" value="Audio/AudioFX/Crickets_sound"/>
     <property name="volume" type="float" value="1"/>
+   </properties>
+  </object>
+  <object id="100" name="Background music" type="backgroundmusic" gid="141" x="743" y="617" width="16" height="16">
+   <properties>
+    <property name="source" value="Audio/Music/Main_menu_theme"/>
    </properties>
   </object>
  </objectgroup>

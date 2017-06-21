@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="1100" height="100" tilewidth="16" tileheight="16" nextobjectid="18">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="1100" height="100" tilewidth="16" tileheight="16" nextobjectid="19">
  <tileset firstgid="1" name="WhiteHouse" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="Tilesets/WhiteHouse.png" width="272" height="272"/>
   <tile id="20" probability="0.01">
@@ -244,6 +244,13 @@
   </object>
   <object id="16" name="Jeep 2" type="jeep" x="15346" y="761.833" width="22" height="18.3333" rotation="45"/>
   <object id="17" name="Jeep 2" type="jeep" x="15395" y="765.833" width="22" height="18.3333" rotation="45"/>
+ </objectgroup>
+ <objectgroup name="Audio">
+  <object id="18" name="Background music" type="backgroundmusic" x="184" y="120" width="112" height="64">
+   <properties>
+    <property name="source" value="Audio/Music/Epic music for an epic moment"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="Tilelaag 2" width="1100" height="100">
   <data encoding="csv">

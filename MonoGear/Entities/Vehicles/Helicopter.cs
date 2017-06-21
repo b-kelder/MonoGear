@@ -60,7 +60,7 @@ namespace MonoGear.Entities.Vehicles
                 props = MonoGearGame.GetResource<Texture2D>("Sprites/Soisoisoisoisoisoisoisoisoisoisoisoisoisoisoisois");
             }
             heliSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Helicopter Sound Effect"), 1, 300, Position, true);
-            heliSound.Volume = 0.3f;
+            heliSound.Volume = 0.1f;
             destoyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenRoflcopter");
         }
 
