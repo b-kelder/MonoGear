@@ -1,10 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using MonoGear.Engine;
+﻿using MonoGear.Engine;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using MonoGear.Engine.Collisions;
 
@@ -17,13 +12,34 @@ namespace MonoGear.Entities
 
         protected float forwardSpeed;
 
+        /// <summary>
+        /// Property for the speed of the vehicle.
+        /// </summary>
         public float Speed { get; set; }
+        /// <summary>
+        /// Property for the acceleration of the vehicle.
+        /// </summary>
         public float Acceleration { get; set; }
+        /// <summary>
+        /// Property for the braking of the vehicle.
+        /// </summary>
         public float Braking { get; set; }
+        /// <summary>
+        /// Property for the steering of the vehicle.
+        /// </summary>
         public float Steering { get; set; }
+        /// <summary>
+        /// Property for the drag of the vehicle.
+        /// </summary>
         public float Drag { get; set; }
         protected bool stationaryLock;
+        /// <summary>
+        /// Property that indicates wether or not the vehicle has constant steering.
+        /// </summary>
         public bool ConstantSteering { get; set; }
+        /// <summary>
+        /// Property that indicates the objective.
+        /// </summary>
         public Objective objective { get; set; }
 
         /// <summary>
@@ -35,10 +51,15 @@ namespace MonoGear.Entities
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
         }
 
+        /// <summary>
+        /// Method that executes when the player enters the vehicle.
+        /// </summary>
         public void Enter()
         {
             entered = true;
+            // Make the player invisible
             player.Visible = false;
+            // Disable the player
             player.Enabled = false;
             if (objective != null)
             {
@@ -46,24 +67,36 @@ namespace MonoGear.Entities
             }
         }
 
+        /// <summary>
+        /// Method that executes when the player exits the vehicle.
+        /// </summary>
         public void Exit()
         {
             stationaryLock = false;
             entered = false;
             forwardSpeed = 0;
+            // Make the player visible
             player.Visible = true;
+            // Re-enable the player
             player.Enabled = true;
             player.Position = Position + Right * -30;
         }
 
+        /// <summary>
+        /// Method that updates the game.
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
-
+            // Check if the player has entered the vehicle
             if(entered)
             {
+                // Check if the interact button is pressed
                 if(input.IsButtonPressed(Input.Button.Interact))
                 {
+                    // Exit the vehicle
                     Exit();
                 }
                 else
@@ -98,7 +131,7 @@ namespace MonoGear.Entities
                             }
                         }
 
-
+                        // Check if the vehicle's forward speed is greater than 0
                         if(forwardSpeed > 0)
                         {
                             // Moving forward
@@ -206,7 +239,7 @@ namespace MonoGear.Entities
                     var prevPos = Position;
                     var deltaX = new Vector2(delta.X, 0);
                     var deltaY = new Vector2(0, delta.Y);
-                    
+                    // Check if the collider is not null
                     if(Collider != null)
                     {
                         Collider hitCollider;
@@ -240,8 +273,10 @@ namespace MonoGear.Entities
             {
                 if(player.Enabled && Vector2.Distance(player.Position, Position) < 40)
                 {
+                    // Check if the interact button is pressed
                     if(input.IsButtonPressed(Input.Button.Interact))
                     {
+                        // Enter the vehicle
                         Enter();
                     }
                 }

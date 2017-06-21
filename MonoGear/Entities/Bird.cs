@@ -15,6 +15,9 @@ namespace MonoGear.Entities
         float speed;
 
         public float YResetValue { get; set; }
+        /// <summary>
+        /// Property with the bird's health.
+        /// </summary>
         public float Health { get; private set; }
 
         PositionalAudio birdSound;
@@ -84,16 +87,24 @@ namespace MonoGear.Entities
             birdSound.Position = Position;
         }
 
+        /// <summary>
+        /// Method is executed when the bird is damaged.
+        /// </summary>
+        /// <param name="damage">The amount of damage taken</param>
         public void Damage(float damage)
         {
             Health -= damage;
-
+            // Check if health is 0 or smaller
             if (Health <= 0)
             {
+                // Destroy the bird
                 Destroy();
             }
         }
 
+        /// <summary>
+        /// Method that destroys the bird.
+        /// </summary>
         public void Destroy()
         {
             instanceTexture = destroyedSprite;

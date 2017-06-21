@@ -66,7 +66,7 @@ namespace MonoGear.Entities.Vehicles
         }
 
         /// <summary>
-        /// Method that updates the game
+        /// Method that updates the game.
         /// </summary>
         /// <param name="input">Input</param>
         /// <param name="gameTime">GameTime</param>

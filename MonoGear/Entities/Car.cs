@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
-using System;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear.Entities
@@ -52,18 +51,6 @@ namespace MonoGear.Entities
             LoadContent();
 
             Collider = new BoxCollider(this, Size);
-        }
-
-        public async void GoTo(Vector2 origin)
-        {
-            Task.Run(() =>
-            {
-                Pathfinding.FindPath(Position, origin, (path) =>
-                {
-                    currentPath = path;
-                    currentPathIndex = 0;
-                });
-            });
         }
 
         /// <summary>
