@@ -97,28 +97,26 @@ namespace MonoGear.Entities
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
-            // Check if the player has entered the vehicle
-            if (entered)
+
+            if(entered)
             {
-                // Check if the interact button is pressed
-                if (input.IsButtonPressed(Input.Button.Interact))
+                if(input.IsButtonPressed(Input.Button.Interact))
                 {
-                    // Exit the vehicle
                     Exit();
                 }
                 else
                 {
-                    if (!stationaryLock)
+                    if(!stationaryLock)
                     {
-                        if (ConstantSteering)
+                        if(ConstantSteering)
                         {
-                            if (input.IsButtonDown(Input.Button.Left))
+                            if(input.PadConnected())
                             {
                                 var sticks = input.GetGamepadState().ThumbSticks;
 
                                 Rotation += sticks.Left.X * MathHelper.ToRadians(Steering) * (float)gameTime.ElapsedGameTime.TotalSeconds * MathExtensions.Sign(forwardSpeed);
                             }
-                            if (input.IsButtonDown(Input.Button.Right))
+                            else
                             {
                                 if(input.IsButtonDown(Input.Button.Left))
                                 {
@@ -133,10 +131,9 @@ namespace MonoGear.Entities
                         else
                         {
                             // Speed based steering for consistent turning circle
-                            if (forwardSpeed != 0)
+                            if(forwardSpeed != 0)
                             {
-                                // Rotate if we're not standing still
-                                if (input.IsButtonDown(Input.Button.Left))
+                                if(input.PadConnected())
                                 {
                                     var sticks = input.GetGamepadState().ThumbSticks;
 
@@ -157,28 +154,28 @@ namespace MonoGear.Entities
                             }
                         }
 
-                        // Check if the vehicle's forward speed is greater than 0
-                        if (forwardSpeed > 0)
+
+                        if(forwardSpeed > 0)
                         {
                             // Moving forward
                             var sd = 0.0f;
-                            if (input.IsButtonDown(Input.Button.Up))
+                            if(input.IsButtonDown(Input.Button.Up))
                             {
                                 sd += Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             }
-                            if (input.IsButtonDown(Input.Button.Down))
+                            if(input.IsButtonDown(Input.Button.Down))
                             {
                                 sd -= Braking * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             }
 
                             // Add drag if no input is present
-                            if (sd == 0)
+                            if(sd == 0)
                             {
                                 sd -= Drag * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             }
 
                             // Check if we should stop
-                            if (forwardSpeed + sd < 0)
+                            if(forwardSpeed + sd < 0)
                             {
                                 stationaryLock = true;
                                 forwardSpeed = 0;
@@ -189,32 +186,32 @@ namespace MonoGear.Entities
                             }
 
                             // Clamp speed
-                            if (forwardSpeed > Speed)
+                            if(forwardSpeed > Speed)
                             {
                                 forwardSpeed = Speed;
                             }
                         }
-                        else if (forwardSpeed < 0)
+                        else if(forwardSpeed < 0)
                         {
                             // Reversing
                             var sd = 0.0f;
-                            if (input.IsButtonDown(Input.Button.Up))
+                            if(input.IsButtonDown(Input.Button.Up))
                             {
                                 sd += Braking * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             }
-                            if (input.IsButtonDown(Input.Button.Down))
+                            if(input.IsButtonDown(Input.Button.Down))
                             {
                                 sd -= Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             }
 
                             // Add drag if no input is present
-                            if (sd == 0)
+                            if(sd == 0)
                             {
                                 sd += Drag * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             }
 
                             // Check if we should stop
-                            if (forwardSpeed + sd > 0)
+                            if(forwardSpeed + sd > 0)
                             {
                                 stationaryLock = true;
                                 forwardSpeed = 0;
@@ -225,7 +222,7 @@ namespace MonoGear.Entities
                             }
 
                             // Clamp speed
-                            if (forwardSpeed < -Speed)
+                            if(forwardSpeed < -Speed)
                             {
                                 forwardSpeed = -Speed;
                             }
@@ -234,11 +231,11 @@ namespace MonoGear.Entities
                         {
                             // Standing still
                             var sd = 0.0f;
-                            if (input.IsButtonDown(Input.Button.Up))
+                            if(input.IsButtonDown(Input.Button.Up))
                             {
                                 sd += Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             }
-                            if (input.IsButtonDown(Input.Button.Down))
+                            if(input.IsButtonDown(Input.Button.Down))
                             {
                                 sd -= Acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
                             }
@@ -248,14 +245,14 @@ namespace MonoGear.Entities
                     }
                     else
                     {
-                        if (input.IsButtonUp(Input.Button.Up) && input.IsButtonUp(Input.Button.Down))
+                        if(input.IsButtonUp(Input.Button.Up) && input.IsButtonUp(Input.Button.Down))
                         {
                             stationaryLock = false;
                         }
                     }
 
                     var delta = Forward * forwardSpeed;
-                    if (delta.LengthSquared() > Speed * Speed)
+                    if(delta.LengthSquared() > Speed * Speed)
                     {
                         delta.Normalize();
                         delta *= Speed;
@@ -265,21 +262,21 @@ namespace MonoGear.Entities
                     var prevPos = Position;
                     var deltaX = new Vector2(delta.X, 0);
                     var deltaY = new Vector2(0, delta.Y);
-                    // Check if the collider is not null
-                    if (Collider != null)
+
+                    if(Collider != null)
                     {
                         Collider hitCollider;
                         bool hitTilemap;
 
                         Position += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
+                        if(Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
                         {
                             Position = prevPos;
                             forwardSpeed = 0;
                         }
                         prevPos = Position;
                         Position += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
+                        if(Collider.CollidesAny(out hitCollider, out hitTilemap, player.Collider))
                         {
                             Position = prevPos;
                             forwardSpeed = 0;
@@ -297,12 +294,10 @@ namespace MonoGear.Entities
             }
             else
             {
-                if (player.Enabled && Vector2.Distance(player.Position, Position) < 40)
+                if(player.Enabled && Vector2.Distance(player.Position, Position) < 40)
                 {
-                    // Check if the interact button is pressed
-                    if (input.IsButtonPressed(Input.Button.Interact))
+                    if(input.IsButtonPressed(Input.Button.Interact))
                     {
-                        // Enter the vehicle
                         Enter();
                     }
                 }
