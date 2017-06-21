@@ -1,22 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
-using System.Diagnostics;
 
 namespace MonoGear.Entities.Vehicles
 {
     /// <summary>
     /// Willys jeep, player controlled vehicle
     /// </summary>
-    ///
     class Jeep : DrivableVehicle, IDestroyable
     {
         public bool autoenter;
@@ -25,8 +19,14 @@ namespace MonoGear.Entities.Vehicles
         private Texture2D jeepSprite;
         private Texture2D destoyedSprite;
 
+        /// <summary>
+        /// Property with the jeep's health.
+        /// </summary>
         public float Health { get; private set; }
 
+        /// <summary>
+        /// Constructor of the jeep class. Creates an instance of a jeep.
+        /// </summary>
         public Jeep()
         {
             TextureAssetName = "Sprites/Willys";
@@ -97,16 +97,24 @@ namespace MonoGear.Entities.Vehicles
             jeepSound.Position = Position;
         }
 
+        /// <summary>
+        /// Method is executed when the jeep is damaged.
+        /// </summary>
+        /// <param name="damage">The amount of damage taken</param>
         public void Damage(float damage)
         {
             Health -= damage;
-
+            // Check if health is 0 or smaller
             if (Health <= 0)
             {
+                // Destroy the jeep
                 Destroy();
             }
         }
 
+        /// <summary>
+        /// Method that destroys the jeep.
+        /// </summary>
         public void Destroy()
         {
             if(entered)
@@ -116,7 +124,7 @@ namespace MonoGear.Entities.Vehicles
 
             instanceTexture = destoyedSprite;
             Enabled = false;
-
+            // Stop the jeep sound
             AudioManager.StopPositional(jeepSound);
         }
     }
