@@ -314,7 +314,7 @@ namespace MonoGear.Entities
             }
         }
 
-        public void Destroy()
+        public virtual void Destroy()
         {
             if (Entered)
             {

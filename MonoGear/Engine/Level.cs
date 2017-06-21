@@ -361,6 +361,11 @@ namespace MonoGear.Engine
                             {
                                 driveObjective.Add(entity as DrivableVehicle, objective);
                             }
+                            string creditmode;
+                            if(obj.Properties.TryGetValue("creditmode", out creditmode))
+                            {
+                                (entity as Tank).creditsMode = true;
+                            }
                         }
                         else if (obj.Type == "objective")
                         {
@@ -467,10 +472,11 @@ namespace MonoGear.Engine
                             // Global audio via media player
                             string audio;
 
-                            if (!obj.Properties.TryGetValue("source", out audio))
-                            {
-                                MediaPlayer.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                            if (obj.Properties.TryGetValue("source", out audio))
+                            { 
                                 MediaPlayer.Play(MonoGearGame.GetResource<Song>(audio));
+                                MediaPlayer.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                                Debug.WriteLine("Added music");
                             }
                         }
                         else if (obj.Type == "trigger")
@@ -588,7 +594,7 @@ namespace MonoGear.Engine
                             }
 
                             level.AddEntity(entity);
-                            //Debug.WriteLine("Added entity");
+                            //Debug.WriteLine("Added entity" + entity.Tag);
                         }
                     }
                 }
