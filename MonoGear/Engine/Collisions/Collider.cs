@@ -9,6 +9,9 @@ using MonoGear.Entities;
 
 namespace MonoGear.Engine.Collisions
 {
+    /// <summary>
+    /// Base class for Colliders
+    /// </summary>
     public abstract class Collider
     {
         /// <summary>

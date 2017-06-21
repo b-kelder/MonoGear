@@ -11,11 +11,22 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear.Entities.Vehicles
 {
+    /// <summary>
+    /// Player controlled tank. Is used in the credits scene as well without player control.
+    /// </summary>
     class Tank : DrivableVehicle
     {
+        /// <summary>
+        /// Engine sound
+        /// </summary>
         private PositionalAudio tankSound;
+        /// <summary>
+        /// Last time cannon was shot
+        /// </summary>
         private float lastShootTime;
-
+        /// <summary>
+        /// Indicates if we are in credits mode
+        /// </summary>
         public bool creditsMode;
 
         public float GunCycleTime { get; set; }
@@ -40,13 +51,16 @@ namespace MonoGear.Entities.Vehicles
             Braking = 140;
             Steering = 60;
             Drag = 70;
-            ConstantSteering = true;
+            ConstantSteering = true;        // Tank can turn at the spot
 
             Collider = new BoxCollider(this, new Vector2(24, 24));
 
             LoadContent();
         }
 
+        /// <summary>
+        /// Called when level is loaded or entity is added to scene
+        /// </summary>
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
@@ -64,6 +78,7 @@ namespace MonoGear.Entities.Vehicles
         {
             if(creditsMode)
             {
+                // Fire at player jeep once
                 if(Vector2.Distance(player.Position, Position) < 250)
                 {
                     FireCannon();
@@ -71,7 +86,7 @@ namespace MonoGear.Entities.Vehicles
                 }
             }
 
-
+            // Input and movement handling
             base.Update(input, gameTime);
 
             if (destroyed)
@@ -79,19 +94,22 @@ namespace MonoGear.Entities.Vehicles
                 AudioManager.StopPositional(tankSound);
             }
 
+
             float minVolume = 0.1f;
             if(Entered)
             {
+                // Speed based sound
                 tankSound.Position = Position;
                 tankSound.Volume = minVolume + (0.2f - minVolume) * Math.Abs(forwardSpeed) / Speed;
 
-
+                // Player controlled cannon
                 if(input.IsButtonPressed(Input.Button.Shoot) && lastShootTime + GunCycleTime <= (float)gameTime.TotalGameTime.TotalSeconds)
                 {
                     lastShootTime = (float)gameTime.TotalGameTime.TotalSeconds;
                     FireCannon();
                 }
 
+                // Player controlled MG
                 if (input.IsButtonPressed(Input.Button.Throw))
                 {
                     var bullet = new Bullet(Collider);
@@ -100,8 +118,6 @@ namespace MonoGear.Entities.Vehicles
                     bullet.Position = Position + Forward * 18 + Right * 10;
 
                     MonoGearGame.SpawnLevelEntity(bullet);
-
-                    lastShootTime = (float)gameTime.TotalGameTime.TotalSeconds;
 
                     var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Tank_gatling").CreateInstance();
                     sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
@@ -115,6 +131,9 @@ namespace MonoGear.Entities.Vehicles
             }
         }
 
+        /// <summary>
+        /// Fires tank main gun by spaning a missile
+        /// </summary>
         public void FireCannon()
         {
             var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);

@@ -3,8 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear.Engine
 {
+    /// <summary>
+    /// Camera used for rendering the scene
+    /// </summary>
     public class Camera
     {
+        /// <summary>
+        /// Main camera
+        /// </summary>
         public static Camera main;
 
         private Viewport viewport;

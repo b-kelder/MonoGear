@@ -17,8 +17,14 @@ using MonoGear.Entities.Vehicles;
 
 namespace MonoGear.Engine
 {
+    /// <summary>
+    /// Represents a level
+    /// </summary>
     public class Level 
     {
+        /// <summary>
+        /// Name of the level
+        /// </summary>
         public string Name { get; private set; }
         /// <summary>
         /// All layers as loaded from the level file
@@ -29,17 +35,44 @@ namespace MonoGear.Engine
         /// </summary>
         LevelLayer combinedLayer;
 
+        /// <summary>
+        /// Array of top most tiles
+        /// </summary>
         public Tile[] Tiles { get { return combinedLayer.tiles; } }
 
+        /// <summary>
+        /// Level width in tiles
+        /// </summary>
         public int Width { get; private set; }
+        /// <summary>
+        /// Height in tiles
+        /// </summary>
         public int Height { get; private set; }
+        /// <summary>
+        /// Tile width in pixels
+        /// </summary>
         public int TileWidth { get; private set; }
+        /// <summary>
+        /// Tile height in pixels
+        /// </summary>
         public int TileHeight { get; private set; }
 
+        /// <summary>
+        /// Background layers
+        /// </summary>
         List<LevelOverlay> backgroundLayers;
+        /// <summary>
+        /// Foreground layers
+        /// </summary>
         List<LevelOverlay> foregroundLayers;
+        /// <summary>
+        /// List of entities in this level
+        /// </summary>
         HashSet<WorldEntity> levelEntities;
 
+        /// <summary>
+        /// Creates a new level. Private because you should use LoadLevel
+        /// </summary>
         private Level()
         {
             tileLayers = new List<LevelLayer>();
@@ -49,6 +82,10 @@ namespace MonoGear.Engine
             levelEntities = new HashSet<WorldEntity>();
         }
 
+        /// <summary>
+        /// Adds a background layer to the level
+        /// </summary>
+        /// <param name="layer"></param>
         public void AddBackgroundLayer(LevelOverlay layer)
         {
             if (layer.texture == null)
@@ -64,6 +101,10 @@ namespace MonoGear.Engine
                 });
         }
 
+        /// <summary>
+        /// Adds a foreground layer.
+        /// </summary>
+        /// <param name="layer"></param>
         public void AddForegroundLayer(LevelOverlay layer)
         {
             if (layer.texture == null)
@@ -79,6 +120,10 @@ namespace MonoGear.Engine
                 });
         }
 
+        /// <summary>
+        /// Draws foreground layers to spritebatch.
+        /// </summary>
+        /// <param name="batch"></param>
         public void DrawForeground(SpriteBatch batch)
         {
             foreach (var layer in foregroundLayers)
@@ -87,6 +132,10 @@ namespace MonoGear.Engine
             }
         }
 
+        /// <summary>
+        /// Draws background layers with spritebatch.
+        /// </summary>
+        /// <param name="batch"></param>
         public void DrawBackground(SpriteBatch batch)
         {
             foreach (var layer in backgroundLayers)
@@ -95,16 +144,23 @@ namespace MonoGear.Engine
             }
         }
 
+        /// <summary>
+        /// Draws tiles with the spritebatch and camera.
+        /// </summary>
+        /// <param name="batch">Batch to use for rendering</param>
+        /// <param name="camera">Camera to use for clipping</param>
         public void DrawTiles(SpriteBatch batch, Camera camera)
         {
-            // TODO: Bake to image on level load and use that for rendering?
+            // Get clipping rect
             var clip = camera.GetClippingRect();
 
+            // Translate rect to tile positions
             int ys = Math.Max(0, (int)clip.Y / TileHeight - 1);
             int ye = Math.Min(Height, (int)clip.Bottom / TileHeight + 1);
             int xs = Math.Max(0, (int)clip.X / TileWidth - 1);
             int xe = Math.Min(Width, (int)clip.Right / TileWidth + 1);
 
+            // Draw only the visible tiles
             foreach (var layer in tileLayers)
             {
                 for (int y = ys; y < ye; y++)
@@ -117,17 +173,30 @@ namespace MonoGear.Engine
             }
         }
 
+        /// <summary>
+        /// Adds an entity to the level.
+        /// </summary>
+        /// <param name="entity"></param>
         public void AddEntity(WorldEntity entity)
         {
             entity.OnLevelUnloaded();
             levelEntities.Add(entity);
         }
 
+        /// <summary>
+        /// Returns entities in this level.
+        /// </summary>
+        /// <returns></returns>
         public WorldEntity[] GetEntities()
         {
             return levelEntities.ToArray();
         }
 
+        /// <summary>
+        /// Returns tile at world pixel position.
+        /// </summary>
+        /// <param name="position">Position</param>
+        /// <returns>Tile or null if out of bounds</returns>
         public Tile GetTile(Vector2 position)
         {
             var xy = new Vector2(position.X / TileWidth, position.Y / TileHeight);
@@ -138,60 +207,68 @@ namespace MonoGear.Engine
             return combinedLayer.tiles[(int)xy.X + Width * (int)xy.Y];
         }
 
+        /// <summary>
+        /// Loads a level from filename.
+        /// </summary>
+        /// <param name="resource">The level file name</param>
+        /// <returns>Level</returns>
         public static Level LoadLevel(string resource)
         {
             var level = new Level();
 
+            // Run in task because TmxMap needs IO and we can only do that in tasks
             Task.Run(() =>
             {
+                // Load data
                 var map = new TmxMap(Path.Combine("Content/Levels", resource + ".tmx"));
-
                 level.Name = resource;
-
                 level.Width = map.Width;
                 level.Height = map.Height;
 
-                // Get tileset
+                // Get tileset data
                 var tileset = map.Tilesets[0];
-
                 level.TileHeight = tileset.TileHeight;
                 level.TileWidth = tileset.TileWidth;
 
+                // Build dictionary with tile indexes and tile objects
                 var tilesetDict = new Dictionary<int, Tile>();
                 tilesetDict.Add(0, null);                       // 0 means no tile
 
+                // Load texture
                 var tilesetTexture = MonoGearGame.GetResource<Texture2D>(Path.Combine("Levels\\Tilesets", Path.GetFileNameWithoutExtension(tileset.Image.Source)));
 
+                // Create tile objects from tileset data and texture
                 int rows = (int)tileset.TileCount / (int)tileset.Columns;
                 bool done = false;
                 for (int x = 0; x < tileset.Columns && !done; x++)
                 {
                     for (int y = 0; y < rows; y++)
                     {
+                        // Check if we are finished with the tiles
                         if (x + y * tileset.Columns > tileset.TileCount)
                         {
                             done = true;
                             break;
                         }
 
-                        // Load tile
+                        // Create new tile
                         Tile tile = new Tile(tilesetTexture);
                         tile.textureRect.X = x * tileset.TileWidth;
                         tile.textureRect.Y = y * tileset.TileHeight;
                         tile.textureRect.Width = tileset.TileWidth;
                         tile.textureRect.Height = tileset.TileHeight;
 
-
+                        // Tile index stored for debugging
                         int index = x + y * (int)tileset.Columns;
                         tile.tilesetId = index;
 
-
-                        // Load custom properties
+                        // Load custom tile properties
                         TmxTilesetTile tileData;
                         if (tileset.Tiles.TryGetValue(index, out tileData))
                         {
                             Debug.WriteLine("Loading custom properties for tile " + index);
 
+                            // Load solid
                             string solid;
                             if(tileData.Properties.TryGetValue("solid", out solid))
                             {
@@ -205,6 +282,7 @@ namespace MonoGear.Engine
                                 }
                             }
 
+                            // Tile walk sound
                             string sound;
                             if(tileData.Properties.TryGetValue("sound", out sound))
                             {
@@ -220,19 +298,19 @@ namespace MonoGear.Engine
                             }
                         }
 
-
+                        // Add tile to dictionary for later use
                         tilesetDict.Add(tileset.FirstGid + index, tile);
                     }
                 }
 
-                // Get layers
+                // Create combined layer tiles
                 level.combinedLayer.tiles = new Tile[map.Width * map.Height];
 
-                var reversedLayers = map.Layers.Reverse();          // Layers get stored bottom to top, we need top to bottom
+                // Layers get stored bottom to top, we need top to bottom
+                var reversedLayers = map.Layers.Reverse();
                 foreach (var layer in reversedLayers)
                 {
                     Debug.WriteLine("Loading layer: " + layer.Name);
-
 
                     // Add layer
                     var levelLayer = new LevelLayer();
@@ -254,15 +332,16 @@ namespace MonoGear.Engine
                         }
                     }
 
+                    // Add layer to level
                     level.tileLayers.Add(levelLayer);
                 }
 
                 level.tileLayers.Reverse();             // Sort them bottom to top again
 
-
                 // Load objects
                 var groups = map.ObjectGroups;
 
+                // Dictionaries used to link entities together by name
                 var guardPaths = new Dictionary<Guard, string>();
                 var carPaths = new Dictionary<Car, string>();
                 var paths = new Dictionary<string, List<Vector2>>();
@@ -272,15 +351,15 @@ namespace MonoGear.Engine
                 var pcWithObjective = new Dictionary<PC, string>();
                 var driveObjective = new Dictionary<DrivableVehicle, string>();
 
-
-
+                // Loop trough all objects
                 foreach (var objectGroup in groups)
                 {
                     foreach (var obj in objectGroup.Objects)
                     {
+                        // Small fix for spawn position with some entities
                         var halfTileOffset = -new Vector2(-level.TileWidth, level.TileHeight) / 2;
 
-                        //Debug.WriteLine("Found object of type " + obj.Type);
+                        // Check type and create appropriate objects and entities
                         WorldEntity entity = null;
                         if (obj.Type == "spawnpoint")
                         {
@@ -487,6 +566,7 @@ namespace MonoGear.Engine
                                 Action<Collider, IEnumerable<Collider>, IEnumerable<Collider>> actionL = null;
                                 if (action == "nextlevel")
                                 {
+                                    // Action for going to a next level
                                     actionL = (self, previous, current) =>
                                     {
                                         foreach (var col in current)
@@ -506,6 +586,7 @@ namespace MonoGear.Engine
                                 }
                                 else if (action == "alert")
                                 {
+                                    // Action for alerting all guards to the players position
                                     actionL = (self, previous, current) =>
                                     {
                                         foreach (var col in current)
@@ -524,6 +605,7 @@ namespace MonoGear.Engine
                                 }
                                 else if (action == "objective")
                                 {
+                                    // Action for clearing an objective
                                     string objective;
                                     if (obj.Properties.TryGetValue("objective", out objective))
                                     {
@@ -574,7 +656,6 @@ namespace MonoGear.Engine
                                 paths[obj.Name] = new List<Vector2>();
                                 foreach (var point in obj.Points)
                                 {
-                                    //Debug.WriteLine(point.X + ", " + point.Y);
                                     paths[obj.Name].Add(new Vector2((float)point.X + (float)obj.X, (float)point.Y + (float)obj.Y));
                                 }
                             }
@@ -594,7 +675,7 @@ namespace MonoGear.Engine
                             }
 
                             level.AddEntity(entity);
-                            //Debug.WriteLine("Added entity" + entity.Tag);
+
                         }
                     }
                 }
@@ -675,11 +756,17 @@ namespace MonoGear.Engine
         }
     }
 
+    /// <summary>
+    /// Stores level layer data
+    /// </summary>
     public struct LevelLayer
     {
         public Tile[] tiles;
     }
 
+    /// <summary>
+    /// Stores overlay data
+    /// </summary>
     public struct LevelOverlay
     {
         public int layer;

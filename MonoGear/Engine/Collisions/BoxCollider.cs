@@ -2,6 +2,9 @@
 
 namespace MonoGear.Engine.Collisions
 {
+    /// <summary>
+    /// Boxed shaped collider.
+    /// </summary>
     public class BoxCollider : Collider
     {
         /// <summary>
