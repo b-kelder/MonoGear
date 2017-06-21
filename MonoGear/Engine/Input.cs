@@ -9,8 +9,14 @@ using System.Threading.Tasks;
 
 namespace MonoGear.Engine
 {
+    /// <summary>
+    /// Input handling class
+    /// </summary>
     public class Input
     {
+        /// <summary>
+        /// Buttons used in the game
+        /// </summary>
         public enum Button
         {
             Up,
@@ -24,17 +30,19 @@ namespace MonoGear.Engine
             Sneak,
         }
 
+        // Current and previous frame's keyboard and gamepad states
         KeyboardState currentState;
         KeyboardState previousState;
-
         GamePadState currentPadState;
         GamePadState previousPadState;
 
+        // Key mappings
         Dictionary<Button, Tuple<Keys, Keys>> buttonsToKeys;
         Dictionary<Button, Buttons> buttonsToPad;
 
         public Input()
         {
+            // Create key mappings
             buttonsToKeys = new Dictionary<Button, Tuple<Keys, Keys>> {
                 { Button.Left,      new Tuple<Keys, Keys>(Keys.Left,        Keys.A) },
                 { Button.Right,     new Tuple<Keys, Keys>(Keys.Right,       Keys.D) },
@@ -64,17 +72,27 @@ namespace MonoGear.Engine
 
         public void Update()
         {
+            // Get new states
             previousState = currentState;
             currentState = Keyboard.GetState();
             previousPadState = currentPadState;
             currentPadState = GamePad.GetState(PlayerIndex.One);
         }
 
+        /// <summary>
+        /// Returns the current gamepad state.
+        /// </summary>
+        /// <returns>GamePadState</returns>
         public GamePadState GetGamepadState()
         {
             return currentPadState;
         }
 
+        /// <summary>
+        /// Returns true if the button was pressed this frame.
+        /// </summary>
+        /// <param name="button">The button</param>
+        /// <returns>True or false</returns>
         public bool IsButtonPressed(Button button)
         {
             if(currentPadState.IsConnected)
@@ -89,6 +107,11 @@ namespace MonoGear.Engine
             }
         }
 
+        /// <summary>
+        /// Returns true if the button is down this frame.
+        /// </summary>
+        /// <param name="button">The button</param>
+        /// <returns>True or false</returns>
         public bool IsButtonDown(Button button)
         {
             if(currentPadState.IsConnected)
@@ -103,6 +126,11 @@ namespace MonoGear.Engine
             }
         }
 
+        /// <summary>
+        /// Returns true if the button was released this frame.
+        /// </summary>
+        /// <param name="button">The button</param>
+        /// <returns>True or false</returns>
         public bool IsButtonReleased(Button button)
         {
             if(currentPadState.IsConnected)
@@ -117,6 +145,11 @@ namespace MonoGear.Engine
             }
         }
 
+        /// <summary>
+        /// Returns true if the button is up this frame.
+        /// </summary>
+        /// <param name="button">The button</param>
+        /// <returns>True or false</returns>
         public bool IsButtonUp(Button button)
         {
             if(currentPadState.IsConnected)
@@ -131,26 +164,50 @@ namespace MonoGear.Engine
             }
         }
 
+        /// <summary>
+        /// Returns true if a gamepad is connected.
+        /// </summary>
+        /// <returns>True or false</returns>
         public bool PadConnected()
         {
             return currentPadState.IsConnected;
         }
 
+        /// <summary>
+        /// Returns true if the key is down this frame.
+        /// </summary>
+        /// <param name="key">XNA key</param>
+        /// <returns>True or false</returns>
         public bool IsKeyDown(Keys key)
         {
             return currentState.IsKeyDown(key);
         }
 
+        /// <summary>
+        /// Returns true if the key is up this frame.
+        /// </summary>
+        /// <param name="key">XNA key</param>
+        /// <returns>True or false</returns>
         public bool IsKeyUp(Keys key)
         {
             return currentState.IsKeyUp(key);
         }
 
+        /// <summary>
+        /// Returns true if the key is pressed this frame.
+        /// </summary>
+        /// <param name="key">XNA key</param>
+        /// <returns>True or false</returns>
         public bool IsKeyPressed(Keys key)
         {
             return previousState.IsKeyUp(key) && currentState.IsKeyDown(key);
         }
 
+        /// <summary>
+        /// Returns true if the key is released this frame.
+        /// </summary>
+        /// <param name="key">XNA key</param>
+        /// <returns>True or false</returns>
         public bool IsKeyReleased(Keys key)
         {
             return previousState.IsKeyDown(key) && currentState.IsKeyUp(key);
