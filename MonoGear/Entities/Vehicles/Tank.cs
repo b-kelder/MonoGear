@@ -3,30 +3,21 @@ using Microsoft.Xna.Framework.Audio;
 using MonoGear.Engine.Audio;
 using MonoGear.Engine.Collisions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using MonoGear.Engine;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear.Entities.Vehicles
 {
-    /// <summary>
-    /// Tank, player controlled vehicle
-    /// </summary>
-    class Tank : DrivableVehicle, IDestroyable
+    class Tank : DrivableVehicle
     {
         private PositionalAudio tankSound;
         private float lastShootTime;
-        private bool destroyed;
-        private Texture2D destroyedSprite;
 
         public float GunCycleTime { get; set; }
-        /// <summary>
-        /// Property with the jet's health.
-        /// </summary>
-        public float Health { get; private set; }
 
-        /// <summary>
-        /// Constructor of the tank class. Creates an instance of a tank.
-        /// </summary>
         public Tank()
         {
             TextureAssetName = "Sprites/Abrams";
@@ -54,9 +45,6 @@ namespace MonoGear.Entities.Vehicles
             LoadContent();
         }
 
-        /// <summary>
-        /// Method that executes when the level is loaded.
-        /// </summary>
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
@@ -79,7 +67,8 @@ namespace MonoGear.Entities.Vehicles
             {
                 tankSound.Position = Position;
                 tankSound.Volume = minVolume + (0.2f - minVolume) * Math.Abs(forwardSpeed) / Speed;
-                // Check if the shoot button is pressed and the gun cycle time has finished
+
+
                 if(input.IsButtonPressed(Input.Button.Shoot) && lastShootTime + GunCycleTime <= (float)gameTime.TotalGameTime.TotalSeconds)
                 {
                     var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
@@ -95,7 +84,7 @@ namespace MonoGear.Entities.Vehicles
                     sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
                     sound.Play();
                 }
-                // Check if the throw button is pressed
+
                 if (input.IsButtonPressed(Input.Button.Throw))
                 {
                     var bullet = new Bullet(Collider);
@@ -117,38 +106,6 @@ namespace MonoGear.Entities.Vehicles
             {
                 tankSound.Volume = minVolume;
             }
-        }
-
-        /// <summary>
-        /// Method is executed when the tank is damaged.
-        /// </summary>
-        /// <param name="damage">The amount of damage taken</param>
-        public void Damage(float damage)
-        {
-            Health -= damage;
-            // Check if health is 0 or smaller
-            if (Health <= 0)
-            {
-                // Destroy the tank
-                Destroy();
-            }
-        }
-
-        /// <summary>
-        /// Method that destroys the tank.
-        /// </summary>
-        public void Destroy()
-        {
-            if (entered)
-            {
-                Exit();
-            }
-
-            destroyed = true;
-            Enabled = false;
-            instanceTexture = destroyedSprite;
-            // Stop the tank sound
-            AudioManager.StopPositional(tankSound);
         }
     }
 }
