@@ -19,6 +19,7 @@ namespace MonoGear.Entities.Vehicles
         private bool destroyed;
         private Texture2D destoyedSprite;
         private Player player;
+        private float speed;
 
         /// <summary>
         /// Property with the helicopter's health.
@@ -38,7 +39,7 @@ namespace MonoGear.Entities.Vehicles
 
             delay = 0;
             barrelNr = 0;
-
+            speed = 240;
             Health = 50;
 
             LoadContent();
@@ -94,7 +95,16 @@ namespace MonoGear.Entities.Vehicles
         {
             base.Update(input, gameTime);
 
-            Position = player.Position - new Vector2(300, 0);
+            var target = player.Position;
+            Rotation = MathExtensions.VectorToAngle(target - Position);
+            var distance = Vector2.Distance(Position, target);
+            if (distance > 260)
+            {
+                // Move towards player
+                var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                delta *= speed;
+                Move(delta);
+            }
 
             heliSound.Position = Position;
             // Check if the delay is greater than 0
@@ -104,10 +114,10 @@ namespace MonoGear.Entities.Vehicles
             }
 
             // Check if the delay is smaller than 0
-            if (delay <=0)
+            if (delay <=0 && distance < 320)
             {
                 var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
-                missile.Rotation = Rotation;
+
 
                 Vector2 vec = new Vector2(18, 0);
                 if (barrelNr == 0)
@@ -128,6 +138,7 @@ namespace MonoGear.Entities.Vehicles
                 }
 
                 missile.Position = Position + Forward * vec.X + Right * vec.Y;
+                missile.Rotation = MathExtensions.VectorToAngle(player.Position - missile.Position);
 
                 MonoGearGame.SpawnLevelEntity(missile);
 
@@ -141,7 +152,7 @@ namespace MonoGear.Entities.Vehicles
                 sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
                 sound.Play();
 
-                delay = 1;
+                delay = 2f;
             }
         }
 
@@ -151,13 +162,7 @@ namespace MonoGear.Entities.Vehicles
         /// <param name="damage">The amount of damage taken</param>
         public void Damage(float damage)
         {
-            Health -= damage;
-            // Check if health is 0 or smaller
-            if (Health <= 0)
-            {
-                // Destroy the helicopter
-                Destroy();
-            }
+
         }
 
         /// <summary>
