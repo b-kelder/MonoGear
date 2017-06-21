@@ -1,21 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGear.Engine;
-using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
 
 namespace MonoGear.Entities.Vehicles
 {
     /// <summary>
-    /// ApacheRoflCopter
+    /// Helicopter
     /// </summary>
-    ///
     class Helicopter : WorldEntity, IDestroyable
     {
         private Texture2D props;
@@ -26,9 +19,16 @@ namespace MonoGear.Entities.Vehicles
         private bool destroyed;
         private Texture2D destoyedSprite;
         private Player player;
+        private float speed;
 
+        /// <summary>
+        /// Property with the helicopter's health.
+        /// </summary>
         public float Health { get; private set; }
 
+        /// <summary>
+        /// Constructor of the helicopter class. Creates an instance of a helicopter.
+        /// </summary>
         public Helicopter()
         {
             TextureAssetName = "Sprites/MyRoflcopter";
@@ -39,7 +39,7 @@ namespace MonoGear.Entities.Vehicles
 
             delay = 0;
             barrelNr = 0;
-
+            speed = 240;
             Health = 50;
 
             LoadContent();
@@ -63,9 +63,14 @@ namespace MonoGear.Entities.Vehicles
             destoyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenRoflcopter");
         }
 
+        /// <summary>
+        /// Method that draws the helicopter
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            // Check if the helicopter isn't destroyed
             if (!destroyed)
             {
                 spriteBatch.Draw(props, Position + (Forward * 16), props.Bounds, Color.White, rot, new Vector2(props.Bounds.Size.X, props.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
@@ -90,29 +95,50 @@ namespace MonoGear.Entities.Vehicles
         {
             base.Update(input, gameTime);
 
-            Position = player.Position - new Vector2(300, 0);
+            var target = player.Position;
+            Rotation = MathExtensions.VectorToAngle(target - Position);
+            var distance = Vector2.Distance(Position, target);
+            if (distance > 260)
+            {
+                // Move towards player
+                var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                delta *= speed;
+                Move(delta);
+            }
 
             heliSound.Position = Position;
-
+            // Check if the delay is greater than 0
             if (delay > 0)
+            {
                 delay -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
 
-            if (delay <=0)
+            // Check if the delay is smaller than 0
+            if (delay <=0 && distance < 320)
             {
                 var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
-                missile.Rotation = Rotation;
+
 
                 Vector2 vec = new Vector2(18, 0);
                 if (barrelNr == 0)
+                {
                     vec.Y = 24;
+                }
                 if (barrelNr == 1)
+                {
                     vec.Y = -24;
+                }
                 if (barrelNr == 2)
+                {
                     vec.Y = 18;
+                }
                 if (barrelNr == 3)
+                {
                     vec.Y = -18;
+                }
 
                 missile.Position = Position + Forward * vec.X + Right * vec.Y;
+                missile.Rotation = MathExtensions.VectorToAngle(player.Position - missile.Position);
 
                 MonoGearGame.SpawnLevelEntity(missile);
 
@@ -126,27 +152,29 @@ namespace MonoGear.Entities.Vehicles
                 sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
                 sound.Play();
 
-                delay = 1;
+                delay = 2f;
             }
         }
 
+        /// <summary>
+        /// Method is executed when the helicopter is damaged.
+        /// </summary>
+        /// <param name="damage">The amount of damage taken</param>
         public void Damage(float damage)
         {
-            Health -= damage;
 
-            if (Health <= 0)
-            {
-                Destroy();
-            }
         }
 
+        /// <summary>
+        /// Method that destroys the helicopter.
+        /// </summary>
         public void Destroy()
         {
             instanceTexture = destoyedSprite;
 
             destroyed = true;
             Enabled = false;
-
+            // Stop the jet sound
             AudioManager.StopPositional(heliSound);
         }
     }

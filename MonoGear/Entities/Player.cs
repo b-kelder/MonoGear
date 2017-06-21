@@ -102,16 +102,35 @@ namespace MonoGear.Entities
             var dx = 0.0f;
             var dy = 0.0f;
             var clip = Camera.main.GetClippingRect();
-            if (input.IsButtonDown(Input.Button.Left) || input.IsScreenTouched(new Rectangle(0,0, (int)clip.X, (int)clip.Y / 4)))
-                dx -= Speed;
-            if(input.IsButtonDown(Input.Button.Right) || input.IsScreenTouched(new Rectangle(0, (int)clip.Y / 4, (int)clip.X, (int)clip.Y / 4)))
-                dx += Speed;
-            if(input.IsButtonDown(Input.Button.Up) || input.IsScreenTouched(new Rectangle(0, (int)clip.Y / 2, (int)clip.X, (int)clip.Y / 4)))
-                dy -= Speed;
-            if(input.IsButtonDown(Input.Button.Down) || input.IsScreenTouched(new Rectangle(0, 0, ((int)clip.Y / 4) * 3, (int)clip.Y / 4)))
-                dy += Speed;
 
-            if (input.IsKeyDown(Keys.LeftShift))
+            if(input.PadConnected())
+            {
+                var sticks = input.GetGamepadState().ThumbSticks;
+
+                dx += sticks.Left.X * Speed;
+                dy += sticks.Left.Y * Speed;
+            }
+            else
+            {
+                if(input.IsButtonDown(Input.Button.Left))
+                {
+                    dx -= Speed;
+                }
+                if(input.IsButtonDown(Input.Button.Right))
+                {
+                    dx += Speed;
+                }
+                if(input.IsButtonDown(Input.Button.Up))
+                {
+                    dy -= Speed;
+                }
+                if(input.IsButtonDown(Input.Button.Down))
+                {
+                    dy += Speed;
+                }
+            }
+
+            if(input.IsButtonDown(Input.Button.Sneak))
             {
                 SneakMode = true;
                 Speed = 50;
