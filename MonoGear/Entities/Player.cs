@@ -194,7 +194,7 @@ namespace MonoGear.Entities
             }
 
             if (SneakMode)
-                walkingSound.Play();
+                walkingSound.Pause();
 
             if (ThrowingDelay > 0)
                 ThrowingDelay -= 1;
