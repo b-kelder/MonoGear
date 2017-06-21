@@ -17,15 +17,12 @@ namespace MonoGear.Entities.Vehicles
     /// Willys jeep, player controlled vehicle
     /// </summary>
     ///
-    class Jeep : DrivableVehicle, IDestroyable
+    class Jeep : DrivableVehicle
     {
         public bool autoenter;
         private PositionalAudio jeepSound;
         private Texture2D playerSprite;
-        private Texture2D jeepSprite;
-        private Texture2D destoyedSprite;
-
-        public float Health { get; private set; }
+        private Texture2D jeepSprite;    
 
         public Jeep()
         {
@@ -56,8 +53,8 @@ namespace MonoGear.Entities.Vehicles
         {
             base.OnLevelLoaded();
             jeepSound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Car_sound"), 0, 300, Position, true);
-            playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer"); 
-            destoyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
+            playerSprite = MonoGearGame.GetResource<Texture2D>("Sprites/WillysPlayer");
+            destroyedSprite = MonoGearGame.GetResource<Texture2D>("Sprites/BrokenWillys");
             jeepSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Willys");
 
             if (autoenter)
@@ -75,6 +72,11 @@ namespace MonoGear.Entities.Vehicles
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
+
+            if(destroyed)
+            {
+                AudioManager.StopPositional(jeepSound);
+            }
 
             float minVolume = 0.75f;
             if(entered)
@@ -95,29 +97,6 @@ namespace MonoGear.Entities.Vehicles
             }
 
             jeepSound.Position = Position;
-        }
-
-        public void Damage(float damage)
-        {
-            Health -= damage;
-
-            if (Health <= 0)
-            {
-                Destroy();
-            }
-        }
-
-        public void Destroy()
-        {
-            if(entered)
-            {
-                Exit();   
-            }
-
-            instanceTexture = destoyedSprite;
-            Enabled = false;
-
-            AudioManager.StopPositional(jeepSound);
         }
     }
 }

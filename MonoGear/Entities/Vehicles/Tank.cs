@@ -12,15 +12,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGear.Entities.Vehicles
 {
-    class Tank : DrivableVehicle, IDestroyable
+    class Tank : DrivableVehicle
     {
         private PositionalAudio tankSound;
         private float lastShootTime;
-        private bool destroyed;
-        private Texture2D destroyedSprite;
 
         public float GunCycleTime { get; set; }
-        public float Health { get; private set; }
 
         public Tank()
         {
@@ -105,30 +102,6 @@ namespace MonoGear.Entities.Vehicles
             {
                 tankSound.Volume = minVolume;
             }
-        }
-
-        public void Damage(float damage)
-        {
-            Health -= damage;
-
-            if (Health <= 0)
-            {
-                Destroy();
-            }
-        }
-
-        public void Destroy()
-        {
-            if (entered)
-            {
-                Exit();
-            }
-
-            destroyed = true;
-            Enabled = false;
-            instanceTexture = destroyedSprite;
-
-            AudioManager.StopPositional(tankSound);
         }
     }
 }

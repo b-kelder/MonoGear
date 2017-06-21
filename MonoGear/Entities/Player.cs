@@ -36,6 +36,8 @@ namespace MonoGear.Entities
 
         public int DartCount { get; set; }
 
+        public DrivableVehicle CurrentVehicle { get; set; }
+
         private SoundEffectInstance walkingSound;
         private SoundEffectInstance walkingSoundGrass;
         private SoundEffectInstance walkingSoundWater;

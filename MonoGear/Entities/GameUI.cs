@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using MonoGear.Engine;
+using MonoGear.Entities.Vehicles;
 
 namespace MonoGear.Entities
 {
@@ -104,6 +105,36 @@ namespace MonoGear.Entities
             {
                 spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "Darts: " + player.DartCount, new Vector2(rect.Right - 100, rect.Bottom - 32), Color.Red);
             }
+            #endregion
+
+            #region Draw Vehicle Health
+
+            if (player.CurrentVehicle != null)
+            {
+                Texture2D texture;
+                if ((player.CurrentVehicle as Jeep) != null)
+                {
+                    texture = MonoGearGame.GetResource<Texture2D>("Sprites/SleepDart");
+                }
+                else if((player.CurrentVehicle as Tank) != null)
+                {
+                    texture = MonoGearGame.GetResource<Texture2D>("Sprites/SleepDart");
+                }
+                else
+                {
+                    texture = MonoGearGame.GetResource<Texture2D>("Sprites/SleepDart");
+                }
+
+                var test = player.CurrentVehicle.Health / 5;
+                pos = rect.Right - 100;
+                for (int i = 0; i < test; i++)
+                {
+                    // Draw a dart
+                    spriteBatch.Draw(texture, new Vector2(pos, rect.Bottom - 70), Color.White);
+                    pos += 15;
+                }
+            }
+
             #endregion
 
             #region Draw Objective

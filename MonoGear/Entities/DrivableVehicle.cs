@@ -10,7 +10,7 @@ using MonoGear.Engine.Collisions;
 
 namespace MonoGear.Entities
 {
-    public class DrivableVehicle : WorldEntity
+    public class DrivableVehicle : WorldEntity, IDestroyable
     {
         protected bool entered;
         protected Player player;
@@ -25,6 +25,9 @@ namespace MonoGear.Entities
         protected bool stationaryLock;
         public bool ConstantSteering { get; set; }
         public Objective objective { get; set; }
+        public float Health { get; protected set; }
+        protected Texture2D destroyedSprite;
+        protected bool destroyed;
 
         /// <summary>
         /// Method that executes when the level is loaded.
@@ -33,11 +36,13 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
+            destroyed = false;
         }
 
         public void Enter()
         {
             entered = true;
+            player.CurrentVehicle = this;
             player.Visible = false;
             player.Enabled = false;
             if (objective != null)
@@ -51,6 +56,7 @@ namespace MonoGear.Entities
             stationaryLock = false;
             entered = false;
             forwardSpeed = 0;
+            player.CurrentVehicle = null;
             player.Visible = true;
             player.Enabled = true;
             player.Position = Position + Right * -30;
@@ -246,6 +252,27 @@ namespace MonoGear.Entities
                     }
                 }
             }
+        }
+
+        public void Damage(float damage)
+        {
+            Health -= damage;
+
+            if (Health <= 0)
+            {
+                Destroy();
+            }
+        }
+
+        public void Destroy()
+        {
+            if (entered)
+            {
+                Exit();
+            }
+
+            instanceTexture = destroyedSprite;
+            Enabled = false;
         }
     }
 }
