@@ -23,7 +23,7 @@ namespace MonoGear.Entities.Vehicles
             TextureAssetName = "Sprites/Abrams";
             Tag = "Tank";
             Speed = 135;
-            entered = false;
+            Entered = false;
             stationaryLock = false;
 
             Z = 2;
@@ -68,7 +68,7 @@ namespace MonoGear.Entities.Vehicles
             }
 
             float minVolume = 0.1f;
-            if(entered)
+            if(Entered)
             {
                 tankSound.Position = Position;
                 tankSound.Volume = minVolume + (0.2f - minVolume) * Math.Abs(forwardSpeed) / Speed;

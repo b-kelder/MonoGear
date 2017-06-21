@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGear.Engine;
 using MonoGear.Engine.Audio;
+using System;
 
 namespace MonoGear.Entities.Vehicles
 {
@@ -39,7 +40,7 @@ namespace MonoGear.Entities.Vehicles
 
             delay = 0;
             barrelNr = 0;
-            speed = 240;
+            speed = 420;
             Health = 50;
 
             LoadContent();
@@ -102,7 +103,20 @@ namespace MonoGear.Entities.Vehicles
             {
                 // Move towards player
                 var delta = MathExtensions.AngleToVector(Rotation) * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                delta *= speed;
+
+                if(distance > 400)
+                {
+                    delta *= speed;
+                }
+                else if(player.CurrentVehicle != null)
+                {
+                    delta *= player.CurrentVehicle.Speed + 15;
+                }
+                else
+                {
+                    delta *= player.Speed + 15;
+                }
+                
                 Move(delta);
             }
 
@@ -152,7 +166,7 @@ namespace MonoGear.Entities.Vehicles
                 sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
                 sound.Play();
 
-                delay = 2f;
+                delay = 1f + 3.0f * (float)MathExtensions.Random.NextDouble();
             }
         }
 

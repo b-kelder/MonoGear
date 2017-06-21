@@ -480,10 +480,16 @@ namespace MonoGear.Engine
                                     {
                                         foreach (var col in current)
                                         {
-                                            if (col.Entity.Tag == "Player")
+                                            var vehicle = col.Entity as DrivableVehicle;
+                                            if (col.Entity.Tag == "Player" || (vehicle != null && vehicle.Entered))
                                             {
+                                                if(vehicle != null && vehicle.Entered)
+                                                {
+                                                    vehicle.Exit();
+                                                }
                                                 MonoGearGame.NextLevel();
                                             }
+                                            
                                         }
                                     };
                                 }
@@ -493,7 +499,8 @@ namespace MonoGear.Engine
                                     {
                                         foreach (var col in current)
                                         {
-                                            if (col.Entity.Tag == "Player" && !previous.Contains(col))
+                                            var vehicle = col.Entity as DrivableVehicle;
+                                            if((col.Entity.Tag == "Player" || (vehicle != null && vehicle.Entered)) && !previous.Contains(col))
                                             {
                                                 var guards = MonoGearGame.FindEntitiesOfType<Guard>();
                                                 foreach (var guard in guards)
@@ -513,7 +520,8 @@ namespace MonoGear.Engine
                                         {
                                             foreach (var col in current)
                                             {
-                                                if (col.Entity.Tag == "Player")
+                                                var vehicle = col.Entity as DrivableVehicle;
+                                                if(col.Entity.Tag == "Player" || (vehicle != null && vehicle.Entered))
                                                 {
                                                     Objective ob;
                                                     if (objectives.TryGetValue(objective, out ob))

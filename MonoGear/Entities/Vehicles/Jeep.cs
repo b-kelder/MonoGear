@@ -28,13 +28,13 @@ namespace MonoGear.Entities.Vehicles
         {
             TextureAssetName = "Sprites/Willys";
             Tag = "Willys";
-            Speed = 230;
-            entered = false;
+            Speed = 260;
+            Entered = false;
             stationaryLock = false;
 
             Z = 1;
 
-            Health = 20;
+            Health = 30;
 
             Acceleration = 80;
             Braking = 200;
@@ -60,6 +60,7 @@ namespace MonoGear.Entities.Vehicles
             if (autoenter)
             {
                 Enter();
+                forwardSpeed = Speed;
             }
 
         }
@@ -79,7 +80,7 @@ namespace MonoGear.Entities.Vehicles
             }
 
             float minVolume = 0.75f;
-            if(entered)
+            if(Entered)
             {
                 if (instanceTexture != playerSprite)
                 {

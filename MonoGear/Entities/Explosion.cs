@@ -34,7 +34,7 @@ namespace MonoGear.Entities
 
             Tag = "BOEM!";
 
-            blastRadius = 120;
+            blastRadius = 60;
             maxDamage = 30;
 
             Z = 100;

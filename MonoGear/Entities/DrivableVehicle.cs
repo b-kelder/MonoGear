@@ -8,7 +8,7 @@ namespace MonoGear.Entities
 {
     public class DrivableVehicle : WorldEntity, IDestroyable
     {
-        protected bool entered;
+        public bool Entered { get; protected set; }
         protected Player player;
 
         protected float forwardSpeed;
@@ -61,7 +61,7 @@ namespace MonoGear.Entities
         /// </summary>
         public void Enter()
         {
-            entered = true;
+            Entered = true;
             // Make the player invisible
             player.CurrentVehicle = this;
             player.Visible = false;
@@ -79,7 +79,7 @@ namespace MonoGear.Entities
         public void Exit()
         {
             stationaryLock = false;
-            entered = false;
+            Entered = false;
             forwardSpeed = 0;
             // Make the player visible
             player.CurrentVehicle = null;
@@ -98,7 +98,7 @@ namespace MonoGear.Entities
         {
             base.Update(input, gameTime);
 
-            if(entered)
+            if(Entered)
             {
                 if(input.IsButtonPressed(Input.Button.Interact))
                 {
@@ -316,7 +316,7 @@ namespace MonoGear.Entities
 
         public void Destroy()
         {
-            if (entered)
+            if (Entered)
             {
                 Exit();
             }
