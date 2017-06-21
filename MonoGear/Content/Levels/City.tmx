@@ -5041,7 +5041,11 @@
     <property name="patrolpath" value="Backyard Half Left"/>
    </properties>
   </object>
-  <object id="73" name="jeep" type="jeep" x="3602.67" y="1973.84" width="8.66663" height="7.667"/>
+  <object id="73" name="jeep" type="jeep" x="3602.67" y="1973.84" width="8.66663" height="7.667">
+   <properties>
+    <property name="objective" value="Objective1"/>
+   </properties>
+  </object>
   <object id="92" name="guard 6" type="guard" gid="26" x="1606" y="1816" width="16" height="16">
    <properties>
     <property name="patrolpath" value="Patrol Path F"/>
