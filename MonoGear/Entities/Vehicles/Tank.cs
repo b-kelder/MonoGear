@@ -58,6 +58,11 @@ namespace MonoGear.Entities.Vehicles
         {
             base.Update(input, gameTime);
 
+            if (destroyed)
+            {
+                AudioManager.StopPositional(tankSound);
+            }
+
             float minVolume = 0.1f;
             if(entered)
             {

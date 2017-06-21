@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using MonoGear.Engine;
-using MonoGear.Entities.Vehicles;
 
 namespace MonoGear.Entities
 {
