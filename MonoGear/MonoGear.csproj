@@ -104,6 +104,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Engine\Audio\AudioManager.cs" />
+    <Compile Include="Entities\Vehicles\Credits.cs" />
     <Compile Include="Entities\Vehicles\Tank.cs" />
     <Compile Include="Entities\DrivableVehicle.cs" />
     <Compile Include="Entities\Explosion.cs" />
@@ -166,6 +167,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Levels\Dessert.tmx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Levels\Credits.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="project.json" />

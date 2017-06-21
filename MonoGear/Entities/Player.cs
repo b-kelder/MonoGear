@@ -20,13 +20,14 @@ namespace MonoGear.Entities
 
         private float health;
         private bool wasDead;
-        public float Health {
+        public float Health
+        {
             get { return health; }
             set
             {
                 wasDead = health <= 0;
                 health = value;
-                if(health <= 0 && !wasDead)
+                if (health <= 0 && !wasDead)
                 {
                     var gameOver = MonoGearGame.FindEntitiesWithTag("GameOverScreen")[0] as GameOver;
                     gameOver.EnableGameOver();
@@ -36,7 +37,19 @@ namespace MonoGear.Entities
 
         public int DartCount { get; set; }
 
-        public DrivableVehicle CurrentVehicle { get; set; }
+        private DrivableVehicle currentVehicle;
+        public DrivableVehicle CurrentVehicle
+        {
+            get
+            {
+                return currentVehicle;
+            }
+            set
+            {
+                walkingSound.Stop();
+                currentVehicle = value;
+            }
+        }
 
         private SoundEffectInstance walkingSound;
         private SoundEffectInstance walkingSoundGrass;
@@ -52,7 +65,7 @@ namespace MonoGear.Entities
             Z = 2;
 
             TextureAssetName = "Sprites/Person";
-            
+
             AnimationLength = 3;
             AnimationCurrentFrame = 1;
             AnimationDelta = 0.1f;
@@ -71,7 +84,7 @@ namespace MonoGear.Entities
 
             if (deadSprite == null)
             {
-                deadSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Dead");                
+                deadSprite = MonoGearGame.GetResource<Texture2D>("Sprites/Dead");
             }
 
             walkingSoundGrass = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Running On Grass").CreateInstance();
@@ -89,7 +102,7 @@ namespace MonoGear.Entities
             base.OnLevelLoaded();
 
             var ents = MonoGearGame.FindEntitiesWithTag("PlayerSpawnPoint");
-            if(ents.Count > 0)
+            if (ents.Count > 0)
             {
                 Position = new Vector2(ents[0].Position.X, ents[0].Position.Y);
             }
@@ -104,7 +117,7 @@ namespace MonoGear.Entities
             var clip = Camera.main.GetClippingRect();
 
             // Use analog sticks or keyboard for movement depending on if we have a gamepad connected
-            if(input.PadConnected())
+            if (input.PadConnected())
             {
                 var sticks = input.GetGamepadState().ThumbSticks;
 
@@ -113,25 +126,25 @@ namespace MonoGear.Entities
             }
             else
             {
-                if(input.IsButtonDown(Input.Button.Left))
+                if (input.IsButtonDown(Input.Button.Left))
                 {
                     dx -= Speed;
                 }
-                if(input.IsButtonDown(Input.Button.Right))
+                if (input.IsButtonDown(Input.Button.Right))
                 {
                     dx += Speed;
                 }
-                if(input.IsButtonDown(Input.Button.Up))
+                if (input.IsButtonDown(Input.Button.Up))
                 {
                     dy -= Speed;
                 }
-                if(input.IsButtonDown(Input.Button.Down))
+                if (input.IsButtonDown(Input.Button.Down))
                 {
                     dy += Speed;
                 }
             }
 
-            if(input.IsButtonDown(Input.Button.Sneak))
+            if (input.IsButtonDown(Input.Button.Sneak))
             {
                 SneakMode = true;
                 Speed = 50;
@@ -149,7 +162,7 @@ namespace MonoGear.Entities
             }
 
             var delta = new Vector2(dx, dy);
-            if(delta.LengthSquared() > Speed * Speed)
+            if (delta.LengthSquared() > Speed * Speed)
             {
                 delta.Normalize();
                 delta *= Speed;
@@ -157,7 +170,7 @@ namespace MonoGear.Entities
 
             var tilevalue = MonoGearGame.GetCurrentLevel().GetTile(Position)?.Sound;
             SoundEffectInstance tilesound;
-            switch(tilevalue)
+            switch (tilevalue)
             {
                 case Tile.TileSound.Grass:
                     tilesound = walkingSoundGrass;
@@ -173,13 +186,13 @@ namespace MonoGear.Entities
                     break;
             }
 
-            if(tilesound != null && tilesound != walkingSound)
+            if (tilesound != null && tilesound != walkingSound)
             {
                 // stop old sound
                 walkingSound.Stop();
                 walkingSound = tilesound;
             }
-            if(delta.LengthSquared() > 0)
+            if (delta.LengthSquared() > 0)
             {
                 Rotation = MathExtensions.VectorToAngle(delta);
                 AnimationRunning = true;
@@ -194,13 +207,13 @@ namespace MonoGear.Entities
             }
 
             if (SneakMode)
-                walkingSound.Pause();
+                walkingSound.Stop();
 
             if (ThrowingDelay > 0)
                 ThrowingDelay -= 1;
 
             // Throw rock
-            if(input.IsButtonPressed(Input.Button.Throw))
+            if (input.IsButtonPressed(Input.Button.Throw))
             {
                 if (ThrowingDelay <= 0)
                 {
@@ -216,9 +229,9 @@ namespace MonoGear.Entities
             }
 
             // Shoot sleep dart
-            if(input.IsButtonPressed(Input.Button.Shoot))
+            if (input.IsButtonPressed(Input.Button.Shoot))
             {
-                if(DartCount > 0)
+                if (DartCount > 0)
                 {
                     var sleepDart = new SleepDart(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
                     sleepDart.Position = Position;
@@ -228,14 +241,14 @@ namespace MonoGear.Entities
                     var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Blowgun").CreateInstance();
                     sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
                     sound.Play();
-                }    
+                }
             }
 
 
             // Check collisions
             if (input.IsKeyDown(Keys.N))
             {
-                Position += delta * (float)gameTime.ElapsedGameTime.TotalSeconds *  10;
+                Position += delta * (float)gameTime.ElapsedGameTime.TotalSeconds * 10;
 
             }
             else
@@ -256,7 +269,7 @@ namespace MonoGear.Entities
                     Position = prevPos;
                 }
             }
-            
+
 
             Camera.main.Position = new Vector2(Position.X, Position.Y);
         }
@@ -269,7 +282,7 @@ namespace MonoGear.Entities
             if (health <= 0 && !wasDead)
             {
                 spriteBatch.Draw(deadSprite, new Vector2(Position.X, Position.Y + 1), deadSprite.Bounds, Color.White, 0, new Vector2(deadSprite.Bounds.Size.X, deadSprite.Bounds.Size.Y) / 2, 1, SpriteEffects.None, 0);
-                
+
             }
         }
 

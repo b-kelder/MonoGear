@@ -10,6 +10,7 @@ using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
 using System.Diagnostics;
+using Microsoft.Xna.Framework.Media;
 
 namespace MonoGear.Entities.Vehicles
 {
@@ -22,26 +23,27 @@ namespace MonoGear.Entities.Vehicles
         public bool autoenter;
         private PositionalAudio jeepSound;
         private Texture2D playerSprite;
-        private Texture2D jeepSprite;    
+        private Texture2D jeepSprite;
+        private bool creditsMode;
 
         public Jeep()
         {
             TextureAssetName = "Sprites/Willys";
             Tag = "Willys";
-            Speed = 260;
+            Speed = 230;
             Entered = false;
             stationaryLock = false;
 
             Z = 1;
 
-            Health = 30;
+            Health = 20;
 
             Acceleration = 80;
             Braking = 200;
             Steering = 180;
             Drag = 50;
 
-            Collider = new BoxCollider(this, new Vector2(24,24));
+            Collider = new BoxCollider(this, new Vector2(24, 24));
 
             LoadContent();
         }
@@ -60,7 +62,6 @@ namespace MonoGear.Entities.Vehicles
             if (autoenter)
             {
                 Enter();
-                forwardSpeed = Speed;
             }
 
         }
@@ -74,30 +75,50 @@ namespace MonoGear.Entities.Vehicles
         {
             base.Update(input, gameTime);
 
-            if(destroyed)
+            if (creditsMode)
             {
-                AudioManager.StopPositional(jeepSound);
-            }
-
-            float minVolume = 0.75f;
-            if(Entered)
-            {
-                if (instanceTexture != playerSprite)
+                Health = 100;
+                //Disable game entity's
+                if (MonoGearGame.FindEntitiesOfType<GameUI>()[0].Enabled)
                 {
-                    instanceTexture = playerSprite;
+                    MonoGearGame.FindEntitiesOfType<GameUI>()[0].Enabled = false;
+                    MonoGearGame.FindEntitiesOfType<GameUI>()[0].Visible = false;
+
+                    MonoGearGame.SpawnLevelEntity(new Credits());
                 }
-                jeepSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
+
+                Rotation = MathHelper.ToRadians(90);
+                forwardSpeed = Speed;
+                jeepSound.Volume = 0;
             }
             else
             {
-                if (instanceTexture != jeepSprite)
+                if (destroyed)
                 {
-                    instanceTexture = jeepSprite;
+                    AudioManager.StopPositional(jeepSound);
                 }
-                jeepSound.Volume = minVolume;
-            }
 
-            jeepSound.Position = Position;
+                float minVolume = 0.75f;
+                if (Entered)
+                {
+                    if (instanceTexture != playerSprite)
+                    {
+                        instanceTexture = playerSprite;
+                    }
+                    jeepSound.Volume = minVolume + (1.0f - minVolume) * Math.Abs(forwardSpeed) / Speed;
+                    creditsMode = true;
+                }
+                else
+                {
+                    if (instanceTexture != jeepSprite)
+                    {
+                        instanceTexture = jeepSprite;
+                    }
+                    jeepSound.Volume = minVolume;
+                }
+
+                jeepSound.Position = Position;
+            }
         }
     }
 }
