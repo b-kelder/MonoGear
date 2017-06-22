@@ -1,11 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MonoGear.Engine.Collisions;
 
 namespace MonoGear.Engine
@@ -13,7 +7,9 @@ namespace MonoGear.Engine
     public abstract class WorldEntity
     {
         protected Texture2D instanceTexture;
-
+        /// <summary>
+        /// Size of the entity
+        /// </summary>
         public Vector2 Size { get; set; }
 
         /// <summary>
@@ -38,16 +34,34 @@ namespace MonoGear.Engine
             }
         }
 
+        /// <summary>
+        /// Entity's rotation
+        /// </summary>
         public float Rotation { get; set; }
-
+        /// <summary>
+        /// Entitiys collider
+        /// </summary>
         public Collider Collider { get; set; }
-
+        /// <summary>
+        /// Indicates if the entity is visible or not
+        /// </summary>
         public bool Visible { get; set; }
+        /// <summary>
+        /// Indicates if the entity is enabled or not
+        /// </summary>
         public bool Enabled { get; set; }
-
+        /// <summary>
+        /// Entity's texture name
+        /// </summary>
         public string TextureAssetName { get; set; }
+        /// <summary>
+        /// Entity's tag name
+        /// </summary>
         public string Tag { get; set; }
 
+        /// <summary>
+        /// Constructor of the world entity class.
+        /// </summary>
         public WorldEntity()
         {
             Visible = true;
@@ -55,6 +69,10 @@ namespace MonoGear.Engine
             Size = new Vector2(0, 0);
         }
 
+        /// <summary>
+        /// Method that moves the entity.
+        /// </summary>
+        /// <param name="delta">Delta</param>
         public void Move(Vector2 delta)
         {
             Position += delta;
@@ -69,29 +87,52 @@ namespace MonoGear.Engine
             }
         }
 
+        /// <summary>
+        /// Method that executes when the level is loaded.
+        /// </summary>
         public virtual void OnLevelLoaded()
         {
-            if(Collider != null)
+            if (Collider != null)
+            {
                 Collider.Register();
+            }
 
         }
 
+        /// <summary>
+        /// Method that executes when the level is unloaded.
+        /// </summary>
         public virtual void OnLevelUnloaded()
         {
-            if(Collider != null)
+            if (Collider != null)
+            {
                 Collider.Deregister();
+            }
         }
 
+        /// <summary>
+        /// Method that updates the game.
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public virtual void Update(Input input, GameTime gameTime)
         {
             if (!Enabled)
+            {
                 return;
+            }
         }
 
+        /// <summary>
+        /// Method that draws the entity/
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch</param>
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            if(instanceTexture == null)
+            if (instanceTexture == null)
+            {
                 return;
+            }
 
             spriteBatch.Draw(instanceTexture, new Vector2(Position.X, Position.Y), instanceTexture.Bounds, Color.White, Rotation, Size / 2, 1, SpriteEffects.None, 0);
         }

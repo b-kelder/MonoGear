@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
@@ -11,10 +7,21 @@ namespace MonoGear.Engine
     public abstract class WorldEntityAnimated : WorldEntity
     {
         private float animationCounter;
-
+        /// <summary>
+        /// The length of the animation
+        /// </summary>
         public int AnimationLength { get; set; }
+        /// <summary>
+        /// The delta of teh animation
+        /// </summary>
         public float AnimationDelta { get; set; }
+        /// <summary>
+        /// The animation's current frame
+        /// </summary>
         public int AnimationCurrentFrame { get; set; }
+        /// <summary>
+        /// Property that indicates wether or not the animation is running.
+        /// </summary>
         public bool AnimationRunning { get; set; }
         public bool AnimationPingPong
         {
@@ -28,11 +35,19 @@ namespace MonoGear.Engine
         private int animDeltaSign;
         private bool pingpong;
 
+        /// <summary>
+        /// Constructor of the world entity animated class.
+        /// </summary>
         public WorldEntityAnimated()
         {
             animDeltaSign = 1;
         }
 
+        /// <summary>
+        /// Method that updates the game.
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
@@ -72,6 +87,9 @@ namespace MonoGear.Engine
             }
         }
 
+        /// <summary>
+        /// Method that executes when the level is loaded.
+        /// </summary>
         protected override void LoadContent()
         {
             base.LoadContent();
@@ -79,10 +97,16 @@ namespace MonoGear.Engine
             Size = new Vector2(Size.X / AnimationLength, Size.Y);
         }
 
+        /// <summary>
+        /// Method that draws the entity.
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if(instanceTexture == null)
+            if (instanceTexture == null)
+            {
                 return;
+            }
 
             Rectangle sourceRect = new Rectangle(AnimationCurrentFrame * (int)Size.X, 0, (int)Size.X, (int)Size.Y);
             spriteBatch.Draw(instanceTexture, new Vector2(Position.X, Position.Y), sourceRect, Color.White, Rotation, Size / 2, 1, SpriteEffects.None, 0);
