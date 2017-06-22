@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Input;
 using System;
 using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
@@ -9,10 +7,16 @@ namespace MonoGear.Entities
 {
     class Rock : WorldEntity
     {
-        float speed { get; set; }
+        /// <summary>
+        /// Property for the speed at which the rock flies.
+        /// </summary>
+        float Speed { get; set; }
         Collider originCollider;
 
-
+        /// <summary>
+        /// Contructor of the rock class. Creates an instance of a rock.
+        /// </summary>
+        /// <param name="originCollider">Origin collider</param>
         public Rock(Collider originCollider)
         {
             CircleCollider collider = new CircleCollider(this, 2);
@@ -20,7 +24,7 @@ namespace MonoGear.Entities
 
             // Speed in units/sec. Right now 1 unit = 1 pixel
             Random rand = new Random();
-            speed = 200f + rand.Next(-20, 20);
+            Speed = 200f + rand.Next(-20, 20);
             TextureAssetName = "Sprites/Rock";
             Tag = "TheRock";
 
@@ -30,26 +34,34 @@ namespace MonoGear.Entities
             this.originCollider = originCollider;
         }
 
+        /// <summary>
+        /// Method that updates the game
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
 
             Collider collider;
             var pos = Position;
-            var delta = Forward * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            var delta = Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Move(delta);
 
             bool hitTilemap;
 
+            // Check if the rock collides with anything
             if(Collider.CollidesAny(out collider, out hitTilemap, originCollider))
             {
                 Position = pos;
-                speed = 0.0f;
+                Speed = 0.0f;
 
                 var entities = MonoGearGame.FindEntitiesOfType<Guard>();
 
+                // Loop through all guards
                 foreach(var guard in entities)
                 {
+                    // Check if the guard is in range
                     if(Vector2.Distance(Position, guard.Position) < 150)
                     {
                         guard.Interest(Position);
@@ -59,10 +71,14 @@ namespace MonoGear.Entities
                 Enabled = false;
             }
 
-            if(speed > 0)
-                speed -= 3;
+            if (Speed > 0)
+            {
+                Speed -= 3;
+            }
             else
-                speed = 0;
+            {
+                Speed = 0;
+            }
         }
     }
 }
