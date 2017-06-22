@@ -555,7 +555,6 @@ namespace MonoGear.Engine
                             { 
                                 MediaPlayer.Play(MonoGearGame.GetResource<Song>(audio));
                                 MediaPlayer.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
-                                Debug.WriteLine("Added music");
                             }
                         }
                         else if (obj.Type == "trigger")
