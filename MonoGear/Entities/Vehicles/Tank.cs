@@ -3,9 +3,6 @@ using Microsoft.Xna.Framework.Audio;
 using MonoGear.Engine.Audio;
 using MonoGear.Engine.Collisions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MonoGear.Engine;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -21,16 +18,21 @@ namespace MonoGear.Entities.Vehicles
         /// </summary>
         private PositionalAudio tankSound;
         /// <summary>
-        /// Last time cannon was shot
+        /// Last time cannon was shot.
         /// </summary>
         private float lastShootTime;
         /// <summary>
-        /// Indicates if we are in credits mode
+        /// Indicates if we are in credits mode.
         /// </summary>
         public bool creditsMode;
-
+        /// <summary>
+        /// Property that indicates the current Gun cycle time.
+        /// </summary>
         public float GunCycleTime { get; set; }
 
+        /// <summary>
+        /// Constructor of the tank class. Creates an instance of a tank.
+        /// </summary>
         public Tank()
         {
             TextureAssetName = "Sprites/Abrams";

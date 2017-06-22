@@ -1,9 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGear.Engine;
-using MonoGear.Engine.Audio;
 using Microsoft.Xna.Framework.Media;
 
 namespace MonoGear.Entities
@@ -16,7 +13,6 @@ namespace MonoGear.Entities
         Texture2D madeby, wouter, manuel, bram, danny, tom, thomas;
         Texture2D specialThanks;
         Texture2D music, dejaVu, america, kevin;
-
 
         /// <summary>
         /// Constructor of the bird class. Creates an instance of a bird.

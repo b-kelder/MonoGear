@@ -1,23 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
 using MonoGear.Engine.Audio;
-using System.Diagnostics;
-using Microsoft.Xna.Framework.Media;
 
 namespace MonoGear.Entities.Vehicles
 {
     /// <summary>
     /// Willys jeep, player controlled vehicle
     /// </summary>
-    ///
     class Jeep : DrivableVehicle
     {
         /// <summary>
@@ -41,6 +34,9 @@ namespace MonoGear.Entities.Vehicles
         /// </summary>
         public bool creditsMode;
 
+        /// <summary>
+        /// Constructor of the jeep class. Creates an instance of a jeep.
+        /// </summary>
         public Jeep()
         {
             TextureAssetName = "Sprites/Willys";
