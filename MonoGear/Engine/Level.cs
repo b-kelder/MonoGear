@@ -460,7 +460,7 @@ namespace MonoGear.Engine
 
                                     foreach (var item in objectives)
                                     {
-                                        if (item.Value.index == ind)
+                                        if (item.Value.Index == ind)
                                         {
                                             newIndex = false;
                                         }
@@ -727,7 +727,7 @@ namespace MonoGear.Engine
                     Objective ob;
                     if (objectives.TryGetValue(pc.Value, out ob))
                     {
-                        pc.Key.objective = ob;
+                        pc.Key.Objective = ob;
                     }
                     else
                     {

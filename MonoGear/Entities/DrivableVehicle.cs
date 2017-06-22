@@ -304,16 +304,23 @@ namespace MonoGear.Entities
             }
         }
 
+        /// <summary>
+        /// Method is executed when the vehicle is damaged.
+        /// </summary>
+        /// <param name="damage">The amount of damage taken</param>
         public void Damage(float damage)
         {
             Health -= damage;
-
+            // Check if health is 0 or smaller
             if (Health <= 0)
             {
                 Destroy();
             }
         }
 
+        /// <summary>
+        /// Method that destroys the vehicle.
+        /// </summary>
         public virtual void Destroy()
         {
             if (Entered)

@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Audio;
 using MonoGear.Engine.Audio;
 using MonoGear.Engine;
-using System.Collections.Generic;
 
 namespace MonoGear.Entities
 {
@@ -21,6 +20,10 @@ namespace MonoGear.Entities
         /// </summary>
         /// 
         private Player player;
+
+        /// <summary>
+        /// Constructor of the explosion class. Creates an instance of an explosion.
+        /// </summary>
         public Explosion()
         {
             // Bird texture
@@ -42,6 +45,9 @@ namespace MonoGear.Entities
             LoadContent();
         }
 
+        /// <summary>
+        /// Method that executes when the level is loaded.
+        /// </summary>
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();

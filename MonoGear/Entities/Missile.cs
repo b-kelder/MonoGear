@@ -1,29 +1,27 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework.Audio;
-
 using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
-using MonoGear.Engine.Audio;
 
 namespace MonoGear.Entities
 {
     class Missile : WorldEntity
     {
-        float speed { get; set; }
+        /// <summary>
+        /// Property that indicates the speed at which the missile flies.
+        /// </summary>
+        float Speed { get; set; }
         Collider originCollider;
         private float boemInSec;
 
+        /// <summary>
+        /// Constructor of the missile class. Creates an instance of a missile.
+        /// </summary>
         public Missile(Collider originCollider)
         {
             CircleCollider collider = new CircleCollider(this, 2);
             collider.Trigger = true;
 
-            speed = 800f;
+            Speed = 800f;
             boemInSec = 1f;
             TextureAssetName = "Sprites/Missile";
             Tag = "Missile";
@@ -34,12 +32,17 @@ namespace MonoGear.Entities
             this.originCollider = originCollider;
         }
 
+        /// <summary>
+        /// Method that updates the game
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
             
             var pos = Position;
-            var delta = Forward * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            var delta = Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Move(delta);
 
             if (boemInSec > 0)
@@ -48,7 +51,7 @@ namespace MonoGear.Entities
             if (Collider.CollidesAny() || boemInSec <= 0)
             {
                 Position = pos;
-                speed = 0.0f;
+                Speed = 0.0f;
 
                 MonoGearGame.SpawnLevelEntity(new Explosion() { Position = this.Position });
                 MonoGearGame.DestroyEntity(this);

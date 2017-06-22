@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MonoGear.Engine;
 using MonoGear.Engine.Collisions;
 
@@ -14,6 +12,12 @@ namespace MonoGear.Entities
         HashSet<Collider> previousColliders;
         Action<Collider, IEnumerable<Collider>, IEnumerable<Collider>> onTrigger;
 
+        /// <summary>
+        /// Constructor of the world box trigger class.
+        /// </summary>
+        /// <param name="position">The position</param>
+        /// <param name="size">The size</param>
+        /// <param name="onTrigger">The action on trigger</param>
         public WorldBoxTrigger(Vector2 position, Vector2 size, Action<Collider, IEnumerable<Collider>, IEnumerable<Collider>> onTrigger)
         {
             if(onTrigger == null)
@@ -29,6 +33,11 @@ namespace MonoGear.Entities
             this.onTrigger = onTrigger;
         }
 
+        /// <summary>
+        /// Method that updates the game
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);

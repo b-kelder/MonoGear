@@ -121,6 +121,10 @@ namespace MonoGear.Entities
             carSound.Position = Position;
         }
 
+        /// <summary>
+        /// Method is executed when the car is damaged.
+        /// </summary>
+        /// <param name="damage">The amount of damage taken</param>
         public void Damage(float damage)
         {
             Health -= damage;

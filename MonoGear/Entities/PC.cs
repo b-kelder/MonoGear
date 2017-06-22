@@ -1,29 +1,35 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using MonoGear.Engine;
-using MonoGear.Engine.Audio;
 
 
 namespace MonoGear.Entities
 {
     class PC : WorldEntityAnimated
     {
-        public List<CCTV> connectedCameras { get; set; }
-        public float progressPerClick { get; set; }
-        public Objective objective { get; set; }
+        /// <summary>
+        /// Property that contains the list of all connected cameras.
+        /// </summary>
+        public List<CCTV> ConnectedCameras { get; set; }
+        /// <summary>
+        /// Property with the progress per click.
+        /// </summary>
+        public float ProgressPerClick { get; set; }
+        /// <summary>
+        /// Property with the objective connected to this pc.
+        /// </summary>
+        public Objective Objective { get; set; }
 
         private Player player;
         private float hackingProgress;
         private bool inRange;
         private bool hacked;
-        
 
+        /// <summary>
+        /// Constructor of the pc class. Creates an instance of a pc.
+        /// </summary>
         public PC()
         {
             TextureAssetName = "Sprites/Pc";
@@ -35,24 +41,35 @@ namespace MonoGear.Entities
             AnimationPingPong = true;
             AnimationRunning = true;
 
-            connectedCameras = new List<CCTV>();
+            ConnectedCameras = new List<CCTV>();
             hackingProgress = 0;
-            progressPerClick = 25;
+            ProgressPerClick = 25;
             hacked = false;
             LoadContent();
         }
 
+        /// <summary>
+        /// Method that adds a CCTV camera to the connected cameras list.
+        /// </summary>
+        /// <param name="cctv"></param>
         public void AddCCTV(CCTV cctv)
         {
-            connectedCameras.Add(cctv);
+            ConnectedCameras.Add(cctv);
         }
 
+        /// <summary>
+        /// Method that executes when the level is loaded.
+        /// </summary>
 	    public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
         }
 
+        /// <summary>
+        /// Method that draws the pc.
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
@@ -64,39 +81,56 @@ namespace MonoGear.Entities
             }
         }
 
+
+        /// <summary>
+        /// Method that hacks the pc
+        /// </summary>
         public void HackPC()
         {
-            //Hack all connected camera's
-            foreach (var CCTV in connectedCameras)
+            //Hack all connected cameras
+            foreach (var CCTV in ConnectedCameras)
             {
                 CCTV.Hack();
             }
             hacked = true;
         }
 
+        /// <summary>
+        /// Method that updates the game
+        /// </summary>
+        /// <param name="input">Input</param>
+        /// <param name="gameTime">GameTime</param>
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
 
+            // Check if the player is in range
             if (Vector2.Distance(Position, player.Position) < 20)
+            {
                 inRange = true;
+            }
             else
+            {
                 inRange = false;
-
+            }
+            // Check if the interact button is pressed
             if (input.IsButtonPressed(Input.Button.Interact) && inRange)
             {
-                hackingProgress += progressPerClick;
+                hackingProgress += ProgressPerClick;
                 var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Hacking_sound").CreateInstance();
                 sound.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
                 sound.Play();
             }
+            // Check if the hacking progress is completed
             if (hackingProgress >= 100)
             {
+                // Hack the pc
                 HackPC();
                 Enabled = false;
-                if (objective != null)
+                if (Objective != null)
                 {
-                    GameUI.CompleteObjective(objective);
+                    // Complete the objective
+                    GameUI.CompleteObjective(Objective);
                 }
             }
             

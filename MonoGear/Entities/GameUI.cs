@@ -30,7 +30,7 @@ namespace MonoGear.Entities
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
             objectives.Clear();
             objectives.AddRange(MonoGearGame.FindEntitiesOfType<Objective>());
-            objectives.Sort((a, b) => a.index.CompareTo(b.index));
+            objectives.Sort((a, b) => a.Index.CompareTo(b.Index));
         }
 
         /// <summary>
