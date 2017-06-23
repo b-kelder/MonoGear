@@ -33,7 +33,7 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
 
-            AudioManager.PlayGlobal(MonoGearGame.GetResource<SoundEffect>("Audio/Music/wav/America_Horse_With_No_Name").CreateInstance()); 
+            AudioManager.PlayGlobal(MonoGearGame.GetResource<SoundEffect>("Audio/Music/America_Horse_With_No_Name").CreateInstance()); 
 
             // Load all sprites
             wouter = MonoGearGame.GetResource<Texture2D>("Sprites/Credits/Wouter");
