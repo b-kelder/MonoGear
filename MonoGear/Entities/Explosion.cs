@@ -51,7 +51,10 @@ namespace MonoGear.Entities
         public override void OnLevelLoaded()
         {
             base.OnLevelLoaded();
+            // Find the player
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
+
+            //Play the explotion sound on creation
             sound = AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Explosion"), 1, 1200, Position, false);
             sound.Position = Position;
             sound.Volume = 0.8f;
@@ -72,6 +75,7 @@ namespace MonoGear.Entities
             {
                 if(player.Enabled)
                 {
+                    // Calcutate damage based on distance from the explotion
                     var dis = Vector2.Distance(player.Position, Position);
                     if(dis < blastRadius)
                     {
@@ -79,9 +83,11 @@ namespace MonoGear.Entities
                     }
                 }
 
+                // Find everything that can be destroyed
                 var things = MonoGearGame.FindEntitiesOfType<IDestroyable>();
                 foreach (var thing in things)
                 {
+                    // Calcutate damage based on distance from the explotion
                     var dis = Vector2.Distance((thing as WorldEntity).Position, Position);
                     if (dis < blastRadius)
                     {
@@ -89,8 +95,10 @@ namespace MonoGear.Entities
                     } 
                 }
 
+                // Note that we have exploded
                 exploded = true;
             }
+            // Destoy the explotion after its done with the animation
             else if (AnimationCurrentFrame == 14)
             {
                 MonoGearGame.DestroyEntity(this);

@@ -9,14 +9,12 @@ namespace MonoGear.Entities
     public class GameUI : WorldEntity
     {
         private Player player;
-        private bool showAllObjective;
 
+        //A list of all the objectives in the current level
         static List<Objective> objectives = new List<Objective>();
 
         public GameUI()
         {
-            showAllObjective = false;
-
             Z = int.MaxValue;
         }
 
@@ -28,6 +26,8 @@ namespace MonoGear.Entities
             base.OnLevelLoaded();
 
             player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
+
+            //Reset the objectives list and sort in on index
             objectives.Clear();
             objectives.AddRange(MonoGearGame.FindEntitiesOfType<Objective>());
             objectives.Sort((a, b) => a.Index.CompareTo(b.Index));
@@ -51,11 +51,6 @@ namespace MonoGear.Entities
         public override void Update(Input input, GameTime gameTime)
         {
             base.Update(input, gameTime);
-
-            if (input.IsButtonPressed(Input.Button.Interact))
-            {
-                showAllObjective = !showAllObjective;
-            }
         }
 
         /// <summary>
@@ -133,17 +128,8 @@ namespace MonoGear.Entities
             }
             else
             {
+                // Draw a no objective string
                 spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), "No objective", new Vector2(rect.Left + 16, rect.Top + 16), Color.LightGray);
-            }
-
-            if (showAllObjective)
-            {
-                float top = rect.Top + 32;
-                for (int i = 1; i < objectives.Count; i++)
-                {
-                    spriteBatch.DrawString(MonoGearGame.GetResource<SpriteFont>("Fonts/Arial"), objectives[i].ToString(), new Vector2(rect.Left + 16, top), Color.LightGray);
-                    top += 11;
-                }
             }
             
             #endregion

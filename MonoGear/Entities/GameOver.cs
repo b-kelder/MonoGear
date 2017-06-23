@@ -35,10 +35,14 @@ namespace MonoGear.Entities
         {
             base.LoadContent();
 
+            // Load sprite
             if (gameOverSprite == null)
             {
                 gameOverSprite = MonoGearGame.GetResource<Texture2D>("Sprites/gameover");
             }
+
+            // Find the player
+            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
         }
 
         /// <summary>
@@ -56,22 +60,26 @@ namespace MonoGear.Entities
                 spriteBatch.Draw(gameOverSprite, clipRect, Color.White);
             }
         }
-
+        /// <summary>
+        /// Method used to enable the gameover screen
+        /// </summary>
         public void EnableGameOver()
         {
-            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
             gameOver = true;
             Position = player.Position;
             Visible = true;
             player.Enabled = false;
+
             var sound = MonoGearGame.GetResource<SoundEffect>("Audio/AudioFX/Wasted_sound").CreateInstance();
             sound.Volume = 0.5f * SettingsPage.Volume * SettingsPage.EffectVolume;
             sound.Play();
         }
 
+        /// <summary>
+        /// Method used to disable the gameover screen
+        /// </summary>
         public void DisableGameOver()
         {
-            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
             gameOver = false;
             Visible = false;
             player.Enabled = true;

@@ -131,7 +131,7 @@ namespace MonoGear.Entities.Vehicles
             {
                 var missile = new Missile(MonoGearGame.FindEntitiesOfType<Player>()[0].Collider);
 
-
+                // Check what barrel to shoot from
                 Vector2 vec = new Vector2(18, 0);
                 if (barrelNr == 0)
                 {

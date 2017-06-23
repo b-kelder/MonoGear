@@ -314,11 +314,6 @@ namespace MonoGear.Engine
 
             GetNodeIfWalkable(x, y - 1, map, proposedLocations);
             GetNodeIfWalkable(x, y + 1, map, proposedLocations);
-            // No diagonals for now
-            //GetNodeIfWalkable(x - 1, y - 1, map, proposedLocations);
-            //GetNodeIfWalkable(x + 1, y + 1, map, proposedLocations);
-            //GetNodeIfWalkable(x + 1, y - 1, map, proposedLocations);
-            //GetNodeIfWalkable(x - 1, y + 1, map, proposedLocations);
             GetNodeIfWalkable(x - 1, y, map, proposedLocations);
             GetNodeIfWalkable(x + 1, y, map, proposedLocations);
 

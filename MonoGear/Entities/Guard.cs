@@ -197,13 +197,16 @@ namespace MonoGear.Entities
         {
             base.Update(input, gameTime);
 
+            // If sleeping, dont do anything
             if(state == State.Sleeping)
             {
                 return;
             }
 
+            // If in pursuit
             if(state == State.Pursuit)
             {
+                // Keep the animation running
                 AnimationRunning = true;
                 var target = playerPos;
                 if(Vector2.DistanceSquared(Position, target) > 90)
@@ -305,15 +308,19 @@ namespace MonoGear.Entities
                 AnimationRunning = false;
                 RunSpeed = 0;
                 WalkSpeed = 0;
+
+                // If player is spotted in JamesBond difficulty, instant game over
                 if (SettingsPage.Difficulty.Equals(DifficultyLevels.JamesBond))
                 {
                     player.Health -= 50;
                 }
                 else
                 {
+                    // Else we start following the player
                     state = State.Pursuit;
                     if (CanSee(out playerPos))
                     {
+                        // Start shooting if we can see the player
                         if (gameTime.TotalGameTime.TotalSeconds >= shootStartTime + shootTime)
                         {
                             var bullet = new Bullet(Collider);
@@ -426,6 +433,7 @@ namespace MonoGear.Entities
         /// <param name="origin"></param>
         public async void Alert(Vector2 origin)
         {
+            // Make sure the correct thing happens based on the current state
             if(!Enabled || state == State.ToAlert)
                 return;
 
@@ -443,8 +451,10 @@ namespace MonoGear.Entities
 
             state = State.ToAlert;
 
+            // Small delay before being alerted
             await Task.Delay(1000);
 
+            // Find a path
             Task.Run(() =>
             {
                 Pathfinding.FindPath(Position, origin, (path) =>
@@ -513,6 +523,7 @@ namespace MonoGear.Entities
         /// <param name="target"></param>
         public void GoTo(Vector2 target)
         {
+            // Goto a location through pathfinding
             Task.Run(() =>
             {
                 Pathfinding.FindPath(Position, target, (path) =>
@@ -523,15 +534,28 @@ namespace MonoGear.Entities
             });
         }
 
+        /// <summary>
+        /// Method that check if we can detect a player
+        /// </summary>
+        /// <param name="entityPos"></param>
+        /// <returns></returns>
         private bool CanDetect(out Vector2 entityPos)
         {
+            // Check if we can hear the player
             if(CanHear(out entityPos))
             {
                 return true;
             }
+
+            // Check if we can see him
             return CanSee(out entityPos);
         }
 
+        /// <summary>
+        /// Method that checks if we can see a player
+        /// </summary>
+        /// <param name="entityPos">Returns the position of the player</param>
+        /// <returns>True if we can see, else false</returns>
         private bool CanSee(out Vector2 entityPos)
         {
             var dis = Vector2.Distance(Position, player.Position);
@@ -562,6 +586,11 @@ namespace MonoGear.Entities
             return false;
         }
 
+        /// <summary>
+        /// Method that checks if we can hear the player
+        /// </summary>
+        /// <param name="entityPos">Returns the position of the player</param>
+        /// <returns>True if we can hear, else false</returns>
         private bool CanHear(out Vector2 entityPos)
         {
             var dis = Vector2.Distance(Position, player.Position);
@@ -577,6 +606,10 @@ namespace MonoGear.Entities
             return false;
         }
 
+        /// <summary>
+        /// Method is executed when the guard is damaged.
+        /// </summary>
+        /// <param name="damage">The amount of damage taken</param>
         public void Damage(float damage)
         {
             Health -= damage;
@@ -587,6 +620,9 @@ namespace MonoGear.Entities
             }
         }
 
+        /// <summary>
+        /// Method is executed when the guard is killed.
+        /// </summary>
         public void Destroy()
         {
             MonoGearGame.DestroyEntity(this);

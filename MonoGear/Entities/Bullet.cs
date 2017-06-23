@@ -51,24 +51,25 @@ namespace MonoGear.Entities
             bool hitTilemap;
 
             // Check if the bullet collides with anything
-            if(Collider.CollidesAny(out collider, out hitTilemap, originCollider))
+            if (Collider.CollidesAny(out collider, out hitTilemap, originCollider))
             {
                 Position = pos;
                 // Set the speed to 0
                 Speed = 0.0f;
 
                 // Check if the bullet collides with a player
-                if(!hitTilemap && collider.Entity.Tag == "Player")
+                if (!hitTilemap && collider.Entity.Tag == "Player")
                 {
                     var player = collider.Entity as Player;
                     // Decrease the player's health by 1
                     player.Health -= 1.0f;
                 }
-                
 
+                // Find everything that can be destroyed
                 var things = MonoGearGame.FindEntitiesOfType<IDestroyable>();
                 foreach (var thing in things)
                 {
+                    // Damage the thing if it gets hit
                     var dis = thing as WorldEntity;
                     if (!hitTilemap && collider.Entity == dis)
                     {
@@ -76,19 +77,9 @@ namespace MonoGear.Entities
                     }
                 }
 
+                // Destroy if we hit something
                 MonoGearGame.DestroyEntity(this);
             }
-
-            if (Speed > 0)
-            {
-                Speed -= 1;
-            }
-            else
-            {
-                Speed = 0;
-                MonoGearGame.DestroyEntity(this);
-            }
-
         }
     }
 }

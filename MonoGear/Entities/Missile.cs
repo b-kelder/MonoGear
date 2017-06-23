@@ -41,13 +41,16 @@ namespace MonoGear.Entities
         {
             base.Update(input, gameTime);
             
+            // Keep moving the missile forward
             var pos = Position;
             var delta = Forward * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Move(delta);
 
+            // If not exploded, kee[ counting down
             if (boemInSec > 0)
                 boemInSec -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            // If we hit anything or the timer runs out, EXPLODE
             if (Collider.CollidesAny() || boemInSec <= 0)
             {
                 Position = pos;
