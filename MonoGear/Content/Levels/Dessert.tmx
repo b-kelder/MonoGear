@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="1100" height="100" tilewidth="16" tileheight="16" nextobjectid="20">
+<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="1100" height="100" tilewidth="16" tileheight="16" nextobjectid="20">
  <tileset firstgid="1" name="WhiteHouse" tilewidth="16" tileheight="16" tilecount="289" columns="17">
   <image source="Tilesets/WhiteHouse.png" width="272" height="272"/>
   <tile id="20" probability="0.01">
@@ -1293,6 +1293,7 @@
   <object id="19" name="BackgroundMusic" type="audio" gid="430" x="5136" y="1048" width="16" height="16">
    <properties>
     <property name="source" value="Audio/Music/Epic_music_for_an_epic_moment"/>
+    <property name="volume" type="float" value="0.6"/>
    </properties>
   </object>
  </objectgroup>
