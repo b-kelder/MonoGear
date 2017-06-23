@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoGear.Engine;
 using Microsoft.Xna.Framework.Media;
+using MonoGear.Engine.Audio;
+using Microsoft.Xna.Framework.Audio;
 
 namespace MonoGear.Entities
 {
@@ -31,11 +33,7 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
 
-            try
-            {
-                MediaPlayer.Play(MonoGearGame.GetResource<Song>("Audio/Music/America Horse With No Name"));
-                MediaPlayer.Volume = 1 * SettingsPage.Volume * SettingsPage.MusicVolume;
-            } catch { }
+            AudioManager.PlayGlobal(MonoGearGame.GetResource<SoundEffect>("Audio/Music/wav/America_Horse_With_No_Name").CreateInstance()); 
 
             // Load all sprites
             wouter = MonoGearGame.GetResource<Texture2D>("Sprites/Credits/Wouter");

@@ -546,24 +546,6 @@ namespace MonoGear.Engine
                                 AudioManager.AddPositionalAudio(MonoGearGame.GetResource<SoundEffect>(audio), float.Parse(volume), float.Parse(range), new Vector2((float)obj.X, (float)obj.Y), true);
                             }
                         }
-                        else if (obj.Type == "backgroundmusic")
-                        {
-                            // Global audio via media player
-                            string audio;
-
-                            if (obj.Properties.TryGetValue("source", out audio))
-                            {
-                                try
-                                {
-                                    MediaPlayer.Play(MonoGearGame.GetResource<Song>(audio));
-                                    MediaPlayer.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
-                                }
-                                catch
-                                {
-                                    Debug.WriteLine("There was an error loading the music due to the mediaplayer being unable to initialize");
-                                }
-                            }
-                        }
                         else if (obj.Type == "trigger")
                         {
                             string action;

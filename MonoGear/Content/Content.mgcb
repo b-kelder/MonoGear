@@ -61,12 +61,6 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Running On Grass.wav
 
-#begin Audio/Music/Epic music for an epic moment.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/Epic music for an epic moment.mp3
-
 #begin Audio/AudioFX/Guard_Alert_Sound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -705,18 +699,6 @@
 /processorParam:TextureFormat=Color
 /build:Levels/Tilesets/Dessert.png
 
-#begin Audio/Music/America Horse With No Name.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/America Horse With No Name.mp3
-
-#begin Audio/Music/White house inside.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Music/White house inside.mp3
-
 #begin Sprites/Wrench.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -891,10 +873,27 @@
 /processorParam:Quality=Best
 /build:Audio/AudioFX/Car.wav
 
-#begin Audio/Music/Main_menu_theme.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Audio/Music/America_Horse_With_No_Name.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Music/Main_menu_theme.mp3
+/build:Audio/Music/America_Horse_With_No_Name.wav
 
+#begin Audio/Music/Epic_music_for_an_epic_moment.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Epic_music_for_an_epic_moment.wav
+
+#begin Audio/Music/Main_menu_theme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/Main_menu_theme.wav
+
+#begin Audio/Music/White_house_inside.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Music/White_house_inside.wav
 
