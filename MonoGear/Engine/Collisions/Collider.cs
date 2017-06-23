@@ -25,18 +25,26 @@ namespace MonoGear.Engine.Collisions
         public Vector2 BBSize { get; protected set; }
         public WorldEntity Entity { get; protected set; } 
 
+        /// <summary>
+        /// The static contructor of the collider class
+        /// </summary>
         static Collider()
         {
             _colliders = new HashSet<Collider>();
-            
         }
 
+        /// <summary>
+        /// The contructor of the collider class
+        /// </summary>
+        /// <param name="entity"></param>
         public Collider(WorldEntity entity)
         {
+            // Throw exeption if we have no entity
             if(entity == null)
             {
                 throw new ArgumentNullException("entity");
             }
+
             Entity = entity;
             Entity.Collider = this;
             Active = true;
@@ -45,28 +53,40 @@ namespace MonoGear.Engine.Collisions
             Register();
         }
 
+        /// <summary>
+        /// Method to register a collider and use it in collision checking
+        /// </summary>
         public void Register()
         {
             _colliders.Add(this);
         }
 
+        /// <summary>
+        /// Method to deregister a collider and prevent it from being used in collision checking
+        /// </summary>
         public void Deregister()
         {
             _colliders.Remove(this);
         }
 
-        public static void OnReturnToMenu()
-        {
-            _colliders.Clear();
-        }
-
+        /// <summary>
+        /// Method that checks if a collider collides with a specific collider
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>True if the collision is detected</returns>
         public abstract bool Collides(Collider other);
 
+        /// <summary>
+        /// Method that checks if there is a collision with any collider
+        /// </summary>
+        /// <returns>True if a collision is detected</returns>
         public virtual bool CollidesAny()
         {
+            // Check if we could be colliding
             var colliders = BoxOverlapAny(this);
             if(colliders.Count() != 0)
             {
+                // Run through all colliders that might collide and check if we do
                 foreach(var col in colliders)
                 {
                     if(Collides(col))
@@ -88,12 +108,20 @@ namespace MonoGear.Engine.Collisions
             }
         }
 
+        /// <summary>
+        /// Method that checks if there is a collision with any collider
+        /// </summary>
+        /// <param name="other">Returns the other collider</param>
+        /// <param name="hitTilemap">Returns if the collision is with the tilemap</param>
+        /// <returns>True if a collision is detected</returns>
         public virtual bool CollidesAny(out Collider other, out bool hitTilemap)
         {
+            // Check if we could be colliding
             var colliders = BoxOverlapAny(this);
             if(colliders.Count() != 0)
             {
-                foreach(var col in colliders)
+                // Run through all colliders that might collide and check if we do
+                foreach (var col in colliders)
                 {
                     if(Collides(col))
                     {
@@ -119,13 +147,23 @@ namespace MonoGear.Engine.Collisions
             return hitTilemap;
         }
 
+        /// <summary>
+        /// Method that checks if there is a collision with any collider
+        /// </summary>
+        /// <param name="other">Returns the other collider</param>
+        /// <param name="hitTilemap">Returns if the collision is with the tilemap</param>
+        /// <param name="ignored">The collider to ignore</param>
+        /// <returns>True if a collision is detected</returns>
         public virtual bool CollidesAny(out Collider other, out bool hitTilemap, Collider ignored)
         {
+            // Check if we could be colliding
             var colliders = BoxOverlapAny(this);
             if(colliders.Count() != 0)
             {
-                foreach(var col in colliders)
+                // Run through all colliders that might collide and check if we do
+                foreach (var col in colliders)
                 {
+                    // Check if we need to ignore the collider
                     if(col == ignored)
                     {
                         continue;
@@ -155,6 +193,12 @@ namespace MonoGear.Engine.Collisions
             return hitTilemap;
         }
 
+        /// <summary>
+        /// Check if there is a overlap between two colliders
+        /// </summary>
+        /// <param name="a">Collider a</param>
+        /// <param name="b">Collider b</param>
+        /// <returns>Returns true if an overlap is found</returns>
         protected static bool BoxOverlap(Collider a, Collider b)
         {
             if(
@@ -168,6 +212,12 @@ namespace MonoGear.Engine.Collisions
             return true;
         }
 
+        /// <summary>
+        /// Check if there is a circle overlap between two circlecolliders
+        /// </summary>
+        /// <param name="a">Collider a</param>
+        /// <param name="b">Collider b</param>
+        /// <returns>Returns true if an overlap is found</returns>
         protected static bool CircleOverlap(CircleCollider a, CircleCollider b)
         {
             float sqrRad = (a.Radius + b.Radius) * (a.Radius + b.Radius);
@@ -181,6 +231,12 @@ namespace MonoGear.Engine.Collisions
             return false;
         }
 
+        /// <summary>
+        /// Check if there is an overlap between a circlecollider and a collider
+        /// </summary>
+        /// <param name="a">Collider a</param>
+        /// <param name="b">Collider b</param>
+        /// <returns>Returns true if an overlap is found</returns>
         protected static bool CircleBoxOverlap(CircleCollider a, Collider b)
         {
             Vector2 circleDistance = new Vector2();
@@ -199,12 +255,23 @@ namespace MonoGear.Engine.Collisions
             return (cornerDistance_sq <= MathExtensions.Square(a.Radius));
         }
 
+        /// <summary>
+        /// Method used to cast a ray from a point to a point
+        /// </summary>
+        /// <param name="from">Where to shoot from</param>
+        /// <param name="to">Where to shoot to</param>
+        /// <param name="firstHit">The first item to be hit by the ray</param>
+        /// <param name="hitTilemap">True if we hit the tilemap</param>
+        /// <param name="ignoreTag">What tag to ignore when checking collisions</param>
+        /// <param name="delta">The delta used</param>
+        /// <returns>Returns true if a collision was detected</returns>
         public static bool RaycastAny(Vector2 from, Vector2 to, out Collider firstHit, out bool hitTilemap, string ignoreTag, float delta = 8.0f)
         {
             Vector2 deltaVec = (to - from);
             deltaVec.Normalize();
             deltaVec *= delta;
 
+            //Setup the ray if it hase not been done before
             if(_raycastCollider == null)
             {
                 _raycastCollider = new BoxCollider(new Bird(), Vector2.One);  // Just need a WorldEntity that has no collider for this
@@ -214,36 +281,52 @@ namespace MonoGear.Engine.Collisions
             }
             _raycastCollider.Entity.Position = from;
 
-
-
             float prevDistance = float.MaxValue;
             float distance = Vector2.DistanceSquared(_raycastCollider.Entity.Position, to);
 
+            // If current distance is closer than we have been before
             while(distance < prevDistance)
             {
+                // Check if we collide with anything
                 if(_raycastCollider.CollidesAny(out firstHit, out hitTilemap))
                 {
+                    // If we did not hit an entity we should ignore
                     if(hitTilemap || firstHit.Entity.Tag != ignoreTag)
                     {
                         return true;
                     }
                 }
+
+                // Keep moving the ray forward and update the prev/current distance
                 _raycastCollider.Entity.Move(deltaVec);
                 prevDistance = distance;
                 distance = Vector2.DistanceSquared(_raycastCollider.Entity.Position, to);
             }
 
+            // If nothing was hit, return false
             firstHit = null;
             hitTilemap = false;
             return false;
         }
 
+        /// <summary>
+        /// Check if there is an overlap between a circle collider and the tilemap
+        /// </summary>
+        /// <param name="circle">Collider a</param>
+        /// <param name="level">The tilemap</param>
+        /// <returns>Returns true if an overlap is found</returns>
         public static bool CircleTilemapOverlap(CircleCollider circle, Level level)
         {
             // I'm not doing this, everything's a box now
             return BoxTilemapOverlap(circle, level);
         }
 
+        /// <summary>
+        /// Check if there is an overlap between a circle collider and the tilemap
+        /// </summary>
+        /// <param name="box">Collider a</param>
+        /// <param name="level">The tilemap</param>
+        /// <returns>Returns true if an overlap is found</returns>
         public static bool BoxTilemapOverlap(Collider box, Level level)
         {
             var boxStart = new Vector2(box.Entity.Position.X - box.BBSize.X / 2, box.Entity.Position.Y - box.BBSize.Y / 2);
