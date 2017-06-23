@@ -459,7 +459,11 @@ namespace MonoGear
                 // Clear audio
                 AudioManager.ClearPositionalAudio();
                 AudioManager.ClearGlobalAudio();
-                MediaPlayer.Stop();
+
+                try
+                {
+                    MediaPlayer.Stop();
+                } catch {}
 
                 activeLevel = nextLevel;
                 nextLevel = null;

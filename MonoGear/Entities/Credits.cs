@@ -31,12 +31,11 @@ namespace MonoGear.Entities
         {
             base.OnLevelLoaded();
 
-            // Play credit music
-            if (MediaPlayer.State != MediaState.Playing)
+            try
             {
                 MediaPlayer.Play(MonoGearGame.GetResource<Song>("Audio/Music/America Horse With No Name"));
                 MediaPlayer.Volume = 1 * SettingsPage.Volume * SettingsPage.MusicVolume;
-            }
+            } catch { }
 
             // Load all sprites
             wouter = MonoGearGame.GetResource<Texture2D>("Sprites/Credits/Wouter");

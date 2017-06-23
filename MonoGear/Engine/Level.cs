@@ -552,9 +552,16 @@ namespace MonoGear.Engine
                             string audio;
 
                             if (obj.Properties.TryGetValue("source", out audio))
-                            { 
-                                MediaPlayer.Play(MonoGearGame.GetResource<Song>(audio));
-                                MediaPlayer.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                            {
+                                try
+                                {
+                                    MediaPlayer.Play(MonoGearGame.GetResource<Song>(audio));
+                                    MediaPlayer.Volume = 1 * SettingsPage.Volume * SettingsPage.EffectVolume;
+                                }
+                                catch
+                                {
+                                    Debug.WriteLine("There was an error loading the music due to the mediaplayer being unable to initialize");
+                                }
                             }
                         }
                         else if (obj.Type == "trigger")

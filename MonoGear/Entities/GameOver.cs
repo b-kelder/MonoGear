@@ -40,9 +40,6 @@ namespace MonoGear.Entities
             {
                 gameOverSprite = MonoGearGame.GetResource<Texture2D>("Sprites/gameover");
             }
-
-            // Find the player
-            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
         }
 
         /// <summary>
@@ -65,6 +62,8 @@ namespace MonoGear.Entities
         /// </summary>
         public void EnableGameOver()
         {
+            // Find the player
+            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
             gameOver = true;
             Position = player.Position;
             Visible = true;
@@ -80,6 +79,8 @@ namespace MonoGear.Entities
         /// </summary>
         public void DisableGameOver()
         {
+            // Find the player
+            player = MonoGearGame.FindEntitiesWithTag("Player")[0] as Player;
             gameOver = false;
             Visible = false;
             player.Enabled = true;
