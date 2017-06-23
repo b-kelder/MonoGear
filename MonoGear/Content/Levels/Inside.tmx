@@ -2509,7 +2509,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Triggers">
-  <object id="10" name="Trumps office" type="trigger" x="744" y="153.727" width="151.182" height="102.273">
+  <object id="10" name="Trumps office" type="trigger" x="744" y="72.3937" width="151.182" height="186.273">
    <properties>
     <property name="action" value="alert"/>
    </properties>
