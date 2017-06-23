@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using MonoGear.Entities;
+using System.Diagnostics;
 
 namespace MonoGear.Engine.Audio
 {
@@ -117,6 +118,7 @@ namespace MonoGear.Engine.Audio
         // Method that clears all global audio.
         public static void ClearGlobalAudio()
         {
+            Debug.WriteLine("Clearing global audio");
             // Loop through all global sounds
             foreach(var audio in globalSounds)
             {

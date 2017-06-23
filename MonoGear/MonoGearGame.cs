@@ -456,15 +456,6 @@ namespace MonoGear
             // Check if the next level is not null
             if(nextLevel != null)
             {
-                // Clear audio
-                AudioManager.ClearPositionalAudio();
-                AudioManager.ClearGlobalAudio();
-
-                try
-                {
-                    MediaPlayer.Stop();
-                } catch {}
-
                 activeLevel = nextLevel;
                 nextLevel = null;
 
@@ -525,6 +516,10 @@ namespace MonoGear
         /// <param name="levelName">Name of the level</param>
         public static void LoadLevel(string levelName)
         {
+            // Clear audio before loading level
+            AudioManager.ClearPositionalAudio();
+            AudioManager.ClearGlobalAudio();
+
             instance.nextLevel = Level.LoadLevel(levelName);
         }
 

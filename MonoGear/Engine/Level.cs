@@ -528,6 +528,12 @@ namespace MonoGear.Engine
                                 soundEffect.IsLooped = (loop == "true");
                                 soundEffect.Volume = float.Parse(volume) * SettingsPage.Volume * SettingsPage.EffectVolume;
                                 AudioManager.PlayGlobal(soundEffect);
+                                Debug.WriteLine("Added audio " + audio);
+                                Debug.WriteLine("With Volume " + soundEffect.Volume);
+                            }
+                            else
+                            {
+                                Debug.WriteLine("Could not add audio" + audio);
                             }
                         }
                         else if (obj.Type == "audiosource")
