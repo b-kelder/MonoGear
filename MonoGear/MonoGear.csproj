@@ -142,6 +142,17 @@
     </Compile>
     <Compile Include="MonoGearGame.cs" />
     <Compile Include="Entities\Player.cs" />
+    <Compile Include="Network\EntityMessage.cs" />
+    <Compile Include="Network\EntityTypeDatabase.cs" />
+    <Compile Include="Network\NetManager.cs" />
+    <Compile Include="Network\NetworkEntity.cs" />
+    <Compile Include="Network\NetworkMessage.cs" />
+    <Compile Include="Network\NetworkPlayer.cs" />
+    <Compile Include="Network\Protocol.cs" />
+    <Compile Include="Network\SyncInt32.cs" />
+    <Compile Include="Network\SyncFloat.cs" />
+    <Compile Include="Network\SyncValue.cs" />
+    <Compile Include="Network\SyncVector2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>

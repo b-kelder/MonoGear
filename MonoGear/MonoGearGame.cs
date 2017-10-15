@@ -262,6 +262,9 @@ namespace MonoGear
             // Update input state
             input.Update();
 
+            // Let NetManager update
+            Network.NetManager.OnUpdate(destroyQueue, spawnQueueLocal, spawnQueueGlobal, levelEntities, globalEntities);
+
             // Destroy entities
             while(destroyQueue.Count > 0)
             {

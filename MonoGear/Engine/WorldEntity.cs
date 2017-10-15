@@ -1,11 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGear.Engine.Collisions;
+using MonoGear.Network;
 
 namespace MonoGear.Engine
 {
     public abstract class WorldEntity
     {
+        protected const string NETWORK_NAME_POSITION = "_pos";
+        protected const string NETWORK_NAME_ROTATION = "_rot";
+
         protected Texture2D instanceTexture;
         /// <summary>
         /// Size of the entity
@@ -60,6 +64,11 @@ namespace MonoGear.Engine
         public string Tag { get; set; }
 
         /// <summary>
+        /// Network representation of this WorldEntity
+        /// </summary>
+        public NetworkEntity NetworkEntity { get; protected set; }
+
+        /// <summary>
         /// Constructor of the world entity class.
         /// </summary>
         public WorldEntity()
@@ -67,6 +76,10 @@ namespace MonoGear.Engine
             Visible = true;
             Enabled = true;
             Size = new Vector2(0, 0);
+            NetworkEntity = new NetworkEntity(this);
+            // Setup default network sync values
+            NetworkEntity.SetSyncValue(NETWORK_NAME_POSITION, Position);
+            NetworkEntity.SetSyncValue(NETWORK_NAME_ROTATION, Rotation);
         }
 
         /// <summary>
@@ -120,6 +133,29 @@ namespace MonoGear.Engine
             if (!Enabled)
             {
                 return;
+            }
+
+            // TODO: Maybe move this to some post update method? Idk
+            if(NetManager.IsNetworkGame && NetworkEntity.Enabled)
+            {
+                // Handle basic network syncing
+                if(NetworkEntity.IsAuthorative)
+                {
+                    // Position
+                    NetworkEntity.SetSyncValue(NETWORK_NAME_POSITION, Position);
+
+                    // Rotation
+                    NetworkEntity.SetSyncValue(NETWORK_NAME_ROTATION, Rotation);
+                }
+                else
+                {
+                    // TODO: Use (and update) HasChanged?
+                    // Position
+                    Position = NetworkEntity.GetSyncVector2(NETWORK_NAME_POSITION);
+
+                    // Rotation
+                    Rotation = NetworkEntity.GetSyncFloat(NETWORK_NAME_ROTATION);
+                }
             }
         }
 
